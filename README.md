@@ -2,7 +2,7 @@
 
 Creating a database and a front end website to connect healthcare workers with job opportunities in Nigeria.
 
-Developers:
+####Developers:
 
 Khalaya Dean
 Charles Snider
@@ -11,8 +11,8 @@ Nicholas Scholz
 Senai Saunder
 William Leonard
 
-Operating Instructions:
+####Operating Instructions:
 
-File Manifest:
+####File Manifest:
 
-Bug List: 
+####Bug List: 
