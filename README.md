@@ -12,3 +12,5 @@ Senai Saunder
 William Leonard
 
 Operating Instructions:
+
+Bug List: 
