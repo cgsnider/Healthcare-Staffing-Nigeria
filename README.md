@@ -10,3 +10,5 @@ Haoran Zhang
 Nicholas Scholz
 Senai Saunder
 William Leonard
+
+Operating Instructions:
