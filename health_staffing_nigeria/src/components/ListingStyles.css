@@ -1,0 +1,81 @@
+#time {
+    position: relative;
+    height: 22px;
+    width: 124px;
+    left: 17px;
+    top: 24px;
+}
+
+#pay {
+    position: relative;
+    height: 22px;
+    width: 146px;
+    left: 17px;
+    top: 48px;
+}
+
+#title {
+    position: relative;
+    height: 29px;
+    width: 155px;
+    left: 17px;
+    top: 0px;
+    border-radius: nullpx;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 29px;
+    color: #000000;
+}
+
+#loc {
+    position: relative;
+    height: 15px;
+    width: 97px;
+    left: 17px;
+    top: 0px;
+    border-radius: nullpx;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    color: #000000;
+}
+
+#JobList {
+    position: absolute;
+    text-align: left;
+    height: 298px;
+    width: 242px;
+    background: rgba(196, 196, 196, 0.01);
+    mix-blend-mode: normal;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+}
+
+#JobList:hover {
+    background-color: lightgray;
+}
+
+#jobImage {
+    position: relative;
+    height: 88px;
+    width: 223px;
+    left: 9px;
+    top: 0px;
+    border-radius: 0px;
+}
+
+.details {
+    border-radius: nullpx;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    color: #000000;
+}
