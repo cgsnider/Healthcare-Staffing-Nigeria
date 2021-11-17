@@ -8,7 +8,7 @@ Khalaya Dean
 Charles Snider
 Haoran Zhang
 Nicholas Scholz
-Senai Saunder
+Senai Saunders
 William Leonard
 
 #### Operating Instructions:
