@@ -1,0 +1,12 @@
+.rectangle {
+  display: inline-flex;
+  flex-direction: column;
+  width: 100%;
+  height: 10%;
+  background: lightgray;
+}
+
+.logo {
+  margin: auto;
+  width: 10%;
+}
