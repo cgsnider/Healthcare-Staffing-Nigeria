@@ -5,3 +5,9 @@
   left: 15%;
   background-color: black;
 }
+
+.content_box {
+  position: absolute;
+  left: 15.125%;
+  top: 13.5%;
+}

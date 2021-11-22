@@ -1,0 +1,17 @@
+.option_base {
+  border: none;
+  background: none;
+  font-size: medium;
+}
+
+.selected {
+  color: #484848;
+}
+
+.unselected {
+  color: #696969;
+}
+
+.clicked {
+  color: black;
+}

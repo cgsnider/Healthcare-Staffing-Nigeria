@@ -1,15 +1,19 @@
 import React from 'react'
 
-import "./ContentContainer.css"
+import "./styling/ContentContainer.css"
 
 function ContentContainer(props) {
     
     const {content} = props; 
 
+    console.log(`content: ${content}`);
+
     return (
         <div>
             <div className='divider_top'/>
-            {content}
+            <div className='content_box'>
+            {(content.toJSX) ? content.toJSX(): <div />}
+            </div>
         </div>
     )
 }

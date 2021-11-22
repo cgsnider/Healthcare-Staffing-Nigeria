@@ -16,3 +16,24 @@ export default class JobListing extends React.Component {
         );
     }
 }
+
+export class JobListingBuilder {
+
+    constructor(link, image, position, location, shifts, salary) {
+        this.link = link
+        this.image = image;
+        this.position = position;
+        this.location = location;
+        this.shifts = shifts;
+        this.salary = salary;
+    }
+    
+    toJSX() {
+        return <JobListing link={this.link} image={this.image} position={this.position} location={this.location} shifts={this.shifts} salary={this.salary}/>;
+    }
+
+    toString() {
+        return `image: ${this.image}, position: ${this.positions}, location: ${this.location}, shifts: ${this.shifts}, salary: ${this.salary}`
+    }
+
+}

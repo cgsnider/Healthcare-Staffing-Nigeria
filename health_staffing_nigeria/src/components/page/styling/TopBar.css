@@ -1,0 +1,24 @@
+.rectangle {
+  align-items: center;
+  display: inline-flex;
+  flex-direction: column;
+  width: 100%;
+  height: 10%;
+  background: lightgray;
+}
+
+.list_options {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+}
+
+.logo {
+  margin: auto;
+  width: 10%;
+}
+
+.divider_dot {
+  font-size: large;
+  font-weight: bold;
+}
