@@ -8,7 +8,7 @@ function LeftContainer(props) {
     return (
         <div className="row">
             <div className='left_frame'>
-                {content}
+                {(content && content.toJSX) ? content.toJSX() : <div />}
             </div>           
             <div className='divider' />
         </ div>

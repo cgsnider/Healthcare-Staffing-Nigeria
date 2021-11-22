@@ -12,7 +12,7 @@ function ContentContainer(props) {
         <div>
             <div className='divider_top'/>
             <div className='content_box'>
-            {(content.toJSX) ? content.toJSX(): <div />}
+            {(content && content.toJSX) ? content.toJSX(): <div />}
             </div>
         </div>
     )

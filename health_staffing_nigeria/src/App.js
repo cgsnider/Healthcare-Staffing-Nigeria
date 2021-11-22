@@ -10,6 +10,20 @@ import ContentContainer from './components/page/ContentContainer';
 import TopOption from './components/page/TopOption';
 
 
+/*
+
+- How to use -
+
+If you want to load your component into the main content section:
+
+You need to add a builder class in your code (see JobListGrid file for an example).
+This builder class needs to store all of the data that you want to pass as props to your component
+IMPORTANT: your builder class needs to contain a toJSX() method. This methods should return the JSX component that is to be displayed.
+
+The you can pass your component to the ContentContainer prop called content and it should dsiplay.
+
+*/
+
 
 
 function App(props) {
