@@ -6,6 +6,25 @@ function Register() {
     const RegisterDisplay = () =>{
         if (user === "Organisation") {
             //insert organisation registration component
+            const divStyle = {display: 'flex', alignItems: 'center'};
+            return (
+                <div className="OrganizationRegistration">
+                    <div className="FacilityName" style={divStyle}>
+                    <label>Facility Name</label>
+                    <input id="facility-name"></input>
+                    </div>
+
+                    <div className="EmailAddress" style={divStyle}>
+                        <label>Email Address</label>
+                        <input id="email-address"></input>
+                    </div>
+
+                    <div className="Password" style={divStyle}>
+                        <label>Password</label>
+                        <input id="password"></input>
+                    </div>
+                </div>
+            )
         } else {
             //insert practitioner registration component
         }
