@@ -4,13 +4,13 @@ import Button from 'react-bootstrap/Button';
 import './LoginStyles.css';
 // import { StyleSheet, Text, View } from 'React'
 
-export default function Login() {
+export default function Login(props) {
 
 	const [username, getName] = useState("");
 	const [password, getPass] = useState("");
 
 	function handleLogin() {
-		event.preventDefault();
+		// event.preventDefault();
 	}
 
 	function checkInput() {
@@ -41,5 +41,17 @@ export default function Login() {
         	</Form>
         </div>
     );
+}
+
+export class LoginBuilder {
+	
+	constructor() {
+		//Record data for props (looks like there are no props here)
+	}
+
+	toJSX() {
+		return <Login />
+	}
+
 }
 

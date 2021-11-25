@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-import Login from './components/Login';
+import Login, { LoginBuilder } from './components/Login';
 import Listing, { JobListingBuilder } from './components/Listing';
 import JobListGrid, {JobGridBuilder} from './components/JobListGrid';
 import Register from "./components/Register.js";
@@ -8,6 +8,7 @@ import TopBar from './components/page/TopBar';
 import LeftContainer from './components/page/LeftContainer';
 import ContentContainer from './components/page/ContentContainer';
 import TopOption from './components/page/TopOption';
+
 
 
 /*
@@ -44,7 +45,7 @@ function App(props) {
 
   const [options, setOptions] = useState(login_topOptions);
   const [leftContent, setLeftContent] = useState(null);
-  const [mainContent, setMainContent] = useState(<Login />)
+  const [mainContent, setMainContent] = useState(new LoginBuilder())
 
 
   const genJobPage = () => {
@@ -59,7 +60,7 @@ function App(props) {
   const genLoginPage = () => { 
     setOptions(login_topOptions);
     setLeftContent(null);
-    setMainContent(null);
+    setMainContent(new LoginBuilder());
   }
 
 
