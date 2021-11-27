@@ -40,8 +40,8 @@ function App(props) {
     <TopOption text={'Profile'} action={() => console.log("To Profiles")} key={4}/>,
   ];
   
-  
-  const StartContent = new RegsiterBuilder();
+  //change this to whatever content to start with or to test ur component
+  const StartContent = new RegsiterBuilder(); 
   const [options, setOptions] = useState(login_topOptions);
   const [leftContent, setLeftContent] = useState(null);
   const [mainContent, setMainContent] = useState(StartContent)
