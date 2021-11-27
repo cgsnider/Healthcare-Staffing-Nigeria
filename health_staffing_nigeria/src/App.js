@@ -62,6 +62,12 @@ function App(props) {
     setMainContent(null);
   }
 
+  const setRegisterPage = () => {
+    setOptions(login_topOptions);
+    setLeftContent(null);
+    setMainContent()
+  }
+
   return (
       <div>
           <TopBar options={options}/>

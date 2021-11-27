@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import './RegStyle.css'
+import './RegStyle.css';
+import UserPool from "../model/UserPool"
+
+
 
 function Register() {
     const [user, setUser] = useState("Organisation");
@@ -11,6 +14,15 @@ function Register() {
         confPassword: "",
         facilityName: "",
     });
+
+    const onSubmit = (event) => {
+        UserPool.signUp(formData.email, formData.password, [], null, (err, data) => {
+            if (err) {
+                console.error(err);
+            }
+            console.log(data);
+        });
+    };
 
     const RegisterDisplay = () =>{
         if (user === "Practitioner") {
@@ -142,6 +154,7 @@ function Register() {
                     <button>Return</button>
                     <button onClick={()=> {
                         if(checkEmpty() && passwordMatch()) {
+                            onSubmit()
                             alert("account created");
                             console.log(formData);
                         }

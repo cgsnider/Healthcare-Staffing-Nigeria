@@ -15,4 +15,8 @@ William Leonard
 
 #### File Manifest:
 
-#### Bug List: 
+#### Bug List:
+
+### Required Dependencies
+
+amazon-cognito-identity-js
