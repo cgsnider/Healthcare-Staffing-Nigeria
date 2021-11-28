@@ -2,41 +2,67 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./LoginStyles.css";
+import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
+import { LeftBarExampleBuilder } from "./page/LeftBarExample";
+import UserPool from "../model/UserPool";
 // import { StyleSheet, Text, View } from 'React'
 
 export default function Login(props) {
 
   const {toLanding, toRegister} = props;
 
-  const [username, getName] = useState("");
-  const [password, getPass] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPass] = useState("");
 
-  var testUsername = "test";
+  var testEmail = "test";
   var testPassword = "password";
   var tryAgain = false;
 
-  function checkInput() {
-    return username.length > 0 && password.length > 0;
+
+  const onLogin = () => {
+    const user = new CognitoUser({
+        Username: email,
+        Pool: UserPool,
+    });
+
+    const authDetails = new AuthenticationDetails({
+        Username: email,
+        Password: password
+    })
+
+    user.authenticateUser(authDetails, {
+        onSuccess: (data) => {
+            toLanding()
+        },
+        onFailure: (data) => {},
+        newPasswordRequired: (data) => {}
+    })
   }
+
+  function checkInput() {
+    return email.length > 0 && email.length > 0;
+  }
+
 
   //Check username and password
   const checkLogin = () =>  {
-      console.log("Check Login")
-    if (username == testUsername && password == testPassword) {
-      console.log("success");
-      tryAgain = false;
-      toLanding();
-      console.log(tryAgain);
-    } else {
-      tryAgain = true;
-      incorrect();
-    }
+    //   console.log("Check Login")
+    // if (username == testUsername && password == testPassword) {
+    //   console.log("success");
+    //   tryAgain = false;
+    //   toLanding();
+    //   console.log(tryAgain);
+    // } else {
+    //   tryAgain = true;
+    //   incorrect();
+    // }
+    onLogin()
   }
 
   function incorrect() {
     if (tryAgain == true) {
       console.log("test");
-      return <div className="incorrect">Incorrect username or password!</div>;
+      return <div className="incorrect">Incorrect username/email or password!</div>;
     }
   }
 
@@ -46,13 +72,13 @@ export default function Login(props) {
       {incorrect()}
 
       <Form onSubmit={checkLogin}>
-        <Form.Group size="lg" controlid="username">
+        <Form.Group size="lg" controlid="email/username">
           <Form.Label>Username</Form.Label>
           <Form.Control
             autoFocus
             type="username"
-            value={username}
-            onChange={(n) => getName(n.target.value)}
+            value={email}
+            onChange={(n) => setEmail(n.target.value)}
           />
         </Form.Group>
         <Form.Group size="lg" controlid="password">
@@ -60,7 +86,7 @@ export default function Login(props) {
           <Form.Control
             type="password"
             value={password}
-            onChange={(n) => getPass(n.target.value)}
+            onChange={(n) => setPass(n.target.value)}
           />
         </Form.Group>
       </Form>
