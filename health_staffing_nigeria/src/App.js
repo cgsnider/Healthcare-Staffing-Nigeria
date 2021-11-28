@@ -44,7 +44,7 @@ function App(props) {
   ];
   
   //change this to whatever content to start with or to test ur component
-  const StartContent = new RegsiterBuilder(); 
+  const StartContent = new ProfileBuilder(); 
   const LeftBarContent = new LeftBarExampleBuilder(); 
   const [options, setOptions] = useState(login_topOptions);
   const [leftContent, setLeftContent] = useState(null);
@@ -77,6 +77,12 @@ function App(props) {
     setOptions(login_topOptions);
     setLeftContent(null);
     setMainContent()
+  }
+
+  const setProfilePage = () => {
+    setOptions(prof_topOptions);
+    setLeftContent(null);
+    setMainContent(new ProfileBuilder())
   }
 
   return (
