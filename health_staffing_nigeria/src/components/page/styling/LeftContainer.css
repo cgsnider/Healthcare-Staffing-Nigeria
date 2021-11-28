@@ -1,6 +1,6 @@
 .left_frame {
   width: 15%;
-  height: 100%;
+  height: calc(100% + (136px));
   position: absolute;
   left: 0;
   background-color: whitesmoke;
@@ -9,7 +9,7 @@
 
 .divider {
   width: 0.125%;
-  height: 100%;
+  height: calc(100% + (136px));
   position: absolute;
   left: 15%;
   background-color: black;

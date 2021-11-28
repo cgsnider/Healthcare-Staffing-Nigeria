@@ -3,7 +3,7 @@ import React, {useState} from 'react'
 import Login from './components/Login';
 import Listing, { JobListingBuilder } from './components/Listing';
 import JobListGrid, {JobGridBuilder} from './components/JobListGrid';
-import Register from "./components/Register.js";
+import Register, { RegsiterBuilder } from "./components/Register";
 import TopBar from './components/page/TopBar';
 import LeftContainer from './components/page/LeftContainer';
 import ContentContainer from './components/page/ContentContainer';
@@ -40,11 +40,11 @@ function App(props) {
     <TopOption text={'Profile'} action={() => console.log("To Profiles")} key={4}/>,
   ];
   
-  
-
+  //change this to whatever content to start with or to test ur component
+  const StartContent = new RegsiterBuilder(); 
   const [options, setOptions] = useState(login_topOptions);
   const [leftContent, setLeftContent] = useState(null);
-  const [mainContent, setMainContent] = useState(<Login />)
+  const [mainContent, setMainContent] = useState(StartContent)
 
 
   const genJobPage = () => {
@@ -62,6 +62,11 @@ function App(props) {
     setMainContent(null);
   }
 
+  const setRegisterPage = () => {
+    setOptions(login_topOptions);
+    setLeftContent(null);
+    setMainContent()
+  }
 
   return (
       <div>

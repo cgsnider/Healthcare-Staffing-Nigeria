@@ -45,7 +45,7 @@
 }
 
 #JobList {
-    position: absolute;
+    position: relative;
     text-align: left;
     height: 298px;
     width: 242px;
@@ -78,4 +78,8 @@
     font-size: 18px;
     line-height: 22px;
     color: #000000;
+}
+
+a {
+    text-decoration: none;
 }
