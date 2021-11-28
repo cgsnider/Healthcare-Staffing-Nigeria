@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import './RegStyle.css';
+import './ProfileStyle.css';
 
 
 
 //register
 function Profile() {
-    //const [user, setUser] = useState("Organisation");
+    const [user, setUser] = useState("Organisation");
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -16,11 +16,52 @@ function Profile() {
     });
     
 
-    //
+    
     const ProfileDisplay = () =>{
             //insert organisation registration component
          return (
-            <div class="form">
+             <div>
+                 <div>
+                     <div className="Profile-Container" style={{
+                        display:"flex",
+                        justifyContent:"space-around",
+                        margin:"10px 0px"
+                     }}>
+                        <div className="profile-img">
+                             <img src="blankProfilePic.jpeg"></img>
+                        </div>
+
+
+                        <div className="profile-name">
+                            <h4>firstName lastName</h4>
+                            <div className="profile-info">
+                                <h5>Phone Number:</h5>
+                            </div>
+                            <div className="profile-info">
+                                <h5>Email:</h5>
+                            </div>
+                            <div className="profile-otherinfo">
+                                <h5>Professional Information</h5>
+                                <p className="professional-box">Field/Specialty: Allergy & Immunology</p>
+                            </div>
+                            <div className="profile-otherinfo">
+                                <h5>Licenses</h5>
+                                <p className="professional-box">Sample Licences</p>
+                            </div>
+                            <div className="profile-otherinfo">
+                                <h5>Documents</h5>
+                                <p className="professional-box">Sample Resume</p>
+                            </div>
+                            <div className="profile-ver">
+                                <h5>Verification Status: Unverified</h5>
+                                <button className="Ver-button">Request Verification</button>
+
+                            </div>
+                        </div>
+                     </div>
+                 </div>
+             </div>);
+           /* <div class="form">
 
                 <div class="form-group">
                     <label>Name: </label>
@@ -55,51 +96,10 @@ function Profile() {
                     }} />
                 </div>
             </div>
-            );
+            );*/
     }
-/*
-    return (
-        <div>
-            <div className="form-container">
-                <div className="registerType">
-                    <input type="radio" id="OrgRegister" value="Organization" 
-                    onChange={() => {
-                        setUser("Organisation"); 
-                        setFormData({ ...formData, password: "", confPassword: ""});
-                    }} 
-                    checked={user==="Organisation"}/>
 
-                    <label for="OrgRegister">Organisation</label>
-
-                    <input type="radio" id="PracRegister" value="Practitioner" 
-                    onChange={() => {
-                        setUser("Practitioner");
-                        setFormData({ ...formData, password: "", confPassword: ""});
-                    }} 
-                    checked={user==="Practitioner"}/>
-                    <label for="PrecRegister">Practitioner</label>
-                </div>
-
-                <div className="registerBody">
-                    {RegisterDisplay()}
-                </div>
-
-                <div className="buttons">
-                    <button>Return</button>
-                    <button onClick={()=> {
-                        if(checkEmpty() && passwordMatch()) {
-                            onSubmit()
-                            alert("account created");
-                            console.log(formData);
-                        }
-                    }}>Submit</button>
-                </div>
-            </div>
-        </div>
-    );
-}
-*/ return (ProfileDisplay());
-
+    return ( ProfileDisplay());
 }
 
 export default Profile;

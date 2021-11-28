@@ -64,7 +64,6 @@ function App(props) {
     setOptions(prof_topOptions);
     setMainContent(new ProfileBuilder());
     setLeftContent(null);
-    setMainContent(null);
   }
 
   const genLoginPage = () => { 
