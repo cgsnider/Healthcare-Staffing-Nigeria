@@ -55,48 +55,12 @@ function Profile() {
                             <div className="profile-ver">
                                 <h5>Verification Status: Unverified</h5>
                                 <button className="Ver-button">Request Verification</button>
-
                             </div>
                         </div>
                      </div>
                  </div>
              </div>);
-           /* <div class="form">
 
-                <div class="form-group">
-                    <label>Name: </label>
-                    <input type="text" placeholder="First Name" value = {formData.firstName} onChange={(e) => {
-                        setFormData({ ...formData, firstName: e.target.value});
-                    }} />
-
-                    <input type="text" placeholder="Last Name" value = {formData.lastName} onChange={(e) => {
-                        setFormData({ ...formData, lastName: e.target.value});
-                    }} />
-                </div>
-
-
-                <div class="form-group">
-                    <label>Email: </label>
-                    <input type="text" value = {formData.email} onChange={(e) => {
-                        setFormData({ ...formData, email: e.target.value});
-                    }} />
-                </div>
-
-                <div class="form-group">
-                    <label>Password: </label>
-                    <input type="password" value={formData.password} onChange={(e) => {
-                        setFormData({ ...formData, password: e.target.value});
-                    }} />
-                </div>
-
-                <div class="form-group">
-                    <label>Confirm Password: </label>
-                    <input type="password" value={formData.confPassword} onChange={(e) => {
-                        setFormData({ ...formData, confPassword: e.target.value});
-                    }} />
-                </div>
-            </div>
-            );*/
     }
 
     return ( ProfileDisplay());
