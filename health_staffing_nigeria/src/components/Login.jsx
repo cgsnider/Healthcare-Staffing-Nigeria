@@ -34,7 +34,9 @@ export default function Login(props) {
         onSuccess: (data) => {
             toLanding()
         },
-        onFailure: (data) => {},
+        onFailure: (data) => {
+          alert("Login Failed\nEmail or Password incorrect");
+        },
         newPasswordRequired: (data) => {}
     })
   }
@@ -73,7 +75,7 @@ export default function Login(props) {
 
       <Form onSubmit={checkLogin}>
         <Form.Group size="lg" controlid="email/username">
-          <Form.Label>Username</Form.Label>
+          <Form.Label>Email</Form.Label>
           <Form.Control
             autoFocus
             type="username"

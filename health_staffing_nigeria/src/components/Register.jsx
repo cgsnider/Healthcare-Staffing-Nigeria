@@ -19,14 +19,18 @@ function Register(props) {
     });
 
     const onSubmit = (event) => {
-        console.log("ONSU")
-        UserPool.signUp(formData.email, formData.password, [], null, (err, data) => {
-            if (err) {
-                alert("Passwords must be 8 characters with upper and lower case, punctuation, and special symbols");
-            } else {
-                toLogin()
-            }
-        });
+        if (formData.password !== formData.confPassword) {
+            alert("Regisration Failed\npassword and confirm password must be the same");
+        } else {
+            UserPool.signUp(formData.email, formData.password, [], null, (err, data) => {
+                if (err) {
+                    alert("Regisration Failed\nPlease double check input");
+                } else {
+                    alert("Account Created");
+                    toLogin();
+                }
+            });
+        }
     };
 
     const RegisterDisplay = () =>{
@@ -122,12 +126,6 @@ function Register(props) {
         return true;
     }
 
-    const passwordMatch = () => {
-        if (formData.password != formData.confPassword) {
-            return false;
-        }
-        return true;
-    }
 
     return (
         <div>
@@ -157,13 +155,8 @@ function Register(props) {
 
                 <div className="buttons">
                     <button onClick={toLogin}>Return</button>
-                    <button onClick={()=> {
-                        if(checkEmpty() && passwordMatch()) {
-                            onSubmit()
-                            alert("account created");
-                            console.log(formData);
-                        }
-                    }}>Submit</button>
+                    <button onClick={onSubmit}
+                    >Submit</button>
                 </div>
             </div>
         </div>
