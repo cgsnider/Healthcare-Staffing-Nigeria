@@ -4,7 +4,10 @@ import UserPool from "../model/UserPool"
 
 
 
-function Register() {
+function Register(props) {
+
+    const {toLogin} = props;
+
     const [user, setUser] = useState("Organisation");
     const [formData, setFormData] = useState({
         firstName: "",
@@ -16,11 +19,13 @@ function Register() {
     });
 
     const onSubmit = (event) => {
+        console.log("ONSU")
         UserPool.signUp(formData.email, formData.password, [], null, (err, data) => {
             if (err) {
-                console.error(err);
+                alert("Passwords must be 8 characters with upper and lower case, punctuation, and special symbols");
+            } else {
+                toLogin()
             }
-            console.log(data);
         });
     };
 
@@ -151,7 +156,7 @@ function Register() {
                 </div>
 
                 <div className="buttons">
-                    <button>Return</button>
+                    <button onClick={toLogin}>Return</button>
                     <button onClick={()=> {
                         if(checkEmpty() && passwordMatch()) {
                             onSubmit()
@@ -168,8 +173,10 @@ function Register() {
 export default Register;
 
 export class RegsiterBuilder {
-    constructor(){}
+    constructor(toLogin){
+        this.toLogin = toLogin;
+    }
     toJSX() {
-        return <Register />
+        return <Register toLogin={this.toLogin}/>
     }
 }

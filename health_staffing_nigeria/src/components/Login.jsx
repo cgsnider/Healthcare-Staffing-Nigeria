@@ -4,7 +4,10 @@ import Button from "react-bootstrap/Button";
 import "./LoginStyles.css";
 // import { StyleSheet, Text, View } from 'React'
 
-export default function Login() {
+export default function Login(props) {
+
+  const {toLanding, toRegister} = props;
+
   const [username, getName] = useState("");
   const [password, getPass] = useState("");
 
@@ -16,16 +19,13 @@ export default function Login() {
     return username.length > 0 && password.length > 0;
   }
 
-  //link register page
-  function toRegister() {
-    return null;
-  }
-
   //Check username and password
-  function checkLogin() {
+  const checkLogin = () =>  {
+      console.log("Check Login")
     if (username == testUsername && password == testPassword) {
       console.log("success");
       tryAgain = false;
+      toLanding();
       console.log(tryAgain);
     } else {
       tryAgain = true;
@@ -65,11 +65,11 @@ export default function Login() {
         </Form.Group>
       </Form>
       <button
-            className="login_buttons"
+          className="login_buttons"
           variant="primary"
           size="lg"
           type="submit"
-          disabled={!checkInput()}
+          onClick={checkLogin}
         >
           Login
         </button>
@@ -93,12 +93,13 @@ export default function Login() {
 
 export class LoginBuilder {
 	
-	constructor() {
-		//Record data for props (looks like there are no props here)
+	constructor(toLanding, toRegister) {
+		this.toLanding = toLanding;
+        this.toRegister = toRegister;
 	}
 
 	toJSX() {
-		return <Login />
+		return <Login toLanding={this.toLanding} toRegister={this.toRegister}/>
 	}
 
 }

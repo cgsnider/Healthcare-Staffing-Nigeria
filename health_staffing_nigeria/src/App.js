@@ -31,58 +31,64 @@ The you can pass your component to the ContentContainer prop called content and 
 function App(props) {
 
   const login_topOptions = [
-    <TopOption text={'Home'} action={() => genJobPage()} key={0}/>,
+    <TopOption text={'Home'} action={() => toLogin()} key={0}/>,
     <TopOption text={'About'} action={() => console.log("To About")} key={1}/>,
   ];
   
   const prof_topOptions = [
     //to exit profile
-    <TopOption text={'Home'} action={() => genJobPage()} key={0}/>,
+    <TopOption text={'Home'} action={() => toJobListings()} key={0}/>,
     <TopOption text={'About'} action={() => console.log("To About")} key={1}/>,
     <TopOption text={'Applications'} action={() => console.log("To Applications")} key={3}/>,
-    <TopOption text={'Profile'} action={() => genProfile()} key={4}/>,
+    <TopOption text={'Profile'} action={() => toProfile()} key={4}/>,
   ];
   
-  //change this to whatever content to start with or to test ur component
-  const StartContent = new LoginBuilder(); 
-  const LeftBarContent = new LeftBarExampleBuilder(); 
-  const [options, setOptions] = useState(login_topOptions);
-  const [leftContent, setLeftContent] = useState(null);
-  const [mainContent, setMainContent] = useState(StartContent)
-
-
-  const genJobPage = () => {
-    console.log("GenJobPage");
-    const postings = fetchJobs();
-    setOptions(prof_topOptions);
-    setLeftContent(LeftBarContent);
-    setMainContent(new JobGridBuilder(postings));
-    console.log(`Main Content: ${mainContent}`);
+  const builders = {
+    jobListings: null,
+    profile: null,
+    login: null,
+    register: null
   }
 
-  const genProfile = () => { 
+  const toJobListings = () => {
+    setOptions(prof_topOptions);
+    setLeftContent(LeftBarContent);
+    setMainContent(builders.jobListings);
+  }
+
+  const toProfile = () => { 
     setOptions(prof_topOptions);
     setMainContent(new ProfileBuilder());
     setLeftContent(null);
   }
 
-  const genLoginPage = () => { 
+  const toLogin = () => { 
     setOptions(login_topOptions);
     setLeftContent(null);
-    setMainContent(null);
+    setMainContent(builders.login);
   }
 
-  const setRegisterPage = () => {
+  const toRegister = () => {
     setOptions(login_topOptions);
     setLeftContent(null);
-    setMainContent()
+    setMainContent(builders.register)
   }
+  
+  Object.assign(builders, {
+    jobListings: new JobGridBuilder(fetchJobs()),
+    profile: new ProfileBuilder(),
+    login: new LoginBuilder(toJobListings, toRegister),
+    register: new RegsiterBuilder(toLogin)
+  })
 
-  const setProfilePage = () => {
-    setOptions(prof_topOptions);
-    setLeftContent(null);
-    setMainContent(new ProfileBuilder())
-  }
+  const StartContent = builders.login; 
+  const LeftBarContent = new LeftBarExampleBuilder(); 
+  const [options, setOptions] = useState(login_topOptions);
+  const [leftContent, setLeftContent] = useState(null);
+  const [mainContent, setMainContent] = useState(StartContent)
+
+  
+
 
   return (
       <div>
