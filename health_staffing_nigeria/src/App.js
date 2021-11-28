@@ -45,7 +45,7 @@ function App(props) {
   const StartContent = new RegsiterBuilder(); 
   const LeftBarContent = new LeftBarExampleBuilder(); 
   const [options, setOptions] = useState(login_topOptions);
-  const [leftContent, setLeftContent] = useState(LeftBarContent);
+  const [leftContent, setLeftContent] = useState(null);
   const [mainContent, setMainContent] = useState(StartContent)
 
 
@@ -53,20 +53,20 @@ function App(props) {
     console.log("GenJobPage");
     const postings = fetchJobs();
     setOptions(prof_topOptions);
-    setLeftContent(leftContent);
+    setLeftContent(LeftBarContent);
     setMainContent(new JobGridBuilder(postings));
     console.log(`Main Content: ${mainContent}`);
   }
 
   const genLoginPage = () => { 
     setOptions(login_topOptions);
-    setLeftContent(leftContent);
+    setLeftContent(null);
     setMainContent(null);
   }
 
   const setRegisterPage = () => {
     setOptions(login_topOptions);
-    setLeftContent(leftContent);
+    setLeftContent(null);
     setMainContent()
   }
 

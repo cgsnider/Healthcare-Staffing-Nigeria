@@ -1,5 +1,5 @@
 import React from "react";
-import './styling/LeftContainer.css';
+import './styling/LeftBarExample.css';
 
 
 export default class Checkbox extends React.Component {
@@ -22,7 +22,7 @@ export default class Checkbox extends React.Component {
         const { isChecked } = this.checkboxState;
     
         return (
-            <div className="checkbox">
+            <div className="checkbox" id='checkboxText'>
                 <label>
                     <input
                         type="checkbox"
@@ -78,8 +78,8 @@ export class LeftBarExampleBuilder {
 
     toJSX() {
         return (
-            <div className="container">
-                <label> Sort: </label>
+            <div className="checkboxList">
+                <div id='sortTitle'> Sort: </div>
                 <form> {this.createCheckboxes()} </form>
               </div>
         );
