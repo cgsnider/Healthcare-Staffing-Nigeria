@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Listing, { JobListingBuilder } from './components/Listing';
 import JobListGrid, {JobGridBuilder} from './components/JobListGrid';
 import Register, { RegsiterBuilder } from "./components/Register";
+import LeftBarExample, { LeftBarExampleBuilder } from "./components/page/LeftBarExample";
 import TopBar from './components/page/TopBar';
 import LeftContainer from './components/page/LeftContainer';
 import ContentContainer from './components/page/ContentContainer';
@@ -42,8 +43,9 @@ function App(props) {
   
   //change this to whatever content to start with or to test ur component
   const StartContent = new RegsiterBuilder(); 
+  const LeftBarContent = new LeftBarExampleBuilder(); 
   const [options, setOptions] = useState(login_topOptions);
-  const [leftContent, setLeftContent] = useState(null);
+  const [leftContent, setLeftContent] = useState(LeftBarContent);
   const [mainContent, setMainContent] = useState(StartContent)
 
 
@@ -51,20 +53,20 @@ function App(props) {
     console.log("GenJobPage");
     const postings = fetchJobs();
     setOptions(prof_topOptions);
-    setLeftContent(null);
+    setLeftContent(leftContent);
     setMainContent(new JobGridBuilder(postings));
     console.log(`Main Content: ${mainContent}`);
   }
 
   const genLoginPage = () => { 
     setOptions(login_topOptions);
-    setLeftContent(null);
+    setLeftContent(leftContent);
     setMainContent(null);
   }
 
   const setRegisterPage = () => {
     setOptions(login_topOptions);
-    setLeftContent(null);
+    setLeftContent(leftContent);
     setMainContent()
   }
 
