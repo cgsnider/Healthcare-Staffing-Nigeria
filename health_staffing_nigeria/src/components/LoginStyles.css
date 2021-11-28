@@ -1,0 +1,29 @@
+.Login {
+  padding: 60px 0;
+}
+
+.Login form {
+  margin: 0 auto;
+  max-width: 150px;
+  display: block;
+}
+
+.registerTag {
+  margin: 10px auto;
+  padding: 0px 15px;
+}
+
+.registerButton {
+  display: inline-block;
+  padding: 0px 35px;
+}
+
+.incorrect {
+  color: "red";
+}
+
+.Title {
+  font-size: 40px;
+  margin: 40px auto;
+  max-width: 110px;
+}
