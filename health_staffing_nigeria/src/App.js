@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Listing, { JobListingBuilder } from './components/Listing';
 import JobListGrid, {JobGridBuilder} from './components/JobListGrid';
 import Register, { RegsiterBuilder } from "./components/Register";
+import Profile, { ProfileBuilder } from "./components/Profile"
 import LeftBarExample, { LeftBarExampleBuilder } from "./components/page/LeftBarExample";
 import TopBar from './components/page/TopBar';
 import LeftContainer from './components/page/LeftContainer';
@@ -35,10 +36,11 @@ function App(props) {
   ];
   
   const prof_topOptions = [
-    <TopOption text={'Home'} action={() => console.log("To Home")} key={0}/>,
+    //to exit profile
+    <TopOption text={'Home'} action={() => genJobPage()} key={0}/>,
     <TopOption text={'About'} action={() => console.log("To About")} key={1}/>,
     <TopOption text={'Applications'} action={() => console.log("To Applications")} key={3}/>,
-    <TopOption text={'Profile'} action={() => console.log("To Profiles")} key={4}/>,
+    <TopOption text={'Profile'} action={() => genProfile()} key={4}/>,
   ];
   
   //change this to whatever content to start with or to test ur component
@@ -56,6 +58,13 @@ function App(props) {
     setLeftContent(LeftBarContent);
     setMainContent(new JobGridBuilder(postings));
     console.log(`Main Content: ${mainContent}`);
+  }
+
+  const genProfile = () => { 
+    setOptions(prof_topOptions);
+    setMainContent(new ProfileBuilder());
+    setLeftContent(null);
+    setMainContent(null);
   }
 
   const genLoginPage = () => { 
