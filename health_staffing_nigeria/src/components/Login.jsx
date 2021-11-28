@@ -41,8 +41,8 @@ export default function Login() {
   }
 
   return (
-    <div className="Login">
-      <div className="Title">Login</div>
+    <div className="login_form">
+      <div className="login_title">Login</div>
       {incorrect()}
 
       <Form onSubmit={checkLogin}>
@@ -63,18 +63,20 @@ export default function Login() {
             onChange={(n) => getPass(n.target.value)}
           />
         </Form.Group>
-
-        <Button
+      </Form>
+      <button
+            className="login_buttons"
           variant="primary"
           size="lg"
           type="submit"
           disabled={!checkInput()}
         >
           Login
-        </Button>
-        <div className="registerTag">Need an account?</div>
-        <div className="registerButton">
-          <Button
+        </button>
+        <div >Need an account?</div>
+        <div>
+          <button
+          className="login_buttons"
             variant="primary"
             size="lg"
             type="register"
@@ -83,9 +85,8 @@ export default function Login() {
             }}
           >
             Register
-          </Button>
+          </button>
         </div>
-      </Form>
     </div>
   );
 }

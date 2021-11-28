@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-import Login from './components/Login';
+import Login, { LoginBuilder } from './components/Login';
 import Listing, { JobListingBuilder } from './components/Listing';
 import JobListGrid, {JobGridBuilder} from './components/JobListGrid';
 import Register, { RegsiterBuilder } from "./components/Register";
@@ -44,7 +44,7 @@ function App(props) {
   ];
   
   //change this to whatever content to start with or to test ur component
-  const StartContent = new ProfileBuilder(); 
+  const StartContent = new LoginBuilder(); 
   const LeftBarContent = new LeftBarExampleBuilder(); 
   const [options, setOptions] = useState(login_topOptions);
   const [leftContent, setLeftContent] = useState(null);
