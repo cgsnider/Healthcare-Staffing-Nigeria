@@ -1,0 +1,14 @@
+.reg_radio {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.reg_radio_button {
+  display: inline;
+}
+
+.regisration {
+  vertical-align: middle;
+  text-align: center;
+}
