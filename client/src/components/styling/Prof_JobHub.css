@@ -1,0 +1,11 @@
+.prof_job_grid {
+  list-style-type: none;
+  margin: 0 auto;
+  padding: 0;
+  display: table;
+}
+
+.prof_job_node {
+  display: inline-block;
+  padding: 1%;
+}
