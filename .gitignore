@@ -2,7 +2,8 @@
     # Edit at https://www.toptal.com/developers/gitignore?templates=react,node
 
     client/node_modules/
-    
+    server/node/node_modules/
+
     ### Node ###
     # Logs
     logs
