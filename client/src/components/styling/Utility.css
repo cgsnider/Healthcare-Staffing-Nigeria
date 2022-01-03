@@ -2,3 +2,21 @@
   font-size: x-small;
   padding-right: 5%;
 }
+
+.txt_button_option_base {
+  border: none;
+  background: none;
+  font-size: medium;
+}
+
+.txt_button_selected {
+  color: #484848;
+}
+
+.txt_button_unselected {
+  color: #696969;
+}
+
+.txt_button_clicked {
+  color: black;
+}

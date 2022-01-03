@@ -1,7 +1,8 @@
 
 import React, {useState} from 'react';
-import RegisterFac from '../parts/RegisterFac';
+import {Link} from 'react-router-dom';
 
+import RegisterFac from '../parts/RegisterFac';
 import RegisterProf from '../parts/RegisterProf'
 
 
@@ -36,8 +37,12 @@ function Regisration (props){
                 
             {(user === users[0]) ? <RegisterFac/> : <RegisterProf/>} 
 
+            <Link to="/">
             <input type="button" value="Submit" />
+            </Link>
+            <Link to="/">
             <input type="button"  value="Cancel" />
+            </Link>
 
         </div>
 

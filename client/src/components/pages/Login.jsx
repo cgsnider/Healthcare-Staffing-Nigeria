@@ -3,6 +3,8 @@ import React from 'react';
 
 import '../styling/Login.css';
 import '../../App.css'
+import { Link } from 'react-router-dom';
+import { ShortTextInput } from '../parts/Utility';
 
 function Login(props) {
     
@@ -12,22 +14,18 @@ function Login(props) {
             
             <div>Login</div> 
               
-            
-            <div className='input_labels_txt'>
-                Username
-            </div>
-            <input type="text" />
+            <ShortTextInput label="Username" />
             
 
-            <div className='input_labels_txt'>
-                Password
-            </div>
-            <input type="text" />
+            <ShortTextInput label="Password" type="password"/>
 
             <div>
-            <input type="button" value ="login"/>
-
-            <input type="button" value ="register"/>
+                <Link to="/">
+                    <input type="button" value ="login"/>
+                </Link>
+                <Link to="/Register">
+                    <input type="button" value ="register"/>
+                </Link>
             </div>
                     
         </div>

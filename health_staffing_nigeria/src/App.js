@@ -81,7 +81,7 @@ function App(props) {
     register: new RegsiterBuilder(toLogin)
   })
 
-  const StartContent = builders.login; 
+  const StartContent = builders.jobListings; 
   const LeftBarContent = new LeftBarExampleBuilder(); 
   const [options, setOptions] = useState(login_topOptions);
   const [leftContent, setLeftContent] = useState(null);

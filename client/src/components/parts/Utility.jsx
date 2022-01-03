@@ -1,4 +1,4 @@
-import React from "react"
+import React , {useState} from "react"
 import '../styling/Utility.css'
 
 //Possible props: label, onChange, type
@@ -19,4 +19,28 @@ function ShortTextInput(props) {
 
 }
 
-export {ShortTextInput};
+function TxtButton(props) {
+
+    const {text, action} = props;
+
+    const [color, setColor] = useState('option_base unselected');
+
+    const mouseHover = () => {
+        setColor('txt_button_option_base txt_button_selected');
+    }
+
+    const mouseOff = () => {
+        setColor('txt_button_option_base txt_button_unselected');
+    }
+
+    const mouseClick = () => {
+        setColor('txt_button_option_base txt_button_clicked');
+        action()
+    }
+    
+    return (
+        <button onClick = {mouseClick} onMouseOver={mouseHover} onMouseOut={mouseOff} className = {color}> {text} </button>
+    );
+}
+
+export {ShortTextInput, TxtButton};
