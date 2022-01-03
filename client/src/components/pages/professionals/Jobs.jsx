@@ -53,19 +53,21 @@ function Jobs (props) {
 function OptionsBar (props) {
 
 
+
     window.onscroll = () => {stickBar()};
 
     let optBar = document.getElementById("opt_bar");
 
-    let sticky = optBar.offsetTop;
+    let sticky = (optBar ==  null) ? 125 : optBar.offsetHeight;
 
     function stickBar () {
         if (window.pageYOffset >= sticky) {
             optBar.classList.add("sticky")
-          } else {
+        } else {
             optBar.classList.remove("sticky");
-          }
+        }
     }
+
 
     return (
         <div id="opt_bar" className='options_bar'>
@@ -76,6 +78,7 @@ function OptionsBar (props) {
             <label>{" Search: "}</label>
             <input type='text' />
         </div>
+        
     )
 }
 

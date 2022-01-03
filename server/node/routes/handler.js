@@ -8,6 +8,78 @@ router.get('/jobs', (req, res) => {
         "location":"Generic, Nigeria",
         "shifts":"12 Hour Shifts",
         "salary":"$90,000"
+    },{
+        "image":'resources/cmg_logo.png',
+        "position":"Cardiologist" ,
+        "location":"Generic, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$90,000"
+    },{
+        "image":'resources/cmg_logo.png',
+        "position":"Cardiologist" ,
+        "location":"Generic, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$90,000"
+    },{
+        "image":'resources/cmg_logo.png',
+        "position":"Cardiologist" ,
+        "location":"Generic, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$90,000"
+    },{
+        "image":'resources/cmg_logo.png',
+        "position":"Cardiologist" ,
+        "location":"Generic, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$90,000"
+    },{
+        "image":'resources/cmg_logo.png',
+        "position":"Cardiologist" ,
+        "location":"Generic, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$90,000"
+    },{
+        "image":'resources/cmg_logo.png',
+        "position":"Cardiologist" ,
+        "location":"Generic, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$90,000"
+    },{
+        "image":'resources/cmg_logo.png',
+        "position":"Cardiologist" ,
+        "location":"Generic, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$90,000"
+    },{
+        "image":'resources/cmg_logo.png',
+        "position":"Cardiologist" ,
+        "location":"Generic, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$90,000"
+    },{
+        "image":'resources/cmg_logo.png',
+        "position":"Cardiologist" ,
+        "location":"Generic, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$90,000"
+    },{
+        "image":'resources/cmg_logo.png',
+        "position":"Cardiologist" ,
+        "location":"Generic, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$90,000"
+    },{
+        "image":'resources/cmg_logo.png',
+        "position":"Cardiologist" ,
+        "location":"Generic, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$90,000"
+    },{
+        "image":'resources/cmg_logo.png',
+        "position":"Cardiologist" ,
+        "location":"Generic, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$90,000"
     }];
 
     res.end(JSON.stringify(str));
