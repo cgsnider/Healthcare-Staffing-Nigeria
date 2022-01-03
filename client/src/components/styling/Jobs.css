@@ -1,0 +1,32 @@
+.prof_job_grid {
+  list-style-type: none;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.prof_job_node {
+  display: inline-block;
+  padding: 1%;
+}
+
+.options_bar {
+  background-color: rgba(200, 200, 200, 1);
+  margin: 0;
+  padding: 0;
+}
+
+.options_section {
+  vertical-align: middle;
+  display: inline;
+  text-align: center;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.sticky + .content {
+  padding-top: 60px;
+}

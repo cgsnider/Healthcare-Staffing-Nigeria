@@ -1,0 +1,34 @@
+.topBar {
+  align-items: center;
+  display: inline-flex;
+  flex-direction: column;
+  width: 100%;
+  background: lightgray;
+}
+
+.topbar_options {
+  display: flex;
+  list-style-type: none;
+  margin-top: 0;
+  flex-direction: row;
+  align-content: center;
+  padding: 0;
+}
+
+.txt_button_option_base {
+  border: none;
+  background: none;
+  font-size: medium;
+}
+
+.txt_button_selected {
+  color: #484848;
+}
+
+.txt_button_unselected {
+  color: #696969;
+}
+
+.txt_button_clicked {
+  color: black;
+}

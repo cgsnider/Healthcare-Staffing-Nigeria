@@ -7,3 +7,11 @@
   font-size: x-small;
   padding-right: 5%;
 }
+
+.login_title {
+  font-size: large;
+  font-weight: bold;
+  background-color: white;
+  margin-top: 2%;
+  margin-bottom: 1%;
+}
