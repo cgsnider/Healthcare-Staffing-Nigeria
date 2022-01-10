@@ -52,21 +52,24 @@ function Jobs (props) {
 
 function OptionsBar (props) {
 
+    useEffect( () => {
+        window.onscroll = () => {stickBar()};
 
+        let optBar = document.getElementById("opt_bar");
 
-    window.onscroll = () => {stickBar()};
+        let sticky =  optBar.offsetHeight;
 
-    let optBar = document.getElementById("opt_bar");
-
-    let sticky = (optBar ==  null) ? 125 : optBar.offsetHeight;
-
-    function stickBar () {
-        if (window.pageYOffset >= sticky) {
-            optBar.classList.add("sticky")
-        } else {
-            optBar.classList.remove("sticky");
+        function stickBar () {
+            if (window.pageYOffset >= sticky) {
+                optBar.classList.add("sticky")
+            } else {
+                optBar.classList.remove("sticky");
+            }
         }
-    }
+
+    }, [])
+
+    
 
 
     return (
