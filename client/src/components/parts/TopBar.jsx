@@ -6,7 +6,7 @@ import "../styling/TopBar.css"
 function TopBar(props) {
 
     const {options} = (props.options != null) ? options : {
-        'options':[{text:'home', to: '/'}, {text:'about', to: '/'}]
+        'options':[{text:'Home', to: '/'}, {text:'About', to: '/'}]
     };
 
     let key = 0;
