@@ -14,20 +14,12 @@
   margin: 0;
   padding: 0;
   z-index: 10;
+  position: sticky;
+  top: 0;
 }
 
 .options_section {
   vertical-align: middle;
   display: inline;
   text-align: center;
-}
-
-.sticky {
-  position: fixed;
-  top: 0;
-  width: 100%;
-}
-
-.sticky + .content {
-  padding-top: 60px;
 }

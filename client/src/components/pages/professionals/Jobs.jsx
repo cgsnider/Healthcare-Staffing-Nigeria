@@ -52,26 +52,6 @@ function Jobs (props) {
 
 function OptionsBar (props) {
 
-    useEffect( () => {
-        window.onscroll = () => {stickBar()};
-
-        let optBar = document.getElementById("opt_bar");
-
-        let sticky =  optBar.offsetHeight;
-
-        function stickBar () {
-            if (window.pageYOffset >= sticky) {
-                optBar.classList.add("sticky")
-            } else {
-                optBar.classList.remove("sticky");
-            }
-        }
-
-    }, [])
-
-    
-
-
     return (
         <div id="opt_bar" className='options_bar'>
             <input type='button' value='Location A-Z' className='button_primary'/>
