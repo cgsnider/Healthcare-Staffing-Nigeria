@@ -3,6 +3,7 @@ import React from 'react';
 
 import '../styling/Login.css';
 import '../../App.css'
+import '../../index.css'
 import TopBar from '../parts/TopBar';
 
 import { Link } from 'react-router-dom';
@@ -16,7 +17,7 @@ function Login(props) {
         
         <div className='login'> 
             
-            <div className='login_title'>Login</div> 
+            <div className='login_title hover:text-blue-500'>Login</div> 
               
             <ShortTextInput label="Username" className="login_entry"/>
             
@@ -25,10 +26,10 @@ function Login(props) {
 
             <div>
                 <Link to="/jobs">
-                    <input type="button" value ="login" className='button_primary'/>
+                    <button value ="login" className='button_primary outline outline-1'>Login</button>
                 </Link>
                 <Link to="/Register">
-                    <input type="button" value ="register" className='button_primary'/>
+                    <button type="button" value ="register" className='button_primary outline outline-1'>Register</button>
                 </Link>
             </div>
                     

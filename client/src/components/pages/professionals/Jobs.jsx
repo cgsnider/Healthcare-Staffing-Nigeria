@@ -54,12 +54,12 @@ function OptionsBar (props) {
 
     return (
         <div id="opt_bar" className='options_bar'>
-            <input type='button' value='Location A-Z' className='button_primary'/>
-            <input type='button' value='Postion A-Z' className='button_primary'/>
-            <input type='button' value='Hours' className='button_primary'/>
-            <input type='button' value='Pay' className='button_primary'/>
+            <button value='Location A-Z' className='button_primary outline outline-1'>Location A-Z</button>
+            <button type='button' value='Postion A-Z' className='button_primary outline outline-1'>Position A-Z</button>
+            <button type='button' value='Hours' className='button_primary outline outline-1'>Hours</button>
+            <button type='button' value='Pay' className='button_primary outline outline-1'>Pay</button>
             <label>{" Search: "}</label>
-            <input type='text' />
+            <input type='text' className="rounded h-7"/>
         </div>
         
     )
