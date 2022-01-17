@@ -7,7 +7,9 @@ module.exports = {
       },
       colors: {
         'cmg-light':'#00ff00',
-        'cmg-dark': '#142c14'
+        'cmg-mid': '#3a8c3c',
+        'cmg-dim': 'ffffff',
+        'cmg-dark': '#142c14',
       }
     },
   },

@@ -33,7 +33,6 @@ function Regisration (props){
     return (
 
             <div className='regisration p-0 m-0'>
-                <TopBar />
                 <div class="font-mono bg-gradient-to-br from-cmg-light to-cmg-dark h-screen">
                     <div class="container mx-auto">
                         <div class="flex justify-center px-6 my-0 h-screen">
@@ -105,8 +104,8 @@ function Regisration (props){
                                         <div class="mb-6 text-center">
                                             <Link to="/">
                                                 <button
-                                                    class="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
-                                                    type="button"
+                                                    class="w-full px-4 py-2 font-bold text-white bg-cmg-mid rounded-full hover:bg-green-600 focus:outline-none focus:shadow-outline"
+                                                    
                                                 >
                                                     Register Account
                                                 </button>
@@ -123,7 +122,7 @@ function Regisration (props){
                                             </Link>
 							            </div>
                                         <div class="text-center">
-                                            <Link to="/">
+                                            <Link to="/login">
                                                 <a
                                                     class="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
                                                     

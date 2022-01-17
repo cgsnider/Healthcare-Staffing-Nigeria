@@ -2,53 +2,53 @@ import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
 
 import "../styling/TopBar.css"
+import logo from "../../images/cmg_logo.png"
+/*
+*   for now i think this is ok but when validating logged in/on the jobs page
+*   replace the login/sign up buttons with some kind of drop menu that will take 
+*   the user to the other pages
+*/
+
+
+
 
 function TopBar(props) {
 
     const {options} = (props.options != null) ? options : {
-        'options':[{text:'Home', to: '/'}, {text:'About', to: '/'}]
+        'options':[{text:'Home', to: '/'}, {text:'About', to: '/'}, {text:'Contact Us', to:'/'}]
     };
 
     let key = 0;
 
     return (
-        <div className='topBar'>
-            <img src = {'resources/cmg_logo.png'} className="logo" alt=""/>
-            <ul className='topbar_options'>
-                {options.map(e => (
-                    <li key={key++}>
-                        <TxtButton text={e.text} to={e.to} sideEffect={e.sideEffect}/>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    )
-}
-
-function TxtButton(props) {
-
-    const {text, to, sideEffect} = props;
-
-    const [color, setColor] = useState('txt_button_option_base unselected');
-
-    const mouseHover = () => {
-        setColor('txt_button_option_base txt_button_selected');
-    }
-
-    const mouseOff = () => {
-        setColor('txt_button_option_base txt_button_unselected');
-    }
-
-    const mouseClick = () => {
-        setColor('txt_button_option_base txt_button_clicked');
-        sideEffect()
-    }
-    
-    return (
-        <Link to={to}>
-            <input type="button" onClick = {mouseClick} onMouseOver={mouseHover} onMouseOut={mouseOff} className = {color} value={text}/>
-        </Link>
+        <nav>
+            <div class="">
+            <div class="flex justify-between h-16 px-10 shadow items-center">
+                <div class="flex items-center space-x-8">
+                <img class="text-xl lg:text-2xl font-bold cursor-pointer h-16" src={logo}/>
+                <div class="hidden md:flex justify-around space-x-4">
+                    {options.map(e => (
+                        <Link to={e.to}>
+                        <a class="hover:text-cmg-light text-gray-700">{e.text}</a>
+                        </Link>
+                    ))}
+                </div>
+                </div>
+                <div class="flex space-x-4 items-center">
+                    <Link to="/login">
+                        <a href="#" class="text-gray-800 text-sm outline outline-1 rounded px-4 py-2">LOGIN</a>
+                    </Link>
+                    <Link to="/register">
+                        <a href="#" class="bg-green-900 px-4 py-2 rounded text-white hover:bg-cmg-mid text-sm">SIGNUP</a>
+                    </Link>
+                </div>
+            </div>
+            </div>
+        </nav>
+                
     );
 }
+
+
 
 export default TopBar
