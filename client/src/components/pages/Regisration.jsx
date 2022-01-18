@@ -104,7 +104,7 @@ function Regisration (props){
                                         <div class="mb-6 text-center">
                                             <Link to="/">
                                                 <button
-                                                    class="w-full px-4 py-2 font-bold text-white bg-cmg-mid rounded-full hover:bg-green-600 focus:outline-none focus:shadow-outline"
+                                                    class="w-full px-4 py-2 font-bold text-white bg-cmg-mid rounded-md hover:bg-green-600 focus:outline-none focus:shadow-outline"
                                                     
                                                 >
                                                     Register Account
