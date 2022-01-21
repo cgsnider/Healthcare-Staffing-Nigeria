@@ -12,7 +12,7 @@ function ShortTextInput(props) {
                 {label}
             </label>
             <div>
-                <input type={(type !== 'password') ? "text" : type} onChange={onChange}/>
+                <input className='' type={(type !== 'password') ? "text" : type} onChange={onChange}/>
             </div>
         </>
     )
