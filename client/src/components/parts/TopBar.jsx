@@ -36,7 +36,7 @@ function TopBar(props) {
                 </div>
                 <div class="flex space-x-4 items-center">
                     <Link to="/login">
-                        <a href="#" class="text-gray-800 text-sm outline outline-1 rounded px-4 py-2">LOGIN</a>
+                        <a href="#" class="hover:bg-gray-50 text-gray-800 text-sm outline outline-1 rounded px-4 py-2">LOGIN</a>
                     </Link>
                     <Link to="/register">
                         <a href="#" class="bg-green-900 px-4 py-2 rounded text-white hover:bg-cmg-mid text-sm">SIGNUP</a>
