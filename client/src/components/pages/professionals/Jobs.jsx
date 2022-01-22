@@ -53,13 +53,17 @@ function Jobs (props) {
 function OptionsBar (props) {
 
     return (
-        <div id="opt_bar" className='options_bar'>
-            <button value='Location A-Z' className='button_primary outline outline-1'>Location A-Z</button>
-            <button type='button' value='Postion A-Z' className='button_primary outline outline-1'>Position A-Z</button>
-            <button type='button' value='Hours' className='button_primary outline outline-1'>Hours</button>
-            <button type='button' value='Pay' className='button_primary outline outline-1'>Pay</button>
-            <label>{" Search: "}</label>
-            <input type='text' className="rounded h-7"/>
+        <div id="opt_bar" className='flex justify-between options_bar bg-gray-100'>
+            <div className='flex w-full items-center'>
+                <button value='Location A-Z' className='button_primary outline outline-1 hover:bg-gray-300'>Location A-Z</button>
+                <button type='button' value='Postion A-Z' className='button_primary outline outline-1 hover:bg-gray-300'>Position A-Z</button>
+                <button type='button' value='Hours' className='button_primary outline outline-1 hover:bg-gray-300'>Hours</button>
+                <button type='button' value='Pay' className='button_primary outline outline-1 hover:bg-gray-300'>Pay</button>
+            </div>
+            <div className='flex items-center space-x-1 pr-1'>
+                <label>{" Search: "}</label>
+                <input type='text' className="rounded h-7"/>
+            </div>
         </div>
         
     )

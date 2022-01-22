@@ -20,7 +20,7 @@ function Login(props) {
             
                             <form>
                                 <div>
-                                    <span class="text-sm text-gray-900">Welcome back</span>
+                                    <span class="text-sm text-gray-900">Welcome Back!</span>
                                     <h1 class="text-2xl font-bold">Login to your account</h1>
                                 </div>
                                 <div class="mt-5">
