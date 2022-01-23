@@ -8,10 +8,17 @@ router.use(express.urlencoded({extended: false}));
 router.get('/jobs', (req, res) => {
     const str = [{
         "image":'resources/cmg_logo.png',
-        "position":"Cardiologist" ,
-        "location":"Generic, Nigeria",
+        "position":"Cardiologist2" ,
+        "location":"Generic3, Nigeria",
         "shifts":"12 Hour Shifts",
         "salary":"$90,000"
+    },
+    {
+        "image":'resources/cmg_logo.png',
+        "position":"Cardiologist1" ,
+        "location":"Generic2, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$80,000"
     }];
 
     res.end(JSON.stringify(str));

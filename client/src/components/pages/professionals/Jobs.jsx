@@ -22,15 +22,26 @@ function Jobs (props) {
         setPostings(items);
     }
 
+    const handleClick = (e) =>{
+        const copy = [...postings]
+        console.log(postings[0][e])
+        if (e === 'salary') {
+            copy.sort((a, b)=> a[e] < b[e]? 1:-1)
+        } else {
+            copy.sort((a, b)=> a[e] > b[e]? 1:-1)
+        }
+        
+        setPostings(copy)
+        //console.log("sorted on " + e)
+    }
     
 
 
     return (
         <div>
             <TopBar />
-            <OptionsBar />
+            <OptionsBar click={handleClick} />
             <ul className="prof_job_grid">
-
                 {postings.map(e => (
                     <li className='prof_job_node' key={key++}>
                         <JobListing link="http://localhost:3000" 
@@ -55,10 +66,10 @@ function OptionsBar (props) {
     return (
         <div id="opt_bar" className='flex justify-between options_bar bg-gray-100'>
             <div className='flex w-full items-center'>
-                <button value='Location A-Z' className='button_primary outline outline-1 hover:bg-gray-300'>Location A-Z</button>
-                <button type='button' value='Postion A-Z' className='button_primary outline outline-1 hover:bg-gray-300'>Position A-Z</button>
-                <button type='button' value='Hours' className='button_primary outline outline-1 hover:bg-gray-300'>Hours</button>
-                <button type='button' value='Pay' className='button_primary outline outline-1 hover:bg-gray-300'>Pay</button>
+                <button value='Location A-Z' className='button_primary outline outline-1 hover:bg-gray-300' onClick={() => props.click('location')}>Location A-Z</button>
+                <button type='button' value='Postion A-Z' className='button_primary outline outline-1 hover:bg-gray-300' onClick={() => props.click('position')}>Position A-Z</button>
+                <button type='button' value='Hours' className='button_primary outline outline-1 hover:bg-gray-300' onClick={() => props.click('shifts')}>Hours</button>
+                <button type='button' value='Pay' className='button_primary outline outline-1 hover:bg-gray-300' onClick={() => props.click('salary')}>Pay</button>
             </div>
             <div className='flex items-center space-x-1 pr-1'>
                 <label>{" Search: "}</label>
