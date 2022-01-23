@@ -34,4 +34,31 @@ function RegisterUser(newUser){
     });
 }
 
+function signIn(user) {
+    let authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
+        Username: user.email,
+        Password: user.password
+    });
+
+    let userData = {
+        Username: user.email,
+        Pool: userPool
+    }
+
+    let cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+
+    cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess: function (result) {
+            console.log('access token + ' + result.getAccessToken().getJwtToken());
+            console.log('id token + ' + result.getIdToken().getJwtToken());
+            console.log('refresh token + ' + result.getRefreshToken().getToken());
+        },
+        onFailure: function(err) {
+            console.log(err);
+        },
+
+    });
+
+}
+
 exports.RegisterUser = RegisterUser;
