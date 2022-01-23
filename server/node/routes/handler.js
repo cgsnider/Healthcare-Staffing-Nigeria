@@ -35,4 +35,13 @@ router.post('/register', (req, res) => {
     }
 })
 
+router.post('/login', (req, res) => {
+    const {email, password} = req.body;
+
+    console.log(`email: ${email}, password:${password}`);
+    cognito.SignIn({email, password});
+    res.status(200).send("recieved");
+
+})
+
 module.exports = router;
