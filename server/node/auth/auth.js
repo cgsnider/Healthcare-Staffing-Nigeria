@@ -12,6 +12,8 @@ const poolData = {
     ClientId: "27jfqr5p999tf9tp9n7tu8f2ju"
 }; 
 
+const DISABLE_AUTH = false; //Set this to true to disable authentication. DEV USE ONLY
+
 const pool_region = 'us-east-2';
 
 const iss = `https://cognito-idp.${pool_region}.amazonaws.com/${poolData.UserPoolId}`;
@@ -21,6 +23,10 @@ const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 var pems;
 
 function authenticateToken(req, res, next) {
+    if (DISABLE_AUTH) {
+        next();
+        return;
+    }
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
     if (token == null) {
