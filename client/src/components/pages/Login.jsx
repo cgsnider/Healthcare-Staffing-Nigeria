@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import '../styling/Login.css';
 import '../../App.css'
@@ -8,9 +8,23 @@ import TopBar from '../parts/TopBar';
 
 import { Link } from 'react-router-dom';
 import { ShortTextInput } from '../parts/Utility';
+import  {LoginUser } from '../../hooks/cognito';
 
 function Login(props) {
-    
+    const [input, setInput] = useState({email:'', password:''});
+
+    const Log = (e) => {
+        console.log(input)
+        LoginUser(input, loginFail(e), loginSuccess()).catch(err=>console.log('bruh'));
+    }
+
+    const loginFail = (e) => {
+        e.preventDefault()
+        alert('username or password incorrect');
+    }
+    const loginSuccess = () => {
+        console.log('success')
+    }
     return (
         <div class="border font-mono">
             <div class="min-h-screen bg-no-repeat bg-cover bg-center bg-logo">
@@ -25,11 +39,11 @@ function Login(props) {
                                 </div>
                                 <div class="mt-5">
                                     <label class="block text-md mb-2" for="email">Email</label>
-                                    <input class="px-4 w-full border-2 py-2 rounded-md text-sm outline-none" type="email" name="password" placeholder="email" />
+                                    <input class="px-4 w-full border-2 py-2 rounded-md text-sm outline-none" type="email" name="email" placeholder="email" onInput={ (e) => setInput({...input, email: e.target.value})}/>
                                 </div>
                                 <div class="my-3">
                                     <label class="block text-md mb-2" for="password">Password</label>
-                                    <input class="px-4 w-full border-2 py-2 rounded-md text-sm outline-none" type="password" name="password" placeholder="password" />
+                                    <input class="px-4 w-full border-2 py-2 rounded-md text-sm outline-none" type="password" name="password" placeholder="password" onInput={ (e) => setInput({...input, password: e.target.value})}/>
                                 </div>
                                 <div class="flex justify-between">
                                     <div>
@@ -39,8 +53,8 @@ function Login(props) {
                                     <span class="text-sm text-blue-700 hover:underline cursor-pointer">Forgot password?</span>
                                 </div>
                                 <div class="">
-                                    <Link to="/jobs">
-                                        <button class="mt-4 mb-3 w-full bg-cmg-mid hover:bg-green-500 text-white py-2 rounded-md transition duration-100">Login now</button>
+                                    <Link to="/jobs" onClick={Log}>
+                                        <button class="mt-4 mb-3 w-full bg-cmg-mid hover:bg-green-500 text-white py-2 rounded-md transition duration-100" >Login now</button>
                                     </Link>
                                     <Link to="/">
                                         <button class="mt-4 mb-3 w-full bg-gray-900 hover:bg-gray-600 text-white py-2 rounded-md transition duration-100">Cancel</button>

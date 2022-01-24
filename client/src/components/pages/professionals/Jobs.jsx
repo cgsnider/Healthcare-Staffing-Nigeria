@@ -22,10 +22,12 @@ function Jobs (props) {
         let items = await getJobPosts();
         setPostings(items);
     }
-
+    
+    //handles sorting postings based on prop e
+    //passed to options for use
     const handleClick = (e) =>{
         const copy = [...postings]
-        console.log(postings[0][e])
+        //console.log(postings[0][e])
         if (e === 'salary') {
             copy.sort((a, b)=> a[e] < b[e]? 1:-1)
         } else {

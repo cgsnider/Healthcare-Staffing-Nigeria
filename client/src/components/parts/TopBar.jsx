@@ -25,7 +25,9 @@ function TopBar(props) {
             <div class="">
             <div class="flex justify-between h-16 px-10 shadow items-center">
                 <div class="flex items-center space-x-8">
-                <img class="text-xl lg:text-2xl font-bold cursor-pointer h-16" src={logo}/>
+                    <Link to="/" >
+                    <img class="text-xl lg:text-2xl font-bold cursor-pointer h-16" src={logo}/>
+                    </Link>
                 <div class="hidden md:flex justify-around space-x-4">
                     {options.map(e => (
                         <Link to={e.to}>
