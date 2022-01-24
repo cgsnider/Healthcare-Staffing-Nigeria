@@ -6,6 +6,8 @@ import TopBar from '../../parts/TopBar';
 import '../../styling/Jobs.css'
 import '../../../App.css'
 
+import { getJobPosts } from '../../../hooks/server';
+
 function Jobs (props) {
 
     let key = 0;
@@ -17,8 +19,7 @@ function Jobs (props) {
     const [postings, setPostings] = useState([]);
 
     const fetchPostings = async() => {
-        const data = await fetch('/api/jobs');
-        const items = await data.json();
+        let items = await getJobPosts();
         setPostings(items);
     }
 
