@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const cognito = require('../auth/cognito.js');
+const auth = require('../auth/auth.js');
+const authenticate = auth.authenticateToken
 
 router.use(express.urlencoded({extended: false}));
 
-router.get('/jobs', (req, res) => {
+router.get('/jobs', authenticate, (req, res) => {
     const str = [{
         "image":'resources/cmg_logo.png',
         "position":"Cardiologist" ,
@@ -17,31 +18,31 @@ router.get('/jobs', (req, res) => {
     res.end(JSON.stringify(str));
 })
 
-router.post('/register', (req, res) => {
+// router.post('/register', (req, res) => {
     
-    const newUser = {
-        email: req.body.email,
-        password: req.body.password,
-        fname: req.body.fname,
-        lname: req.body.lname
-    }
+//     const newUser = {
+//         email: req.body.email,
+//         password: req.body.password,
+//         fname: req.body.fname,
+//         lname: req.body.lname
+//     }
 
-    if (cognito.RegisterUser(newUser)) {
-        console.log('Created User')
-        res.status(201).send('Created User');
-    } else {
-        console.log('Failed to Create user')
-        res.status(200).send('Failed to Create user')
-    }
-})
+//     if (auth.RegisterUser(newUser)) {
+//         console.log('Created User')
+//         res.status(201).send('Created User');
+//     } else {
+//         console.log('Failed to Create user')
+//         res.status(200).send('Failed to Create user')
+//     }
+// })
 
-router.post('/login', (req, res) => {
-    const {email, password} = req.body;
+// router.post('/login', (req, res) => {
+//     const {email, password} = req.body;
 
-    console.log(`email: ${email}, password:${password}`);
-    cognito.SignIn({email, password});
-    res.status(200).send("recieved");
+//     console.log(`email: ${email}, password:${password}`);
+//     auth.SignIn({email, password});
+//     res.status(200).send("recieved");
 
-})
+// })
 
 module.exports = router;
