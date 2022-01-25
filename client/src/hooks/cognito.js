@@ -60,6 +60,7 @@ export async function LoginUser (user, failure, success) {
             onSuccess: (result) => {
                 localStorage.setItem("accessToken", result.getAccessToken().getJwtToken());
                 localStorage.setItem("refreshToken", result.getRefreshToken().getToken());
+                localStorage.setItem("loggedIn", true);
                 
                 if(success) {
                     success();

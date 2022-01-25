@@ -55,9 +55,9 @@ function Regisration (props){
     }
     const regSuccess = () => {
         console.log('registration successful');
-        const user = {email: formData.email, password: formData.password}
-        console.log(user);
-        LoginUser(user, loginNo, loginYes).catch(err=>console.log(err))
+        let userl = {email: formData.email, password: formData.password}
+        console.log(userl);
+        LoginUser(userl, loginNo, loginYes).catch(err=>console.log(err))
         
     }
     const loginNo = () => {

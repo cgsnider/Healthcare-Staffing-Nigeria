@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 
 import "../styling/TopBar.css"
@@ -17,7 +17,15 @@ function TopBar(props) {
     const {options} = (props.options != null) ? options : {
         'options':[{text:'Home', to: '/'}, {text:'About', to: '/'}, {text:'Contact Us', to:'/'}]
     };
+    const [loggedIn, setLoggedIn] = useState(false);
+    useEffect(() => {
+        setLoggedIn(localStorage.getItem('loggedIn'));
+    });
 
+    const logout = () => {
+        localStorage.clear()
+        setLoggedIn(false);
+    }
     let key = 0;
 
     return (
@@ -33,9 +41,19 @@ function TopBar(props) {
                         <Link to={e.to}>
                         <a class="hover:text-cmg-light text-gray-700">{e.text}</a>
                         </Link>
-                    ))}
+                    ))
+                    }
+                    {(loggedIn)?
+                    <Link to='/jobs'>
+                    <a class="hover:text-cmg-light text-gray-700">{'Jobs'}</a>
+                    </Link>
+                        :
+                    <div></div>
+                    }
                 </div>
                 </div>
+                {(!loggedIn)? 
+                
                 <div class="flex space-x-4 items-center">
                     <Link to="/login">
                         <a href="#" class="hover:bg-gray-50 text-gray-800 text-sm outline outline-1 rounded px-4 py-2">LOGIN</a>
@@ -44,6 +62,14 @@ function TopBar(props) {
                         <a href="#" class="bg-green-900 px-4 py-2 rounded text-white hover:bg-cmg-mid text-sm">SIGNUP</a>
                     </Link>
                 </div>
+                :
+                <div class="flex space-x-4 items-center">
+                    
+                    <Link to="/" onClick={logout}>
+                        <a href="#" class="bg-green-900 px-4 py-2 rounded text-white hover:bg-cmg-mid text-sm">LOGOUT</a>
+                    </Link>
+                </div>
+                }
             </div>
             </div>
         </nav>
