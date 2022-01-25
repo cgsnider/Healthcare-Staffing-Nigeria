@@ -6,24 +6,24 @@ import '../../App.css'
 import '../../index.css'
 import TopBar from '../parts/TopBar';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ShortTextInput } from '../parts/Utility';
 import  {LoginUser } from '../../hooks/cognito';
 
 function Login(props) {
     const [input, setInput] = useState({email:'', password:''});
+    const navigate = useNavigate();
 
     const Log = (e) => {
-        console.log(input)
-        LoginUser(input, loginFail(e), loginSuccess()).catch(err=>console.log('bruh'));
+        e.preventDefault();
+        LoginUser(input, loginFail, loginSuccess).catch(err=>console.log("promise failed with error "+err));
     }
 
-    const loginFail = (e) => {
-        e.preventDefault()
+    const loginFail = () => {
         alert('username or password incorrect');
     }
     const loginSuccess = () => {
-        console.log('success')
+        navigate('/jobs', {replace: true})
     }
     return (
         <div class="border font-mono">
