@@ -4,6 +4,8 @@ import { ShortTextInput } from "./Utility";
 import '../../App.css'
 
 function RegisterFac(props) {
+    const form = props.data;
+    const setForm = props.setData;
 
     return (
 
@@ -16,6 +18,7 @@ function RegisterFac(props) {
                 id="OrgName"
                 type="text"
                 placeholder="Org Name"
+                onInput={(e)=>setForm({...form, org: e.target.value})}
             />
         </div>
         

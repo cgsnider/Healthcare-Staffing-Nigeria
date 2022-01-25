@@ -1,6 +1,7 @@
 
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+import  { LoginUser, RegisterUser } from '../../hooks/cognito';
 
 import RegisterFac from '../parts/RegisterFac';
 import RegisterProf from '../parts/RegisterProf';
@@ -14,6 +15,15 @@ function Regisration (props){
 
     const users = ['Professional','Facility'];
     const [user, setUser] = useState(users[0])
+    const [formData, setData] = useState({
+        fname:'',
+        lname:'',
+        org:'',
+        email:'',
+        password:'',
+        confpassword:'',
+    })
+    const navigate = useNavigate();
 
     const change_user = (event) => {
         setUser(event.target.value)
@@ -27,7 +37,37 @@ function Regisration (props){
         }
         
     }
+    const register = (e) => {
+        e.preventDefault();
+        console.log(formData);
+        if(formData.password === formData.confpassword){
+            console.log('password match')
+            RegisterUser(formData, regFail, regSuccess).catch(err=>console.log(err))
+            //get password policy known {uppercase, symbol, number}
+        } else {
+            console.log('passwords didnt match')
+        }
+        
+    }
 
+    const regFail = () => {
+        console.log('registration Fail')
+    }
+    const regSuccess = () => {
+        console.log('registration successful');
+        const user = {email: formData.email, password: formData.password}
+        console.log(user);
+        LoginUser(user, loginNo, loginYes).catch(err=>console.log(err))
+        
+    }
+    const loginNo = () => {
+        console.log('registered but not login');
+        navigate('/login', {replace: true})
+    }
+    const loginYes = () => {
+        console.log('registered and login');
+        navigate('/jobs', {replace: true})
+    }
 
 
     return (
@@ -64,7 +104,7 @@ function Regisration (props){
                                         <label>Organization</label>
                                     </div>
                                     <form class="px-8 pt-6 pb-8 mb-4 bg-white rounded">
-                                        {(user === users[0]) ? <RegisterProf/> : <RegisterFac/>}
+                                        {(user === users[0]) ? <RegisterProf data={formData} setData={setData}/> : <RegisterFac data={formData} setData={setData}/>}
                                         <div class="mb-4 mt-7">
                                             <label class="block mb-2 text-sm font-bold text-gray-700" for="email">
                                                 Email
@@ -74,6 +114,7 @@ function Regisration (props){
                                                 id="email"
                                                 type="email"
                                                 placeholder="Email"
+                                                onInput={(e)=>setData({...formData, email: e.target.value})}
                                             />
                                         </div>
                                         <div class="mb-4 md:flex md:justify-between">
@@ -86,6 +127,7 @@ function Regisration (props){
                                                     id="password"
                                                     type="password"
                                                     placeholder="******************"
+                                                    onInput={(e)=>setData({...formData, password: e.target.value})}
                                                 />
                                                 <p class="text-xs italic text-red-500 hidden">Please choose a password.</p>
                                             </div>
@@ -98,11 +140,12 @@ function Regisration (props){
                                                     id="c_password"
                                                     type="password"
                                                     placeholder="******************"
+                                                    onInput={(e)=>setData({...formData, confpassword: e.target.value})}
                                                 />
                                             </div>
                                         </div>
                                         <div class="mb-6 text-center">
-                                            <Link to="/">
+                                            <Link to="/" onClick={register}>
                                                 <button
                                                     class="w-full px-4 py-2 font-bold text-white bg-cmg-mid rounded-md hover:bg-green-600 focus:outline-none focus:shadow-outline"
                                                     
@@ -122,7 +165,7 @@ function Regisration (props){
                                             </Link>
 							            </div>
                                         <div class="text-center">
-                                            <Link to="/login">
+                                            <Link to="/login" >
                                                 <a
                                                     class="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
                                                     

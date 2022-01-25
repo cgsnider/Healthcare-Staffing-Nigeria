@@ -13,14 +13,19 @@ function Jobs (props) {
     let key = 0;
 
     useEffect( ()=> {
-        fetchPostings();
+        let isMounted = true;
+        fetchPostings(isMounted);
+        return () => {
+            isMounted = false;
+        };
     }, [])
 
     const [postings, setPostings] = useState([]);
 
-    const fetchPostings = async() => {
+    const fetchPostings = async(isMounted) => {
         let items = await getJobPosts();
-        setPostings(items);
+        if (isMounted) setPostings(items)
+        else console.log('aborted setPostings on unmounted component')
     }
     
     //handles sorting postings based on prop e

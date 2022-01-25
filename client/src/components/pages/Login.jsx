@@ -8,7 +8,7 @@ import TopBar from '../parts/TopBar';
 
 import { Link, useNavigate } from 'react-router-dom';
 import { ShortTextInput } from '../parts/Utility';
-import  {LoginUser } from '../../hooks/cognito';
+import  { LoginUser } from '../../hooks/cognito';
 
 function Login(props) {
     const [input, setInput] = useState({email:'', password:''});

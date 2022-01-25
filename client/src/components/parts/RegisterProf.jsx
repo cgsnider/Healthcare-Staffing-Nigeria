@@ -4,6 +4,8 @@ import { ShortTextInput } from "./Utility";
 import '../../App.css'
 
 function RegisterProf(props) {
+    const form = props.data;
+    const setForm = props.setData;
 
     return (
         <div class="mb-4 md:flex md:justify-between">
@@ -16,6 +18,7 @@ function RegisterProf(props) {
                     id="firstName"
                     type="text"
                     placeholder="First Name"
+                    onInput={(e)=>setForm({...form, fname: e.target.value})}
                 />
             </div>
             <div class="md:ml-2">
@@ -27,6 +30,7 @@ function RegisterProf(props) {
                     id="lastName"
                     type="text"
                     placeholder="Last Name"
+                    onInput={(e)=>setForm({...form, lname: e.target.value})}
                 />
             </div>
         </div>
