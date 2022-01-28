@@ -30,22 +30,22 @@ function TopBar(props) {
 
     return (
         <nav>
-            <div class="">
-            <div class="flex justify-between h-16 px-10 shadow items-center">
-                <div class="flex items-center space-x-8">
+            <div className="">
+            <div className="flex justify-between h-16 px-10 shadow items-center">
+                <div className="flex items-center space-x-8">
                     <Link to="/" >
-                    <img class="text-xl lg:text-2xl font-bold cursor-pointer h-16" src={logo}/>
+                    <img className="text-xl lg:text-2xl font-bold cursor-pointer h-16" src={logo}/>
                     </Link>
-                <div class="hidden md:flex justify-around space-x-4">
+                <div className="hidden md:flex justify-around space-x-4">
                     {options.map(e => (
-                        <Link to={e.to}>
-                        <a class="hover:text-cmg-light text-gray-700">{e.text}</a>
+                        <Link to={e.to} key={key++}>
+                        <div className="hover:text-cmg-light text-gray-700">{e.text}</div>
                         </Link>
                     ))
                     }
                     {(loggedIn)?
                     <Link to='/jobs'>
-                    <a class="hover:text-cmg-light text-gray-700">{'Jobs'}</a>
+                    <div className="hover:text-cmg-light text-gray-700">{'Jobs'}</div>
                     </Link>
                         :
                     <div></div>
@@ -54,19 +54,19 @@ function TopBar(props) {
                 </div>
                 {(!loggedIn)? 
                 
-                <div class="flex space-x-4 items-center">
+                <div className="flex space-x-4 items-center">
                     <Link to="/login">
-                        <a href="#" class="hover:bg-gray-50 text-gray-800 text-sm outline outline-1 rounded px-4 py-2">LOGIN</a>
+                        <div href="#" className="hover:bg-gray-50 text-gray-800 text-sm outline outline-1 rounded px-4 py-2">LOGIN</div>
                     </Link>
                     <Link to="/register">
-                        <a href="#" class="bg-green-900 px-4 py-2 rounded text-white hover:bg-cmg-mid text-sm">SIGNUP</a>
+                        <div href="#" className="bg-green-900 px-4 py-2 rounded text-white hover:bg-cmg-mid text-sm">SIGNUP</div>
                     </Link>
                 </div>
                 :
-                <div class="flex space-x-4 items-center">
+                <div className="flex space-x-4 items-center">
                     
                     <Link to="/" onClick={logout}>
-                        <a href="#" class="bg-green-900 px-4 py-2 rounded text-white hover:bg-cmg-mid text-sm">LOGOUT</a>
+                        <div href="#" className="bg-green-900 px-4 py-2 rounded text-white hover:bg-cmg-mid text-sm">LOGOUT</div>
                     </Link>
                 </div>
                 }

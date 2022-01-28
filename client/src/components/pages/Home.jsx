@@ -7,9 +7,6 @@ function Home(props){
     return (
         <div>
             <TopBar />
-            <Link to='/test'>
-                <button class="border p-3">to</button>
-            </Link>
         </div>
     );
 }

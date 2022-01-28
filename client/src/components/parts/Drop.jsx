@@ -3,20 +3,26 @@ import Select from "react-select"
 import '../styling/drop.css'
 
 export default function Drop(props){
-    const myoptions = [
-        {
-            label: "Cardiologist",
-            value: "CA",
-        },
-        {
-            label: "Cardiologist2",
-            value: "CA2",
-        },
-        {
-            label: "Cardiologist3",
-            value: "CA3",
-        },
-    ]
+    let myoptions;
+    if (props.options){
+        myoptions = props.options
+    } else {
+        myoptions = [
+            {
+                label: "Cardiologist1",
+                value: "CA",
+            },
+            {
+                label: "Cardiologist2",
+                value: "CA2",
+            },
+            {
+                label: "Cardiologist3",
+                value: "CA3",
+            },
+        ]
+    }
+    
     
     const custom = {
         container: (provided, state) => ({
@@ -31,12 +37,13 @@ export default function Drop(props){
 
     return (
         <div>
-            <label>here is the dropdown</label>
+            <label for='posSelect'>{props.label}</label>
             <Select
+                id='posSelect'
                 styles={custom}
-                isMulti
                 options={myoptions}
                 classNamePrefix="nick"
+                onChange={(e) => props.setPosition(e)}
             />
         </div>
     );
