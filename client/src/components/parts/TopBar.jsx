@@ -19,7 +19,10 @@ function TopBar(props) {
     };
     const [loggedIn, setLoggedIn] = useState(false);
     useEffect(() => {
-        setLoggedIn(localStorage.getItem('loggedIn'));
+        if(!loggedIn){
+            setLoggedIn(localStorage.getItem('loggedIn'));
+        }
+        
     });
 
     const logout = () => {
@@ -46,6 +49,13 @@ function TopBar(props) {
                     {(loggedIn)?
                     <Link to='/jobs'>
                     <div className="hover:text-cmg-light text-gray-700">{'Jobs'}</div>
+                    </Link>
+                        :
+                    <div></div>
+                    }
+                    {(loggedIn)?
+                    <Link to='/user'>
+                    <div className="hover:text-cmg-light text-gray-700">{'Profile'}</div>
                     </Link>
                         :
                     <div></div>
