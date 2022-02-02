@@ -48,6 +48,76 @@ router.get('/jobs', authenticate, (req, res) => {
         "location":"Generic2, Nigeria",
         "shifts":"12 Hour Shifts",
         "salary":"$80,000"
+    },
+    {
+        "image":'resources/cmg_logo.png',
+        "position":"Cardiologist2" ,
+        "location":"Generic3, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$90,000"
+    },
+    {
+        "image":'resources/cmg_logo.png',
+        "position":"Cardiologist2" ,
+        "location":"Generic3, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$90,000"
+    },
+    {
+        "image":'resources/cmg_logo.png',
+        "position":"Cardiologist2" ,
+        "location":"Generic3, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$90,000"
+    },
+    {
+        "image":'resources/cmg_logo.png',
+        "position":"Cardiologist2" ,
+        "location":"Generic3, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$90,000"
+    },
+    {
+        "image":'resources/cmg_logo.png',
+        "position":"Cardiologist2" ,
+        "location":"Generic3, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$90,000"
+    },
+    {
+        "image":'resources/cmg_logo.png',
+        "position":"Cardiologist2" ,
+        "location":"Generic3, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$90,000"
+    },
+    {
+        "image":'resources/cmg_logo.png',
+        "position":"Cardiologist2" ,
+        "location":"Generic3, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$90,000"
+    },
+    {
+        "image":'resources/cmg_logo.png',
+        "position":"Cardiologist2" ,
+        "location":"Generic3, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$90,000"
+    },
+    {
+        "image":'resources/cmg_logo.png',
+        "position":"Cardiologist2" ,
+        "location":"Generic3, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$90,000"
+    },
+    {
+        "image":'resources/cmg_logo.png',
+        "position":"Cardiologist2" ,
+        "location":"Generic3, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$90,000"
     },];
 
     res.end(JSON.stringify(str));
