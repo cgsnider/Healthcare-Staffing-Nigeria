@@ -7,6 +7,8 @@ import logo from "../../images/cmg_logo.png"
 *   for now i think this is ok but when validating logged in/on the jobs page
 *   replace the login/sign up buttons with some kind of drop menu that will take 
 *   the user to the other pages
+*
+*   look into tailwind sticky for nav when scrolling
 */
 
 
@@ -32,7 +34,7 @@ function TopBar(props) {
     let key = 0;
 
     return (
-        <nav>
+        <nav className="bg-white">
             <div className="">
             <div className="flex justify-between h-16 px-10 shadow items-center">
                 <div className="flex items-center space-x-8">

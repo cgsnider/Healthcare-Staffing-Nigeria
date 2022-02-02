@@ -54,7 +54,6 @@ function Jobs (props) {
 
         return (
             <div>
-                <TopBar />
                 <OptionsBar click={handleClick} />
                 <Drop position={position} setPosition={setPosition} label='select a position'/>
                 {(position !== null) ?

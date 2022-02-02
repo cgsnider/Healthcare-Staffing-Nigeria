@@ -32,3 +32,7 @@
 .txt_button_clicked {
   color: black;
 }
+
+.nav_stick {
+  z-Index: 500;
+}

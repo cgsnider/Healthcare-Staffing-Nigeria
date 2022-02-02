@@ -5,7 +5,6 @@ export default function Profile(props) {
 
     return (
         <div>
-            <TopBar />
             profile
         </div>
     );

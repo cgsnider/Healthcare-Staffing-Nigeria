@@ -6,7 +6,6 @@ function Home(props){
 
     return (
         <div>
-            <TopBar />
         </div>
     );
 }
