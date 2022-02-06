@@ -70,10 +70,10 @@ details > summary {
 
 .dropdown_menu {
   position: absolute;
-  top: 100%;
+  top: 85%;
   left: auto;
   z-index: 100;
-  right: 0;
+  right: 2%;
   border: 1px solid #8a8f93;
   width: 180px;
   border-radius: 3px;
@@ -88,4 +88,15 @@ details > summary {
 .menu_item:hover {
   background-color: #3a8c3c;
   color: white;
+}
+
+.dropdown_menu::before {
+  top: -15%;
+  right: 18%;
+  left: auto;
+  border: 8px solid transparent;
+  border-bottom-color: #8a8f93;
+  position: absolute;
+  display: inline-block;
+  content: "";
 }
