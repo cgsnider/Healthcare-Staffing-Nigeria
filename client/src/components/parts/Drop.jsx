@@ -36,7 +36,7 @@ export default function Drop(props){
     }
 
     return (
-        <div>
+        <div className='pl-4'>
             <label for='posSelect'>{props.label}</label>
             <Select
                 id='posSelect'

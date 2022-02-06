@@ -1,21 +1,24 @@
 import React, {useEffect, useState} from 'react';
-import { Link } from 'react-router-dom';
-
-import "../styling/TopBar.css"
-import logo from "../../images/cmg_logo.png"
+import { Link, useNavigate } from 'react-router-dom';
+import '@github/details-menu-element';
+import "../styling/TopBar.css";
+import logo from "../../images/cmg_logo.png";
 /*
 *   for now i think this is ok but when validating logged in/on the jobs page
 *   replace the login/sign up buttons with some kind of drop menu that will take 
 *   the user to the other pages
 *
-*   look into tailwind sticky for nav when scrolling
+*   to add more page references in dropdown menu just add a button with same attributes
+*   and navigate onclick to new page
+*
+*   replace 'menu' with something else possibly image or usename?
 */
 
 
 
 
 function TopBar(props) {
-
+    const navigate = useNavigate();
     const {options} = (props.options != null) ? options : {
         'options':[{text:'Home', to: '/'}, {text:'About', to: '/'}, {text:'Contact Us', to:'/'}]
     };
@@ -30,6 +33,7 @@ function TopBar(props) {
     const logout = () => {
         localStorage.clear()
         setLoggedIn(false);
+        navigate('/', {replace: true});
     }
     let key = 0;
 
@@ -48,20 +52,6 @@ function TopBar(props) {
                         </Link>
                     ))
                     }
-                    {(loggedIn)?
-                    <Link to='/jobs'>
-                    <div className="hover:text-cmg-light text-gray-700">{'Jobs'}</div>
-                    </Link>
-                        :
-                    <div></div>
-                    }
-                    {(loggedIn)?
-                    <Link to='/user'>
-                    <div className="hover:text-cmg-light text-gray-700">{'Profile'}</div>
-                    </Link>
-                        :
-                    <div></div>
-                    }
                 </div>
                 </div>
                 {(!loggedIn)? 
@@ -77,9 +67,18 @@ function TopBar(props) {
                 :
                 <div className="flex space-x-4 items-center">
                     
-                    <Link to="/" onClick={logout}>
-                        <div href="#" className="bg-green-900 px-4 py-2 rounded text-white hover:bg-cmg-mid text-sm">LOGOUT</div>
-                    </Link>
+                    <details className='details-overlay details-reset'>
+                        <summary>
+                            <div className='inline-block mr-1'>menu</div>
+                            <span className='dropdown_caret'></span>
+                        </summary>
+                        <details-menu role="menu" class='dropdown_menu bg-white py-0.5'>
+                            <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/user', {replace:true})}>Profile</button>
+                            <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/jobs', {replace:true})}>Jobs</button>
+                            <div role='none' className='block h-0 my-1.5 border-b-2 '></div>
+                            <button className='menu_item' type='button' role='menuitem' onClick={logout}>Sign Out</button>
+                        </details-menu>
+                    </details>
                 </div>
                 }
             </div>
