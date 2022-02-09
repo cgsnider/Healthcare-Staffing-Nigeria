@@ -11,7 +11,7 @@ import logo from "../../images/cmg_logo.png";
 *   to add more page references in dropdown menu just add a button with same attributes
 *   and navigate onclick to new page
 *
-*   replace 'menu' with something else possibly image or usename?
+*   replace 'menu' with something else possibly image or username?
 */
 
 
@@ -69,7 +69,7 @@ function TopBar(props) {
                     
                     <details className='details-overlay details-reset'>
                         <summary>
-                            <div className='inline-block mr-1'>menu</div>
+                            <div className='inline-block mr-1'>Menu</div>
                             <span className='dropdown_caret'></span>
                         </summary>
                         <details-menu role="menu" class='dropdown_menu bg-white py-0.5'>

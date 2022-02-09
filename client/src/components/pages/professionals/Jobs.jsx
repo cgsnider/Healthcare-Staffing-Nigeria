@@ -46,7 +46,12 @@ function Jobs (props) {
     }
     const filterPosition = (pos) => {
         //console.log(pos, pos.position==position.label);
-        return pos.position == position.label;
+        if (position.label === "All") {
+            return true;
+        }
+        else {
+            return pos.position === position.label;
+        }
     }
     
 
@@ -55,13 +60,15 @@ function Jobs (props) {
         return (
             <div>
                 <OptionsBar click={handleClick} />
-                <Drop position={position} setPosition={setPosition} label='select a position'/>
+                <div className="justify-center content-center flex">
+                    <Drop position={position} setPosition={setPosition} label='Select a Position'/>
+                </div>
                 {(position !== null) ?
 
-                    <ul className="prof_job_grid">
+                    <ul className="prof_job_grid content-center flex flex-wrap mx-32">
                     {[...postings].filter(filterPosition)
                       .map(e => {
-                       return ( <li className='prof_job_node' key={key++}>
+                       return ( <li className='prof_job_node mx-16 mb-8' key={key++}>
                             <JobListing link="http://localhost:3000" 
                             image={e.image}
                             position={e.position}
@@ -74,14 +81,14 @@ function Jobs (props) {
             
                     </ul>
                     :
-                    <div className="flex content-center justify-center">choose a position to see job listings</div>
+                    <div className="flex content-center justify-center">Choose a Position to See Job Listings</div>
                 }
                 
             </div>
         );
     } else {
         return(
-            <div>must be logged in to see postings 
+            <div>Must be Logged in to See Postings
                 <Link to="/" >
                 <h1>Return</h1>
                 </Link>
