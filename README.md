@@ -11,10 +11,15 @@ Creating a database and a front end website to connect healthcare workers with j
 #### Developers:
 
 Khalaya Dean
+
 Charles Snider
+
 Haoran Zhang
+
 Nicholas Scholz
+
 Senai Saunders
+
 William Leonard
 
 #### Operating Instructions:

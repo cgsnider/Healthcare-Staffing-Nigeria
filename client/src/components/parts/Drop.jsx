@@ -9,6 +9,10 @@ export default function Drop(props){
     } else {
         myoptions = [
             {
+                label: "All",
+                value: "All",
+            },
+            {
                 label: "Cardiologist1",
                 value: "CA",
             },
