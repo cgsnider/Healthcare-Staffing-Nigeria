@@ -2,6 +2,7 @@ How to initialize the local database:
 
 1. download MySQL:
    If you have homebrew enter "brew install mysql" into the command line
+
    Otherwise go to https://dev.mysql.com/doc/mysql-getting-started/en/#mysql-getting-started-installing and download mysql
 
 2. Start the mySQL server
