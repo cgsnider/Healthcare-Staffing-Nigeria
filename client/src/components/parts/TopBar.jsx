@@ -1,73 +1,84 @@
 import React, {useEffect, useState} from 'react';
-import { Link } from 'react-router-dom';
-
-import "../styling/TopBar.css"
-import logo from "../../images/cmg_logo.png"
+import { Link, useNavigate } from 'react-router-dom';
+import '@github/details-menu-element';
+import "../styling/TopBar.css";
+import logo from "../../images/cmg_logo.png";
 /*
 *   for now i think this is ok but when validating logged in/on the jobs page
 *   replace the login/sign up buttons with some kind of drop menu that will take 
 *   the user to the other pages
+*
+*   to add more page references in dropdown menu just add a button with same attributes
+*   and navigate onclick to new page
+*
+*   replace 'menu' with something else possibly image or username?
 */
 
 
 
 
 function TopBar(props) {
-
+    const navigate = useNavigate();
     const {options} = (props.options != null) ? options : {
         'options':[{text:'Home', to: '/'}, {text:'About', to: '/'}, {text:'Contact Us', to:'/'}]
     };
     const [loggedIn, setLoggedIn] = useState(false);
     useEffect(() => {
-        setLoggedIn(localStorage.getItem('loggedIn'));
+        if(!loggedIn){
+            setLoggedIn(localStorage.getItem('loggedIn'));
+        }
+        
     });
 
     const logout = () => {
         localStorage.clear()
         setLoggedIn(false);
+        navigate('/', {replace: true});
     }
     let key = 0;
 
     return (
-        <nav>
-            <div class="">
-            <div class="flex justify-between h-16 px-10 shadow items-center">
-                <div class="flex items-center space-x-8">
+        <nav className="bg-white">
+            <div className="">
+            <div className="flex justify-between h-16 px-10 shadow items-center">
+                <div className="flex items-center space-x-8">
                     <Link to="/" >
-                    <img class="text-xl lg:text-2xl font-bold cursor-pointer h-16" src={logo}/>
+                    <img className="text-xl lg:text-2xl font-bold cursor-pointer h-16" src={logo}/>
                     </Link>
-                <div class="hidden md:flex justify-around space-x-4">
+                <div className="hidden md:flex justify-around space-x-4">
                     {options.map(e => (
-                        <Link to={e.to}>
-                        <a class="hover:text-cmg-light text-gray-700">{e.text}</a>
+                        <Link to={e.to} key={key++}>
+                        <div className="hover:text-cmg-light text-gray-700">{e.text}</div>
                         </Link>
                     ))
-                    }
-                    {(loggedIn)?
-                    <Link to='/jobs'>
-                    <a class="hover:text-cmg-light text-gray-700">{'Jobs'}</a>
-                    </Link>
-                        :
-                    <div></div>
                     }
                 </div>
                 </div>
                 {(!loggedIn)? 
                 
-                <div class="flex space-x-4 items-center">
+                <div className="flex space-x-4 items-center">
                     <Link to="/login">
-                        <a href="#" class="hover:bg-gray-50 text-gray-800 text-sm outline outline-1 rounded px-4 py-2">LOGIN</a>
+                        <div href="#" className="hover:bg-gray-50 text-gray-800 text-sm outline outline-1 rounded px-4 py-2">LOGIN</div>
                     </Link>
                     <Link to="/register">
-                        <a href="#" class="bg-green-900 px-4 py-2 rounded text-white hover:bg-cmg-mid text-sm">SIGNUP</a>
+                        <div href="#" className="bg-green-900 px-4 py-2 rounded text-white hover:bg-cmg-mid text-sm">SIGNUP</div>
                     </Link>
                 </div>
                 :
-                <div class="flex space-x-4 items-center">
+                <div className="flex space-x-4 items-center">
                     
-                    <Link to="/" onClick={logout}>
-                        <a href="#" class="bg-green-900 px-4 py-2 rounded text-white hover:bg-cmg-mid text-sm">LOGOUT</a>
-                    </Link>
+                    <details className='details-overlay details-reset'>
+                        <summary>
+                            <div className='inline-block mr-1'>Menu</div>
+                            <span className='dropdown_caret'></span>
+                        </summary>
+                        <details-menu role="menu" class='dropdown_menu bg-white py-0.5'>
+                            <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/user', {replace:true})}>Profile</button>
+                            <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/jobs', {replace:true})}>Jobs</button>
+                            <div role='none' className='block h-0 my-1.5 border-b-2 '></div>
+                            <button className='menu_item' type='button' role='menuitem' onClick={logout}>Sign Out</button>
+                        </details-menu>
+                    </details>
                 </div>
                 }
             </div>

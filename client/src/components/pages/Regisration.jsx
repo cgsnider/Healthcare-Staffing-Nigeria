@@ -85,7 +85,7 @@ function Regisration (props){
                                     <div class="flex justify-center mt-6">
                                         <label>Professional</label>
                                         <div class="mx-4" >
-                                            <label for="toogleButton" class="flex items-center cursor-pointer" >
+                                            <label htmlFor="toogleButton" class="flex items-center cursor-pointer" >
 
                                             <div class="relative" >
                                             <input id="toogleButton" type="checkbox" class="hidden" onClick={toggleUser}/>
@@ -106,7 +106,7 @@ function Regisration (props){
                                     <form class="px-8 pt-6 pb-8 mb-4 bg-white rounded">
                                         {(user === users[0]) ? <RegisterProf data={formData} setData={setData}/> : <RegisterFac data={formData} setData={setData}/>}
                                         <div class="mb-4 mt-7">
-                                            <label class="block mb-2 text-sm font-bold text-gray-700" for="email">
+                                            <label class="block mb-2 text-sm font-bold text-gray-700" htmlFor="email">
                                                 Email
                                             </label>
                                             <input
@@ -119,7 +119,7 @@ function Regisration (props){
                                         </div>
                                         <div class="mb-4 md:flex md:justify-between">
                                             <div class="mb-4 md:mr-2 md:mb-0">
-                                                <label class="block mb-2 text-sm font-bold text-gray-700" for="password">
+                                                <label class="block mb-2 text-sm font-bold text-gray-700" htmlFor="password">
                                                     Password
                                                 </label>
                                                 <input
@@ -132,7 +132,7 @@ function Regisration (props){
                                                 <p class="text-xs italic text-red-500 hidden">Please choose a password.</p>
                                             </div>
                                             <div class="md:ml-2">
-                                                <label class="block mb-2 text-sm font-bold text-gray-700" for="c_password">
+                                                <label class="block mb-2 text-sm font-bold text-gray-700" htmlFor="c_password">
                                                     Confirm Password
                                                 </label>
                                                 <input

@@ -32,3 +32,71 @@
 .txt_button_clicked {
   color: black;
 }
+
+.nav_stick {
+  z-Index: 500;
+}
+
+details > summary {
+  list-style: none;
+}
+
+.details-overlay[open]>summary::before {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 80;
+  display: block;
+  cursor: default;
+  content: " ";
+  background: transparent;
+}
+
+.dropdown_caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  vertical-align: middle;
+  content: "";
+  border-style: solid;
+  border-color: black;
+  border-width: 4px 4px 0;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+
+.dropdown_menu {
+  position: absolute;
+  top: 85%;
+  left: auto;
+  z-index: 100;
+  right: 2%;
+  border: 1px solid #8a8f93;
+  width: 180px;
+  border-radius: 3px;
+}
+
+.menu_item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 4px 8px 4px 16px;
+}
+.menu_item:hover {
+  background-color: #3a8c3c;
+  color: white;
+}
+
+.dropdown_menu::before {
+  top: -15%;
+  right: 18%;
+  left: auto;
+  border: 8px solid transparent;
+  border-bottom-color: #8a8f93;
+  position: absolute;
+  display: inline-block;
+  content: "";
+}

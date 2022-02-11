@@ -1,12 +1,11 @@
 import React from 'react';
 import TopBar from '../parts/TopBar';
-import { Link } from 'react-router-dom';
 
-function Home(props){
+export default function Profile(props) {
 
     return (
         <div>
+            profile
         </div>
     );
 }
-export default Home;
