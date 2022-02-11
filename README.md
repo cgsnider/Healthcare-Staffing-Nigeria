@@ -31,3 +31,15 @@ William Leonard
 ### Required Dependencies
 
 amazon-cognito-identity-js
+
+#Healthcare Staffing Nigeria
+A website where healthcare workers can apply for job postings in Nigeria, and it is managed by Covenant Medical Group. Healthcare facilities can make job postings for open positions and healthcare workers can apply for the jobs.
+
+##Version 0.1.0
+#New Features:
+Login, Registration, and Job Posting Page UIs created
+Connect website with Amazon AWS cognito server for login
+Implemented JWT tokens for security and authentication on the server
+Created Node.js server
+Website can now fetch job posting data from the Node.js
+
