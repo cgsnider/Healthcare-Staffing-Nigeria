@@ -1,124 +1,25 @@
 const express = require('express');
-const router = express.Router();
 
 const auth = require('../auth/auth.js');
-const authenticate = auth.authenticateToken
+const db = require('../database/database.js')
 
+const authenticate = auth.authenticateToken;
+
+const router = express.Router();
 router.use(express.urlencoded({extended: false}));
+
+
+
+
 
 router.get('/jobs', authenticate, (req, res) => {
     const str = [{
         "image":'resources/cmg_logo.png',
-        "position":"Cardiologist2" ,
-        "location":"Generic3, Nigeria",
+        "position":"Cardiologist" ,
+        "location":"Lagos, Nigeria",
         "shifts":"12 Hour Shifts",
         "salary":"$90,000"
-    },
-    {
-        "image":'resources/cmg_logo.png',
-        "position":"Cardiologist1" ,
-        "location":"Generic2, Nigeria",
-        "shifts":"12 Hour Shifts",
-        "salary":"$80,000"
-    },
-    {
-        "image":'resources/cmg_logo.png',
-        "position":"Cardiologist2" ,
-        "location":"Generic2, Nigeria",
-        "shifts":"12 Hour Shifts",
-        "salary":"$80,000"
-    },
-    {
-        "image":'resources/cmg_logo.png',
-        "position":"Cardiologist3" ,
-        "location":"Generic2, Nigeria",
-        "shifts":"12 Hour Shifts",
-        "salary":"$80,000"
-    },
-    {
-        "image":'resources/cmg_logo.png',
-        "position":"Cardiologist3" ,
-        "location":"Generic2, Nigeria",
-        "shifts":"12 Hour Shifts",
-        "salary":"$80,000"
-    },
-    {
-        "image":'resources/cmg_logo.png',
-        "position":"Cardiologist1" ,
-        "location":"Generic2, Nigeria",
-        "shifts":"12 Hour Shifts",
-        "salary":"$80,000"
-    },
-    {
-        "image":'resources/cmg_logo.png',
-        "position":"Cardiologist2" ,
-        "location":"Generic3, Nigeria",
-        "shifts":"12 Hour Shifts",
-        "salary":"$90,000"
-    },
-    {
-        "image":'resources/cmg_logo.png',
-        "position":"Cardiologist2" ,
-        "location":"Generic3, Nigeria",
-        "shifts":"12 Hour Shifts",
-        "salary":"$90,000"
-    },
-    {
-        "image":'resources/cmg_logo.png',
-        "position":"Cardiologist2" ,
-        "location":"Generic3, Nigeria",
-        "shifts":"12 Hour Shifts",
-        "salary":"$90,000"
-    },
-    {
-        "image":'resources/cmg_logo.png',
-        "position":"Cardiologist2" ,
-        "location":"Generic3, Nigeria",
-        "shifts":"12 Hour Shifts",
-        "salary":"$90,000"
-    },
-    {
-        "image":'resources/cmg_logo.png',
-        "position":"Cardiologist2" ,
-        "location":"Generic3, Nigeria",
-        "shifts":"12 Hour Shifts",
-        "salary":"$90,000"
-    },
-    {
-        "image":'resources/cmg_logo.png',
-        "position":"Cardiologist2" ,
-        "location":"Generic3, Nigeria",
-        "shifts":"12 Hour Shifts",
-        "salary":"$90,000"
-    },
-    {
-        "image":'resources/cmg_logo.png',
-        "position":"Cardiologist2" ,
-        "location":"Generic3, Nigeria",
-        "shifts":"12 Hour Shifts",
-        "salary":"$90,000"
-    },
-    {
-        "image":'resources/cmg_logo.png',
-        "position":"Cardiologist2" ,
-        "location":"Generic3, Nigeria",
-        "shifts":"12 Hour Shifts",
-        "salary":"$90,000"
-    },
-    {
-        "image":'resources/cmg_logo.png',
-        "position":"Cardiologist2" ,
-        "location":"Generic3, Nigeria",
-        "shifts":"12 Hour Shifts",
-        "salary":"$90,000"
-    },
-    {
-        "image":'resources/cmg_logo.png',
-        "position":"Cardiologist2" ,
-        "location":"Generic3, Nigeria",
-        "shifts":"12 Hour Shifts",
-        "salary":"$90,000"
-    },];
+    }];
 
     res.end(JSON.stringify(str));
 })
