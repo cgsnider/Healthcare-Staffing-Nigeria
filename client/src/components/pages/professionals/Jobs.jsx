@@ -26,7 +26,9 @@ function Jobs (props) {
     const [search, setSearch] = useState('');
 
     const fetchPostings = async(isMounted) => {
+        console.log("b4")
         let items = await getJobPosts();
+        console.log("GETTING JOB POISTING ITEMS", items)
         if (isMounted) setPostings(items)
         else console.log('aborted setPostings on unmounted component')
     }
@@ -59,7 +61,7 @@ function Jobs (props) {
     }
     
 
-    if(postings !== null) {
+    if((postings !== null)) {
 
         return (
             <div>

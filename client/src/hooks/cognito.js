@@ -76,3 +76,23 @@ export async function LoginUser (user, failure, success) {
         });
     });
   }
+  export async function ResetPassword (user, failure, success) {
+    return new Promise(function (resolve, reject) {
+        const cognito_user = new CognitoUser({
+            Username: user.email,
+            Pool: userPool,
+        });
+
+        //https://stackoverflow.com/questions/38110615/how-to-allow-my-user-to-reset-their-password-on-cognito-user-pools
+        cognito_user.forgotPassword({
+            onSuccess: (result) => console.log("Reset PW Sucess"),
+            //https://github.com/amazon-archives/amazon-cognito-identity-js/blob/master/src/CognitoUser.js#L1227
+            onFailure: (result) => console.log("Reset PW Failure"),
+            inputVerificationCode() { 
+            var verificationCode = prompt('Please input verification code ', '');
+            var newPassword = prompt('Enter new password ', '');
+             cognito_user.confirmPassword(verificationCode, newPassword, this);
+            }
+        });
+    });
+  }

@@ -7,6 +7,15 @@ export async function getJobPosts() {
     return await getData('/jobs');
 }
 
+
+export async function getProfessionalProfileData() {
+    return await getData('/user');
+}
+
+export async function postProfessionalProfileData(data) {
+    return await postData('/user', data);
+}
+
 /**
  * Generic method for making a GET request. 
  * @param {string} url The url for the resources being searched for. (api is included)
