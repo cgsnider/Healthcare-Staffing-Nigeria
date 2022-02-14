@@ -23,9 +23,12 @@ function Jobs (props) {
 
     const [postings, setPostings] = useState(null);
     const [position, setPosition] = useState(null);
+    const [search, setSearch] = useState('');
 
     const fetchPostings = async(isMounted) => {
+        console.log("b4")
         let items = await getJobPosts();
+        console.log("GETTING JOB POISTING ITEMS", items)
         if (isMounted) setPostings(items)
         else console.log('aborted setPostings on unmounted component')
     }
@@ -44,6 +47,9 @@ function Jobs (props) {
         setPostings(copy)
         //console.log("sorted on " + e)
     }
+    const filterSearch = (posts) =>{
+        return !!(posts.position.includes(search) || posts.location.includes(search) || (search === ''));
+    }
     const filterPosition = (pos) => {
         //console.log(pos, pos.position==position.label);
         if (position.label === "All") {
@@ -55,18 +61,18 @@ function Jobs (props) {
     }
     
 
-    if(postings !== null) {
+    if((postings !== null)) {
 
         return (
             <div>
-                <OptionsBar click={handleClick} />
+                <OptionsBar search={search} setSearch={setSearch} click={handleClick}/>
                 <div className="justify-center content-center flex">
                     <Drop position={position} setPosition={setPosition} label='Select a Position'/>
                 </div>
                 {(position !== null) ?
 
                     <ul className="prof_job_grid content-center flex flex-wrap mx-32">
-                    {[...postings].filter(filterPosition)
+                    {[...postings].filter(filterPosition).filter(filterSearch)
                       .map(e => {
                        return ( <li className='prof_job_node mx-16 mb-8' key={key++}>
                             <JobListing link="http://localhost:3000" 
@@ -111,7 +117,7 @@ function OptionsBar (props) {
             </div>
             <div className='flex items-center space-x-1 pr-1'>
                 <label>{" Search: "}</label>
-                <input type='text' className="rounded h-7"/>
+                <input type='text' className="rounded h-7" onInput={ (e) => props.setSearch(e.target.value)}/>
             </div>
         </div>
         

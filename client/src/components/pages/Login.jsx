@@ -8,7 +8,7 @@ import TopBar from '../parts/TopBar';
 
 import { Link, useNavigate } from 'react-router-dom';
 import { ShortTextInput } from '../parts/Utility';
-import  { LoginUser } from '../../hooks/cognito';
+import  { LoginUser, ResetPassword } from '../../hooks/cognito';
 
 function Login(props) {
     const [input, setInput] = useState({email:'', password:''});
@@ -17,6 +17,12 @@ function Login(props) {
     const Log = (e) => {
         e.preventDefault();
         LoginUser(input, loginFail, loginSuccess).catch(err=>console.log("promise failed with error "+err));
+    }
+
+    const Reset = (e) => {
+        e.preventDefault();
+        ResetPassword(input, loginFail, loginSuccess).catch(err=>console.log("Reset Password promise failed with error "+err));
+
     }
 
     const loginFail = () => {
@@ -50,7 +56,10 @@ function Login(props) {
                                         <input className="cursor-pointer rounded-xl mr-2"  type="checkbox" id="rememberme" />
                                         <label className="text-sm" htmlFor="rememberme">Remember Me</label>
                                     </div>
-                                    <span className="text-sm text-blue-700 hover:underline cursor-pointer">Forgot password?</span>
+
+                                    <Link to="/login" onClick={Reset}>
+                                        <span className="text-sm text-blue-700  hover:underline cursor-pointer">Forgot password?</span>
+                                    </Link>
                                 </div>
                                 <div className="">
                                     <Link to="/jobs" onClick={Log}>
