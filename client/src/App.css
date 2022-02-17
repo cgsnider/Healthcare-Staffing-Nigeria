@@ -28,4 +28,15 @@
 }
 .button_primary:hover {
   border-color: rgba(200, 200, 200, 1);
+  background: rgba(224, 224, 224, 1);
+}
+
+.button_primary_highlighted {
+  display: inline;
+  margin: 0.5%;
+  width: 10%;
+  border-radius: 16px;
+  font-size: medium;
+  font-family: Arial, Helvetica, sans-serif;
+  background: rgba(224, 224, 224, 1);
 }
