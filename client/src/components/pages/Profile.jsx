@@ -11,6 +11,7 @@ import { ShortTextInput } from '../parts/Utility';
 import  { LoginUser, ResetPassword } from '../../hooks/cognito';
 import { useState } from 'react';
 import { postProfessionalProfileData } from '../../hooks/server';
+import {Drop2 , Drop} from '../parts/Drop';
 
 export default function Profile(props) {
     const [updatedProfile, setUpdatedProfile] = useState(localStorage.getItem("userInfo") ? 
@@ -25,6 +26,8 @@ export default function Profile(props) {
     }
     return (
         <div>
+            
+            <Drop2 />
              <div className="mt-5">
                 <label className="block text-md mb-2" htmlFor="name">Name</label>
                 <input className="px-4 w-full border-2 py-2 rounded-md text-sm outline-none" value={updatedProfile.name} name="name" placeholder="name" onInput={ (e) => setUpdatedProfile({...updatedProfile, name: e.target.value}) }/>

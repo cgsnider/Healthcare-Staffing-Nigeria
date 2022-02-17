@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
 import JobListing from '../../parts/JobListings'
 import TopBar from '../../parts/TopBar';
-import Drop from '../../parts/Drop';
+import { Drop } from '../../parts/Drop';
 
 import '../../styling/Jobs.css'
 import '../../../App.css'

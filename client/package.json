@@ -16,6 +16,9 @@
     "react-scripts": "5.0.0",
     "react-select": "^5.2.2",
     "react-select-pure": "0.0.3-alpha.0",
+    "react-spinners": "^0.11.0",
+    "react-tiny-virtual-list": "^2.2.0",
+    "react-window": "^1.8.6",
     "select-pure": "^2.1.2-alpha.0",
     "web-vitals": "^2.1.2"
   },
