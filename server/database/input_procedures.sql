@@ -155,3 +155,26 @@ insert into SYSTEMLOG (uid, act) value
 end //
 DELIMITER ;
 
+drop procedure if exists admin_create_professional;
+DELIMITER //
+create procedure admin_create_professional (
+    in i_fname varchar(55),
+    in i_lname varchar(55),
+    in i_email varchar(254),
+    in i_college varchar(75),
+    in i_phonenumber varchar(20),
+    in i_mdcn varchar(30),
+    in i_verified int
+    
+) begin 
+insert into PERSON (id) value (null);
+
+select max(id) from PERSON into @id;
+
+insert into PROFESSIONAL(id, email, verified, fname, lname, college, phoneNumber, MDCN) value 
+	(@id, i_email, i_verified, i_fname, i_lname, i_college, i_phonenumber, i_mdcn);
+    
+insert into SYSTEMLOG (uid, act) value 
+    (@id, 'admin_create_professional');
+end //
+DELIMITER ;
