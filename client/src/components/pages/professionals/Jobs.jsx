@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
 import JobListing from '../../parts/JobListings'
 import TopBar from '../../parts/TopBar';
-import Drop from '../../parts/Drop';
+import { Drop } from '../../parts/Drop';
 
 import '../../styling/Jobs.css'
 import '../../../App.css'
@@ -12,9 +12,13 @@ import { getJobPosts } from '../../../hooks/server';
 function Jobs (props) {
 
     let key = 0;
+    const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect( ()=> {
         let isMounted = true;
+        if(!loggedIn){
+            setLoggedIn(localStorage.getItem('loggedIn'));
+        }
         fetchPostings(isMounted);
         return () => {
             isMounted = false;
@@ -24,10 +28,11 @@ function Jobs (props) {
     const [postings, setPostings] = useState(null);
     const [position, setPosition] = useState(null);
     const [search, setSearch] = useState('');
-
+    const [fetchError, setFetchError] = useState(false);
     const fetchPostings = async(isMounted) => {
         console.log("b4")
-        let items = await getJobPosts();
+        let items = await getJobPosts()
+        .catch(err=>setFetchError(true))
         console.log("GETTING JOB POISTING ITEMS", items)
         if (isMounted) setPostings(items)
         else console.log('aborted setPostings on unmounted component')
@@ -61,7 +66,7 @@ function Jobs (props) {
     }
     
 
-    if((postings !== null)) {
+    if((fetchError !== true)) {
 
         return (
             <div>
@@ -94,9 +99,9 @@ function Jobs (props) {
         );
     } else {
         return(
-            <div>Must be Logged in to See Postings
+            <div>Error retrieving job postings
                 <Link to="/" >
-                <h1>Return</h1>
+                <h1>Return Home</h1>
                 </Link>
             </div>
         );
