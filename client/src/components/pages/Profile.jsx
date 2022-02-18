@@ -47,7 +47,7 @@ export default function Profile(props) {
 
     }
     return (
-    <div className="bg-gray-100">
+    <div className="bg-gray-100 border-2 h-full min-h-screen">
         <div className="w-full text-white bg-main-color">
             <div className="container mx-auto p-5">
                 <div className="md:flex no-wrap md:-mx-2 ">
