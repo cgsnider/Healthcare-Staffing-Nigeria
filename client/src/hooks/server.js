@@ -7,6 +7,14 @@ export async function getJobPosts() {
     return await getData('/jobs');
 }
 
+export async function applyToJobPost(jobTitle) {
+    return await getData('/jobs' + jobTitle)
+}
+
+export async function submitApplication(data) {
+    return await postData('/jobs/cardiologist', data)
+}
+
 
 export async function getProfessionalProfileData() {
     return await getData('/user');

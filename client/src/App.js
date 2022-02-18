@@ -8,6 +8,7 @@ import Jobs from './components/pages/professionals/Jobs'
 import TopBar from './components/parts/TopBar';
 import Home from './components/pages/Home';
 import Profile from './components/pages/Profile.jsx';
+import Apply from './components/pages/Apply.jsx';
 //import Drop from './components/pages/Drop';
 //import Elogin from './components/examples/Elogin';
 
@@ -35,6 +36,7 @@ const App = () => {
           <Route path="/" element={<Home/>}/>
           <Route path="/jobs" element={<Jobs/>} />
           <Route path='/user' element={<Profile/>} />
+          <Route path="/jobs/cardiologist" element={<Apply/>}/>
         </Route>
 
         {/**pages without navbar go here */}

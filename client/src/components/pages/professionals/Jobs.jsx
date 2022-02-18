@@ -75,7 +75,7 @@ function Jobs (props) {
                     {[...postings].filter(filterPosition).filter(filterSearch)
                       .map(e => {
                        return ( <li className='prof_job_node mx-16 mb-8' key={key++}>
-                            <JobListing link="http://localhost:3000" 
+                            <JobListing link="http://localhost:3000/jobs/cardiologist" 
                             image={e.image}
                             position={e.position}
                             location={e.location}

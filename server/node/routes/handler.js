@@ -24,6 +24,25 @@ router.get('/jobs', authenticate, (req, res) => {
     res.end(JSON.stringify(str));
 })
 
+router.get('/jobs/cardiologist', authenticate, (req, res) => {
+    const str = [{
+        "position":"Cardiologist" ,
+        "location":"Lagos, Nigeria",
+        "shifts":"12 Hour Shifts",
+        "salary":"$90,000"
+    }];
+
+    res.end(JSON.stringify(str));
+})
+
+router.post('/jobs/cardiologist', authenticate, (req, res) => {
+    // TODO: Check Authentication
+    // TODO: Store applicant information here
+    res.redirect('/jobs').catch((err) => {
+        console.log(err);
+    });
+})
+
 // router.post('/register', (req, res) => {
     
 //     const newUser = {
