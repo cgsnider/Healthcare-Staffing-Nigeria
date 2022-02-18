@@ -22,7 +22,7 @@ export default function Profile(props) {
         DoB: "January 01, 2000", 
         specialization: "Cardiologist",
         desc: "short description",
-        verified: false,
+        verified: true,
         resume: null,
     })
 
@@ -178,7 +178,7 @@ export default function Profile(props) {
                                         </span>
                                         <span class="tracking-wide">Education</span>
                                         <Popup trigger={<button className="bg-green-500 rounded text-white py-1 text-sm px-2">Add</button>} position='right center' modal>
-                                            <div>popup content here!</div>
+                                            <Drop2 />
                                         </Popup>
                                     </div>
                                     <ul class="list-inside space-y-2">
