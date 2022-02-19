@@ -13,7 +13,7 @@ call create_job_posting('MemorialHospital@hosp.org', 'Lead Cardiologist', 40000,
 call create_job_posting('MemorialHospital@hosp.org', 'Oral Surgeon', 10000, 'A doctor of oral surgical procedures', 5, 'Surgery', '4 Hr');
 call create_job_posting('MemorialHospital@hosp.org', 'Neurologist', 70000, 'Treat conditions of the nerves, spine, and brain', 3, 'Neurology', '3 Hr');
 
-call create_job_posting('GeneralHospital@hosp.org', 'Lead Cardiologist', 40000, 'Evaluate, monitor, and supervise patient care before, during, and after surgery, delivering anesthesia, leading the Anesthesia Care Team', 1, 'Anesthesiologist', '4 Hr');
+call create_job_posting('GeneralHospital@hosp.org', 'Anesthesiologist', 40000, 'Evaluate, monitor, and supervise patient care before, during, and after surgery, delivering anesthesia, leading the Anesthesia Care Team', 1, 'Anesthesiology', '4 Hr');
 call create_job_posting('GeneralHospital@hosp.org', 'Orthopedic surgeons', 70000, 'Specialize in diseases and conditions of the bones, muscles, ligaments, tendons, and joints', 5, 'Surgery', '7 Hr');
 call create_job_posting('GeneralHospital@hosp.org', 'Head Neorologist', 70000, 'Lead the Neorology Department', 3, 'Neurology', '6 Hr');
 

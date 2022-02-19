@@ -13,11 +13,11 @@ router.use(express.urlencoded({extended: false}));
 
 
 router.get('/jobs', authenticate, (req, res) => {
+    console.log('-----------------------------------------------------------------------------')
     if (req.user != 402) {
         let sql = `CALL get_postings('${req.user.email}', ${(req.body.category != undefined) ? "'req.body.category'" : 'null'})`
         let query = db.query(sql, (err, results) => {
             if (err) throw err;
-            console.log(results);
             res.end(JSON.stringify(results))
         })
     } else {
@@ -27,17 +27,28 @@ router.get('/jobs', authenticate, (req, res) => {
 
 router.get('/profile', authenticate, (req, res) => {
     if (req.user != 402) {
-        console.log("---------------------------------/profile------------------------------------------------------------")
         let sql = `CALL get_profile('${req.user.email}')`
         let query = db.query(sql, (err, results) => {
             if (err) throw err;
-            console.log(results);
             res.end(JSON.stringify(results))
         })
     } else {
         res.end(JSON.stringify('402'));
     }
 })
+
+router.get('/categories', authenticate, (req, res) => {
+    if (req.user != 402) {
+        let sql = `CALL get_posting_categories`
+        let query = db.query(sql, (err, results) => {
+            if (err) throw err;
+            res.end(JSON.stringify(results))
+        })
+    } else {
+        res.end(JSON.stringify('402'));
+    }
+})
+
 
 router.post('/register', (req, res) => {
     

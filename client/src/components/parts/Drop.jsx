@@ -8,6 +8,7 @@ import RingLoader from 'react-spinners/RingLoader';
 import PulseLoader from 'react-spinners/PulseLoader';
 import CustomMenuList from './MenuList'
 export function Drop(props){
+
     let myoptions;
     if (props.options){
         myoptions = props.options

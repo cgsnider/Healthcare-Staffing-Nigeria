@@ -7,7 +7,7 @@ import { Drop } from '../../parts/Drop';
 import '../../styling/Jobs.css'
 import '../../../App.css'
 
-import { getJobPosts } from '../../../hooks/server';
+import { getCategories, getJobPosts } from '../../../hooks/server';
 
 function Jobs (props) {
 
@@ -20,22 +20,38 @@ function Jobs (props) {
             setLoggedIn(localStorage.getItem('loggedIn'));
         }
         fetchPostings(isMounted);
+        fetchCategories(isMounted);
         return () => {
             isMounted = false;
         };
     }, [])
 
     const [postings, setPostings] = useState(null);
+    const [categories, setCategories] = useState(null);
     const [position, setPosition] = useState(null);
     const [search, setSearch] = useState('');
     const [fetchError, setFetchError] = useState(false);
     const fetchPostings = async(isMounted) => {
-        console.log("b4")
         let items = await getJobPosts()
         .catch(err=>setFetchError(true))
-        console.log("GETTING JOB POISTING ITEMS", items)
-        if (isMounted) setPostings(items[0])
+        if (isMounted) setPostings(items[0]);
         else console.log('aborted setPostings on unmounted component')
+    }
+
+    const fetchCategories = async(isMounted) => {
+        let items = await getCategories()
+        .catch(err=>setFetchError(true))
+        if (isMounted) {
+            items[0].unshift({Category:'All'})
+            console.log('list: ',items[0])
+            setCategories(items[0].map(cat => {
+                return ({
+                    label: cat.Category,
+                    value: cat.Category
+                })
+            }), console.log(categories))
+        }
+        else console.log('aborted setCategories on unmounted component')
     }
     
     //handles sorting postings based on prop e
@@ -54,15 +70,16 @@ function Jobs (props) {
         //console.log("sorted on " + e)
     }
     const filterSearch = (posts) =>{
-        return !!((search === '') || posts.title.includes(search) || posts.city.includes(search));
+        return !!((search === '') || posts.Title.includes(search) || posts.City.includes(search));
     }
     const filterPosition = (pos) => {
         //console.log(pos, pos.position==position.label);
+        // console.log(pos)
         if (position.label === "All") {
             return true;
         }
         else {
-            return pos.position === position.label;
+            return pos.Category === position.label;
         }
     }
     
@@ -73,7 +90,7 @@ function Jobs (props) {
             <div>
                 <OptionsBar search={search} setSearch={setSearch} click={handleClick}/>
                 <div className="justify-center content-center flex">
-                    <Drop position={position} setPosition={setPosition} label='Select a Position'/>
+                    <Drop position={position} setPosition={setPosition} label='Select a Position' options={categories}/>
                 </div>
                 {(position !== null) ?
 
@@ -82,11 +99,11 @@ function Jobs (props) {
                       .map(e => {
                        return ( <li className='prof_job_node mx-16 mb-8' key={key++}>
                             <JobListing link="http://localhost:3000" 
-                            image={(e.image) ? e.image : 'resources/cmg_logo.png'}
-                            position={e.title}
-                            location={`${e.city}, ${e.country}`}
-                            shifts={e.shifts}
-                            salary={e.salary}/>
+                            image={(e.Image) ? e.Image : 'resources/cmg_logo.png'}
+                            position={e.Title}
+                            location={`${e.City}, ${e.Country}`}
+                            shifts={e.Shifts}
+                            salary={e.Salary}/>
                         </li> )
                     })}
 

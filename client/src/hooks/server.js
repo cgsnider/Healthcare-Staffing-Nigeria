@@ -3,13 +3,17 @@
  * Gets Job Postings from server
  * @returns Data that represents a job posting
  */
-export async function getJobPosts() {
+export async function getJobPosts(category) {
     return await getData('/jobs');
 }
 
 
 export async function getProfileData() {
     return await getData('/profile');
+}
+
+export async function getCategories() {
+    return await getData('/categories')
 }
 
 export async function postProfessionalProfileData(data) {
@@ -21,7 +25,7 @@ export async function postProfessionalProfileData(data) {
  * @param {string} url The url for the resources being searched for. (api is included)
  * @returns the data from the get request with JSON processing completed
  */
-async function getData(url='') {
+async function getData(url='', body={}) {
     const data = await fetch(`api${url}`, {
         method: 'GET',
         mode: 'cors',
@@ -33,6 +37,7 @@ async function getData(url='') {
         },
         redirect: 'follow',
         referrerPolicy: 'no-referrer', 
+
     })
     const items = await data.json();
     return items;
