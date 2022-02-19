@@ -34,7 +34,7 @@ function Jobs (props) {
         let items = await getJobPosts()
         .catch(err=>setFetchError(true))
         console.log("GETTING JOB POISTING ITEMS", items)
-        if (isMounted) setPostings(items)
+        if (isMounted) setPostings(items[0])
         else console.log('aborted setPostings on unmounted component')
     }
     
@@ -53,7 +53,7 @@ function Jobs (props) {
         //console.log("sorted on " + e)
     }
     const filterSearch = (posts) =>{
-        return !!(posts.position.includes(search) || posts.location.includes(search) || (search === ''));
+        return !!((search === '') || posts.title.includes(search) || posts.city.includes(search));
     }
     const filterPosition = (pos) => {
         //console.log(pos, pos.position==position.label);
@@ -81,9 +81,9 @@ function Jobs (props) {
                       .map(e => {
                        return ( <li className='prof_job_node mx-16 mb-8' key={key++}>
                             <JobListing link="http://localhost:3000" 
-                            image={e.image}
-                            position={e.position}
-                            location={e.location}
+                            image={(e.image) ? e.image : 'resources/cmg_logo.png'}
+                            position={e.title}
+                            location={`${e.city}, ${e.country}`}
                             shifts={e.shifts}
                             salary={e.salary}/>
                         </li> )

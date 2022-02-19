@@ -17,7 +17,7 @@ insert into PROFESSIONAL(id, email, verified, fname, lname, college, phoneNumber
 	(@id, i_email, -1, i_fname, i_lname, null, null, null);
 
 insert into SYSTEMLOG (uid, act) value 
-    (id, 'register_professional');
+    (@id, 'register_professional');
 end //
 DELIMITER ;
 
@@ -94,37 +94,19 @@ drop procedure if exists create_job_posting;
 DELIMITER //
 create procedure create_job_posting (
 	in i_fac_email varchar(55),
-    in title varchar(30), 
-    in salary int,
-    in descript text,
-    in slots int
-) begin 
-	
-select id from FACILTIY where email = i_fac_email into @id;
-
-insert into JOBPOSTING (fid, title, salary, descript, slots) values
-	(@id, title, salary, descript, slots);
-	
-insert into SYSTEMLOG (uid, act) value 
-	(@id, 'create_job_posting');
-end //
-DELIMITER ;
-
-drop procedure if exists create_job_posting;
-DELIMITER //
-create procedure create_job_posting (
-	in i_fac_email varchar(55),
     in i_title varchar(30), 
     in i_salary int,
     in i_descript text,
     in i_slots int,
-    in i_category varchar(30)
+    in i_category varchar(30),
+    in i_shifts varchar(30)
+    
 ) begin 
 	
 select id from FACILITY where email = i_fac_email into @id;
 
-insert into JOBPOSTING (fid, title, salary, descript, slots, category) values
-	(@id, i_title, i_salary, i_descript, i_slots, i_category);
+insert into JOBPOSTING (fid, title, salary, descript, category, slots, shifts) values
+	(@id, i_title, i_salary, i_descript, i_category, i_slots, i_shifts);
 	
 insert into SYSTEMLOG (uid, act) value 
 	(@id, 'create_job_posting');
@@ -155,3 +137,25 @@ insert into SYSTEMLOG (uid, act) value
 end //
 DELIMITER ;
 
+drop procedure if exists admin_create_professional;
+DELIMITER //
+create procedure admin_create_professional (
+    in i_fname varchar(55),
+    in i_lname varchar(55),
+    in i_email varchar(254),
+    in i_verified int,
+    in i_college varchar(75),
+    in i_phonenumber varchar(20),
+    in i_mdcn varchar(30)
+) begin 
+insert into PERSON (id) value (null);
+
+select max(id) from PERSON into @id;
+
+insert into PROFESSIONAL(id, email, verified, fname, lname, college, phoneNumber, MDCN) value 
+	(@id, i_email, i_verified, i_fname, i_lname, i_college, i_phonenumber, i_mdcn);
+
+insert into SYSTEMLOG (uid, act) value 
+    (@id, 'admin_create_professional');
+end //
+DELIMITER ;
