@@ -41,6 +41,7 @@ function Jobs (props) {
     //handles sorting postings based on prop e
     //passed to options for use
     const handleClick = (e) =>{
+        console.log(postings)
         const copy = [...postings]
         //console.log(postings[0][e])
         if (e === 'salary') {
@@ -66,7 +67,7 @@ function Jobs (props) {
     }
     
 
-    if((fetchError !== true)) {
+    if((fetchError !== true && postings!==null)) {
 
         return (
             <div>
@@ -120,9 +121,9 @@ function OptionsBar (props) {
         <div id="opt_bar" className='flex justify-between options_bar bg-gray-100'>
             <div className='flex w-full items-center'>
                 
-                //Onclick sets isHighlight from 0-3 based on which filter option is selected. If the value of 
+                {/*Onclick sets isHighlight from 0-3 based on which filter option is selected. If the value of 
                 // isHighlight matches the value of the filter button
-                // it will get highlighted. This is handled in the ternary operator under each buttons className
+                // it will get highlighted. This is handled in the ternary operator under each buttons className*/}
                 <button type='button' value='Location A-Z' className={`outline outline-1 min-w-fit px-1 py-0 ${isHighlight==0?'button_primary_highlighted':'button_primary'}`} onClick={() => {highlight(0); props.click('location');}}>Location A-Z</button>
                 <button type='button' value='Postion A-Z' className={`outline outline-1 min-w-fit px-1 py-0 ${isHighlight==1?'button_primary_highlighted':'button_primary'}`} onClick={() => {highlight(1); props.click('position');}}>Position A-Z</button>
                 <button type='button' value='Hours' className={`outline outline-1 min-w-fit px-1 py-0 ${isHighlight==2?'button_primary_highlighted':'button_primary'}`} onClick={() => {highlight(2); props.click('shifts');}}>Hours</button>

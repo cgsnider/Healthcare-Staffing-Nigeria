@@ -143,6 +143,7 @@ create procedure admin_create_professional (
     in i_fname varchar(55),
     in i_lname varchar(55),
     in i_email varchar(254),
+
     in i_verified int,
     in i_college varchar(75),
     in i_phonenumber varchar(20),
