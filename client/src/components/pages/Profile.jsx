@@ -19,13 +19,16 @@ export default function Profile(props) {
         professionalInfo: "", 
         license: "", 
         gender: "Male", 
-        address: "12334 Park Place\nLos Angeles CA 90001\nUSA", 
+        //address: "12334 Park Place\nLos Angeles CA 90001\nUSA", 
         DoB: "January 01, 2000", 
         specialization: "Cardiologist",
         desc: "short description",
         verified: 1, //0=unverified, 1=pending, 2=verified
         resume: null,
         MDCN: 123456,
+        street:'1234 Park place',
+        city:'Los Angeles',
+        country:'United States',
     })
     const [newExperience, setNewExperience] = useState([]);
     /** {university: 'Vanderbilt University', startDate: '2022-02-01', endDate: '2022-02-26', degree: 'Bachelors Degree', count: 0}
@@ -184,7 +187,7 @@ export default function Profile(props) {
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Address</div>
-                                <div className="px-4 py-2">{profileInfo.address}</div>
+                                        <div className="px-4 py-2">{(`${profileInfo.street}\n ${profileInfo.city}, ${profileInfo.country}`|| "None")}</div>
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Email</div>
@@ -531,7 +534,7 @@ function AboutPopup(props) {
             <button className="bg-green-500 rounded text-white text-sm py-1 px-3 ml-auto" onClick={e=>setOpen(true)}>Edit</button>
             <Popup open={open} modal position='right center' onClose={close} >
                 <div className="text-gray-700 m-5 w-auto">
-                    <h1 className='text-2xl bold mb-5 text-center'>Edit Profile</h1>
+                    <h1 className='text-2xl bold mb-5 border-b-2'>Profile</h1>
                     <div className="grid md:grid-cols-2 text-sm gap-y-2">
                         <div className="grid grid-cols-2  items-center">
                             <div className="px-4 py-2 font-semibold">First Name</div>
@@ -548,10 +551,6 @@ function AboutPopup(props) {
                         <div className="grid grid-cols-2  items-center">
                             <div className="px-4 py-2 font-semibold">Contact No.</div>
                             <input type='text' className="rounded" value={tempInfo.phoneNumber} onInput={e=>setTempInfo({...tempInfo, phoneNumber: e.target.value})}/>
-                        </div>
-                        <div className="grid grid-cols-2  items-center">
-                            <div className="px-4 py-2 font-semibold">Current Address</div>
-                            <textarea className="rounded" value={tempInfo.address} onInput={e=>setTempInfo({...tempInfo, address: e.target.value})}/>
                         </div>
                         <div className="grid grid-cols-2  items-center">
                             <div className="px-4 py-2 font-semibold">Email</div>
@@ -572,7 +571,25 @@ function AboutPopup(props) {
                             <div className="px-4 py-2 font-semibold">MDCN #</div>
                             <input type='text' className="rounded" value={tempInfo.MDCN} onInput={e=>setTempInfo({...tempInfo, MDCN: e.target.value})}/>
                         </div>
-                        <div className="grid grid-cols-2  items-center">
+                        <div className='col-span-2'>
+                            <h1 className='text-2xl bold mb-5 border-b-2'>Address</h1>
+                            <div className="grid grid-cols-5  items-center">
+                                <div className="px-4 py-2 font-semibold">Street</div>
+                                <input type='text' className="rounded col-span-2 col-start-2" value={tempInfo.street} onInput={e=>setTempInfo({...tempInfo, street: e.target.value})}/>
+                            </div>
+                            <div className="grid grid-cols-5  items-center">
+                                <div className="px-4 py-2 font-semibold">City</div>
+                                <input type='text' className="rounded col-span-2 col-start-2" value={tempInfo.city} onInput={e=>setTempInfo({...tempInfo, city: e.target.value})}/>
+                            </div>
+                            <div className="grid grid-cols-5  items-center">
+                                <div className="px-4 py-2 font-semibold">Country</div>
+                                <input type='text' className="rounded col-span-2 col-start-2" value={tempInfo.country} onInput={e=>setTempInfo({...tempInfo, country: e.target.value})}/>
+                            </div>
+                        </div>
+                        <div className='col-span-2'>
+                            <h1 className='text-2xl bold mb-5 border-b-2'>Career</h1>
+                        </div>
+                        <div className="grid grid-cols-2  items-center col-start-1">
                             <div className="px-4 py-2 font-semibold">specialization</div>
                             <input type='text' className="rounded" value={tempInfo.specialization} onInput={e=>setTempInfo({...tempInfo, specialization: e.target.value})}/>
                         </div>

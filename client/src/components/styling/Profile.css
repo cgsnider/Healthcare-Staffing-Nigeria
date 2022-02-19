@@ -1,3 +1,7 @@
 .react-datepicker__input-container > input[type='text'] {
     width: inherit;
 }
+.popup-content {
+    height: 90%;
+    overflow-y: scroll;
+}
