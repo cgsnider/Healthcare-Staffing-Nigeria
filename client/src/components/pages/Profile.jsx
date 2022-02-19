@@ -5,34 +5,13 @@ import 'reactjs-popup/dist/index.css';
 import '../styling/Profile.css';
 import '../../App.css'
 import '../../index.css'
-<<<<<<< HEAD
-
-import { getProfileData } from '../../hooks/server';
-
-=======
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
->>>>>>> profilepopups
 import { useState, useEffect } from 'react';
 import {Drop2 , Drop} from '../parts/Drop';
 import placeholder from '../../images/profile-placeholder.jpg';
 export default function Profile(props) {
     const [profileInfo, setProfileInfo] = useState(
-<<<<<<< HEAD
-        {Email: "Loading...", 
-        PhoneNumber: "Loading...", 
-        Fname: "Loading...", 
-        LName: "Loading...",
-        Image: null,
-        MDCN: "Loading...", 
-        Verified: true,
-        City: "Loading...",
-        Country: "Loading...",
-        Street: "Loading...",
-        LicenseNumber: "Loading...",
-        Bio: "Loading...",
-        Resume: null,
-=======
         {email: "temp@example.com", 
         phoneNumber: "123-456-1111", 
         fname: "John",
@@ -47,7 +26,6 @@ export default function Profile(props) {
         verified: 1, //0=unverified, 1=pending, 2=verified
         resume: null,
         MDCN: 123456,
->>>>>>> profilepopups
     })
     const [newExperience, setNewExperience] = useState([]);
     /** {university: 'Vanderbilt University', startDate: '2022-02-01', endDate: '2022-02-26', degree: 'Bachelors Degree', count: 0}
@@ -63,10 +41,10 @@ export default function Profile(props) {
         }
     }, []);
     const fetchProfileData = async(isMounted) => {
-        let data = await getProfileData()
-        console.log(data[0][0])
-        if (isMounted) setProfileInfo(data[0][0])
-        else console.log('aborted setPostings on unmounted component')
+        //let data = await getProfileData()
+        //console.log(data[0][0])
+        //if (isMounted) setProfileInfo(data[0][0])
+        //else console.log('aborted setPostings on unmounted component')
     }
 
     const ApplyVerification =(e) => {
@@ -156,17 +134,7 @@ export default function Profile(props) {
                                 <li className="flex items-center py-3">
                                     <span>Varification Status</span>
                                     <span className="ml-auto">
-<<<<<<< HEAD
-                                        {(profileInfo.Verified === 2)?
-                                        <span className="bg-green-500 py-1 px-2 rounded text-white text-sm">Verified</span>
-                                        :
-                                        <div className="ml-auto mr-0">
-                                            <span className="bg-red-500 py-1 px-2 rounded text-white text-sm">Unverified</span>
-                                        </div>
-                                        }
-=======
                                         <VerifiedIcon />
->>>>>>> profilepopups
                                     </span>
                                 </li>
                                 <li className="flex items-center py-3">
@@ -200,19 +168,11 @@ export default function Profile(props) {
                                 <div className="grid md:grid-cols-2 text-sm">
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">First Name</div>
-<<<<<<< HEAD
-                                        <div className="px-4 py-2">{profileInfo.FName}</div>
-                                    </div>
-                                    <div className="grid grid-cols-2">
-                                        <div className="px-4 py-2 font-semibold">Last Name</div>
-                                        <div className="px-4 py-2">{profileInfo.LName}</div>
-=======
                                         <div className="px-4 py-2">{profileInfo.fname}</div>
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Last Name</div>
                                         <div className="px-4 py-2">{profileInfo.lname}</div>
->>>>>>> profilepopups
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">MDCN #</div>
@@ -220,24 +180,16 @@ export default function Profile(props) {
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Contact No.</div>
-<<<<<<< HEAD
-                                        <div className="px-4 py-2">{profileInfo.PhoneNumber /**not sure how to handle country code formatting */}</div>
-=======
                                         <div className="px-4 py-2">{`+234 ${profileInfo.phoneNumber}` /**not sure how to handle country code formatting */}</div>
->>>>>>> profilepopups
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Address</div>
-                                        <div className="px-4 py-2">{(`${profileInfo.Street}, ${profileInfo.City}, ${profileInfo.Country}`|| "None")}</div>
+                                <div className="px-4 py-2">{profileInfo.address}</div>
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Email</div>
                                         <div className="px-4 py-2">
-<<<<<<< HEAD
-                                            <a className="text-blue-800" href={`mailto:${profileInfo.Email}`}>{profileInfo.Email}</a>
-=======
                                             <a className="text-blue-800 overflow-clip" href={`mailto:${profileInfo.email}`}>{profileInfo.email}</a>
->>>>>>> profilepopups
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-2">
