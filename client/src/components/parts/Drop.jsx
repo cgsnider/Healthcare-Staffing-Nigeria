@@ -7,6 +7,7 @@ import '../styling/drop.css';
 import RingLoader from 'react-spinners/RingLoader';
 import PulseLoader from 'react-spinners/PulseLoader';
 import CustomMenuList from './MenuList'
+
 export function Drop(props){
 
     let myoptions;
@@ -37,7 +38,6 @@ export function Drop(props){
     const custom = {
         container: (provided, state) => ({
             ...provided,
-            width: 300,
         }),
         singleValue: (provided, state) => {
             const opacity=1;
@@ -46,7 +46,7 @@ export function Drop(props){
     }
 
     return (
-        <div className='pl-4'>
+        <div>
             <label htmlFor='posSelect'>{props.label}</label>
             <Select
                 id='posSelect'
@@ -54,6 +54,8 @@ export function Drop(props){
                 options={myoptions}
                 classNamePrefix="nick"
                 onChange={(e) => props.setPosition(e)}
+                placeholder={props.placeholder || "choose..."}
+                defaultValue={(props.initial)? {label: props.initial, value:''}:null}
             />
         </div>
     );
@@ -91,7 +93,7 @@ export function Drop2(props) {
         let isMounted = true;
         if((Options.length===0 && inputValue===''))
             fetchOptions(isMounted);
-        console.log(Options)
+        //console.log(Options)
         return () => {
             isMounted = false;
         };
@@ -104,7 +106,7 @@ export function Drop2(props) {
 
             if(isMounted){
                 setOptions(resJSON.map(item=> ({label: item.name, value: item.alpha_two_code})))
-                console.log(resJSON)
+                //console.log(resJSON)
             }
         } catch(e) {
             console.error(e)
@@ -122,7 +124,10 @@ export function Drop2(props) {
  
   // handle selection
     const handleChange = value => {
-        setSelectedValue(value);
+        console.log(value);
+        setSelectedValue(value)
+        props.setNewEducation(value.label)
+        
     }
 
     const filterOptions = (inputValue) => {
@@ -174,7 +179,7 @@ export function Drop2(props) {
             onChange={handleChange}
             filterOption={createFilter({ ignoreAccents: false})}
             captureMenuScroll={false}
-
+            placeholder={props.placeholder || "Select..."}
         />
         );
 
