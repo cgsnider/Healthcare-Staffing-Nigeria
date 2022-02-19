@@ -22,8 +22,8 @@ export default function Profile(props) {
         //address: "12334 Park Place\nLos Angeles CA 90001\nUSA", 
         DoB: "January 01, 2000", 
         specialization: "Cardiologist",
-        desc: "short description",
-        verified: 1, //0=unverified, 1=pending, 2=verified
+        bio: "short description",
+        verified: 0, //0=unverified, 1=pending, 2=verified
         resume: null,
         MDCN: 123456,
         street:'1234 Park place',
@@ -128,10 +128,10 @@ export default function Profile(props) {
                                 </div>
                                 
                             </div>
-                            <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">{profileInfo.FName}</h1>
-                            <h3 className="text-gray-600 font-lg text-semibold leading-6">{' '}</h3>
+                            <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">{profileInfo.fname}</h1>
+                            <h3 className="text-gray-600 font-lg text-semibold leading-6">{profileInfo.specialization}</h3>
                             <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">
-                                {profileInfo.Bio}</p>
+                                {profileInfo.bio}</p>
                             <ul
                                 className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                                 <li className="flex items-center py-3">
@@ -594,7 +594,7 @@ function AboutPopup(props) {
                             <input type='text' className="rounded" value={tempInfo.specialization} onInput={e=>setTempInfo({...tempInfo, specialization: e.target.value})}/>
                         </div>
                         <div className='my-4 w-full col-span-2'>
-                            <textarea className='w-full rounded' type='textarea' placeholder='temp' onInput={e=>setTempInfo({...tempInfo, desc: e.target.value})} value={tempInfo.desc}></textarea>
+                            <textarea className='w-full rounded' type='textarea' placeholder='temp' onInput={e=>setTempInfo({...tempInfo, bio: e.target.value})} value={tempInfo.desc}></textarea>
                         </div>
                     </div>
                     
