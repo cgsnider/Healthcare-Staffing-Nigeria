@@ -30,7 +30,10 @@ create procedure update_professional_profile (
     in i_email varchar(254),
     in i_college varchar(75),
     in i_phonenumber varchar(20),
-    in i_mdcn varchar(30)
+    in i_mdcn varchar(30),
+	in i_country varchar(50),
+	in i_city varchar(50),
+    in i_street varchar(50)
 ) begin 
 
 select id from professional where email = i_email_old into @id;
@@ -43,7 +46,9 @@ set
     college = i_college,
     phonenumber = i_phonenumber,
     mdcn = i_mdcn,
-    verified = 0
+    country = i_country,
+    city = i_city,
+    street = i_street
 where 
 	id = @id;
 
@@ -143,20 +148,62 @@ create procedure admin_create_professional (
     in i_fname varchar(55),
     in i_lname varchar(55),
     in i_email varchar(254),
-
     in i_verified int,
     in i_college varchar(75),
+    in i_licenseNumber varchar(50),
     in i_phonenumber varchar(20),
-    in i_mdcn varchar(30)
+    in i_mdcn varchar(30),
+	in i_country varchar(50),
+	in i_city varchar(50),
+    in i_street varchar(50),
+    in i_Bio text
 ) begin 
 insert into PERSON (id) value (null);
 
 select max(id) from PERSON into @id;
 
-insert into PROFESSIONAL(id, email, verified, fname, lname, college, phoneNumber, MDCN) value 
-	(@id, i_email, i_verified, i_fname, i_lname, i_college, i_phonenumber, i_mdcn);
+insert into PROFESSIONAL(id, email, verified, fname, lname, college,licenseNumber, phoneNumber, MDCN, country, city, street, Bio) value 
+	(@id, i_email, i_verified, i_fname, i_lname, i_college,i_licenseNumber, i_phonenumber, i_mdcn, i_country, i_city, i_street, i_Bio);
 
 insert into SYSTEMLOG (uid, act) value 
     (@id, 'admin_create_professional');
+end //
+DELIMITER ;
+
+drop procedure if exists verified_used;
+DELIMITER //
+create procedure verified_used (
+	in i_email varchar(255),
+    in i_id int,
+    in i_verified int
+) begin
+
+if (select count(*) FROM PROFESSIONAL where email = i_email or id = i_id) != 0
+then
+	if i_id is null or i_verified is null
+	then
+		select verified, id from PROFESSIONAL where email = i_email into @verfied, @id;
+	end if;
+		
+	if @verfied = -1
+	then
+		update PROFESSIONAL
+		set verified = 0
+		where id = @id;
+	end if;
+else 
+	if i_id is null or i_verified is null
+	then
+		select verified, id from FACILITY where email = i_email into @verfied, @id;
+	end if;
+		
+	if @verfied = -1
+	then
+		update FACILITY
+		set verified = 0
+		where id = @id;
+	end if;
+end if;
+
 end //
 DELIMITER ;

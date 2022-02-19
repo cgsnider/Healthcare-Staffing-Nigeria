@@ -20,8 +20,20 @@ router.get('/jobs', authenticate, (req, res) => {
             console.log(results);
             res.end(JSON.stringify(results))
         })
+    } else {
+        res.end(JSON.stringify('402'));
+    }
+})
 
-        // res.end(JSON.stringify(str))
+router.get('/profile', authenticate, (req, res) => {
+    if (req.user != 402) {
+        console.log("---------------------------------/profile------------------------------------------------------------")
+        let sql = `CALL get_profile('${req.user.email}')`
+        let query = db.query(sql, (err, results) => {
+            if (err) throw err;
+            console.log(results);
+            res.end(JSON.stringify(results))
+        })
     } else {
         res.end(JSON.stringify('402'));
     }

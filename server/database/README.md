@@ -12,7 +12,7 @@ How to initialize the local database:
    Otherwise follow guide in install link
 
 3. Now run the sql file.
-   On MacOS or Linux run: "mysql -uroot -p < $(pwd)/server/database/InitializeDB.sql" from the main directory
+   On MacOS or Linux run: "mysql -uroot -p < $(pwd)/server/database/initializeDB.sql" from the main directory
 
    When a password is requested you can just hit enter.
 

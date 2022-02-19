@@ -6,35 +6,40 @@ import '../styling/Profile.css';
 import '../../App.css'
 import '../../index.css'
 
+import { getProfileData } from '../../hooks/server';
 
 import { useState, useEffect } from 'react';
 import {Drop2 , Drop} from '../parts/Drop';
 import placeholder from '../../images/profile-placeholder.jpg';
 export default function Profile(props) {
     const [profileInfo, setProfileInfo] = useState(
-        {email: "temp@example.com", 
-        phoneNumber: "123-456-1111", 
-        name: "John Williams", 
-        professionalInfo: "", 
-        license: "", 
-        gender: "Male", 
-        address: "12334 Park Place, CA US", 
-        DoB: "January 01, 2000", 
-        specialization: "Cardiologist",
-        desc: "short description",
-        verified: true,
-        resume: null,
+        {Email: "Loading...", 
+        PhoneNumber: "Loading...", 
+        Fname: "Loading...", 
+        LName: "Loading...",
+        Image: null,
+        MDCN: "Loading...", 
+        Verified: true,
+        City: "Loading...",
+        Country: "Loading...",
+        Street: "Loading...",
+        LicenseNumber: "Loading...",
+        Bio: "Loading...",
+        Resume: null,
     })
 
     useEffect( ()=> {
         let isMounted = true;
-        fetchUserProfileData();
+        fetchProfileData(isMounted);
         return() => {
             isMounted = false
         }
     }, []);
-    const fetchUserProfileData = () => {
-
+    const fetchProfileData = async(isMounted) => {
+        let data = await getProfileData()
+        console.log(data[0][0])
+        if (isMounted) setProfileInfo(data[0][0])
+        else console.log('aborted setPostings on unmounted component')
     }
 
     const addExperience = (e) => {
@@ -61,10 +66,10 @@ export default function Profile(props) {
                                 </div>
                                 
                             </div>
-                            <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">{profileInfo.name}</h1>
-                            <h3 className="text-gray-600 font-lg text-semibold leading-6">{profileInfo.specialization}</h3>
+                            <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">{profileInfo.FName}</h1>
+                            <h3 className="text-gray-600 font-lg text-semibold leading-6">{' '}</h3>
                             <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">
-                                {profileInfo.desc}</p>
+                                {profileInfo.Bio}</p>
                             <ul
                                 className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                                 <li className="flex items-center py-3">
@@ -109,33 +114,33 @@ export default function Profile(props) {
                                 <div className="grid md:grid-cols-2 text-sm">
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">First Name</div>
-                                        <div className="px-4 py-2">{profileInfo.name.split(' ')[0]}</div>
+                                        <div className="px-4 py-2">{profileInfo.FName}</div>
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Last Name</div>
-                                        <div className="px-4 py-2">{profileInfo.name.split(' ')[1]}</div>
+                                        <div className="px-4 py-2">{profileInfo.LName}</div>
                                     </div>
                                     <div className="grid grid-cols-2">
-                                        <div className="px-4 py-2 font-semibold">Gender</div>
-                                        <div className="px-4 py-2">{profileInfo.gender}</div>
+                                        <div className="px-4 py-2 font-semibold">MDCN #</div>
+                                        <div className="px-4 py-2">{profileInfo.MDCN}</div>
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Contact No.</div>
-                                        <div className="px-4 py-2">{profileInfo.phoneNumber /**not sure how to handle country code formatting */}</div>
+                                        <div className="px-4 py-2">{profileInfo.PhoneNumber /**not sure how to handle country code formatting */}</div>
                                     </div>
                                     <div className="grid grid-cols-2">
-                                        <div className="px-4 py-2 font-semibold">Current Address</div>
-                                        <div className="px-4 py-2">{(profileInfo.address || "None")}</div>
+                                        <div className="px-4 py-2 font-semibold">Address</div>
+                                        <div className="px-4 py-2">{(`${profileInfo.Street}, ${profileInfo.City}, ${profileInfo.Country}`|| "None")}</div>
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Email.</div>
                                         <div className="px-4 py-2">
-                                            <a className="text-blue-800" href={`mailto:${profileInfo.email}`}>{profileInfo.email}</a>
+                                            <a className="text-blue-800" href={`mailto:${profileInfo.Email}`}>{profileInfo.Email}</a>
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-2">
-                                        <div className="px-4 py-2 font-semibold">Birthday</div>
-                                        <div className="px-4 py-2">{profileInfo.DoB}</div>
+                                        <div className="px-4 py-2 font-semibold">License #</div>
+                                        <div className="px-4 py-2">{profileInfo.LicenseNumber}</div>
                                     </div>
                                 </div>
                             </div>

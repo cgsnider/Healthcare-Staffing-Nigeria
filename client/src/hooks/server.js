@@ -8,8 +8,8 @@ export async function getJobPosts() {
 }
 
 
-export async function getProfessionalProfileData() {
-    return await getData('/user');
+export async function getProfileData() {
+    return await getData('/profile');
 }
 
 export async function postProfessionalProfileData(data) {
