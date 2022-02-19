@@ -75,7 +75,7 @@ export default function Profile(props) {
                                 <li className="flex items-center py-3">
                                     <span>Varification Status</span>
                                     <span className="ml-auto">
-                                        {(profileInfo.verified)?
+                                        {(profileInfo.Verified === 2)?
                                         <span className="bg-green-500 py-1 px-2 rounded text-white text-sm">Verified</span>
                                         :
                                         <div className="ml-auto mr-0">
