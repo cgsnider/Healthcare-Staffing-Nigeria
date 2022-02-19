@@ -1,7 +1,18 @@
 .react-datepicker__input-container > input[type='text'] {
     width: inherit;
 }
-.popup-content {
+.about-content {
+    margin: auto;
+    background: rgb(255, 255, 255);
+    width: 50%;
+    padding: 5px;
     height: 90%;
     overflow-y: scroll;
-}
+  }
+  .about-arrow {
+    color: rgb(255, 255, 255);
+  }
+  .about-overlay {
+    background: rgba(0, 0, 0, 0.5);
+  }
+ 

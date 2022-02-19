@@ -513,6 +513,7 @@ function AboutPopup(props) {
     const setInfo = props.setInfo
     const [DoB, setDoB] = useState(new Date(tempInfo.DoB));
     const options = {year: 'numeric', month: 'long', day: 'numeric'}
+    const contentStyle = { width: '90%' };
     const close = (e) => {
         setOpen(false)
     }
@@ -532,7 +533,7 @@ function AboutPopup(props) {
     return(
         <div>
             <button className="bg-green-500 rounded text-white text-sm py-1 px-3 ml-auto" onClick={e=>setOpen(true)}>Edit</button>
-            <Popup open={open} modal position='right center' onClose={close} >
+            <Popup open={open} modal position='right center' onClose={close} className="about">
                 <div className="text-gray-700 m-5 w-auto">
                     <h1 className='text-2xl bold mb-5 border-b-2'>Profile</h1>
                     <div className="grid md:grid-cols-2 text-sm gap-y-2">
@@ -577,7 +578,7 @@ function AboutPopup(props) {
                                 <div className="px-4 py-2 font-semibold">Street</div>
                                 <input type='text' className="rounded col-span-2 col-start-2" value={tempInfo.street} onInput={e=>setTempInfo({...tempInfo, street: e.target.value})}/>
                             </div>
-                            <div className="grid grid-cols-5  items-center">
+                            <div className="grid grid-cols-5  items-center my-2">
                                 <div className="px-4 py-2 font-semibold">City</div>
                                 <input type='text' className="rounded col-span-2 col-start-2" value={tempInfo.city} onInput={e=>setTempInfo({...tempInfo, city: e.target.value})}/>
                             </div>
@@ -594,7 +595,7 @@ function AboutPopup(props) {
                             <input type='text' className="rounded" value={tempInfo.specialization} onInput={e=>setTempInfo({...tempInfo, specialization: e.target.value})}/>
                         </div>
                         <div className='my-4 w-full col-span-2'>
-                            <textarea className='w-full rounded' type='textarea' placeholder='temp' onInput={e=>setTempInfo({...tempInfo, bio: e.target.value})} value={tempInfo.desc}></textarea>
+                            <textarea className='w-full rounded' type='textarea' placeholder='temp' onInput={e=>setTempInfo({...tempInfo, bio: e.target.value})} value={tempInfo.bio}></textarea>
                         </div>
                     </div>
                     
