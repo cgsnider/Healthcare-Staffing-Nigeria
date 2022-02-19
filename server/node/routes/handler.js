@@ -8,12 +8,7 @@ const authenticate = auth.authenticateToken;
 const router = express.Router();
 router.use(express.urlencoded({extended: false}));
 
-
-
-
-
 router.get('/jobs', authenticate, (req, res) => {
-    console.log('-----------------------------------------------------------------------------')
     if (req.user != 402) {
         let sql = `CALL get_postings('${req.user.email}', ${(req.body.category != undefined) ? "'req.body.category'" : 'null'})`
         let query = db.query(sql, (err, results) => {
