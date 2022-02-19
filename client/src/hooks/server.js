@@ -29,6 +29,7 @@ async function getData(url='') {
         credentials: 'same-origin',
         headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            ID: localStorage.getItem('IDToken'),
         },
         redirect: 'follow',
         referrerPolicy: 'no-referrer', 
@@ -49,6 +50,7 @@ async function postData(url = '', data ={}) {
             credentials: 'same-origin',
             headers: {
                 'Authorization': localStorage.getItem('accessToken'),
+                'ID': localStorage.getItem('IDToken'),
                 'Content-Type':'application/x-www-form-urlencoded'
             },
             redirect: 'follow',

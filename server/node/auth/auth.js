@@ -28,19 +28,24 @@ function authenticateToken(req, res, next) {
         return;
     }
     const authHeader = req.headers['authorization'];
+    const idHeader = req.headers['id'];
+
     const token = authHeader && authHeader.split(' ')[1];
     if (token == null) {
         return res.sendStatus(401);
     }
-    verifyUser(token)
+    verifyUser(token, idHeader)
         .then(out => {
-            req.user = out;
+            req.user = out['idRes'];
+            req.auth = out['asRes']
             next()})
-        .catch(req.user = 401);
+        .catch(fail => {
+            req.user = 401
+        });
     return;
 }
 
-async function verifyUser(token) {
+async function verifyUser(accessToken, idToken) {
     return new Promise((resolve, reject) => {
         if (!pems) {
             request({
@@ -59,30 +64,39 @@ async function verifyUser(token) {
                         var pem = jwkToPem(jwk);
                         pems[key_id] = pem;
                     } 
-                    ValidateToken(pems, token)
-                        .then(res => resolve(res))
+                    ValidateAccessToken(pems, accessToken)
+                        .then(asRes => 
+                            ValidateIDToken(pems, idToken)
+                                .then(idRes => resolve({idRes, asRes}))
+                                .catch(rej => reject(rej)))
                         .catch(rej => reject(rej));
                 } else {
                     reject();
                 }
             });
         } else {
-            ValidateToken(pems, token)
-                .then(res => resolve(res))
-                .catch(rej => reject(rej));
+            ValidateAccessToken(pems, accessToken)
+            .then(asRes => 
+                ValidateIDToken(pems, idToken)
+                    .then(idRes => resolve({idRes, asRes}))
+                    .catch(rej => reject(rej)))
+            .catch(rej => reject(rej));
         }
     });
 }
 
-    async function ValidateToken(pems, token) {
+    async function ValidateIDToken(pems, token) {
+        return ValidateToken(pems, token, 'id');
+    }
+
+    async function ValidateAccessToken(pems, token) {
+        return ValidateToken(pems, token, 'access');
+    }
+
+    async function ValidateToken(pems, token, type) {
         return new Promise(function(resolve, reject) {
 
             let decodedJWT = jwt.decode(token, {complete: true});
-
-            let result = {
-                success: false,
-                message: ""
-            }
             
             if (!decodedJWT) {
                 reject("Not a valid JWT token");
@@ -94,16 +108,18 @@ async function verifyUser(token) {
                 return;
             }
             //Reject the jwt if it's not an 'Access Token'
-            if (decodedJWT.payload.token_use != 'access') {
-                reject("Not an access token");
+            if (decodedJWT.payload.token_use != type) {
+                reject(`Not an ${type} token`);
                 return;
             }
-            //Get the kid from the token and retrieve corresponding PEM
+
             var kid = decodedJWT.header.kid;
             var pem = pems[kid];
             if (!pem) {
                 reject('Invalid access token');
+                return;
             }
+
             //Verify the signature of the JWT token to ensure it's really coming from your User Pool
             jwt.verify(token, pem, {issuer: iss}, function(err, user) {
                 if(err) {
@@ -113,8 +129,9 @@ async function verifyUser(token) {
                 }
             })
         });
-       
     }
+
+
 
 
 /**
