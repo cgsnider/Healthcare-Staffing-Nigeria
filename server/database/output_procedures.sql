@@ -77,3 +77,19 @@ create procedure get_posting_categories (
 end //
 DELIMITER ;
 
+drop procedure if exists get_education; 
+DELIMITER //
+create procedure get_education (
+	in i_email varchar(255)
+) begin
+	
+    select id from PROFESSIONAL where email = i_email into @id;
+    
+    select distinct * from EDUCATION where PID = @id; 
+    
+    insert into SYSTEMLOG (uid, act) value 
+		(@id, 'get_education');
+    
+end //
+DELIMITER ;
+

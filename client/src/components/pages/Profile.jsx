@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState, useEffect } from 'react';
 import {Drop2 , Drop} from '../parts/Drop';
 import placeholder from '../../images/profile-placeholder.jpg';
-import { getProfileData, postProfileData } from '../../hooks/server';
+import { getEducation, getProfileData, postEducation, postProfileData } from '../../hooks/server';
 export default function Profile(props) {
     const [profileInfo, setProfileInfo] = useState(
         {Email: "temp@example.com", 
@@ -39,6 +39,7 @@ export default function Profile(props) {
     useEffect( ()=> {
         let isMounted = true;
         fetchProfileData(isMounted);
+        fetchEducation(isMounted);
         return() => {
             isMounted = false
         }
@@ -47,6 +48,13 @@ export default function Profile(props) {
         let data = await getProfileData()
         console.log(data[0][0])
         if (isMounted) setProfileInfo(data[0][0])
+        else console.log('aborted setPostings on unmounted component')
+    }
+
+    const fetchEducation = async(isMounted) => {
+        let data = await getEducation()
+        console.log(data);
+        if (isMounted) setNewEducation([...data[0]]);
         else console.log('aborted setPostings on unmounted component')
     }
 
@@ -259,9 +267,9 @@ export default function Profile(props) {
                                         {(newEducation.length!=0)?newEducation.map((item, i)=> {
                                             return(
                                                 <li key={i} className='mb-4'>
-                                                    <div className='text-teal-600'>{`${item.degree} at ${item.university}`}</div>
-                                                    <div className='text-gray-500 text-xs'>{`${item.startDate} to ${item.endDate}`}</div>
-                                                    <div className='text-xs underline text-blue-600 hover:cursor-pointer' data-index={item.count} onClick={handleRemoveEducation}>Remove</div>
+                                                    <div className='text-teal-600'>{`${item.Degree} at ${item.College}`}</div>
+                                                    <div className='text-gray-500 text-xs'>{`${item.StartDate} to ${item.EndDate}`}</div>
+                                                    <div className='text-xs underline text-blue-600 hover:cursor-pointer' data-index={item.Count} onClick={handleRemoveEducation}>Remove</div>
                                                 </li>
                                             );
                                         })
@@ -299,12 +307,26 @@ function EducationPopup (props) {
         const setNewEducation = props.setNewEducation; 
         const options = {year: 'numeric', month: 'long'}
 
+        useEffect(() => {
+            console.log('NEW EDUCATION HFAKJDHSI: ', newEducation);
+            console.log('ADD EDUCATION HFAKJDHSI: ', addEducation);
+            if (addEducation.legth == 0) {
+                // Remove education
+            } else {
+                // Add Education
+                postEducation(addEducation);
+                // postEducationData()
+            }
+            // postEducationData()
+        }, [newEducation]);
+
         const handleClick = (e) => {
             if(degree===null||startDate===null||endDate===null||institute===''|| endDate<startDate){
                 console.log('error with inputs');
                 return;
             }
-            setAddEducation([...addEducation , {university: institute, startDate: startDate.toLocaleDateString('en-US', options), endDate: endDate.toLocaleDateString('en-US', options), degree: degree.label, count: count}]);
+            setAddEducation([...addEducation , {College: institute, StartDate: startDate.toLocaleDateString('en-US', options), EndDate: endDate.toLocaleDateString('en-US', options), Degree: degree.label, Count: count}], () =>  console.log('addEducation: ', addEducation));
+            console.log('addEducation 2: ', addEducation)
             setCount(count+1)
         }
 
@@ -319,8 +341,8 @@ function EducationPopup (props) {
             //console.log(newEducation)
         }
         const postEducationData = () => {
-            setNewEducation([...newEducation, ...addEducation], console.log(newEducation));
-            
+            setNewEducation([...newEducation, ...addEducation], () => console.log("New Education 2-2: ", newEducation));
+            console.log("New Education 2: ", newEducation)
             //postData(addEducation);
         }
         const closeReset = (e) => {
@@ -333,6 +355,7 @@ function EducationPopup (props) {
         }
         const save = (e) => {
             postEducationData()
+            console.log("Save Education: ", newEducation)
             setOpen(false)
         }
         const handleStartDate = (date) => {
@@ -377,9 +400,9 @@ function EducationPopup (props) {
                         {addEducation.map((item, i)=> {
                             return(
                                 <li key={i} className='border-b-2'>
-                                    <div className='text-teal-600'>{`${item.degree} at ${item.university}`}</div>
-                                    <div className='text-gray-500 text-xs'>{`${item.startDate} to ${item.endDate}`}</div>
-                                    <div className='text-xs underline text-blue-600 hover:cursor-pointer' data-index={item.count} onClick={handleRemove}>Remove</div>
+                                    <div className='text-teal-600'>{`${item.Degree} at ${item.College}`}</div>
+                                    <div className='text-gray-500 text-xs'>{`${item.StartDate} to ${item.EndDate}`}</div>
+                                    <div className='text-xs underline text-blue-600 hover:cursor-pointer' data-index={item.Count} onClick={handleRemove}>Remove</div>
                                 </li>
                             );
                         })}

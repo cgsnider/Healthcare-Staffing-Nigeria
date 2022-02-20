@@ -13,8 +13,8 @@ insert into PERSON (id) value (null);
 
 select max(id) from PERSON into @id;
 
-insert into PROFESSIONAL(id, email, verified, fname, lname, college, phoneNumber, MDCN) value 
-	(@id, i_email, -1, i_fname, i_lname, null, null, null);
+insert into PROFESSIONAL(id, email, verified, fname, lname, phoneNumber, MDCN) value 
+	(@id, i_email, -1, i_fname, i_lname, null, null);
 
 insert into SYSTEMLOG (uid, act) value 
     (@id, 'register_professional');
@@ -28,7 +28,6 @@ create procedure update_professional_profile (
     in i_fname varchar(55),
     in i_lname varchar(55),
     in i_email varchar(254),
-    in i_college varchar(75),
     in i_specialization varchar(50),
     in i_phonenumber varchar(20),
     in i_mdcn varchar(30),
@@ -44,7 +43,6 @@ set
 	email = i_email,
     fname = i_fname,
     lname = i_lname,
-    college = i_college,
     phonenumber = i_phonenumber,
     mdcn = i_mdcn,
     country = i_country,
@@ -153,7 +151,6 @@ create procedure admin_create_professional (
     in i_lname varchar(55),
     in i_email varchar(254),
     in i_verified int,
-    in i_college varchar(75),
     in i_licenseNumber varchar(50),
     in i_specialization varchar(50),
     in i_phonenumber varchar(20),
@@ -168,9 +165,9 @@ insert into PERSON (id) value (null);
 select max(id) from PERSON into @id;
 
 insert into PROFESSIONAL
-	(id, email, verified, fname, lname, college,licenseNumber, specialization, phoneNumber, MDCN, country, city, street, Bio) 
+	(id, email, verified, fname, lname,licenseNumber, specialization, phoneNumber, MDCN, country, city, street, Bio) 
 value 
-	(@id, i_email, i_verified, i_fname, i_lname, i_college,i_licenseNumber, i_specialization, i_phonenumber, i_mdcn, i_country, i_city, i_street, i_Bio);
+	(@id, i_email, i_verified, i_fname, i_lname, i_licenseNumber, i_specialization, i_phonenumber, i_mdcn, i_country, i_city, i_street, i_Bio);
 
 insert into SYSTEMLOG (uid, act) value 
     (@id, 'admin_create_professional');
@@ -211,6 +208,28 @@ else
 		where id = @id;
 	end if;
 end if;
+
+end //
+DELIMITER ;
+
+drop procedure if exists add_education;
+DELIMITER //
+create procedure add_education (
+	in i_email varchar(255),
+	in i_college varchar(255),
+    in i_degree varchar(20),
+    in i_endDate varchar(15),
+    in i_startDate varchar(15)
+) begin 
+	
+    select id from PROFESSIONAL where email = i_email into @id;
+    
+    insert into EDUCATION (PID, College, Degree, EndDate, StartDate) value
+		(@id, i_college, i_degree, i_endDate, i_startDate);
+        
+	insert into SYSTEMLOG (uid, act) value 
+		(@id, 'add_education');
+	
 
 end //
 DELIMITER ;

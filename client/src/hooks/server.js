@@ -1,3 +1,4 @@
+import {arrayObject} from './util.js';
 
 /**
  * Gets Job Postings from server
@@ -7,13 +8,22 @@ export async function getJobPosts(category) {
     return await getData('/jobs');
 }
 
-
 export async function getProfileData() {
     return await getData('/profile');
 }
 
 export async function postProfileData(data) {
     return await postData('/profile', data)
+}
+
+export async function postEducation(data) {
+    if (data.length == 0) return;
+    return await postData('/education', arrayObject(data))
+}
+
+export async function getEducation() {
+    console.log('GET EDUCATION');
+    return await getData('/education');
 }
 
 export async function getCategories() {
@@ -23,6 +33,7 @@ export async function getCategories() {
 export async function postProfessionalProfileData(data) {
     return await postData('/user', data);
 }
+
 
 /**
  * Generic method for making a GET request. 

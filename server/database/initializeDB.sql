@@ -5,6 +5,7 @@ create table PERSON (
   ID int not null AUTO_INCREMENT,
   primary key(ID)
 );
+
 create table PROFESSIONAL (
   ID int not null,
   Email varchar(254) not null unique,
@@ -12,7 +13,6 @@ create table PROFESSIONAL (
   Image longblob,
   FName varchar(55),
   LName varchar(55),
-  College varChar(75),
   PhoneNumber varchar(20),
   LicenseNumber varchar(50),
   Specialization varchar(50),
@@ -25,11 +25,15 @@ create table PROFESSIONAL (
   foreign key (ID) references PERSON(ID)
 );
 
--- create table EDUCATION (
--- 	College varchar(255),
---     Degree char(1),
---     
--- )
+create table EDUCATION (
+	PID int not null,
+	College varchar(255),
+    Degree varchar(20),
+    StartDate varchar(15),
+    EndDate varchar(15),
+    primary key(PID, College, Degree, StartDate, EndDate),
+    foreign key(PID) references PROFESSIONAL(ID)
+);
 
 create table COVERLETTER (
   OwnerId int not null,
