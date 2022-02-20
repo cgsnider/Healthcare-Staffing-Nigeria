@@ -57,7 +57,7 @@ async function postData(url = '', data ={}) {
             cache: 'no-cache',
             credentials: 'same-origin',
             headers: {
-                'Authorization': localStorage.getItem('accessToken'),
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
                 'ID': localStorage.getItem('IDToken'),
                 'Content-Type':'application/x-www-form-urlencoded'
             },

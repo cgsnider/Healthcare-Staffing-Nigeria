@@ -319,7 +319,8 @@ function EducationPopup (props) {
             //console.log(newEducation)
         }
         const postEducationData = () => {
-            setNewEducation([...newEducation, ...addEducation]);
+            setNewEducation([...newEducation, ...addEducation], console.log(newEducation));
+            
             //postData(addEducation);
         }
         const closeReset = (e) => {

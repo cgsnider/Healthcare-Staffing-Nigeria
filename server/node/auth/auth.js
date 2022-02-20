@@ -23,10 +23,12 @@ const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 var pems;
 
 function authenticateToken(req, res, next) {
+
     if (DISABLE_AUTH) {
         next();
         return;
     }
+
     const authHeader = req.headers['authorization'];
     const idHeader = req.headers['id'];
 
@@ -36,11 +38,13 @@ function authenticateToken(req, res, next) {
     }
     verifyUser(token, idHeader)
         .then(out => {
+
             req.user = out['idRes'];
             req.auth = out['asRes']
             next()})
         .catch(fail => {
             req.user = 401
+
         });
     return;
 }

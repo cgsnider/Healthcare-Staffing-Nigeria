@@ -44,7 +44,7 @@ router.get('/categories', authenticate, (req, res) => {
     }
 });
 
-router.post('/profile', (req, res) => {
+router.post('/profile', authenticate, (req, res) => {
     data = req.body;
     let params = `'${data.Email}', '${data.FName}', '${data.LName}', '${data.Email}', '${data.College}',`
     params += `'${data.Specialization}', '${data.PhoneNumber}', '${data.MDCN}', '${data.Country}', '${data.City}', '${data.Street}'`

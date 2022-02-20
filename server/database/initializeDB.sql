@@ -24,6 +24,13 @@ create table PROFESSIONAL (
   primary key(ID),
   foreign key (ID) references PERSON(ID)
 );
+
+-- create table EDUCATION (
+-- 	College varchar(255),
+--     Degree char(1),
+--     
+-- )
+
 create table COVERLETTER (
   OwnerId int not null,
   Title varchar(200),
