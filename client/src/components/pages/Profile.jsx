@@ -10,25 +10,25 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState, useEffect } from 'react';
 import {Drop2 , Drop} from '../parts/Drop';
 import placeholder from '../../images/profile-placeholder.jpg';
+import { getProfileData } from '../../hooks/server';
 export default function Profile(props) {
     const [profileInfo, setProfileInfo] = useState(
-        {email: "temp@example.com", 
-        phoneNumber: "123-456-1111", 
-        fname: "John",
-        lname: "Williams",
+        {Email: "temp@example.com", 
+        PhoneNumber: "123-456-1111", 
+        FName: "John",
+        LName: "Williams",
         professionalInfo: "", 
-        license: "", 
-        gender: "Male", 
-        //address: "12334 Park Place\nLos Angeles CA 90001\nUSA", 
+        LicenseNumber: "", 
+        Gender: "Male", 
         DoB: "January 01, 2000", 
-        specialization: "Cardiologist",
-        bio: "short description",
-        verified: 0, //0=unverified, 1=pending, 2=verified
+        Specialization: "Cardiologist",
+        Bio: "short description",
+        Verified: 0, //-1=neverLoggedIn  0=unverified, 1=pending, 2=verified
         resume: null,
         MDCN: 123456,
-        street:'1234 Park place',
-        city:'Los Angeles',
-        country:'United States',
+        Street:'1234 Park place',
+        City:'Los Angeles',
+        Country:'United States',
     })
     const [newExperience, setNewExperience] = useState([]);
     /** {university: 'Vanderbilt University', startDate: '2022-02-01', endDate: '2022-02-26', degree: 'Bachelors Degree', count: 0}
@@ -44,10 +44,10 @@ export default function Profile(props) {
         }
     }, []);
     const fetchProfileData = async(isMounted) => {
-        //let data = await getProfileData()
-        //console.log(data[0][0])
-        //if (isMounted) setProfileInfo(data[0][0])
-        //else console.log('aborted setPostings on unmounted component')
+        let data = await getProfileData()
+        console.log(data[0][0])
+        if (isMounted) setProfileInfo(data[0][0])
+        else console.log('aborted setPostings on unmounted component')
     }
 
     const ApplyVerification =(e) => {
@@ -69,14 +69,14 @@ export default function Profile(props) {
     }
 
     const Verificationdrop = (props) => {
-        if(profileInfo.verified===0){
+        if(profileInfo.Verified===0){
             return(
                 <div className='w-full h-8 text-center content-center bg-amber-500'> 
                     <span>you are not verified. You will have limited access until you become verified. to submit for verification click <span className='text-blue-600 underline hover:cursor-pointer' onClick={submitVerification}>here</span></span>
                 </div>
             );
         }
-        if(profileInfo.verified===1){
+        else if(profileInfo.Verified===1){
             return(
                 <div className='w-full h-8 text-center content-center bg-amber-500'> 
                     <span>verification pending. access will be limited until you are verified</span>
@@ -87,21 +87,21 @@ export default function Profile(props) {
     }
 
     const VerifiedIcon = (props) => {
-        if(profileInfo.verified==0) {
+        if(profileInfo.Verified==0) {
             return(
                 <div className="ml-auto mr-0">
                     <span className="bg-red-500 py-1 px-2 rounded text-white text-sm">Unverified</span>
                 </div>
             );
         }
-        if(profileInfo.verified==1) {
+        if(profileInfo.Verified==1) {
             return(
                 <div className="ml-auto mr-0">
                     <span className="bg-amber-500 py-1 px-2 rounded text-white text-sm">Pending</span>
                 </div>
             );
         }
-        if(profileInfo.verified==2) {
+        if(profileInfo.Verified==2) {
             return(
                 <div className="ml-auto mr-0">
                     <span className="bg-green-500 py-1 px-2 rounded text-white text-sm">Verified</span>
@@ -128,14 +128,14 @@ export default function Profile(props) {
                                 </div>
                                 
                             </div>
-                            <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">{profileInfo.fname}</h1>
-                            <h3 className="text-gray-600 font-lg text-semibold leading-6">{profileInfo.specialization}</h3>
+                            <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">{profileInfo.FName}</h1>
+                            <h3 className="text-gray-600 font-lg text-semibold leading-6">{profileInfo.Specialization}</h3>
                             <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">
-                                {profileInfo.bio}</p>
+                                {profileInfo.Bio}</p>
                             <ul
                                 className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                                 <li className="flex items-center py-3">
-                                    <span>Varification Status</span>
+                                    <span>Verification Status</span>
                                     <span className="ml-auto">
                                         <VerifiedIcon />
                                     </span>
@@ -171,11 +171,11 @@ export default function Profile(props) {
                                 <div className="grid md:grid-cols-2 text-sm">
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">First Name</div>
-                                        <div className="px-4 py-2">{profileInfo.fname}</div>
+                                        <div className="px-4 py-2">{profileInfo.FName}</div>
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Last Name</div>
-                                        <div className="px-4 py-2">{profileInfo.lname}</div>
+                                        <div className="px-4 py-2">{profileInfo.LName}</div>
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">MDCN #</div>
@@ -183,16 +183,16 @@ export default function Profile(props) {
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Contact No.</div>
-                                        <div className="px-4 py-2">{`+234 ${profileInfo.phoneNumber}` /**not sure how to handle country code formatting */}</div>
+                                        <div className="px-4 py-2">{`+234 ${profileInfo.PhoneNumber}` /**not sure how to handle country code formatting */}</div>
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Address</div>
-                                        <div className="px-4 py-2">{(`${profileInfo.street}\n ${profileInfo.city}, ${profileInfo.country}`|| "None")}</div>
+                                        <div className="px-4 py-2">{(`${profileInfo.Street}\n ${profileInfo.City}, ${profileInfo.Country}`|| "None")}</div>
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Email</div>
                                         <div className="px-4 py-2">
-                                            <a className="text-blue-800 overflow-clip" href={`mailto:${profileInfo.email}`}>{profileInfo.email}</a>
+                                            <a className="text-blue-800 overflow-clip" href={`mailto:${profileInfo.Email}`}>{profileInfo.Email}</a>
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-2">

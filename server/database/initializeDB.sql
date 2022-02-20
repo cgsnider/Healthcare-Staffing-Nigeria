@@ -15,6 +15,7 @@ create table PROFESSIONAL (
   College varChar(75),
   PhoneNumber varchar(20),
   LicenseNumber varchar(50),
+  Specialization varchar(50),
   MDCN varchar(30),
   City varchar(50),
   Country varchar(50),

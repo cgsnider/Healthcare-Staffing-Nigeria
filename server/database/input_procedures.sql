@@ -29,6 +29,7 @@ create procedure update_professional_profile (
     in i_lname varchar(55),
     in i_email varchar(254),
     in i_college varchar(75),
+    in i_specialization varchar(50),
     in i_phonenumber varchar(20),
     in i_mdcn varchar(30),
 	in i_country varchar(50),
@@ -48,7 +49,8 @@ set
     mdcn = i_mdcn,
     country = i_country,
     city = i_city,
-    street = i_street
+    street = i_street,
+    specialization = i_specialization
 where 
 	id = @id;
 
@@ -151,6 +153,7 @@ create procedure admin_create_professional (
     in i_verified int,
     in i_college varchar(75),
     in i_licenseNumber varchar(50),
+    in i_specialization varchar(50),
     in i_phonenumber varchar(20),
     in i_mdcn varchar(30),
 	in i_country varchar(50),
@@ -162,8 +165,10 @@ insert into PERSON (id) value (null);
 
 select max(id) from PERSON into @id;
 
-insert into PROFESSIONAL(id, email, verified, fname, lname, college,licenseNumber, phoneNumber, MDCN, country, city, street, Bio) value 
-	(@id, i_email, i_verified, i_fname, i_lname, i_college,i_licenseNumber, i_phonenumber, i_mdcn, i_country, i_city, i_street, i_Bio);
+insert into PROFESSIONAL
+	(id, email, verified, fname, lname, college,licenseNumber, specialization, phoneNumber, MDCN, country, city, street, Bio) 
+value 
+	(@id, i_email, i_verified, i_fname, i_lname, i_college,i_licenseNumber, i_specialization, i_phonenumber, i_mdcn, i_country, i_city, i_street, i_Bio);
 
 insert into SYSTEMLOG (uid, act) value 
     (@id, 'admin_create_professional');
