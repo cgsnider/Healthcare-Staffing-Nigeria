@@ -12,6 +12,10 @@ export async function getProfileData() {
     return await getData('/profile');
 }
 
+export async function postProfileData(data) {
+    return await postData('/profile', data)
+}
+
 export async function getCategories() {
     return await getData('/categories')
 }
@@ -47,8 +51,7 @@ async function getData(url='', body={}) {
 async function postData(url = '', data ={}) {
     return new Promise(function (resolve, reject) {
         const formBody = Object.keys(data).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key])).join('&');
-
-        const response = fetch(url, {
+        const response = fetch(`api${url}`, {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -61,6 +64,6 @@ async function postData(url = '', data ={}) {
             redirect: 'follow',
             referrerPolicy: 'no-referrer', 
             body: formBody
-        }).then(response => resolve(response));
+        }).then(response => { console.log(response); resolve(response)});
     });
 }

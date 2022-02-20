@@ -37,7 +37,7 @@ create procedure update_professional_profile (
     in i_street varchar(50)
 ) begin 
 
-select id from professional where email = i_email_old into @id;
+select ID from PROFESSIONAL where email = i_email_old into @id;
 
 update PROFESSIONAL 
 set 
@@ -55,7 +55,9 @@ where
 	id = @id;
 
 insert into SYSTEMLOG (uid, act) value 
-    (id, 'update_professional_profile');
+    (@id, 'update_professional_profile');
+    
+select 200;
 end //
 DELIMITER ;
 

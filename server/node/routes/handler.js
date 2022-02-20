@@ -18,7 +18,7 @@ router.get('/jobs', authenticate, (req, res) => {
     } else {
         res.end(JSON.stringify('402'));
     }
-})
+});
 
 router.get('/profile', authenticate, (req, res) => {
     if (req.user != 402) {
@@ -30,11 +30,11 @@ router.get('/profile', authenticate, (req, res) => {
     } else {
         res.end(JSON.stringify('402'));
     }
-})
+});
 
 router.get('/categories', authenticate, (req, res) => {
     if (req.user != 402) {
-        let sql = `CALL get_posting_categories`
+        let sql = `CALL get_posting_categories`;
         let query = db.query(sql, (err, results) => {
             if (err) throw err;
             res.end(JSON.stringify(results))
@@ -42,6 +42,21 @@ router.get('/categories', authenticate, (req, res) => {
     } else {
         res.end(JSON.stringify('402'));
     }
+});
+
+router.post('/profile', (req, res) => {
+    data = req.body;
+    let params = `'${data.Email}', '${data.FName}', '${data.LName}', '${data.Email}', '${data.College}',`
+    params += `'${data.Specialization}', '${data.PhoneNumber}', '${data.MDCN}', '${data.Country}', '${data.City}', '${data.Street}'`
+    const sql = `CALL update_professional_profile(${params})`;
+    console.log(data);
+    console.log(params);
+    console.log(sql)
+    let query = db.query(sql, (err, results) => {
+        if (err) throw err;
+        res.end(JSON.stringify(results))
+    })
+
 })
 
 
@@ -61,7 +76,7 @@ router.post('/register', (req, res) => {
         console.log('Failed to Create user')
         res.status(200).send('Failed to Create user')
     }
-})
+});
 
 router.post('/login', (req, res) => {
     const {email, password} = req.body;
@@ -70,6 +85,6 @@ router.post('/login', (req, res) => {
     auth.SignIn({email, password});
     res.status(200).send("recieved");
 
-})
+});
 
 module.exports = router;

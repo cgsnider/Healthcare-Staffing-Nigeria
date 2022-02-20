@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState, useEffect } from 'react';
 import {Drop2 , Drop} from '../parts/Drop';
 import placeholder from '../../images/profile-placeholder.jpg';
-import { getProfileData } from '../../hooks/server';
+import { getProfileData, postProfileData } from '../../hooks/server';
 export default function Profile(props) {
     const [profileInfo, setProfileInfo] = useState(
         {Email: "temp@example.com", 
@@ -506,23 +506,29 @@ function ExperiencePopup(props) {
 }
 
 function AboutPopup(props) {
-    const [open, setOpen] = useState(false)
-    const profileInfo = props.info;
-    const [tempInfo, setTempInfo] = useState({...profileInfo})
+    const [open, setOpen] = useState({open: false, fresh: true})
+    const [tempInfo, setTempInfo] = useState({...props.info})
     const [gender, setGender] = useState({label: tempInfo.gender})
     const setInfo = props.setInfo
     const [DoB, setDoB] = useState(new Date(tempInfo.DoB));
     const options = {year: 'numeric', month: 'long', day: 'numeric'}
     const contentStyle = { width: '90%' };
+    
+    useEffect( () => {
+        if (open.fresh) {
+            setOpen({...open, fresh:false})
+            setTempInfo(props.info);
+        }
+    });
+    
     const close = (e) => {
-        setOpen(false)
+        setOpen({...open, open:false})
     }
     const save = (e) => {
-        //postData(profileInfo)
-        //console.log(gender.label)
-        //setTempInfo({...tempInfo, gender: gender.label})
+        console.log(tempInfo)
+        postProfileData(tempInfo)
         setInfo({...tempInfo, gender: gender. label});
-        setOpen(false);
+        setOpen({...open, open:false});
     }
     const handleDate = (date) => {
         setDoB(date);
@@ -532,30 +538,30 @@ function AboutPopup(props) {
 
     return(
         <div>
-            <button className="bg-green-500 rounded text-white text-sm py-1 px-3 ml-auto" onClick={e=>setOpen(true)}>Edit</button>
-            <Popup open={open} modal position='right center' onClose={close} className="about">
+            <button className="bg-green-500 rounded text-white text-sm py-1 px-3 ml-auto" onClick={e=>setOpen({fresh:true, open:true})}>Edit</button>
+            <Popup open={open.open} modal position='right center' onClose={close} className="about">
                 <div className="text-gray-700 m-5 w-auto">
                     <h1 className='text-2xl bold mb-5 border-b-2'>Profile</h1>
                     <div className="grid md:grid-cols-2 text-sm gap-y-2">
                         <div className="grid grid-cols-2  items-center">
                             <div className="px-4 py-2 font-semibold">First Name</div>
-                            <input type='text' className="rounded" value={tempInfo.fname} onInput={e=>setTempInfo({...tempInfo, fname: e.target.value})}/>
+                            <input type='text' className="rounded" value={tempInfo.FName} onInput={e=>setTempInfo({...tempInfo, FName: e.target.value})}/>
                         </div>
                         <div className="grid grid-cols-2  items-center">
                             <div className="px-4 py-2 font-semibold">Last Name</div>
-                            <input type='text' className="rounded" value={tempInfo.lname} onInput={e=>setTempInfo({...tempInfo, lname: e.target.value})}/>
+                            <input type='text' className="rounded" value={tempInfo.LName} onInput={e=>setTempInfo({...tempInfo, LName: e.target.value})}/>
                         </div>
                         <div className="grid grid-cols-2  items-center">
                             <div className="px-4 py-2 font-semibold">Gender</div>
-                            <Drop options={[{label:'Male', value: 'M'},{label: 'Female', Value:'F'},{label: 'Non-binary', value:'NB'},{label:'Other', value:'O'}]} initial={tempInfo.gender} setPosition={setGender}/>
+                            <Drop options={[{label:'Male', value: 'M'},{label: 'Female', Value:'F'},{label: 'Non-binary', value:'NB'},{label:'Other', value:'O'}]} initial={tempInfo.Gender} setPosition={setGender}/>
                         </div>
                         <div className="grid grid-cols-2  items-center">
                             <div className="px-4 py-2 font-semibold">Contact No.</div>
-                            <input type='text' className="rounded" value={tempInfo.phoneNumber} onInput={e=>setTempInfo({...tempInfo, phoneNumber: e.target.value})}/>
+                            <input type='text' className="rounded" value={tempInfo.PhoneNumber} onInput={e=>setTempInfo({...tempInfo, PhoneNumber: e.target.value})}/>
                         </div>
                         <div className="grid grid-cols-2  items-center">
                             <div className="px-4 py-2 font-semibold">Email</div>
-                            <input type='text' className="rounded" value={tempInfo.email} onInput={e=>setTempInfo({...tempInfo, email: e.target.value})}/>
+                            <input type='text' className="rounded" value={tempInfo.Email} onInput={e=>setTempInfo({...tempInfo, Email: e.target.value})}/>
                         </div>
                         <div className="grid grid-cols-2  items-center">
                             <div className="px-4 py-2 font-semibold">Birthday</div>
@@ -576,15 +582,15 @@ function AboutPopup(props) {
                             <h1 className='text-2xl bold mb-5 border-b-2'>Address</h1>
                             <div className="grid grid-cols-5  items-center">
                                 <div className="px-4 py-2 font-semibold">Street</div>
-                                <input type='text' className="rounded col-span-2 col-start-2" value={tempInfo.street} onInput={e=>setTempInfo({...tempInfo, street: e.target.value})}/>
+                                <input type='text' className="rounded col-span-2 col-start-2" value={tempInfo.Street} onInput={e=>setTempInfo({...tempInfo, Street: e.target.value})}/>
                             </div>
                             <div className="grid grid-cols-5  items-center my-2">
                                 <div className="px-4 py-2 font-semibold">City</div>
-                                <input type='text' className="rounded col-span-2 col-start-2" value={tempInfo.city} onInput={e=>setTempInfo({...tempInfo, city: e.target.value})}/>
+                                <input type='text' className="rounded col-span-2 col-start-2" value={tempInfo.City} onInput={e=>setTempInfo({...tempInfo, City: e.target.value})}/>
                             </div>
                             <div className="grid grid-cols-5  items-center">
                                 <div className="px-4 py-2 font-semibold">Country</div>
-                                <input type='text' className="rounded col-span-2 col-start-2" value={tempInfo.country} onInput={e=>setTempInfo({...tempInfo, country: e.target.value})}/>
+                                <input type='text' className="rounded col-span-2 col-start-2" value={tempInfo.Country} onInput={e=>setTempInfo({...tempInfo, Country: e.target.value})}/>
                             </div>
                         </div>
                         <div className='col-span-2'>
@@ -592,10 +598,10 @@ function AboutPopup(props) {
                         </div>
                         <div className="grid grid-cols-2  items-center col-start-1">
                             <div className="px-4 py-2 font-semibold">specialization</div>
-                            <input type='text' className="rounded" value={tempInfo.specialization} onInput={e=>setTempInfo({...tempInfo, specialization: e.target.value})}/>
+                            <input type='text' className="rounded" value={tempInfo.Specialization} onInput={e=>setTempInfo({...tempInfo, Specialization: e.target.value})}/>
                         </div>
                         <div className='my-4 w-full col-span-2'>
-                            <textarea className='w-full rounded' type='textarea' placeholder='temp' onInput={e=>setTempInfo({...tempInfo, bio: e.target.value})} value={tempInfo.bio}></textarea>
+                            <textarea className='w-full rounded' type='textarea' placeholder='temp' onInput={e=>setTempInfo({...tempInfo, Bio: e.target.value})} value={tempInfo.Bio}></textarea>
                         </div>
                     </div>
                     
