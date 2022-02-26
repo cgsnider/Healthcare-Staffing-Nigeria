@@ -34,13 +34,16 @@ function Jobs (props) {
     const fetchPostings = async(isMounted) => {
         let items = await getJobPosts()
         .catch(err=>setFetchError(true))
-        if (isMounted) setPostings(items[0]);
+        if (isMounted) {
+            setPostings(items[0]);
+            console.log(items[0]);
+        }
         else console.log('aborted setPostings on unmounted component')
     }
 
     const fetchCategories = async(isMounted) => {
         let items = await getCategories()
-        .catch(err=>setFetchError(true))
+        .catch(err=>{setFetchError(true); console.error(err);})
         if (isMounted) {
             items[0].unshift({Category:'All'})
             console.log('list: ',items[0])

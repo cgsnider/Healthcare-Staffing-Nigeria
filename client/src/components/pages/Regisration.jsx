@@ -2,7 +2,7 @@
 import React, {useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import  { LoginUser, RegisterUser } from '../../hooks/cognito';
-
+import Popup from 'reactjs-popup';
 import RegisterFac from '../parts/RegisterFac';
 import RegisterProf from '../parts/RegisterProf';
 import TopBar from '../parts/TopBar';
@@ -14,6 +14,7 @@ import '../styling/ToggleSwitch.css'
 function Regisration (props){
 
     const users = ['Professional','Facility'];
+    const [ttOpen, setOpen] = useState(false);
     const [user, setUser] = useState(users[0])
     const [formData, setData] = useState({
         fname:'',
@@ -69,33 +70,43 @@ function Regisration (props){
         navigate('/jobs', {replace: true})
     }
 
-
+    const Tooltip = (props) => (
+        <div>
+            <Popup open={props.open} position='right center' tooltip>
+                <ul>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                </ul>
+            </Popup>
+        </div>
+    )
     return (
 
             <div className='regisration p-0 m-0'>
-                <div class="font-mono bg-gradient-to-br from-cmg-light to-cmg-dark h-screen">
-                    <div class="container mx-auto">
-                        <div class="flex justify-center px-6 my-0 h-screen">
-                            <div class="w-full xl:w-3/4 lg:w-11/12 flex">
+                <div className="font-mono bg-gradient-to-br from-cmg-light to-cmg-dark h-screen">
+                    <div className="container mx-auto">
+                        <div className="flex justify-center px-6 my-0 h-screen">
+                            <div className="w-full xl:w-3/4 lg:w-11/12 flex">
                                 <div
-                                class="w-full h-auto bg-gray-400 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg bg-logo"
+                                className="w-full h-auto bg-gray-400 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg bg-logo"
 					            ></div>
-                                <div class="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">       
-                                    <h3 class="pt-4 text-2xl text-center">Create an Account!</h3>
-                                    <div class="flex justify-center mt-6">
+                                <div className="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">       
+                                    <h3 className="pt-4 text-2xl text-center">Create an Account!</h3>
+                                    <div className="flex justify-center mt-6">
                                         <label>Professional</label>
-                                        <div class="mx-4" >
-                                            <label htmlFor="toogleButton" class="flex items-center cursor-pointer" >
+                                        <div className="mx-4" >
+                                            <label htmlFor="toogleButton" className="flex items-center cursor-pointer" >
 
-                                            <div class="relative" >
-                                            <input id="toogleButton" type="checkbox" class="hidden" onClick={toggleUser}/>
+                                            <div className="relative" >
+                                            <input id="toogleButton" type="checkbox" className="hidden" onClick={toggleUser}/>
 
                                             <div
-                                                class="toggle-path bg-gray-200 w-9 h-5 rounded-full shadow-inner"
+                                                className="toggle-path bg-gray-200 w-9 h-5 rounded-full shadow-inner"
                                             ></div>
 
                                             <div
-                                                class="toggle-circle absolute w-3.5 h-3.5 bg-white rounded-full shadow inset-y-0 left-0"
+                                                className="toggle-circle absolute w-3.5 h-3.5 bg-white rounded-full shadow inset-y-0 left-0"
                                             ></div>
                                             </div>
                                             </label>
@@ -103,40 +114,56 @@ function Regisration (props){
                                         </div>
                                         <label>Organization</label>
                                     </div>
-                                    <form class="px-8 pt-6 pb-8 mb-4 bg-white rounded">
+                                    <form className="px-8 pt-6 pb-8 mb-4 bg-white rounded">
                                         {(user === users[0]) ? <RegisterProf data={formData} setData={setData}/> : <RegisterFac data={formData} setData={setData}/>}
-                                        <div class="mb-4 mt-7">
-                                            <label class="block mb-2 text-sm font-bold text-gray-700" htmlFor="email">
+                                        <div className="mb-4 mt-7">
+                                            <label className="block mb-2 text-sm font-bold text-gray-700" htmlFor="email">
                                                 Email
                                             </label>
                                             <input
-                                                class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                                                className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                                 id="email"
                                                 type="email"
                                                 placeholder="Email"
                                                 onInput={(e)=>setData({...formData, email: e.target.value})}
                                             />
                                         </div>
-                                        <div class="mb-4 md:flex md:justify-between">
-                                            <div class="mb-4 md:mr-2 md:mb-0">
-                                                <label class="block mb-2 text-sm font-bold text-gray-700" htmlFor="password">
+                                        <div className="mb-4 md:flex md:justify-between">
+                                            <div className="mb-4 md:mr-2 md:mb-0">
+                                                <label className="block mb-2 text-sm font-bold text-gray-700" htmlFor="password">
                                                     Password
                                                 </label>
-                                                <input
-                                                    class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                                                    id="password"
-                                                    type="password"
-                                                    placeholder="******************"
-                                                    onInput={(e)=>setData({...formData, password: e.target.value})}
-                                                />
-                                                <p class="text-xs italic text-red-500 hidden">Please choose a password.</p>
+                                                <Popup trigger={<input
+                                                                className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                                                                id="password"
+                                                                type="password"
+                                                                placeholder="******************"
+                                                                onInput={(e)=>setData({...formData, password: e.target.value})}
+                                                                onFocus={(e)=>setOpen(true)}
+                                                                onBlur={(e)=>setOpen(false)}
+                                                                />}
+                                                    position='right center' 
+                                                    on={'focus'}
+                                                    role='tooltip'
+                                                    closeOnDocumentClick>
+                                                    <ul className='list-disc list-inside leading-4 font-mono'>
+                                                        <li>8+ characters</li>
+                                                        <li>uppercase letter</li>
+                                                        <li>lowercase letter</li>
+                                                        <li>number</li>
+                                                        <li>special character</li>
+                                                    </ul>
+                                                </Popup>
+                                                
+                                                
+                                                <p className="text-xs italic text-red-500 hidden">Please choose a password.</p>
                                             </div>
-                                            <div class="md:ml-2">
-                                                <label class="block mb-2 text-sm font-bold text-gray-700" htmlFor="c_password">
+                                            <div className="md:ml-2">
+                                                <label className="block mb-2 text-sm font-bold text-gray-700" htmlFor="c_password">
                                                     Confirm Password
                                                 </label>
                                                 <input
-                                                    class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                                                    className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                                     id="c_password"
                                                     type="password"
                                                     placeholder="******************"
@@ -144,34 +171,34 @@ function Regisration (props){
                                                 />
                                             </div>
                                         </div>
-                                        <div class="mb-6 text-center">
+                                        <div className="mb-6 text-center">
                                             <Link to="/" onClick={register}>
                                                 <button
-                                                    class="w-full px-4 py-2 font-bold text-white bg-cmg-mid rounded-md hover:bg-green-600 focus:outline-none focus:shadow-outline"
+                                                    className="w-full px-4 py-2 font-bold text-white bg-cmg-mid rounded-md hover:bg-green-600 focus:outline-none focus:shadow-outline"
                                                     
                                                 >
                                                     Register Account
                                                 </button>
                                             </Link>
                                         </div>
-                                        <hr class="mb-6 border-t" />
-                                        <div class="text-center">
+                                        <hr className="mb-6 border-t" />
+                                        <div className="text-center">
                                             <Link to="/">
-                                                <a
-                                                    class="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
+                                                <div
+                                                    className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
                                                 >
                                                     Forgot Password?
-                                                </a>
+                                                </div>
                                             </Link>
 							            </div>
-                                        <div class="text-center">
+                                        <div className="text-center">
                                             <Link to="/login" >
-                                                <a
-                                                    class="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
+                                                <div
+                                                    className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
                                                     
                                                 >
                                                     Already have an account? Login!
-                                                </a>
+                                                </div>
                                             </Link>
                                         </div>
                                     </form>
