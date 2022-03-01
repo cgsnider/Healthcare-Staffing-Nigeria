@@ -1,14 +1,14 @@
 import React from 'react'
 
-function PendingProfile(props) {
+function PendingProfileFac(props) {
     return (
         <div className="mt-4 flex justify-center w-full">
             <div className="outline outline-1 rounded-md w-1/2 min-w-fit">
                 <div className="flex content-center justify-between text-sm w-full px-2 py-1">
                     <div className="flex flex-initial basis-1/3 flex-col justify-between">
                         <div className="truncate">{props.name}</div>
-                        <div className="truncate">{props.specialty}</div>
-                        <a href={props.resume} className="truncate text-blue-600" download>Resume</a>
+                        <div className="truncate">{props.street}</div>
+                        <div className="truncate">{props.loc}</div>
                     </div>
                     <div className="flex flex-initial basis-1/3 flex-col justify-between text-center">
                         <div className="truncate">Unverified</div>
@@ -27,4 +27,4 @@ function PendingProfile(props) {
     );
 }
 
-export default PendingProfile
+export default PendingProfileFac
