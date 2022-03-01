@@ -22,7 +22,7 @@ export default function Profile(props) {
         Gender: "Male", 
         DoB: "January 01, 2000", 
         Specialization: "Cardiologist",
-        Bio: "short description",
+        Bio: "Short Description",
         Verified: 0, //-1=neverLoggedIn  0=unverified, 1=pending, 2=verified
         resume: null,
         MDCN: 123456,
@@ -80,14 +80,14 @@ export default function Profile(props) {
         if(profileInfo.Verified===0){
             return(
                 <div className='w-full h-8 text-center content-center bg-amber-500'> 
-                    <span>you are not verified. You will have limited access until you become verified. to submit for verification click <span className='text-blue-600 underline hover:cursor-pointer' onClick={submitVerification}>here</span></span>
+                    <span>You are not verified. You will have limited access until you become verified. To submit for verification click <span className='text-blue-600 underline hover:cursor-pointer' onClick={submitVerification}>here</span></span>
                 </div>
             );
         }
         else if(profileInfo.Verified===1){
             return(
                 <div className='w-full h-8 text-center content-center bg-amber-500'> 
-                    <span>verification pending. access will be limited until you are verified</span>
+                    <span>Verification pending. Access will be limited until you are verified</span>
                 </div>
             );
         }
@@ -310,7 +310,7 @@ function EducationPopup (props) {
         useEffect(() => {
             console.log('NEW EDUCATION HFAKJDHSI: ', newEducation);
             console.log('ADD EDUCATION HFAKJDHSI: ', addEducation);
-            if (addEducation.legth == 0) {
+            if (addEducation.length == 0) {
                 // Remove education
             } else {
                 // Add Education
@@ -371,7 +371,7 @@ function EducationPopup (props) {
                     <div className='flex flex-col justify-around p-4'>
                         <Drop2 setNewEducation={setInstitute} newEducation={institute} placeholder='School'/>
                         <div className='my-2'></div>
-                        <Drop  options={[{label: 'Associates Degree', value: 'A'}, {label:'Bachelors Degree', value: 'B'},{label:'Masters Degree', value: 'M'},{label:'Doctoral Degree', value: 'D'}]} placeholder='highest degree earned' setPosition={setDegree}/>
+                        <Drop  options={[{label: 'Associates Degree', value: 'A'}, {label:'Bachelors Degree', value: 'B'},{label:'Masters Degree', value: 'M'},{label:'Doctoral Degree', value: 'D'}]} placeholder='Highest Degree Earned' setPosition={setDegree}/>
                         <div className='mb-2 mt-4 grid grid-cols-3'>
                             <label className=''>Start Date: </label>
                             <div className='w-full col-span-2'>
@@ -475,7 +475,7 @@ function ExperiencePopup(props) {
            <Popup open={open} position='right center' modal onClose={closeReset}>
                 <div className='grid grid-cols-3 items-center justify-items-end my-2'>
                     <label className='mr-4'>Company Name: </label>
-                    <input className="w-full col-span-2" type='text' placeholder='company'onInput={e=>setCompany(e.target.value)} />
+                    <input className="w-full col-span-2" type='text' placeholder='Company'onInput={e=>setCompany(e.target.value)} />
                 </div>
                 <div className='grid grid-cols-3 items-center justify-items-end mt-2'>
                     <label className='mr-4'>Title at Company: </label>
@@ -543,7 +543,7 @@ function AboutPopup(props) {
             setOpen({...open, fresh:false})
             setTempInfo(props.info);
         }
-    });
+    }, [open, props.info]);
     
     const close = (e) => {
         setOpen({...open, open:false})
@@ -551,7 +551,7 @@ function AboutPopup(props) {
     const save = (e) => {
         console.log(tempInfo)
         postProfileData(tempInfo)
-        setInfo({...tempInfo, gender: gender. label});
+        setInfo({...tempInfo, gender: gender.label});
         setOpen({...open, open:false});
     }
     const handleDate = (date) => {
