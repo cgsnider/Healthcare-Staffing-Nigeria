@@ -13,8 +13,6 @@ const STD_MIDWARE = [authenticate, db.handleNewUser]
 
 router.get('/jobs', STD_MIDWARE, (req, res) => {
 
-    console.log(req.user)
-
     if (req.user != 402) {
         let sql = `CALL get_postings('${req.user.email}', ${(req.body.category != undefined) ? "'req.body.category'" : 'null'})`
         let query = db.query(sql, (err, results) => {
@@ -79,11 +77,9 @@ router.post('/education', STD_MIDWARE, (req, res) => {
     if(req.user != 402) {
         let data = util.objectArray(req.body);
         let out = []
-        console.log(data);
         if(data.College != 'undefined') {
         data.forEach(e => {
             const sql = `call cmg_staffing_nigeria.add_education('${req.user.email}', '${e.College}', '${e.Degree}', '${e.StartDate}', '${e.EndDate}')`
-            console.log(sql)
             let query = db.query(sql, (err, results) => {
                 if (err);
                 out.push(results);

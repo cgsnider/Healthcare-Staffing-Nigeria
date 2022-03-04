@@ -15,8 +15,7 @@ then
 	select J.Title, J.Salary, J.Descript, J.Slots, J.Shifts, J.Category, F.FacName, F.City, F.Country, F.State, F.Street, F.Email
 		from JOBPOSTING as J join FACILITY as F where category = i_category or i_category is null;
 else 
-    call prof_verified_used (null, @id, @verified);
-	select distinct J.title, J.salary, J.Category, J.descript, J.slots from JOBPOSTING where categroy = i_category or i_category is null;
+	select distinct Title, Salary, Category, Descript, Slots from JOBPOSTING where Category = i_category or i_category is null;
 end if;
 
 
