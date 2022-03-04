@@ -1,4 +1,5 @@
 import { CognitoUserPool, CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
+import { parseJwt } from "./util";
 
 const poolData = {
     UserPoolId: "us-east-2_xydbLjNWa",
@@ -58,6 +59,7 @@ export async function RegisterUser (user, failure, success) {
  */
 export async function LoginUser (user, failure, success) {
     return new Promise(function (resolve, reject) {
+        console.log("LoginUser", user.password)
         const cognito_user = new CognitoUser({
             Username: user.email,
             Pool: userPool,
@@ -69,11 +71,12 @@ export async function LoginUser (user, failure, success) {
         })
         cognito_user.authenticateUser(authDetails, {
             onSuccess: (result) => {
+                const idToken = result.getIdToken().getJwtToken();
                 localStorage.setItem("accessToken", result.getAccessToken().getJwtToken());
                 localStorage.setItem("refreshToken", result.getRefreshToken().getToken());
                 localStorage.setItem("IDToken", result.getIdToken().getJwtToken());
                 localStorage.setItem("loggedIn", true);
-                
+                localStorage.setItem("type", parseJwt(idToken)['custom:type'])
                 if(success) {
                     success();
                 }
@@ -108,3 +111,4 @@ export async function LoginUser (user, failure, success) {
         });
     });
   }
+
