@@ -13,7 +13,7 @@ select verified, id from PROFESSIONAL where email = i_email into @verified, @id;
 if @verified = 2
 then 
 	select J.Title, J.Salary, J.Descript, J.Slots, J.Shifts, J.Category, F.FacName, F.City, F.Country, F.State, F.Street, F.Email
-		from JOBPOSTING as J join FACILITY as F where category = i_category or i_category is null;
+		from JOBPOSTING as J join FACILITY as F on F.ID = J.FID where category = i_category or i_category is null;
 else 
 	select distinct Title, Salary, Category, Descript, Slots from JOBPOSTING where Category = i_category or i_category is null;
 end if;
