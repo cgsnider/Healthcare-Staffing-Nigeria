@@ -12,7 +12,6 @@ function objectArray (array) {
         temp.push([body[i][0].slice(0, -1), body[i][1]])
     }
     obj.push(Object.fromEntries(temp));   
-    console.log(obj);
     return obj;
 }
 

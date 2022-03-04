@@ -43,7 +43,13 @@ function Regisration (props){
         console.log(formData);
         if(formData.password === formData.confpassword){
             console.log('password match')
-            RegisterUser(formData, regFail, regSuccess).catch(err=>console.log(err))
+            const reg_data = {
+                name: (user == users[0]) ? `${formData.fname}$${formData.lname}` : formData.org,
+                type: user,
+                email: formData.email,
+                password: formData.password
+            }
+            RegisterUser(reg_data, regFail, regSuccess).catch(err=>console.log(err))
             //get password policy known {uppercase, symbol, number}
         } else {
             console.log('passwords didnt match')

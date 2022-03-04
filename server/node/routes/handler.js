@@ -1,16 +1,20 @@
 const express = require('express');
-
 const auth = require('../auth/auth.js');
 const db = require('../database/database.js');
-
 const util = require('./util.js');
 
 const authenticate = auth.authenticateToken;
 
 const router = express.Router();
+
 router.use(express.urlencoded({extended: false}));
 
-router.get('/jobs', authenticate, (req, res) => {
+const STD_MIDWARE = [authenticate, db.handleNewUser]
+
+router.get('/jobs', STD_MIDWARE, (req, res) => {
+
+    console.log(req.user)
+
     if (req.user != 402) {
         let sql = `CALL get_postings('${req.user.email}', ${(req.body.category != undefined) ? "'req.body.category'" : 'null'})`
         let query = db.query(sql, (err, results) => {
@@ -22,7 +26,7 @@ router.get('/jobs', authenticate, (req, res) => {
     }
 });
 
-router.get('/profile', authenticate, (req, res) => {
+router.get('/profile', STD_MIDWARE, (req, res) => {
     if (req.user != 402) {
         let sql = `CALL get_profile('${req.user.email}')`
         let query = db.query(sql, (err, results) => {
@@ -34,7 +38,7 @@ router.get('/profile', authenticate, (req, res) => {
     }
 });
 
-router.get('/categories', authenticate, (req, res) => {
+router.get('/categories', STD_MIDWARE, (req, res) => {
     if (req.user != 402) {
         let sql = `CALL get_posting_categories`;
         let query = db.query(sql, (err, results) => {
@@ -46,12 +50,11 @@ router.get('/categories', authenticate, (req, res) => {
     }
 });
 
-router.get('/education', authenticate, (req, res) => {
+router.get('/education', STD_MIDWARE, (req, res) => {
     if (req.user != 402) {
         let sql = `CALL get_education('${req.user.email}')`;
         let query = db.query(sql, (err, results) => {
             if (err);
-            console.log('EDUCATION: ', results);
             res.end(JSON.stringify(results))
         })
     } else {
@@ -59,15 +62,12 @@ router.get('/education', authenticate, (req, res) => {
     }
 });
 
-router.post('/profile', authenticate, (req, res) => {
+router.post('/profile', STD_MIDWARE, (req, res) => {
     if (req.user != 402) {
         data = req.body;
         let params = `'${data.Email}', '${data.FName}', '${data.LName}', '${data.Email}',`
         params += `'${data.Specialization}', '${data.PhoneNumber}', '${data.MDCN}', '${data.Country}', '${data.City}', '${data.Street}'`
         const sql = `CALL update_professional_profile(${params})`;
-        console.log(data);
-        console.log(params);
-        console.log(sql)
         let query = db.query(sql, (err, results) => {
             if (err);
             res.end(JSON.stringify(results))
@@ -75,7 +75,7 @@ router.post('/profile', authenticate, (req, res) => {
     } else res.end(JSON.stringify(req.user));
 })
 
-router.post('/education', authenticate, (req, res) => {
+router.post('/education', STD_MIDWARE, (req, res) => {
     if(req.user != 402) {
         let data = util.objectArray(req.body);
         let out = []
@@ -94,34 +94,38 @@ router.post('/education', authenticate, (req, res) => {
     } else res.end();
 })
 
-
-
-
-router.post('/register', (req, res) => {
+// router.post('/register', (req, res) => {
     
-    const newUser = {
-        email: req.body.email,
-        password: req.body.password,
-        fname: req.body.fname,
-        lname: req.body.lname
-    }
+//     const newUser = {
+//         email: req.body.email,
+//         password: req.body.password,
+//         fname: req.body.fname,
+//         lname: req.body.lname
+//     }
 
-    if (auth.RegisterUser(newUser)) {
-        console.log('Created User')
-        res.status(201).send('Created User');
-    } else {
-        console.log('Failed to Create user')
-        res.status(200).send('Failed to Create user')
-    }
-});
+//     if (auth.RegisterUser(newUser)) {
+//         console.log('Created User')
+//         res.status(201).send('Created User');
+//     } else {
+//         console.log('Failed to Create user')
+//         res.status(200).send('Failed to Create user')
+//     }
+// });
 
-router.post('/login', (req, res) => {
-    const {email, password} = req.body;
+// router.post('/login', (req, res) => {
+//     const {email, password} = req.body;
 
-    console.log(`email: ${email}, password:${password}`);
-    auth.SignIn({email, password});
-    res.status(200).send("recieved");
+//     console.log(`email: ${email}, password:${password}`);
+//     auth.SignIn({email, password});
+//     res.status(200).send("recieved");
 
-});
+// });
+
+
+// Other
+
+
+
+
 
 module.exports = router;

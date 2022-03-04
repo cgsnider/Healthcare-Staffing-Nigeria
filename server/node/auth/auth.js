@@ -8,8 +8,8 @@ const jwkToPem = require('jwk-to-pem');
 const jwt = require('jsonwebtoken');
 
 const poolData = {    
-    UserPoolId: "us-east-2_QfRV1jh3E",
-    ClientId: "27jfqr5p999tf9tp9n7tu8f2ju"
+    UserPoolId: "us-east-2_xydbLjNWa",
+    ClientId: "2b5cuqv77lf5oqr4hn32l5cle2"
 }; 
 
 const DISABLE_AUTH = false; //Set this to true to disable authentication. DEV USE ONLY
@@ -138,65 +138,54 @@ async function verifyUser(accessToken, idToken) {
 
 
 
-/**
- * @deprecated For registering user through postman for testing
- * @param {{email, password, fname, lname}} newUser 
- */
- function RegisterUser(newUser){
-    var attributeList = [];
+// /**
+//  * @deprecated For registering user through postman for testing
+//  * @param {{email, password, fname, lname}} newUser 
+//  */
+//  function RegisterUser(newUser){
+//     var attributeList = [];
 
-    // attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name:"fname",Value: newUser.fname}));
-    // attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name:"lname",Value: newUser.lname}));
-    // attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name:"verified",Value: false}));
+//     userPool.signUp(newUser.email, newUser.password, attributeList, null, function(err, result){
+//         if (err) {
+//             return false;
+//         }
+//         cognitoUser = result.user;
+//         return true;
+//     });
+// }
+// /**
+//  * @deprecated For Signing in to user through postman for testing
+//  * @param {*} user 
+//  */
+// function signIn(user) {
 
-    userPool.signUp(newUser.email, newUser.password, attributeList, null, function(err, result){
-        if (err) {
-            return false;
-        }
-        cognitoUser = result.user;
-        return true;
-    });
-}
-/**
- * @deprecated For Signing in to user through postman for testing
- * @param {*} user 
- */
-function signIn(user) {
+//     let authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
+//         Username: user.email,
+//         Password: user.password
+//     });
 
-    // verifyUser('eyJraWQiOiI0SkJBdjZ6ZlJLSloyZktsa0FiaEc2VGdWZjMwVWh5UGZkZmRUZ3NcL0NJTT0iLCJhbGciOiJSUzI1NiJ9.eyJvcmlnaW5fanRpIjoiOGUwYjAzN2EtZDkwYi00ZjUwLWE2Y2YtYjA3MGJhMzgzYTlmIiwic3ViIjoiODljZjNhYTYtNDUzYS00YjAyLTgyMDMtZmY1NjVlNTdhMGE1IiwiZXZlbnRfaWQiOiIwY2ZiYjg2Ny0xNzMyLTQ5MjQtYjU0MS1lNmJmNDhjYzU1ZDUiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIiwiYXV0aF90aW1lIjoxNjQyOTkxODM1LCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0yLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMl9RZlJWMWpoM0UiLCJleHAiOjE…ZjY4ZDEtNmI5MS00NGM5LWI1YjQtMGM3ZDNlYmRkYTQwIiwiY2xpZW50X2lkIjoiMjdqZnFyNXA5OTl0Zjl0cDluN3R1OGYyanUiLCJ1c2VybmFtZSI6Ijg5Y2YzYWE2LTQ1M2EtNGIwMi04MjAzLWZmNTY1ZTU3YTBhNSJ9.ez-U91YgvcVQXTNFCi-73aVhcV-MH-8bhbdYc9oYziV-zWpKRfyTMWlfIQ1YwdWWaJOQhJba_4ovlT5VD92Ia-3qaAmH7vTPxmpNVMSyKdJH2qVYWvdkL3hMZsxtqBQmuuHqr-LS4NuB8sP4PhnO1hofdIsSKf5z92oaHsCjBysaKT1GyABZWzlOKf_A3h73CwkeZWEuwPL1qwV9hXtX8Dlt7hAuOguZiXIFbyzWb9LBv0HjX2VSbtNeiMEk7H9UtzkbwNwm-nPEbEELxOxfTg4T69oTOUgVDBo6yoaEvEnM5GDsbbUvdKAqTWGJGXW4U0IlOrTOD-ZjpKCApxqukg')
-    //             .then(res => console.log(res))
-    //             .catch(rej => console.log(rej));
+//     let userData = {
+//         Username: user.email,
+//         Pool: userPool
+//     }
 
-    let authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
-        Username: user.email,
-        Password: user.password
-    });
+//     let cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
 
-    let userData = {
-        Username: user.email,
-        Pool: userPool
-    }
-
-    let cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-
-    cognitoUser.authenticateUser(authenticationDetails, {
-        onSuccess: function (result) {
-            // console.log('access token + ' + result.getAccessToken().getJwtToken());
-            // console.log('id token + ' + result.getIdToken().getJwtToken());
-            // console.log('refresh token + ' + result.getRefreshToken().getToken());
-            verifyUser(result.getAccessToken().getJwtToken())
-                .then(res => console.log(res))
-                .catch(rej => console.log(rej));
+//     cognitoUser.authenticateUser(authenticationDetails, {
+//         onSuccess: function (result) {
+//             verifyUser(result.getAccessToken().getJwtToken())
+//                 .then(res => console.log(res))
+//                 .catch(rej => console.log(rej));
             
-        }, 
-        onFailure: function(err) {
-            console.log(err);
-        },
+//         }, 
+//         onFailure: function(err) {
+//             console.log(err);
+//         },
         
-    });
+//     });
 
-}
+// }
 
-exports.RegisterUser = RegisterUser;
-exports.SignIn = signIn;
+// exports.RegisterUser = RegisterUser;
+// exports.SignIn = signIn;
 exports.authenticateToken = authenticateToken;

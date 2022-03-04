@@ -32,7 +32,6 @@ create procedure get_profile (
 	in i_email varchar(255)
 ) begin
 
-call verified_used (i_email, null, null);
 
 if (select count(*) FROM PROFESSIONAL where email = i_email) != 0
 then
@@ -87,9 +86,27 @@ create procedure get_education (
     
     select distinct * from EDUCATION where PID = @id; 
     
+    
     insert into SYSTEMLOG (uid, act) value 
 		(@id, 'get_education');
     
+end //
+DELIMITER ;
+
+drop procedure if exists user_exists; 
+DELIMITER //
+create procedure user_exists (
+	in i_email varchar(255)
+) begin
+
+	if (select count(*) FROM PROFESSIONAL where email = i_email) != 0
+		then select 1 as Status;
+	elseif (select count(*) FROM FACILITY where email = i_email) != 0
+		then select 2 as Status;
+	else 
+		select -1 as Status;
+	end if;
+
 end //
 DELIMITER ;
 

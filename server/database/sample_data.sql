@@ -18,4 +18,4 @@ call create_job_posting('GeneralHospital@hosp.org', 'Ortho. Surgeons', 70000, 'S
 call create_job_posting('GeneralHospital@hosp.org', 'Head Neorologist', 70000, 'Lead the Neorology Department', 3, 'Neurology', '6 Hr');
 
 call admin_create_professional('Charles', 'Snider', 'csnider32@gatech.edu', 2, 'AQ21-ASD-23', 'Student', '404-404-4040', '123456', 'United States', 'Atlanta', 'North Ave NW', 'This is an example Bio!');
-call admin_create_professional('Conor', 'Snows', 'cgsnider@outlook.com', 1, 'BQ32-QWE-54', 'Surgeon', '123-123-1234', '789123', 'United States', 'New York', 'First Street', 'General Surgeon for 3+ years at Memorial Hospital.');
+-- call admin_create_professional('Conor', 'Snows', 'cgsnider@outlook.com', 1, 'BQ32-QWE-54', 'Surgeon', '123-123-1234', '789123', 'United States', 'New York', 'First Street', 'General Surgeon for 3+ years at Memorial Hospital.');

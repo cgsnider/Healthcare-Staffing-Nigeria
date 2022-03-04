@@ -14,7 +14,7 @@ insert into PERSON (id) value (null);
 select max(id) from PERSON into @id;
 
 insert into PROFESSIONAL(id, email, verified, fname, lname, phoneNumber, MDCN) value 
-	(@id, i_email, -1, i_fname, i_lname, null, null);
+	(@id, i_email, 0, i_fname, i_lname, null, null);
 
 insert into SYSTEMLOG (uid, act) value 
     (@id, 'register_professional');
@@ -89,7 +89,7 @@ insert into PERSON (id) value (null);
 select max(id) from PERSON into @id;
 
 insert into FACILITY(id, email, verified,facname) value 
-	(@id, i_email, -1, i_name);
+	(@id, i_email, 0, i_name);
     
 insert into SYSTEMLOG (uid, act) value 
     (@id, 'register_facility');
@@ -174,43 +174,6 @@ insert into SYSTEMLOG (uid, act) value
 end //
 DELIMITER ;
 
-drop procedure if exists verified_used;
-DELIMITER //
-create procedure verified_used (
-	in i_email varchar(255),
-    in i_id int,
-    in i_verified int
-) begin
-
-if (select count(*) FROM PROFESSIONAL where email = i_email or id = i_id) != 0
-then
-	if i_id is null or i_verified is null
-	then
-		select verified, id from PROFESSIONAL where email = i_email into @verfied, @id;
-	end if;
-		
-	if @verfied = -1
-	then
-		update PROFESSIONAL
-		set verified = 0
-		where id = @id;
-	end if;
-else 
-	if i_id is null or i_verified is null
-	then
-		select verified, id from FACILITY where email = i_email into @verfied, @id;
-	end if;
-		
-	if @verfied = -1
-	then
-		update FACILITY
-		set verified = 0
-		where id = @id;
-	end if;
-end if;
-
-end //
-DELIMITER ;
 
 drop procedure if exists add_education;
 DELIMITER //
