@@ -2,6 +2,10 @@ const express = require('express');
 const auth = require('../auth/auth.js');
 const db = require('../database/database.js');
 const util = require('./util.js');
+const multer = require('multer')
+
+
+const upload = multer({ dest: 'uploads/' })
 
 const authenticate = auth.authenticateToken;
 
@@ -10,6 +14,7 @@ const router = express.Router();
 router.use(express.urlencoded({extended: false}));
 
 const STD_MIDWARE = [authenticate, db.handleNewUser]
+
 
 router.get('/jobs', STD_MIDWARE, (req, res) => {
 
@@ -71,6 +76,12 @@ router.post('/profile', STD_MIDWARE, (req, res) => {
             res.end(JSON.stringify(results))
         })
     } else res.end(JSON.stringify(req.user));
+})
+
+router.post('/profile_picture', [upload.single('image'), util.formatImage], (req, res) => {
+    console.log("Tiggered")
+    res.send("Recieved")
+
 })
 
 router.post('/education', STD_MIDWARE, (req, res) => {
