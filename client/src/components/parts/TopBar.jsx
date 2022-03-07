@@ -75,6 +75,7 @@ function TopBar(props) {
                         <details-menu role="menu" class='dropdown_menu bg-white py-0.5'>
                             <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/user', {replace:true})}>Profile</button>
                             <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/jobs', {replace:true})}>Jobs</button>
+                            <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/ViewApplications', {replace:true})}>Applications</button>
                             <div role='none' className='block h-0 my-1.5 border-b-2 '></div>
                             <button className='menu_item' type='button' role='menuitem' onClick={logout}>Sign Out</button>
                         </details-menu>
