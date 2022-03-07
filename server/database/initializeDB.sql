@@ -5,7 +5,6 @@ create table PERSON (
   ID int not null AUTO_INCREMENT,
   primary key(ID)
 );
-
 create table PROFESSIONAL (
   ID int not null,
   Email varchar(254) not null unique,
@@ -24,17 +23,15 @@ create table PROFESSIONAL (
   primary key(ID),
   foreign key (ID) references PERSON(ID)
 );
-
 create table EDUCATION (
-	PID int not null,
-	College varchar(255),
-    Degree varchar(20),
-    StartDate varchar(15),
-    EndDate varchar(15),
-    primary key(PID, College, Degree, StartDate, EndDate),
-    foreign key(PID) references PROFESSIONAL(ID)
+  PID int not null,
+  College varchar(255),
+  Degree varchar(20),
+  StartDate varchar(15),
+  EndDate varchar(15),
+  primary key(PID, College, Degree, StartDate, EndDate),
+  foreign key(PID) references PROFESSIONAL(ID)
 );
-
 create table COVERLETTER (
   OwnerId int not null,
   Title varchar(200),

@@ -2,8 +2,8 @@ import { CognitoUserPool, CognitoUser, AuthenticationDetails } from "amazon-cogn
 import { parseJwt } from "./util";
 
 const poolData = {
-    UserPoolId: "us-east-2_xydbLjNWa",
-    ClientId: "4ql6n8e19jruoougjo1vj80s7k"
+    UserPoolId: "us-east-2_q85GCcTxM",
+    ClientId: "2t9l195uocaslipd2ejbslcd7a"
 }
 
 let userPool = new CognitoUserPool(poolData);

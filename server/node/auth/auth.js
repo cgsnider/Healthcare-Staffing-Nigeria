@@ -8,8 +8,8 @@ const jwkToPem = require('jwk-to-pem');
 const jwt = require('jsonwebtoken');
 
 const poolData = {    
-    UserPoolId: "us-east-2_xydbLjNWa",
-    ClientId: "2b5cuqv77lf5oqr4hn32l5cle2"
+    UserPoolId: "us-east-2_q85GCcTxM",
+    ClientId: "50sar6ii4ksu1kshi2tf8o0ntb"
 }; 
 
 const DISABLE_AUTH = false; //Set this to true to disable authentication. DEV USE ONLY
