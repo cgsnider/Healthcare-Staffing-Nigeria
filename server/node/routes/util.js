@@ -34,17 +34,17 @@ function arrayObject(arr) {
 
 
 
-function formatImage(req, res, next) {
-    const file = req.file
-    reshape(file.path)
-        .then(result => next())
-        .catch(err => {
-            console.log(err);
-            next();
-        })
-}
+// function formatImage(req, res, next) {
+//     const file = req.file
+//     reshape(file.path)
+//         .then(result => next())
+//         .catch(err => {
+//             console.log(err);
+//             next();
+//         })
+// }
 
-async function reshape(path) {
+async function formatImage(path) {
 
     let meta = await sharp(path).metadata();
 

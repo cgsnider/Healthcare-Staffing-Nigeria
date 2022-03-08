@@ -7,6 +7,8 @@ const multer = require('multer')
 
 const upload = multer({ dest: 'uploads/' })
 
+const s3 = require('../database/s3.js')
+
 const authenticate = auth.authenticateToken;
 
 const router = express.Router();
@@ -78,8 +80,11 @@ router.post('/profile', STD_MIDWARE, (req, res) => {
     } else res.end(JSON.stringify(req.user));
 })
 
-router.post('/profile_picture', [upload.single('image'), util.formatImage], (req, res) => {
-    console.log("Tiggered")
+router.post('/profile_picture', [upload.single('image')], async (req, res) => {
+    const file = req.file;
+    await util.formatImage(file.path)
+    const results = await s3.upload(file)
+    console.log(results)
     res.send("Recieved")
 
 })
