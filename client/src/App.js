@@ -38,7 +38,7 @@ const App = () => {
           <Route path="/jobs" element={<Jobs/>} />
           <Route path='/user' element={<Profile/>} />
           <Route path='/pendingVerifications' element={<PendingVerifications/>} />
-          <Route path='/ViewApplications' element={<ViewApplications/>}/>
+          <Route path='/applications' element={<ViewApplications/>}/>
         </Route>
 
         {/**pages without navbar go here */}

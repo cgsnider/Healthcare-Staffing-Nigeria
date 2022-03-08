@@ -7,7 +7,7 @@ const multer = require('multer')
 
 const upload = multer({ dest: 'uploads/' })
 
-const authenticate = auth.authenticateToken;
+const authenticate = auth.authenticateToken; 
 
 const router = express.Router();
 

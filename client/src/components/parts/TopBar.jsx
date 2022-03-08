@@ -23,9 +23,13 @@ function TopBar(props) {
         'options':[{text:'Home', to: '/'}, {text:'About', to: '/'}, {text:'Contact Us', to:'/'}]
     };
     const [loggedIn, setLoggedIn] = useState(false);
+    const [userType, setUserType] = useState(null);
     useEffect(() => {
         if(!loggedIn){
             setLoggedIn(localStorage.getItem('loggedIn'));
+        } else {
+            //console.log(localStorage.getItem('type'))
+            setUserType(localStorage.getItem('type'))
         }
         
     });
@@ -36,6 +40,37 @@ function TopBar(props) {
         navigate('/', {replace: true});
     }
     let key = 0;
+    
+    const MenuOptions = (props) => {
+        if (userType === 'Professional') {
+            return (
+                <>
+                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/user', {replace:true})}>Profile</button>
+                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/jobs', {replace:true})}>Jobs</button>
+                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/applications', {replace:true})}>Applications</button>
+
+                </>
+            );
+        }
+        if (userType === 'Facility') {
+            return (
+                <>
+                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/user', {replace:true})}>Profile</button>
+                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/newPosting', {replace:true})}>Create Posting</button>{/** link to page to post new job openings */}
+                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/myPostings', {replace:true})}>My Postings</button> {/** link to view facilities current active postings */}
+
+                </>
+            )
+        }
+        if (userType === 'Admin') {
+            return (
+                <>
+                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/applications', {replace:true})}>pending verifications</button>
+                </>
+            )
+        }
+        return (<div>no userType</div>)
+    }
 
     return (
         <nav className="bg-white">
@@ -73,9 +108,7 @@ function TopBar(props) {
                             <span className='dropdown_caret'></span>
                         </summary>
                         <details-menu role="menu" class='dropdown_menu bg-white py-0.5'>
-                            <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/user', {replace:true})}>Profile</button>
-                            <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/jobs', {replace:true})}>Jobs</button>
-                            <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/ViewApplications', {replace:true})}>Applications</button>
+                            <MenuOptions />
                             <div role='none' className='block h-0 my-1.5 border-b-2 '></div>
                             <button className='menu_item' type='button' role='menuitem' onClick={logout}>Sign Out</button>
                         </details-menu>
