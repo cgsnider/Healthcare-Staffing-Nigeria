@@ -197,6 +197,7 @@ export default function Profile(props) {
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">MDCN #</div>
+<<<<<<< HEAD
                                         <div className="px-4 py-2">{profileInfo.MDCN || "None"}</div>
                                     </div>
                                     <div className="grid grid-cols-2">
@@ -206,6 +207,17 @@ export default function Profile(props) {
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Address</div>
                                         <div className="px-4 py-2">{(profileInfo.Street=='null')?`${profileInfo.Street}\n ${profileInfo.City}, ${profileInfo.Country}`: "None"}</div>
+=======
+                                        <div className="px-4 py-2">{profileInfo.MDCN || 'None'}</div>
+                                    </div>
+                                    <div className="grid grid-cols-2">
+                                        <div className="px-4 py-2 font-semibold">Contact No.</div>
+                                        <div className="px-4 py-2">+234 {profileInfo.PhoneNumber}</div>{/**unsure how to handle country code */}
+                                    </div>
+                                    <div className="grid grid-cols-2">
+                                        <div className="px-4 py-2 font-semibold">Address</div>
+                                        <div className="px-4 py-2">{(profileInfo.Street!==null)?`${profileInfo.Street}\n ${profileInfo.City}, ${profileInfo.Country}`: "None"}</div>
+>>>>>>> nullprofile
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Email</div>
@@ -215,7 +227,11 @@ export default function Profile(props) {
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">License #</div>
+<<<<<<< HEAD
                                         <div className="px-4 py-2">{profileInfo.LicenseNumber || "None"}</div>
+=======
+                                        <div className="px-4 py-2">{profileInfo.LicenseNumber || 'None'}</div>
+>>>>>>> nullprofile
                                     </div>
                                 </div>
                             </div>
@@ -559,7 +575,10 @@ function AboutPopup(props) {
         setInfo({...tempInfo, gender: gender.label});
         setOpen({...open, open:false});
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> nullprofile
     return(
         <div>
             <button className="bg-green-500 rounded text-white text-sm py-1 px-3 ml-auto" onClick={e=>setOpen({fresh:true, open:true})}>Edit</button>
@@ -591,6 +610,10 @@ function AboutPopup(props) {
                             <div className="px-4 py-2 font-semibold">MDCN #</div>
                             <input type='text' className="rounded" value={tempInfo.MDCN} onInput={e=>setTempInfo({...tempInfo, MDCN: e.target.value})}/>
                         </div>
+                        <div className="grid grid-cols-2  items-center">
+                            <div className="px-4 py-2 font-semibold">License #</div>
+                            <input type='text' className="rounded" value={tempInfo.LicenseNumber} onInput={e=>setTempInfo({...tempInfo, LicenseNumber: e.target.value})}/>
+                        </div>
                         <div className='col-span-2'>
                             <h1 className='text-2xl bold mb-5 border-b-2'>Address</h1>
                             <div className="grid grid-cols-5  items-center">
@@ -614,7 +637,11 @@ function AboutPopup(props) {
                             <input type='text' className="rounded" value={tempInfo.Specialization} onInput={e=>setTempInfo({...tempInfo, Specialization: e.target.value})}/>
                         </div>
                         <div className='my-4 w-full col-span-2'>
+<<<<<<< HEAD
                             <textarea className='w-full rounded' type='textarea' placeholder='Short Bio' onInput={e=>setTempInfo({...tempInfo, Bio: e.target.value})} value={tempInfo.Bio}></textarea>
+=======
+                            <textarea className='w-full rounded' type='textarea' placeholder='Short Bio' onInput={e=>setTempInfo({...tempInfo, Bio: e.target.value})} value={(tempInfo.Bio!==null)?tempInfo.Bio:''}></textarea>
+>>>>>>> nullprofile
                         </div>
                     </div>
                     
