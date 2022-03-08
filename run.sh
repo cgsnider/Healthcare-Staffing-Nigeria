@@ -25,6 +25,9 @@ while getopts "cdie" OPTION; do
             echo "Initialize Environment"
             echo "Bucket Access:"
             _env_loc=server/node/.env
+            if test -f "$_env_loc"; then
+                rm $_env_loc
+            fi
             echo $_env_loc
             read -p 'Bucket Name: ' bucket_name
             read -p 'Bucket Region: ' bucket_region
