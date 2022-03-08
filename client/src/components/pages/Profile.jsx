@@ -187,15 +187,15 @@ export default function Profile(props) {
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">MDCN #</div>
-                                        <div className="px-4 py-2">{profileInfo.MDCN}</div>
+                                        <div className="px-4 py-2">{profileInfo.MDCN || 'None'}</div>
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Contact No.</div>
-                                        <div className="px-4 py-2">{`+234 ${profileInfo.PhoneNumber}` /**not sure how to handle country code formatting */}</div>
+                                        <div className="px-4 py-2">+234 {profileInfo.PhoneNumber}</div>{/**unsure how to handle country code */}
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Address</div>
-                                        <div className="px-4 py-2">{(`${profileInfo.Street}\n ${profileInfo.City}, ${profileInfo.Country}`|| "None")}</div>
+                                        <div className="px-4 py-2">{(profileInfo.Street!==null)?`${profileInfo.Street}\n ${profileInfo.City}, ${profileInfo.Country}`: "None"}</div>
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Email</div>
@@ -205,11 +205,7 @@ export default function Profile(props) {
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">License #</div>
-                                        <div className="px-4 py-2">{profileInfo.LicenseNumber}</div>
-                                    </div>
-                                    <div className="grid grid-cols-2">
-                                        <div className="px-4 py-2 font-semibold">MDCN #</div>
-                                        <div className="px-4 py-2">{profileInfo.MDCN}</div>
+                                        <div className="px-4 py-2">{profileInfo.LicenseNumber || 'None'}</div>
                                     </div>
                                 </div>
                             </div>
@@ -534,7 +530,6 @@ function AboutPopup(props) {
     const [tempInfo, setTempInfo] = useState({...props.info})
     const [gender, setGender] = useState({label: tempInfo.gender})
     const setInfo = props.setInfo
-    const [DoB, setDoB] = useState(new Date(tempInfo.DoB));
     const options = {year: 'numeric', month: 'long', day: 'numeric'}
     const contentStyle = { width: '90%' };
     
@@ -554,12 +549,6 @@ function AboutPopup(props) {
         setInfo({...tempInfo, gender: gender.label});
         setOpen({...open, open:false});
     }
-    const handleDate = (date) => {
-        setDoB(date);
-        //console.log(date.toLocaleDateString('en-US', options));
-        setTempInfo({...tempInfo, DoB: date.toLocaleDateString('en-US', options)})
-    }
-
     return(
         <div>
             <button className="bg-green-500 rounded text-white text-sm py-1 px-3 ml-auto" onClick={e=>setOpen({fresh:true, open:true})}>Edit</button>
@@ -588,19 +577,12 @@ function AboutPopup(props) {
                             <input type='text' className="rounded" value={tempInfo.Email} onInput={e=>setTempInfo({...tempInfo, Email: e.target.value})}/>
                         </div>
                         <div className="grid grid-cols-2  items-center">
-                            <div className="px-4 py-2 font-semibold">Birthday</div>
-                            <div>
-                                <DatePicker 
-                                    selected={DoB}
-                                    onChange={handleDate}
-                                    dateFormat='MMMM d, yyyy'
-                                />
-                            </div>
-                            
-                        </div>
-                        <div className="grid grid-cols-2  items-center">
                             <div className="px-4 py-2 font-semibold">MDCN #</div>
                             <input type='text' className="rounded" value={tempInfo.MDCN} onInput={e=>setTempInfo({...tempInfo, MDCN: e.target.value})}/>
+                        </div>
+                        <div className="grid grid-cols-2  items-center">
+                            <div className="px-4 py-2 font-semibold">License #</div>
+                            <input type='text' className="rounded" value={tempInfo.LicenseNumber} onInput={e=>setTempInfo({...tempInfo, LicenseNumber: e.target.value})}/>
                         </div>
                         <div className='col-span-2'>
                             <h1 className='text-2xl bold mb-5 border-b-2'>Address</h1>
@@ -625,7 +607,7 @@ function AboutPopup(props) {
                             <input type='text' className="rounded" value={tempInfo.Specialization} onInput={e=>setTempInfo({...tempInfo, Specialization: e.target.value})}/>
                         </div>
                         <div className='my-4 w-full col-span-2'>
-                            <textarea className='w-full rounded' type='textarea' placeholder='temp' onInput={e=>setTempInfo({...tempInfo, Bio: e.target.value})} value={tempInfo.Bio}></textarea>
+                            <textarea className='w-full rounded' type='textarea' placeholder='Short Bio' onInput={e=>setTempInfo({...tempInfo, Bio: e.target.value})} value={(tempInfo.Bio!==null)?tempInfo.Bio:''}></textarea>
                         </div>
                     </div>
                     
