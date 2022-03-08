@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState, useEffect } from 'react';
 import {Drop2 , Drop} from '../parts/Drop';
 import placeholder from '../../images/profile-placeholder.jpg';
-import { getEducation, getProfileData, postEducation, postProfileData } from '../../hooks/server';
+import { getEducation, getProfileData, postEducation, postProfileData, postProfilePicture } from '../../hooks/server';
 export default function Profile(props) {
     const [profileInfo, setProfileInfo] = useState(
         {Email: "temp@example.com", 
@@ -120,7 +120,8 @@ export default function Profile(props) {
 
     const handleImageUpload = (e) => {
         //file located at e.target.files apparently
-        //console.log(e.target.files)
+        console.log(e.target.files)
+        postProfilePicture(e.target.files[0])
     }
 
 

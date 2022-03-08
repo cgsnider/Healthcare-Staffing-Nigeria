@@ -27,6 +27,8 @@ async function upload(file) {
     
     fs.unlinkSync(file.path)
 
+    console.log("image")
+
     return s3.upload(uploadData).promise()
 }
 
