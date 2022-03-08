@@ -65,6 +65,30 @@ create procedure get_id (
 end //
 DELIMITER ;
 
+drop procedure if exists get_professional_picture; 
+DELIMITER //
+create procedure get_professional_picture (
+	in i_email varchar(255)
+) begin
+
+	select ImageAddr from PROFESSIONAL where email = i_email;
+
+end //
+DELIMITER ;
+
+
+drop procedure if exists get_facility_picture; 
+DELIMITER //
+create procedure get_facility_picture (
+	in i_email varchar(255)
+) begin
+
+	select ImageAddr from FACILITY where email = i_email;
+
+end //
+DELIMITER ;
+
+
 drop procedure if exists get_posting_categories; 
 DELIMITER //
 create procedure get_posting_categories (

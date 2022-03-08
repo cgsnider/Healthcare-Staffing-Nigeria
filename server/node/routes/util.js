@@ -2,7 +2,7 @@
 const sharp = require('sharp');
 const fs = require('fs');
 
-const IMAGE_SIZE = [200, 200]
+const IMAGE_SIZE = [400, 400]
 
 function objectArray (array) {
     let body = Object.entries(array);

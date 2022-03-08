@@ -39,6 +39,12 @@ export async function postProfilePicture(img) {
     formData.append("image", img);
     return await postImage('/profile_picture', formData)
 }
+export async function getProfileImage() {
+    const img = await getImage('/profile_picture');
+    console.log(img)
+}
+
+
 
 
 
@@ -83,6 +89,24 @@ async function postImage(url='', data={}) {
         }).then(response => { console.log(response); resolve(response)});
     });
 }
+
+async function getImage(url='', data={}) {
+    return new Promise(function (resolve, reject) {
+        const response = fetch(`api${url}`, {
+            method: 'GET',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+                'ID': localStorage.getItem('IDToken'),
+            },
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer', 
+        }).then(response => { console.log(response); resolve(response)});
+    });
+}
+
 
 async function postData(url = '', data ={}) {
     return new Promise(function (resolve, reject) {

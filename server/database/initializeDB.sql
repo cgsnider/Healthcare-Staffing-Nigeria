@@ -7,9 +7,9 @@ create table PERSON (
 );
 create table PROFESSIONAL (
   ID int not null,
-  Email varchar(254) not null unique,
+  Email varchar(255) not null unique,
   Verified int not null,
-  Image longblob,
+  ImageAddr varchar(255),
   FName varchar(55),
   LName varchar(55),
   PhoneNumber varchar(20),
@@ -52,7 +52,7 @@ create table FACILITY (
   ID int not null,
   Email varchar(254) not null unique,
   Verified int not null,
-  Image longblob,
+  ImageAddr varchar(255),
   City varchar(50),
   Country varchar(50),
   State varchar(50),

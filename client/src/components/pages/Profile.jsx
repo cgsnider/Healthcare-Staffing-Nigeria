@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState, useEffect } from 'react';
 import {Drop2 , Drop} from '../parts/Drop';
 import placeholder from '../../images/profile-placeholder.jpg';
-import { getEducation, getProfileData, postEducation, postProfileData, postProfilePicture } from '../../hooks/server';
+import { getEducation, getProfileData, getProfileImage, postEducation, postProfileData, postProfilePicture } from '../../hooks/server';
 export default function Profile(props) {
     const [profileInfo, setProfileInfo] = useState(
         {Email: "temp@example.com", 
@@ -24,12 +24,15 @@ export default function Profile(props) {
         Specialization: "Cardiologist",
         Bio: "Short Description",
         Verified: 0, //-1=neverLoggedIn  0=unverified, 1=pending, 2=verified
+        ImageAddr: null,
         resume: null,
         MDCN: 123456,
         Street:'1234 Park place',
         City:'Los Angeles',
         Country:'United States',
     })
+
+
     const [newExperience, setNewExperience] = useState([]);
     /** {university: 'Vanderbilt University', startDate: '2022-02-01', endDate: '2022-02-26', degree: 'Bachelors Degree', count: 0}
      * copy paste above to test education
@@ -119,9 +122,8 @@ export default function Profile(props) {
     }
 
     const handleImageUpload = (e) => {
-        //file located at e.target.files apparently
-        console.log(e.target.files)
-        postProfilePicture(e.target.files[0])
+        postProfilePicture(e.target.files[0]);
+        fetchProfileData(true);
     }
 
 
@@ -138,7 +140,7 @@ export default function Profile(props) {
                                 <div>
                                     <label htmlFor='pfp-upload' >
                                         <img className="h-auto w-full mx-auto hover:cursor-pointer hover:border-2"
-                                            src={profileInfo.Image || placeholder}
+                                            src={(profileInfo.ImageAddr) ?  `/api/profile_picture/${profileInfo.ImageAddr}` : placeholder}
                                             alt="Profile Picture"/>
                                     </label>
                                     {/** use attribute to specify accepted file types: accept={comma-separated list of unique file type specifiers.}*/}
@@ -198,15 +200,15 @@ export default function Profile(props) {
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">MDCN #</div>
-                                        <div className="px-4 py-2">{profileInfo.MDCN || 'None'}</div>
+                                        <div className="px-4 py-2">{profileInfo.MDCN || "None"}</div>
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Contact No.</div>
-                                        <div className="px-4 py-2">+234 {profileInfo.PhoneNumber}</div>{/**unsure how to handle country code */}
+                                        <div className="px-4 py-2">+234 {profileInfo.PhoneNumber} {/**not sure how to handle country code formatting */}</div>
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Address</div>
-                                        <div className="px-4 py-2">{(profileInfo.Street!==null)?`${profileInfo.Street}\n ${profileInfo.City}, ${profileInfo.Country}`: "None"}</div>
+                                        <div className="px-4 py-2">{(profileInfo.Street=='null')?`${profileInfo.Street}\n ${profileInfo.City}, ${profileInfo.Country}`: "None"}</div>
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Email</div>
@@ -560,6 +562,7 @@ function AboutPopup(props) {
         setInfo({...tempInfo, gender: gender.label});
         setOpen({...open, open:false});
     }
+
     return(
         <div>
             <button className="bg-green-500 rounded text-white text-sm py-1 px-3 ml-auto" onClick={e=>setOpen({fresh:true, open:true})}>Edit</button>
@@ -591,10 +594,6 @@ function AboutPopup(props) {
                             <div className="px-4 py-2 font-semibold">MDCN #</div>
                             <input type='text' className="rounded" value={tempInfo.MDCN} onInput={e=>setTempInfo({...tempInfo, MDCN: e.target.value})}/>
                         </div>
-                        <div className="grid grid-cols-2  items-center">
-                            <div className="px-4 py-2 font-semibold">License #</div>
-                            <input type='text' className="rounded" value={tempInfo.LicenseNumber} onInput={e=>setTempInfo({...tempInfo, LicenseNumber: e.target.value})}/>
-                        </div>
                         <div className='col-span-2'>
                             <h1 className='text-2xl bold mb-5 border-b-2'>Address</h1>
                             <div className="grid grid-cols-5  items-center">
@@ -618,7 +617,7 @@ function AboutPopup(props) {
                             <input type='text' className="rounded" value={tempInfo.Specialization} onInput={e=>setTempInfo({...tempInfo, Specialization: e.target.value})}/>
                         </div>
                         <div className='my-4 w-full col-span-2'>
-                            <textarea className='w-full rounded' type='textarea' placeholder='Short Bio' onInput={e=>setTempInfo({...tempInfo, Bio: e.target.value})} value={(tempInfo.Bio!==null)?tempInfo.Bio:''}></textarea>
+                            <textarea className='w-full rounded' type='textarea' placeholder='Short Bio' onInput={e=>setTempInfo({...tempInfo, Bio: e.target.value})} value={tempInfo.Bio}></textarea>
                         </div>
                     </div>
                     

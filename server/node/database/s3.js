@@ -32,14 +32,14 @@ async function upload(file) {
     return s3.upload(uploadData).promise()
 }
 
-async function download(file) {
-
+function download(fileKey) {
   const downloadData = {
     Key: fileKey,
     Bucket: bucketName
   }
 
-  return s3.getObject(downloadParams).createReadStream()
+  return s3.getObject(downloadData).createReadStream()
 }
 
 module.exports.upload = upload;
+module.exports.download = download;

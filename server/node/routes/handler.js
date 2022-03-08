@@ -67,6 +67,15 @@ router.get('/education', STD_MIDWARE, (req, res) => {
     }
 });
 
+
+router.get('/profile_picture/:key', (req, res) => {
+    const key = req.params.key;
+    const readstream = s3.download(key);
+    console.log(readstream)
+    readstream.pipe(res);
+})
+
+
 router.post('/profile', STD_MIDWARE, (req, res) => {
     if (req.user != 402) {
         data = req.body;
@@ -80,12 +89,23 @@ router.post('/profile', STD_MIDWARE, (req, res) => {
     } else res.end(JSON.stringify(req.user));
 })
 
-router.post('/profile_picture', [upload.single('image')], async (req, res) => {
+router.post('/profile_picture', [...STD_MIDWARE, upload.single('image')], async (req, res) => {
     const file = req.file;
-    await util.formatImage(file.path)
-    const results = await s3.upload(file)
-    console.log(results)
-    res.send("Recieved")
+    await util.formatImage(file.path);
+
+    const upload = await s3.upload(file);
+    let sql = ` ('${req.user.email}', '${upload.Key}')`
+
+    if (req.user['custom:type'] == 'Professional') {
+        sql = `CALL update_professional_picture` + sql;
+    } else if (req.user['custom:type'] == 'Facility') {
+        sql = `CALL update_facility_picture` + sql;
+    }
+
+    query = db.query(sql, (err, results) => {
+        if (err) console.log("FAILED TO LOG PROFILE PICTURE IN DB");
+        else res.end(JSON.stringify(upload.Key))
+    })
 
 })
 

@@ -59,6 +59,27 @@ select 200;
 end //
 DELIMITER ;
 
+drop procedure if exists update_professional_picture;
+DELIMITER //
+CREATE PROCEDURE update_professional_picture (
+	IN i_email VARCHAR(255),
+    IN i_imgAddr VARCHAR(255)
+) BEGIN 
+    
+	SELECT ID FROM PROFESSIONAL WHERE email = i_email INTO @id;
+    
+    UPDATE PROFESSIONAL 
+    SET
+		ImageAddr = i_imgAddr
+	WHERE 
+		id = @id;
+	
+	INSERT INTO SYSTEMLOG (uid, act) value 
+	(@id, 'update_professional_picture');
+    
+end //
+DELIMITER ;
+
 drop procedure if exists prof_verified_pending;
 DELIMITER //
 create procedure prof_verified_pending (
@@ -75,6 +96,26 @@ where
 insert into SYSTEMLOG (uid, act) value 
     (id, 'prof_verify_pending');
 end //
+DELIMITER ;
+
+drop procedure if exists update_facility_picture;
+DELIMITER //
+CREATE PROCEDURE update_facility_picture (
+	in i_email VARCHAR(255),
+    in i_imgAddr VARCHAR(255)
+) BEGIN 
+    
+	SELECT ID FROM FACILITY WHERE email = i_email INTO @id;
+    
+    UPDATE FACILITY 
+    SET
+		ImageAddr = i_imgAddr
+	WHERE 
+		 id = @id;
+	
+	INSERT INTO SYSTEMLOG (uid, act) value 
+	(@id, 'update_facility_picture');
+END //
 DELIMITER ;
 
 drop procedure if exists register_facility;
