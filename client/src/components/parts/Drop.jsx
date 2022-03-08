@@ -54,7 +54,7 @@ export function Drop(props){
                 options={myoptions}
                 classNamePrefix="nick"
                 onChange={(e) => props.setPosition(e)}
-                placeholder={props.placeholder || "choose..."}
+                placeholder={props.placeholder || "Choose..."}
                 defaultValue={(props.initial)? {label: props.initial, value:''}:null}
             />
         </div>

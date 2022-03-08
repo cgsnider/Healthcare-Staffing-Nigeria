@@ -70,7 +70,7 @@ details > summary {
 
 .dropdown_menu {
   position: absolute;
-  top: 85%;
+  top: 80%;
   left: auto;
   z-index: 100;
   right: 2%;
@@ -91,7 +91,7 @@ details > summary {
 }
 
 .dropdown_menu::before {
-  top: -15%;
+  top: -11.5%;
   right: 18%;
   left: auto;
   border: 8px solid transparent;

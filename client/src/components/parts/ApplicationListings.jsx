@@ -1,7 +1,7 @@
 import React from 'react'
 import '../styling/JobListings.css'
 
-export default class JobListing extends React.Component {
+export default class ApplicationListing extends React.Component {
     render() {
         return (
             <button>
