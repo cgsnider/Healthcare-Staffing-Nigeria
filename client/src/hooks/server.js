@@ -34,6 +34,13 @@ export async function postProfessionalProfileData(data) {
     return await postData('/user', data);
 }
 
+export async function postProfilePicture(img) {
+    let formData = new FormData();
+    formData.append("image", img);
+    return await postImage('/profile_picture', formData)
+}
+
+
 
 /**
  * Generic method for making a GET request. 
@@ -58,6 +65,24 @@ async function getData(url='', body={}) {
     return items;
 }
 
+
+async function postImage(url='', data={}) {
+    return new Promise(function (resolve, reject) {
+        const response = fetch(`api${url}`, {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+                'ID': localStorage.getItem('IDToken'),
+            },
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer', 
+            body: data
+        }).then(response => { console.log(response); resolve(response)});
+    });
+}
 
 async function postData(url = '', data ={}) {
     return new Promise(function (resolve, reject) {
