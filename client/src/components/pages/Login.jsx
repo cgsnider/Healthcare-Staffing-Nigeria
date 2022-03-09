@@ -37,7 +37,6 @@ function Login(props) {
                 <div className="flex justify-end opacity-[.95]">
                     <div className="bg-white min-h-screen w-1/2 flex justify-center items-center">
                         <div>
-            
                             <form>
                                 <div>
                                     <span className="text-sm text-gray-900">Welcome Back!</span>
@@ -56,7 +55,6 @@ function Login(props) {
                                         <input className="cursor-pointer rounded-xl mr-2"  type="checkbox" id="rememberme" />
                                         <label className="text-sm" htmlFor="rememberme">Remember Me</label>
                                     </div>
-
                                     <Link to="/login" onClick={Reset}>
                                         <span className="text-sm text-blue-700  hover:underline cursor-pointer">Forgot password?</span>
                                     </Link>

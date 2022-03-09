@@ -43,7 +43,7 @@ export default function Profile(props) {
             </div>
            
             <div className="my-3">
-                <label className="block text-md mb-2" htmlFor="licesnse">Licesnse</label>
+                <label className="block text-md mb-2" htmlFor="licesnse">License</label>
                 <input className="px-4 w-full border-2 py-2 rounded-md text-sm outline-none"  name="licesnse" value={updatedProfile.licesnse} placeholder="Licesnse" onInput={(e) => setUpdatedProfile({...updatedProfile, licesnse: e.target.value})}/>
             </div>
 
