@@ -133,3 +133,26 @@ create procedure user_exists (
 end //
 DELIMITER ;
 
+
+
+drop procedure if exists get_applications; 
+DELIMITER //
+create procedure get_applications (
+	in i_email varchar(255)
+) begin
+
+
+select id from PROFESSIONAL where email = i_email into @id;
+
+
+select J.Title, J.Salary, J.Descript, J.Slots, J.Shifts, J.Category, F.FacName, F.City, F.Country, F.State, F.Street, F.Email
+	from JOBPOSTING as J join FACILITY as F on F.ID = J.FID
+	inner join APPLICATION on J.FID = APPLICATION.FID and J.Title = APPLICATION.PostingTitle 
+	where APPLICATION.pid = @id;
+
+
+insert into SYSTEMLOG (uid, act) value 
+    (@id, 'get_applications');
+
+end //
+DELIMITER ;

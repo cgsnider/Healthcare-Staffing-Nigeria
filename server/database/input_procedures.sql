@@ -237,3 +237,30 @@ create procedure add_education (
 
 end //
 DELIMITER ;
+
+
+
+
+drop procedure if exists create_application;
+DELIMITER //
+create procedure create_application (
+
+    in i_fac_email varchar(55),
+	in i_email varchar(255),
+    in i_title varchar(30), 
+    in i_coverletter text,
+    in i_timecreated datetime
+    
+) begin 
+	
+/* select id from FACILITY where email = i_fac_email into @fid;
+
+--select id from PROFESSIONAL where email = i_email into @pid;*/
+
+insert into APPLICATION (fid, pid, postingtitle, coverletter, timecreated) VALUES
+    (1, 4, i_title, i_coverletter, i_timecreated);
+	
+insert into SYSTEMLOG (uid, act) value 
+	(4, 'create_application');
+end //
+DELIMITER ;

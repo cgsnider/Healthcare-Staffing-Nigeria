@@ -8,6 +8,10 @@ export async function getJobPosts(category) {
     return await getData('/jobs');
 }
 
+export async function getApplications(category) {
+    return await getData('/applications');
+}
+
 export async function getProfileData() {
     return await getData('/profile');
 }

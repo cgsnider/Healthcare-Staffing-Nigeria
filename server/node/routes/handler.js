@@ -31,6 +31,20 @@ router.get('/jobs', STD_MIDWARE, (req, res) => {
     }
 });
 
+router.get('/applications', STD_MIDWARE, (req, res) => {
+    if (req.user != 402) {
+        let sql = `CALL get_applications('${req.user.email}')`
+        let query = db.query(sql, (err, results) => {
+            if (err) {
+                console.log("Error in getting applications");
+            }
+            res.end(JSON.stringify(results));
+        })
+    } else {
+        res.end(JSON.stringify('402'));
+    }
+});
+
 router.get('/profile', STD_MIDWARE, (req, res) => {
     if (req.user != 402) {
         let sql = `CALL get_profile('${req.user.email}')`
@@ -123,6 +137,18 @@ router.post('/education', STD_MIDWARE, (req, res) => {
         });
         res.end(JSON.stringify(util.arrayObject(out)));
     }
+    } else res.end();
+})
+
+router.post('/jobs', STD_MIDWARE, (req, res) => {
+    if (req.user != 402) {
+        data = req.body;
+        let params = `'${req.user.email}', '${data.Title}',`
+        const sql = `CALL create_applications(${params})`;
+        let query = db.query(sql, (err, results) => {
+            if (err);
+            res.end(JSON.stringify(results))
+        })
     } else res.end();
 })
 

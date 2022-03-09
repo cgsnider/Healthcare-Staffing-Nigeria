@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import '../../styling/Jobs.css'
 import '../../../App.css'
 
-import { getJobPosts } from '../../../hooks/server';
+import { getJobPosts, getApplications } from '../../../hooks/server';
 import ApplicationListing from "../../parts/ApplicationListings";
 
 function ViewApplications (props) {
@@ -27,7 +27,7 @@ function ViewApplications (props) {
     const [search, setSearch] = useState('');
     const [fetchError, setFetchError] = useState(false);
     const fetchPostings = async(isMounted) => {
-        let items = await getJobPosts()
+        let items = await getApplications()
             .catch(err=>setFetchError(true))
         if (isMounted) {
             setApplications(items[0]);

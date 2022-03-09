@@ -81,7 +81,7 @@ create table JOBPOSTING (
   primary key (FID, Title),
   foreign key (FID) references FACILITY(ID)
 );
-create table APPLICAITON (
+create table APPLICATION (
   FID int not null,
   PID int not null,
   PostingTitle varchar(30),
