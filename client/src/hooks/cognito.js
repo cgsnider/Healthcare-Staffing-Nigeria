@@ -1,8 +1,9 @@
 import { CognitoUserPool, CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
+import { parseJwt } from "./util";
 
 const poolData = {
-    UserPoolId: "us-east-2_QfRV1jh3E",
-    ClientId: "27jfqr5p999tf9tp9n7tu8f2ju"
+    UserPoolId: "us-east-2_q85GCcTxM",
+    ClientId: "2t9l195uocaslipd2ejbslcd7a"
 }
 
 let userPool = new CognitoUserPool(poolData);
@@ -20,7 +21,18 @@ let userPool = new CognitoUserPool(poolData);
  */
 export async function RegisterUser (user, failure, success) {
     return new Promise(function (resolve, reject) {
-        userPool.signUp(user.email, user.password, [], null, (err, data) => {
+        console.log(user)
+        const name = {
+            Name: 'name',
+            Value: user.name
+        }
+
+        const type = {
+            Name: "custom:type",
+            Value: user.type
+        }
+
+        userPool.signUp(user.email, user.password, [name, type], null, (err, data) => {
             if (err) {
                 if (failure) {
                     failure();
@@ -47,6 +59,7 @@ export async function RegisterUser (user, failure, success) {
  */
 export async function LoginUser (user, failure, success) {
     return new Promise(function (resolve, reject) {
+        console.log("LoginUser", user.password)
         const cognito_user = new CognitoUser({
             Username: user.email,
             Pool: userPool,
@@ -58,10 +71,12 @@ export async function LoginUser (user, failure, success) {
         })
         cognito_user.authenticateUser(authDetails, {
             onSuccess: (result) => {
+                const idToken = result.getIdToken().getJwtToken();
                 localStorage.setItem("accessToken", result.getAccessToken().getJwtToken());
                 localStorage.setItem("refreshToken", result.getRefreshToken().getToken());
+                localStorage.setItem("IDToken", result.getIdToken().getJwtToken());
                 localStorage.setItem("loggedIn", true);
-                
+                localStorage.setItem("type", parseJwt(idToken)['custom:type'])
                 if(success) {
                     success();
                 }
@@ -96,3 +111,4 @@ export async function LoginUser (user, failure, success) {
         });
     });
   }
+

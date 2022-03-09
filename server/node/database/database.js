@@ -17,4 +17,45 @@ db.connect(error => {
     }
 })
 
-module.exports = db
+
+function handleNewUser (req, res, next) {
+
+    const sql = `CALL user_exists('${req.user.email}')`
+    db.query(sql, (err, results) => {
+        if (err) console.log('DB FAILURE')
+        else if (results[0][0].Status === -1){
+
+            addNewUser(req.user)
+                .then(res => next())
+                .catch(err => next())
+        } else {
+            next()
+        }
+    })
+
+}
+
+function addNewUser(user) {
+    return new Promise((resolve, reject) => {
+        
+        let sql;
+        
+        if (user['custom:type'] == 'Professional') {
+
+            fullName = user.name.split("$")
+            sql = `call cmg_staffing_nigeria.register_professional('${fullName[0]}', '${fullName[1]}', '${user.email}');`
+        } else {
+            sql = `CALL register_facility('${user.name}', '${user.email}')`
+        }
+
+        db.query(sql, (err, results) => {
+            if (err) reject(results);
+            resolve(results);
+        })
+    })
+}
+
+
+
+module.exports = db;
+module.exports.handleNewUser = handleNewUser;

@@ -1,128 +1,94 @@
 import React, {useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
-import JobListing from '../../parts/JobListings'
-import TopBar from '../../parts/TopBar';
-import { Drop } from '../../parts/Drop';
 
 import '../../styling/Jobs.css'
 import '../../../App.css'
 
-import { getCategories, getJobPosts } from '../../../hooks/server';
+import { getJobPosts } from '../../../hooks/server';
+import ApplicationListing from "../../parts/ApplicationListings";
 
-function Jobs (props) {
+function ViewApplications (props) {
 
     let key = 0;
     const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect( ()=> {
-        let isMounted = true;
+        let isMounted2 = true;
         if(!loggedIn){
             setLoggedIn(localStorage.getItem('loggedIn'));
         }
-        fetchPostings(isMounted);
-        fetchCategories(isMounted);
+        fetchPostings(isMounted2);
         return () => {
-            isMounted = false;
+            isMounted2 = false;
         };
     }, [])
 
-    const [postings, setPostings] = useState(null);
-    const [categories, setCategories] = useState(null);
-    const [position, setPosition] = useState(null);
+    const [applications, setApplications] = useState(null);
     const [search, setSearch] = useState('');
     const [fetchError, setFetchError] = useState(false);
     const fetchPostings = async(isMounted) => {
         let items = await getJobPosts()
-        .catch(err=>setFetchError(true))
+            .catch(err=>setFetchError(true))
         if (isMounted) {
-            setPostings(items[0]);
+            setApplications(items[0]);
             console.log(items[0]);
         }
         else console.log('aborted setPostings on unmounted component')
     }
 
-    const fetchCategories = async(isMounted) => {
-        let items = await getCategories()
-        .catch(err=>{setFetchError(true); console.error(err);})
-        if (isMounted) {
-            items[0].unshift({Category:'All'})
-            console.log('list: ',items[0])
-            setCategories(items[0].map(cat => {
-                return ({
-                    label: cat.Category,
-                    value: cat.Category
-                })
-            }), console.log(categories))
-        }
-        else console.log('aborted setCategories on unmounted component')
-    }
-    
     //handles sorting postings based on prop e
     //passed to options for use
     const handleClick = (e) =>{
-        console.log(postings)
-        const copy = [...postings]
-        //console.log(postings[0][e])
+        console.log(applications)
+        const copy = [...applications]
         if (e === 'salary') {
             copy.sort((a, b)=> a[e] < b[e]? 1:-1)
         } else {
             copy.sort((a, b)=> a[e] > b[e]? 1:-1)
         }
-        
-        setPostings(copy)
-        //console.log("sorted on " + e)
+
+        setApplications(copy)
     }
     const filterSearch = (posts) =>{
         return !!((search === '') || posts.Title.includes(search) || posts.City.includes(search));
     }
-    const filterPosition = (pos) => {
-        //console.log(pos, pos.position==position.label);
-        // console.log(pos)
-        if (position.label === "All") {
-            return true;
-        }
-        else {
-            return pos.Category === position.label;
-        }
-    }
-    
 
-    if((fetchError !== true && postings!==null)) {
+
+    if((fetchError !== true)) {
 
         return (
             <div>
                 <OptionsBar search={search} setSearch={setSearch} click={handleClick}/>
-                <div className="justify-center content-center flex">
-                    <Drop position={position} setPosition={setPosition} label='Select a Position' options={categories}/>
-                </div>
-                {(position !== null) ?
-
+                <h3 className="my-4 flex justify-center text-3xl">Submitted Applications</h3>
+                {(applications !== null) ?
                     <ul className="prof_job_grid content-center flex flex-wrap mx-32">
-                    {[...postings].filter(filterPosition).filter(filterSearch)
-                      .map(e => {
-                       return ( <li className='prof_job_node mx-16 mb-8' key={key++}>
-                            <JobListing
-                            image={(e.Image) ? e.Image : 'resources/cmg_logo.png'}
-                            position={e.Title}
-                            location={`${e.City}, ${e.Country}`}
-                            shifts={e.Shifts}
-                            salary={e.Salary}/>
-                        </li> )
-                    })}
-
-            
+                        {[...applications].filter(filterSearch)
+                            .map(e => {
+                                return ( <li className='prof_job_node mx-16 mb-8' key={key++}>
+                                    <ApplicationListing
+                                        image={(e.Image) ? e.Image : 'resources/cmg_logo.png'}
+                                        position={e.Title}
+                                        location={`${e.City}, ${e.Country}`}
+                                        shifts={e.Shifts}
+                                        salary={e.Salary}/>
+                                </li> )
+                            })}
                     </ul>
                     :
-                    <div className="flex content-center justify-center">Choose a Position to See Job Listings</div>
+                    <div className="flex flex-col items-center mt-32">
+                        <h4 className="text-2xl">No Submitted Applications</h4>
+                        <Link to="/jobs">
+                            <div href="#" className="outline outline-1 rounded-md py-2 px-3 mt-4 text-white hover:bg-green-900 bg-cmg-mid">View Listings</div>
+                        </Link>
+                    </div>
                 }
-                
             </div>
         );
     } else {
         return(
-            <div>Error retrieving job postings
+            <div>Error retrieving Applications
                 <Link to="/" >
-                <h1>Return Home</h1>
+                    <h1>Return Home</h1>
                 </Link>
             </div>
         );
@@ -140,8 +106,8 @@ function OptionsBar (props) {
     return (
         <div id="opt_bar" className='flex justify-between options_bar bg-gray-100'>
             <div className='flex w-full items-center'>
-                
-                {/*Onclick sets isHighlight from 0-3 based on which filter option is selected. If the value of 
+
+                {/*Onclick sets isHighlight from 0-3 based on which filter option is selected. If the value of
                 // isHighlight matches the value of the filter button
                 // it will get highlighted. This is handled in the ternary operator under each buttons className*/}
                 <button type='button' value='Location A-Z' className={`outline outline-1 min-w-fit px-1 py-0 ${isHighlight==0?'button_primary_highlighted':'button_primary'}`} onClick={() => {highlight(0); props.click('location');}}>Location A-Z</button>
@@ -150,12 +116,12 @@ function OptionsBar (props) {
                 <button type='button' value='Pay' className={`outline outline-1 min-w-fit px-1 py-0 ${isHighlight==3?'button_primary_highlighted':'button_primary'}`} onClick={() => {highlight(3); props.click('salary');}}>Pay</button>
             </div>
             <div className='flex items-center space-x-1 pr-1'>
-                <label>{" Search: "}</label> 
+                <label>{" Search: "}</label>
                 <input type='text' className="rounded h-7" onInput={ (e) => props.setSearch(e.target.value)}/>
             </div>
         </div>
-        
+
     )
 }
 
-export default Jobs
+export default ViewApplications

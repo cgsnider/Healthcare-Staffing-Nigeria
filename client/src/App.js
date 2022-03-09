@@ -8,7 +8,8 @@ import Jobs from './components/pages/professionals/Jobs'
 import TopBar from './components/parts/TopBar';
 import Home from './components/pages/Home';
 import Profile from './components/pages/Profile.jsx';
-import Apply from './components/pages/Apply.jsx';
+import PendingVerifications from './components/pages/Admins/PendingVerifications.jsx';
+import ViewApplications from "./components/pages/professionals/ViewApplications";
 //import Drop from './components/pages/Drop';
 //import Elogin from './components/examples/Elogin';
 
@@ -36,7 +37,12 @@ const App = () => {
           <Route path="/" element={<Home/>}/>
           <Route path="/jobs" element={<Jobs/>} />
           <Route path='/user' element={<Profile/>} />
+<<<<<<< HEAD
           <Route path="/jobs/cardiologist" element={<Apply/>}/>
+=======
+          <Route path='/pendingVerifications' element={<PendingVerifications/>} />
+          <Route path='/applications' element={<ViewApplications/>}/>
+>>>>>>> main
         </Route>
 
         {/**pages without navbar go here */}
