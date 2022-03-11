@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import JobListing from '../../parts/JobListings'
 import TopBar from '../../parts/TopBar';
 import { Drop } from '../../parts/Drop';
@@ -168,6 +168,14 @@ function OptionsBar (props) {
 
 function ApplicationPage (props) {
     const post = props.posting
+    const navigate = useNavigate();
+    const verifiedClick = (e) => {
+        /** do apply here */
+    }
+    const unverifiedClick = (e) => {
+        props.setOpen(false)
+        navigate('/user', {replace: true})
+    }
     return (
         <Popup open={props.open} onClose={()=>props.setOpen(false)} className='application'>
             <div className='flex flex-col justify-center content-center text-center mb-10'>
@@ -201,9 +209,9 @@ function ApplicationPage (props) {
             <div>
                 <div className='flex justify-center mt-5'>
                     {(post.FacName)?
-                    <button className='flex justify-center py-2 px-16 text-lg text-white bg-gray-800 hover:bg-gray-600'> Apply </button>
+                    <button className='flex justify-center py-2 px-16 text-lg text-white bg-gray-800 hover:bg-gray-600' onClick={verifiedClick}> Apply </button>
                     :
-                    <button className='flex justify-center py-2 px-16 text-lg text-white bg-gray-300'> Must be verified to apply </button>
+                    <button className='flex justify-center py-2 px-16 text-lg text-white bg-gray-300' onClick={unverifiedClick}> Must be verified to apply </button>
                     }
                 </div>
             </div>
