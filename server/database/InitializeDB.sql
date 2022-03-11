@@ -1,24 +1,36 @@
 drop database if exists cmg_staffing_nigeria;
 create database if not exists cmg_staffing_nigeria;
 use cmg_staffing_nigeria;
-
 create table PERSON (
-	ID int not null,
-    primary key(ID)
+  ID int not null AUTO_INCREMENT,
+  primary key(ID)
 );
-
 create table PROFESSIONAL (
   ID int not null,
-  Email varchar(254) not null,
+  Email varchar(255) not null unique,
   Verified int not null,
-  Image longblob,
+  ImageAddr varchar(255),
   FName varchar(55),
   LName varchar(55),
-  College varChar(75),
   PhoneNumber varchar(20),
+  LicenseNumber varchar(50),
+  Specialization varchar(50),
   MDCN varchar(30),
+  City varchar(50),
+  Country varchar(50),
+  Street varchar(75),
+  Bio text,
   primary key(ID),
   foreign key (ID) references PERSON(ID)
+);
+create table EDUCATION (
+  PID int not null,
+  College varchar(255),
+  Degree varchar(20),
+  StartDate varchar(15),
+  EndDate varchar(15),
+  primary key(PID, College, Degree, StartDate, EndDate),
+  foreign key(PID) references PROFESSIONAL(ID)
 );
 create table COVERLETTER (
   OwnerId int not null,
@@ -38,9 +50,9 @@ create table DOCUMENTS (
 );
 create table FACILITY (
   ID int not null,
-  Email varchar(254) not null,
+  Email varchar(254) not null unique,
   Verified int not null,
-  Image longblob,
+  ImageAddr varchar(255),
   City varchar(50),
   Country varchar(50),
   State varchar(50),
@@ -61,9 +73,11 @@ create table CONTACT (
 create table JOBPOSTING (
   FID int not null,
   Title varchar(30) not null,
+  Category varchar(30) not null,
   Salary int,
   Descript text,
   Slots int not null,
+  Shifts varchar(30),
   primary key (FID, Title),
   foreign key (FID) references FACILITY(ID)
 );
@@ -77,7 +91,6 @@ create table APPLICAITON (
   foreign key (FID, PostingTitle) references JOBPOSTING(FID, Title),
   foreign key (PID) references PROFESSIONAL(ID)
 );
-
 create table MESSAGE (
   FID int not null,
   PID int not null,
@@ -87,22 +100,16 @@ create table MESSAGE (
   foreign key (FID) references FACILITY(ID),
   foreign key (PID) references PROFESSIONAL(ID)
 );
-
 create table SYSTEMLOG (
-	UID int not null,
-    Act varchar(255),
-    TimeCreated datetime,
-    foreign key(UID) references PERSON(ID)
+  UID int not null,
+  Act varchar(255),
+  TimeCreated datetime default current_timestamp on update current_timestamp,
+  foreign key(UID) references PERSON(ID)
 );
-
-create table ADMINISTRATOR (
-	ID int not null,
-    primary key (ID)
-);
-
+create table ADMINISTRATOR (ID int not null, primary key (ID));
 create table PRIVLEGES (
-	AID int not null,
-	privilege varchar(10),
-    primary key (privilege, AID),
-    foreign key (AID) references ADMINISTRATOR(ID)
+  AID int not null,
+  privilege varchar(10),
+  primary key (privilege, AID),
+  foreign key (AID) references ADMINISTRATOR(ID)
 );
