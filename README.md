@@ -25,6 +25,21 @@ A website where healthcare workers can apply for job postings in Nigeria, and it
 
 ## Release Notes
 
+### Version 0.3.0
+
+#### New Features:
+* Medical facilities can register for an account
+* Medical facilities can login
+* Admins can review and verify applications for verification
+* Medical professionals can apply for jobs
+* Images are now uploaded by professionals and stored on the database
+
+#### Bug Fixes:
+* Database connects correctly
+* College dropdown has been corrected
+* Jobs Page now just won’t show data without login but is loaded
+---
+
 ### Version 0.2.0
 
 #### New Features:
