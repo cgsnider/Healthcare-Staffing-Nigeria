@@ -168,9 +168,11 @@ function OptionsBar (props) {
 
 function ApplicationPage (props) {
     const post = props.posting
+    const [cover, setCover] = useState('');
     const navigate = useNavigate();
     const verifiedClick = (e) => {
         /** do apply here */
+        console.log(cover)
     }
     const unverifiedClick = (e) => {
         props.setOpen(false)
@@ -204,6 +206,10 @@ function ApplicationPage (props) {
                 <div className='flex my-2'>
                     <h6 className='font-bold'>Contact:&nbsp;</h6>
                     <span>{(post.Email)?post.Email:"?????"}</span>
+                </div>
+                <div className='my-10'>
+                    <label className='font-bold' htmlFor='cover-letter'>Message/Cover Letter</label>
+                    <textarea id='cover-letter' className='w-full' onInput={e=>setCover(e.target.value)} value={cover}></textarea>
                 </div>
             </div>
             <div>
