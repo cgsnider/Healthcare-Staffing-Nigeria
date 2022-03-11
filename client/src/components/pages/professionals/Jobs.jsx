@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom'
 import JobListing from '../../parts/JobListings'
 import TopBar from '../../parts/TopBar';
 import { Drop } from '../../parts/Drop';
+import Popup from 'reactjs-popup';
 
 import '../../styling/Jobs.css'
 import '../../../App.css'
-
+import '../../styling/Application.css'
 import { getCategories, getJobPosts } from '../../../hooks/server';
 
 function Jobs (props) {
@@ -31,6 +32,8 @@ function Jobs (props) {
     const [position, setPosition] = useState(null);
     const [search, setSearch] = useState('');
     const [fetchError, setFetchError] = useState(false);
+    const [openApply, setOpen] = useState(false);
+    const [applyPos, setApplyPosition] = useState({});
     const fetchPostings = async(isMounted) => {
         let items = await getJobPosts()
         .catch(err=>setFetchError(true))
@@ -106,7 +109,12 @@ function Jobs (props) {
                             position={e.Title}
                             location={`${e.City}, ${e.Country}`}
                             shifts={e.Shifts}
-                            salary={e.Salary}/>
+                            salary={e.Salary}
+                            setOpen={setOpen}
+                            setPosting={setApplyPosition}
+                            posting={e}
+                            />
+                            
                         </li> )
                     })}
 
@@ -115,7 +123,7 @@ function Jobs (props) {
                     :
                     <div className="flex content-center justify-center">Choose a Position to See Job Listings</div>
                 }
-                
+                <ApplicationPage open={openApply} setOpen={setOpen} posting={applyPos}/>
             </div>
         );
     } else {
@@ -156,6 +164,51 @@ function OptionsBar (props) {
         </div>
         
     )
+}
+
+function ApplicationPage (props) {
+    const post = props.posting
+    return (
+        <Popup open={props.open} onClose={()=>props.setOpen(false)} className='application'>
+            <div className='flex flex-col justify-center content-center text-center mb-10'>
+                <div className='absolute right-5 top-4 py-1 px-3 bg-gray-300 text-lg text-center align-center hover:cursor-pointer hover:bg-gray-200 hover:text-black-800' onClick={()=>props.setOpen(false)}>x</div>
+                <h1 className='text-4xl'>{post.Title}</h1>
+                <h2 className='text-xl'>{(post.FacName)? `${post.FacName}`:'?????'}</h2>
+                <h3 className='text-lg'>{(post.City)? `${post.City}, ${post.Country}`:'?????'}</h3>
+            </div>
+            <div id='posting-body' className='mx-3'>
+                <div id='description' className='mb-4'>
+                    <h3 className='font-bold text-lg'>Job Description</h3>
+                    <p>{post.Descript}</p>
+                </div>
+                <div className='flex my-2'>
+                    <h6 className='font-bold'>Salary:&nbsp; </h6>
+                    <span>&#8358; {(post.Salary)? `${post.Salary}`: '?????'}</span>
+                </div>
+                <div className='flex my-2'>
+                    <h6 className='font-bold'>Shifts:&nbsp;</h6>
+                    <span>{(post.Shifts)?post.Shifts:'?????'}</span>
+                </div>
+                <div className='flex my-2'>
+                    <h6 className='font-bold'>Address:&nbsp;</h6>
+                    <span>{(post.Street)?`${post.Street}, ${post.City}, ${post.State}, ${post.Country}`:'?????'}</span>
+                </div>
+                <div className='flex my-2'>
+                    <h6 className='font-bold'>Contact:&nbsp;</h6>
+                    <span>{(post.Email)?post.Email:"?????"}</span>
+                </div>
+            </div>
+            <div>
+                <div className='flex justify-center mt-5'>
+                    {(post.FacName)?
+                    <button className='flex justify-center py-2 px-16 text-lg text-white bg-gray-800 hover:bg-gray-600'> Apply </button>
+                    :
+                    <button className='flex justify-center py-2 px-16 text-lg text-white bg-gray-300'> Must be verified to apply </button>
+                    }
+                </div>
+            </div>
+        </Popup>
+    );
 }
 
 export default Jobs
