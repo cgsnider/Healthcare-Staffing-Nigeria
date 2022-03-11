@@ -14,14 +14,18 @@ function Jobs (props) {
 
     let key = 0;
     const [loggedIn, setLoggedIn] = useState(false);
-
+    const [fetchOnce, setFetchOnce] = useState(false);
     useEffect( ()=> {
         let isMounted = true;
         if(!loggedIn){
             setLoggedIn(localStorage.getItem('loggedIn'));
         }
-        fetchPostings(isMounted);
-        fetchCategories(isMounted);
+        if(!fetchOnce){
+            setFetchOnce(true);
+            fetchPostings(isMounted);
+            fetchCategories(isMounted);
+        }
+
         return () => {
             isMounted = false;
         };
@@ -170,6 +174,7 @@ function ApplicationPage (props) {
     const post = props.posting
     const [cover, setCover] = useState('');
     const navigate = useNavigate();
+
     const verifiedClick = (e) => {
         /** do apply here */
         console.log(cover)
