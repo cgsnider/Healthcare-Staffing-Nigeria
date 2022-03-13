@@ -64,8 +64,7 @@ create table FACILITY (
 );
 create table CONTACT (
   FID int not null,
-  FName varchar(55),
-  LName varchar(55),
+  CName varchar(255),
   PhoneNumber varchar(20),
   primary key(FID),
   foreign key(FID) references FACILITY(ID)

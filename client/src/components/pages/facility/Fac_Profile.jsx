@@ -17,15 +17,16 @@ export default function Fac_Profile(props) {
     console.log('FAC')
 
     const [profileInfo, setProfileInfo] = useState(
-        {Email: "temp@example.com", 
-        PhoneNumber: "123-456-1111", 
-        FacName: "John",
+        {Email: null, 
+        PhoneNumber: null, 
+        FacName: null,
         Verified: 0, //  0=unverified, 1=pending, 2=verified
         ImageAddr: null,
-        Street:'1234 Park place',
-        City:'Los Angeles',
-        Country:'United States',
-        Descript:'None',
+        Street:null,
+        City:null,
+        Country:null,
+        Descript:null,
+        CName: null
     })
 
     
@@ -124,8 +125,8 @@ export default function Fac_Profile(props) {
                                 </div>
                                 
                             </div>
-                            <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">{profileInfo.FName}</h1>
-                            <h3 className="text-gray-600 font-lg text-semibold leading-6">{profileInfo.Specialization}</h3>
+                            <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">{profileInfo.FacName}</h1>
+                            <h3 className="text-gray-600 font-lg text-semibold leading-6">{}</h3>
                             <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">
                                 {profileInfo.Bio}</p>
                             <ul
@@ -167,23 +168,24 @@ export default function Fac_Profile(props) {
                                 <div className="grid md:grid-cols-2 text-sm">
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Facility Name</div>
-                                        <div className="px-4 py-2">{profileInfo.FName}</div>
+                                        <div className="px-4 py-2">{profileInfo.FacName}</div>
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Contact Person</div>
-                                        <div className="px-4 py-2">{profileInfo.LName}</div>
+                                        <div className="px-4 py-2">{profileInfo.CName}</div>
+                                    </div>
+                                    <div className="grid grid-cols-2">
+                                        <div className="px-4 py-2 font-semibold">Address</div>
+                                        <div className="px-4 py-2">{(profileInfo.Street==null)? "None" : `${profileInfo.Street}\n ${profileInfo.City}, ${profileInfo.Country}`}</div>
+                                        {console.log("Prof: ", profileInfo)}
+                                    </div>
+                                    <div className="grid grid-cols-2">
+                                        <div className="px-4 py-2 font-semibold">Contact No.</div>
+                                        <div className="px-4 py-2">{profileInfo.PhoneNumber} {/**not sure how to handle country code formatting */}</div>
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold"></div>
                                         <div className="px-4 py-2">{}</div>
-                                    </div>
-                                    <div className="grid grid-cols-2">
-                                        <div className="px-4 py-2 font-semibold">Contact No.</div>
-                                        <div className="px-4 py-2">+234 {profileInfo.PhoneNumber} {/**not sure how to handle country code formatting */}</div>
-                                    </div>
-                                    <div className="grid grid-cols-2">
-                                        <div className="px-4 py-2 font-semibold">Address</div>
-                                        <div className="px-4 py-2">{(profileInfo.Street=='null')?`${profileInfo.Street}\n ${profileInfo.City}, ${profileInfo.Country}`: "None"}</div>
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Email</div>
@@ -192,8 +194,8 @@ export default function Fac_Profile(props) {
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-2">
-                                        <div className="px-4 py-2 font-semibold">License #</div>
-                                        <div className="px-4 py-2">{profileInfo.LicenseNumber || "None"}</div>
+                                        <div className="px-4 py-2 font-semibold"></div>
+                                        <div className="px-4 py-2">{}</div>
                                     </div>
                                 </div>
                             </div>
@@ -280,16 +282,12 @@ function AboutPopup(props) {
                     <h1 className='text-2xl bold mb-5 border-b-2'>Profile</h1>
                     <div className="grid md:grid-cols-2 text-sm gap-y-2">
                         <div className="grid grid-cols-2  items-center">
-                            <div className="px-4 py-2 font-semibold">First Name</div>
-                            <input type='text' className="rounded" value={tempInfo.FName} onInput={e=>setTempInfo({...tempInfo, FName: e.target.value})}/>
+                            <div className="px-4 py-2 font-semibold">Facility Name</div>
+                            <input type='text' className="rounded" value={tempInfo.FacName} onInput={e=>setTempInfo({...tempInfo, FacName: e.target.value})}/>
                         </div>
                         <div className="grid grid-cols-2  items-center">
-                            <div className="px-4 py-2 font-semibold">Last Name</div>
-                            <input type='text' className="rounded" value={tempInfo.LName} onInput={e=>setTempInfo({...tempInfo, LName: e.target.value})}/>
-                        </div>
-                        <div className="grid grid-cols-2  items-center">
-                            <div className="px-4 py-2 font-semibold">Gender</div>
-                            <Drop options={[{label:'Male', value: 'M'},{label: 'Female', Value:'F'},{label: 'Non-binary', value:'NB'},{label:'Other', value:'O'}]} initial={tempInfo.Gender} setPosition={setGender}/>
+                            <div className="px-4 py-2 font-semibold">Contact Name</div>
+                            <input type='text' className="rounded" value={tempInfo.CName} onInput={e=>setTempInfo({...tempInfo, CName: e.target.value})}/>
                         </div>
                         <div className="grid grid-cols-2  items-center">
                             <div className="px-4 py-2 font-semibold">Contact No.</div>
@@ -297,12 +295,12 @@ function AboutPopup(props) {
                         </div>
                         <div className="grid grid-cols-2  items-center">
                             <div className="px-4 py-2 font-semibold">Email</div>
-                            <input type='text' className="rounded" value={tempInfo.Email} onInput={e=>setTempInfo({...tempInfo, Email: e.target.value})}/>
+                            <input type='text' disbaled='true' className="rounded" value={tempInfo.Email} onInput={e=>setTempInfo({...tempInfo, Email: e.target.value})}/>
                         </div>
-                        <div className="grid grid-cols-2  items-center">
+                        {/* <div className="grid grid-cols-2  items-center">
                             <div className="px-4 py-2 font-semibold">MDCN #</div>
                             <input type='text' className="rounded" value={tempInfo.MDCN} onInput={e=>setTempInfo({...tempInfo, MDCN: e.target.value})}/>
-                        </div>
+                        </div> */}
                         <div className='col-span-2'>
                             <h1 className='text-2xl bold mb-5 border-b-2'>Address</h1>
                             <div className="grid grid-cols-5  items-center">
@@ -319,14 +317,12 @@ function AboutPopup(props) {
                             </div>
                         </div>
                         <div className='col-span-2'>
-                            <h1 className='text-2xl bold mb-5 border-b-2'>Career</h1>
+                            <h1 className='text-2xl bold mb-5 border-b-2'>Description</h1>
                         </div>
                         <div className="grid grid-cols-2  items-center col-start-1">
-                            <div className="px-4 py-2 font-semibold">specialization</div>
-                            <input type='text' className="rounded" value={tempInfo.Specialization} onInput={e=>setTempInfo({...tempInfo, Specialization: e.target.value})}/>
                         </div>
                         <div className='my-4 w-full col-span-2'>
-                            <textarea className='w-full rounded' type='textarea' placeholder='Short Bio' onInput={e=>setTempInfo({...tempInfo, Bio: e.target.value})} value={tempInfo.Bio}></textarea>
+                            <textarea className='w-full rounded' type='textarea' placeholder='Description...' onInput={e=>setTempInfo({...tempInfo, Descript: e.target.value})} value={tempInfo.Descript}></textarea>
                         </div>
                     </div>
                     

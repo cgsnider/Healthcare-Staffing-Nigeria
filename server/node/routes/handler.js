@@ -55,6 +55,7 @@ router.get('/profile', STD_MIDWARE, (req, res) => {
         } else if (req.user['custom:type'] == 'Facility') {
             sql = 'CALL get_facility_profile' + sql
         }
+        console.log("SQL: ", sql)
 
         let query = db.query(sql, (err, results) => {
             if (err) throw err;
@@ -106,23 +107,20 @@ router.post('/profile', STD_MIDWARE, (req, res) => {
         let sql = ''
         
         if (req.user['custom:type'] == 'Professional') {
-            params += `'${req.user.Email}', '${data.FName}', '${data.LName}', '${data.Email}',`
+            params += `'${req.user.email}', '${data.FName}', '${data.LName}', '${data.Email}',`
             params += `'${data.Specialization}', '${data.PhoneNumber}', '${data.MDCN}', '${data.Country}', '${data.City}', '${data.Street}'`
             sql = `CALL update_professional_profile(${params})`;
-            let query = db.query(sql, (err, results) => {
-                if (err);
-                res.end(JSON.stringify(results))
-            })
         } 
-        
         else if (req.user['custom:type'] == 'Facility') {
-            
-            params += `'${req.user.Email}', '${data.City}', '${data.Country}', '${data.Email}',`
-            params += `'${data.FacName}', '${data.ImageAddr}', '${data.State}', '${data.Descript}', '${data.Street}', '${data.ContactFname}'`
-            // params += `'${data.ContactFname}', '${data.Country}', '${data.Email}',`
-            // sql = `CALL update_facility_profile(${params})`;
+            console.log(data)
+            params += `'${req.user.email}', '${data.City}', '${data.Country}', '${data.Email}',`
+            params += `'${data.FacName}', '${data.State}', '${data.Descript}', '${data.Street}', '${data.CName}', '${data.PhoneNumber}'`
+            sql = `CALL update_facility_profile(${params})`;
         }
- 
+        let query = db.query(sql, (err, results) => {
+            if (err);
+            res.end(JSON.stringify(results))
+        })
     } else res.end(JSON.stringify(req.user));
 })
 
