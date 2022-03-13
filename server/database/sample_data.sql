@@ -21,4 +21,4 @@ call admin_create_professional('Charles', 'Snider', 'csnider32@gatech.edu', 2, '
 -- call admin_create_professional('Conor', 'Snows', 'cgsnider@outlook.com', 1, 'BQ32-QWE-54', 'Surgeon', '123-123-1234', '789123', 'United States', 'New York', 'First Street', 'General Surgeon for 3+ years at Memorial Hospital.');
 
 
-call create_application('NigerianHospital@hosp.org', 'csnider32@gatech.edu', 'Cardiologist', 'Sample Coverletter', '2022-03-01 09:05:00');
+-- call create_application('NigerianHospital@hosp.org', 'csnider32@gatech.edu', 'Cardiologist', 'Sample Coverletter', '2022-03-01 09:05:00');

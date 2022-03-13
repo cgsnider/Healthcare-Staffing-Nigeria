@@ -143,8 +143,13 @@ router.post('/education', STD_MIDWARE, (req, res) => {
 router.post('/jobs', STD_MIDWARE, (req, res) => {
     if (req.user != 402) {
         data = req.body;
-        let params = `'${req.user.email}', '${data.Title}',`
-        const sql = `CALL create_applications(${params})`;
+        t = new Date();
+        date = t.getFullYear() + '-' + (t.getMonth()+1) + '-' + t.getDate();
+        time = t.getHours() + ":" + t.getMinutes() + ":" + t.getSeconds();
+        datetime = date + ' ' + time;
+        cover = Object.keys(data.cover).map(function (key) { return data.cover[key] }).join("");
+        let params = `'${data.email}', '${req.user.email}', '${data.title}', '${cover}', '${datetime}'`
+        const sql = `CALL create_application(${params})`;
         let query = db.query(sql, (err, results) => {
             if (err);
             res.end(JSON.stringify(results))

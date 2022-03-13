@@ -8,7 +8,7 @@ import Popup from 'reactjs-popup';
 import '../../styling/Jobs.css'
 import '../../../App.css'
 import '../../styling/Application.css'
-import { getCategories, getJobPosts } from '../../../hooks/server';
+import { getCategories, getJobPosts, postApplications } from '../../../hooks/server';
 
 function Jobs (props) {
 
@@ -177,6 +177,7 @@ function ApplicationPage (props) {
 
     const verifiedClick = (e) => {
         /** do apply here */
+        postApplications({'cover': cover, 'email': post.Email, 'title': post.Title})
         console.log(cover)
     }
     const unverifiedClick = (e) => {

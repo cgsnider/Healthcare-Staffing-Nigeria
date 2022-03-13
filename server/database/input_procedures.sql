@@ -253,14 +253,16 @@ create procedure create_application (
     
 ) begin 
 	
-/* select id from FACILITY where email = i_fac_email into @fid;
 
---select id from PROFESSIONAL where email = i_email into @pid;*/
+select id, title from JOBPOSTING as J left join FACILITY as F on F.ID = J.FID 
+    where F.email = i_fac_email and J.title = i_title into @fid, @title;
+
+select id from PROFESSIONAL where email = i_email into @pid;
 
 insert into APPLICATION (fid, pid, postingtitle, coverletter, timecreated) VALUES
-    (1, 4, i_title, i_coverletter, i_timecreated);
+    (@fid, @pid, @title, i_coverletter, i_timecreated);
 	
 insert into SYSTEMLOG (uid, act) value 
-	(4, 'create_application');
+	(@pid, 'create_application');
 end //
 DELIMITER ;

@@ -16,6 +16,10 @@ export async function getProfileData() {
     return await getData('/profile');
 }
 
+export async function postApplications(data) {
+    return await postData('/jobs', data);
+}
+
 export async function postProfileData(data) {
     return await postData('/profile', data)
 }
