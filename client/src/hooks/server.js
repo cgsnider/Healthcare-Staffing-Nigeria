@@ -30,7 +30,6 @@ export async function postEducation(data) {
 }
 
 export async function getEducation() {
-    console.log('GET EDUCATION');
     return await getData('/education');
 }
 
@@ -38,9 +37,6 @@ export async function getCategories() {
     return await getData('/categories')
 }
 
-export async function postProfessionalProfileData(data) {
-    return await postData('/user', data);
-}
 
 export async function postProfilePicture(img) {
     let formData = new FormData();
