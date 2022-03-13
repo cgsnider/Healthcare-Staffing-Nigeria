@@ -52,6 +52,7 @@ function PendingVerifications(props) {
         [{Email: "NigerianHospital@hosp.org",
             FacName:"Nigerian Hospital",
             Bio: "Short Description",
+            PhoneNumber: "123-456-7890",
             Verified: 1, //-1=neverLoggedIn  0=unverified, 1=pending, 2=verified
             image: null,
             Street:"123 Street",
@@ -62,6 +63,7 @@ function PendingVerifications(props) {
             Email: "NigerianHospital@hosp.org",
             FacName:"Nigerian Hospital",
             Bio: "Short Description",
+            PhoneNumber: "123-456-7890",
             Verified: 1, //-1=neverLoggedIn  0=unverified, 1=pending, 2=verified
             image: null,
             Street:'123 Street',
@@ -115,8 +117,10 @@ function PendingVerifications(props) {
                             <PendingProfileFac name={e.FacName}
                                             image={(e.image) ? e.image : placeholder}
                                             street={e.Street}
-                                            loc={`${e.City}, ${e.State}`}
-                                            email={e.Email}/>
+                                            loc={`${e.City}, ${e.State}, ${e.Country}`}
+                                            email={e.Email}
+                                            number={e.PhoneNumber}
+                                            bio={e.Bio}/>
                         )
                     })}
                 </div>

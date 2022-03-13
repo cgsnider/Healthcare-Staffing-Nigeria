@@ -22,13 +22,10 @@ function PendingProfile(props) {
                 </div>
             </div>
             <div className="flex ml-5 items-center">
-
-
-
-                <Popup trigger = {<button className="h-2/3 px-4 bg-green-500 rounded text-white">Review</button>} modal>
+                <Popup trigger = {<button className="h-2/3 px-4 bg-green-500 rounded text-white">Review</button>} modal className="overflow-auto">
                         {close => (
                            <div>
-                               <div className="flex m-5 w-auto">
+                               <div className="flex flex-wrap m-5 w-auto">
                                     <div className="flex justify-left h-28 min-w-fit">
                                         <img className="rounded-full" src={props.image}/> 
                                     </div>
@@ -36,29 +33,29 @@ function PendingProfile(props) {
                                         <div className="truncate text-xl">{props.name}</div>
                                         <div className="invisible">placeholder</div>
                                         <div className="flex">
-                                            <div className="truncate mr-2">Email:</div>
+                                            <div className="truncate mr-2 font-medium">Email:</div>
                                             <a href={`mailto:${props.email}`} className="truncate">{props.email}</a>
                                         </div>
                                         <div className="flex">
-                                            <div className="truncate mr-1">Phone No.</div>
+                                            <div className="truncate mr-1 font-medium">Phone No.</div>
                                             <div className="truncate">{props.number}</div>
                                         </div>
                                     </div>
                                </div>
                                <div className="flex flex-initial m-5 text-center">
-                                    <div className="basis-1/2">DoB: {props.dob}</div>
-                                    <div className="basis-1/2">Location: {props.loc}</div>
+                                    <div className="basis-1/2"><span className="font-medium">DoB:</span> {props.dob}</div>
+                                    <div className="basis-1/2"><span className="font-medium">Location:</span> {props.loc}</div>
                                </div>
-                               <div className="flex flex-initial m-5 text-center">
+                               <div className="flex flex-initial flex-wrap m-5 text-center">
                                     <div className="basis-1/3">{props.specialty}</div>
-                                    <div className="basis-1/3">MDCN:{props.mdcn}</div>
+                                    <div className="basis-1/3"><span className="font-medium">MDCN:</span>{props.mdcn}</div>
                                     <a href={props.resume} className="truncate text-blue-600 basis-1/3" download>Resume</a>
                                </div>
                                <div className="flex-col">
-                                    <div className="justify-left text-lg ml-10">Description:</div>
+                                    <div className="justify-left text-base ml-10 font-medium">Description:</div>
                                     <div className="flex">
                                         <div className="invisible basis-1/12">placeholder</div>
-                                        <div className="basis-2/3">{props.bio}</div>
+                                        <div className="basis-2/3 overflow-auto">{props.bio}</div>
                                     </div>
                                </div>
                                <div className="flex text-center justify-center gap-2 m-5">
