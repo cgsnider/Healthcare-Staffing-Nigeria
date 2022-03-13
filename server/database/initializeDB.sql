@@ -105,7 +105,11 @@ create table SYSTEMLOG (
   TimeCreated datetime default current_timestamp on update current_timestamp,
   foreign key(UID) references PERSON(ID)
 );
-create table ADMINISTRATOR (ID int not null, primary key (ID));
+create table ADMINISTRATOR (
+ID int not null, 
+Email varchar(255),
+primary key (ID)
+);
 create table PRIVLEGES (
   AID int not null,
   privilege varchar(10),

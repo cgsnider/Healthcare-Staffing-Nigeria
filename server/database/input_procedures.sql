@@ -363,3 +363,70 @@ create procedure facility_apply_for_verification (
 		(@id, 'create_application');
 end //
 DELIMITER ;
+
+drop procedure if exists admin_verify_professional;
+DELIMITER //
+create procedure admin_verify_professional (
+	in i_admin_email varchar(255),
+    in i_prof_email varchar(255)
+) begin 
+	
+	SET @newStatus := 2;
+    
+	SELECT id FROM ADMINISTRATOR WHERE Email = i_email into @id;
+	
+	UPDATE PROFESSIONAL
+	SET
+		Verified = @newStatus
+	WHERE
+		Email = i_prof_email;
+	
+	SELECT @newStatus;
+    
+    
+	insert into SYSTEMLOG (uid, act) value 
+		(@id, 'appprove_verification');
+end //
+DELIMITER ;
+
+drop procedure if exists admin_verify_professional;
+DELIMITER //
+create procedure admin_verify_facility (
+	in i_admin_email varchar(255),
+    in i_fac_email varchar(255)
+) begin 
+	
+	SET @newStatus := 2;
+    
+	SELECT id FROM ADMINISTRATOR WHERE Email = i_email into @id;
+	
+	UPDATE FACILITY
+	SET
+		Verified = @newStatus
+	WHERE
+		Email = i_prof_email;
+	
+	SELECT @newStatus;
+    
+    
+	insert into SYSTEMLOG (uid, act) value 
+		(@id, 'appprove_verification');
+end //
+DELIMITER ;
+
+drop procedure if exists admin_create_admin;
+DELIMITER //
+create procedure admin_create_admin (
+	in i_email varchar(255)
+) begin 
+	    
+	insert into PERSON (id) value (null);
+
+	select max(id) from PERSON into @id;
+
+	insert into ADMINISTRATOR (id, Email) value (@id, i_email);
+
+	insert into SYSTEMLOG (uid, act) value 
+		(@id, 'admin_create_admin');
+end //
+DELIMITER ;

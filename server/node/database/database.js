@@ -37,15 +37,17 @@ function handleNewUser (req, res, next) {
 
 function addNewUser(user) {
     return new Promise((resolve, reject) => {
-        
+        console.log(user)
         let sql;
         
         if (user['custom:type'] == 'Professional') {
 
             fullName = user.name.split("$")
             sql = `call cmg_staffing_nigeria.register_professional('${fullName[0]}', '${fullName[1]}', '${user.email}');`
-        } else {
+        } else if (user['custom:type'] == 'Facility') {
             sql = `CALL register_facility('${user.name}', '${user.email}')`
+        } else if (user['custom:type'] == 'Admin') {
+            sql = `CALL admin_create_admin('${user.email}')`
         }
 
         db.query(sql, (err, results) => {

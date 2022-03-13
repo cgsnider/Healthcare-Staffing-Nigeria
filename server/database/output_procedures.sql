@@ -168,3 +168,39 @@ create procedure get_facility_profile (
 
 end //
 DELIMITER ;
+
+drop procedure if exists get_professionals_pending; 
+DELIMITER //
+create procedure get_professionals_pending(
+	in i_email varchar(255)
+) begin
+	
+    SET @pending := 1;
+    
+    SELECT id FROM ADMINISTRATOR WHERE Email = i_email into @id; 
+    
+	select * from PROFESSIONAL where Verified = @pending;
+    
+    insert into SYSTEMLOG (uid, act) value 
+		(@id, 'get_professionals_pending');
+    
+end //
+DELIMITER ;
+
+drop procedure if exists get_facility_pending; 
+DELIMITER //
+create procedure get_facility_pending(
+	in i_email varchar(255)
+) begin
+	
+    SET @pending := 1;
+    
+    SELECT id FROM ADMINISTRATOR WHERE Email = i_email into @id; 
+    
+	select * from FACILITY where Verified = @pending;
+    
+    insert into SYSTEMLOG (uid, act) value 
+		(@id, 'get_facility_pending');
+    
+end //
+DELIMITER ;
