@@ -1,0 +1,14 @@
+.application-content {
+    margin: auto;
+    background: rgb(255, 255, 255);
+    width: 60%;
+    padding: 5px;
+    height: 90%;
+    overflow-y: scroll;
+  }
+  .application-arrow {
+    color: rgb(255, 255, 255);
+  }
+  .application-overlay {
+    background: rgba(0, 0, 0, 0.5);
+  }

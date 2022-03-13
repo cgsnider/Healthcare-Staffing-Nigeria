@@ -66,25 +66,7 @@ export function Drop(props){
  * async drop. use when dropdown options taken from resource
  */
 export function Drop2(props) {
-    //const [myOptions, setMyOptions] = useState({});
-    /*let myoptions = [
-        {
-            label: "All",
-            value: "All",
-        },
-        {
-            label: "Cardiologist1",
-            value: "CA",
-        },
-        {
-            label: "Cardiologist2",
-            value: "CA2",
-        },
-        {
-            label: "Cardiologist3",
-            value: "CA3",
-        },
-    ];*/
+
     const [inputValue, setValue] = useState('');
     const [selectedValue, setSelectedValue] = useState('');
     const [Options, setOptions] = useState([]);
@@ -151,23 +133,6 @@ export function Drop2(props) {
         );
     }
 
-    /*const MenuList = (props) => {
-        const height = 35;
-        const { options, children, maxHeight, getValue } = props;
-        const [value] = getValue();
-        const initialOffset = options.indexOf(value) * height;
-        return (    
-            <List
-                height={maxHeight}
-                itemCount={children.length}
-                itemSize={height}
-                initialScrollOffset={initialOffset}
-            >
-            {({ index, style }) => <div style={style}>{children[index]}</div>}
-            </List>
-        );
-    }*/
-
     return (
         <AsyncSelect
             cacheOptions
@@ -185,5 +150,3 @@ export function Drop2(props) {
 
 }
 
-//<input class="" autocapitalize="none" autocomplete="off" autocorrect="off" id="react-select-3-input" spellcheck="false" tabindex="0" type="text" aria-autocomplete="list" aria-expanded="true" aria-haspopup="true" aria-controls="react-select-3-listbox" aria-owns="react-select-3-listbox" role="combobox" value="" style="color: inherit; opacity: 1; width: 100%; grid-row-start: 1; grid-column-start: 2; grid-row-end: auto; grid-column-end: auto; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; min-width: 2px; border: 0px; margin: 0px; outline: 0px; padding: 0px; background-position: 0px center;"></input>
-//<input class="" autocapitalize="none" autocomplete="off" autocorrect="off" id="react-select-3-input" spellcheck="false" tabindex="0" type="text" aria-autocomplete="list" aria-expanded="true" aria-haspopup="true" aria-controls="react-select-3-listbox" aria-owns="react-select-3-listbox" role="combobox" value="" style="color: inherit; opacity: 1; width: 100%; grid-row-start: 1; grid-column-start: 2; grid-row-end: auto; grid-column-end: auto; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; min-width: 2px; border: 0px; margin: 0px; outline: 0px; padding: 0px; background-position: 0px center;"></input>
