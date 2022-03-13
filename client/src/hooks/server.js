@@ -29,9 +29,6 @@ export async function getCategories() {
     return await getData('/categories')
 }
 
-export async function postProfessionalProfileData(data) {
-    return await postData('/user', data);
-}
 
 export async function postProfilePicture(img) {
     let formData = new FormData();

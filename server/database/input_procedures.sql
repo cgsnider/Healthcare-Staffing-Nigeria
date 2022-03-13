@@ -237,3 +237,58 @@ create procedure add_education (
 
 end //
 DELIMITER ;
+
+drop procedure if exists update_facility_profile;
+DELIMITER //
+create procedure update_facility_profile (
+	in i_Email_Old varchar(255),
+    in i_City varchar(55),
+    in i_Country varchar(55),
+    in i_Email varchar(255),
+    in i_FacName varchar(255),
+    in i_ImageAddr varchar(255),
+    in i_State varchar(255),
+	in i_Descript text,
+    in i_Street varchar(255),
+    in i_Contact_Fname varchar(255),
+    in i_Contact_Lname varchar(255),
+    in i_Contact_PhoneNumber varchar(255)
+) begin 
+
+select ID from FACILITY where email = i_Email_Old into @id;
+
+update Facility 
+set 
+-- 	email = i_Email,
+	FacName = i_FacName,
+    country = i_country,
+    city = i_city,
+    street = i_street,
+    ImageAddr = i_ImageAddr,
+    State = i_State,
+    Descript = i_Descript
+where 
+	id = @id;
+    
+IF (select count(*) FROM CONTACT where FID = @id) != 0
+THEN
+	update Facility
+    set 
+		Fname = i_Contact_Fname,
+        LName = i_Contact_Lname,
+        PhoneNumber = i_Contact_PhoneNumber
+	where
+		FID = @id;
+ELSE
+	insert into CONTACT (FID, Fname, Lname, PhoneNumber)
+		value (@id, i_Contact_Fname, i_Contact_Lname, i_Contact_PhoneNumber);
+        
+END IF;
+
+insert into SYSTEMLOG (uid, act) value 
+    (@id, 'update_facility_profile');
+    
+select 200;
+end //
+DELIMITER ;
+

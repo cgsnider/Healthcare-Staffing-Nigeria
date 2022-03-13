@@ -27,7 +27,7 @@ DELIMITER ;
 
 drop procedure if exists get_profile; 
 DELIMITER //
-create procedure get_profile (
+create procedure get_professional_profile (
 	in i_email varchar(255)
 ) begin
 
@@ -87,6 +87,19 @@ create procedure get_facility_picture (
 
 end //
 DELIMITER ;
+
+drop procedure if exists get_facility_profile; 
+DELIMITER //
+create procedure get_facility_profile (
+	in i_email varchar(255)
+) begin
+
+	select F.Email, F.Verified, F.ImageAddr, F.City, F.Country, F.State, F.Street, F.Descript, F.FacName, C.Fname, C.Lname, C.PhoneNumber
+    from FACILITY as F join Contact as C on C.FID = F.ID where email = i_email;
+
+end //
+DELIMITER ;
+
 
 
 drop procedure if exists get_posting_categories; 

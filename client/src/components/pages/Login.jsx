@@ -21,7 +21,7 @@ function Login(props) {
 
     const Reset = (e) => {
         e.preventDefault();
-        ResetPassword(input, loginFail, loginSuccess).catch(err=>console.log("Reset Password promise failed with error "+err));
+        ResetPassword(input, loginFail).catch(err=>console.log("Reset Password promise failed with error "+err)).then(res => loginSuccess());
 
     }
 
@@ -29,7 +29,9 @@ function Login(props) {
         alert('username or password incorrect');
     }
     const loginSuccess = () => {
-        navigate('/jobs', {replace: true})
+        console.log("LOGIN")
+        console.log(localStorage.getItem('type'))
+        navigate((localStorage.getItem('type') == 'Professional') ? '/jobs' : '/user', {replace: true})
     }
     return (
         <div className="border font-mono">
@@ -62,9 +64,9 @@ function Login(props) {
                                     </Link>
                                 </div>
                                 <div className="">
-                                    <Link to="/jobs" onClick={Log}>
-                                        <button className="mt-4 mb-3 w-full bg-cmg-mid hover:bg-green-500 text-white py-2 rounded-md transition duration-100" >Login now</button>
-                                    </Link>
+                                    {/* <Link to="/jobs" onClick={Log}> */}
+                                        <button className="mt-4 mb-3 w-full bg-cmg-mid hover:bg-green-500 text-white py-2 rounded-md transition duration-100" onClick={Log} >Login now</button>
+                                    {/* </Link> */}
                                     <Link to="/">
                                         <button className="mt-4 mb-3 w-full bg-gray-900 hover:bg-gray-600 text-white py-2 rounded-md transition duration-100">Cancel</button>
                                     </Link>

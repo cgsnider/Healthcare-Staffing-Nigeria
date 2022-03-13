@@ -52,8 +52,19 @@ function addNewUser(user) {
             if (err) reject(results);
             resolve(results);
         })
-    })
+    });
 }
+
+// function call_proceedure(proceedure, params) {
+//     return new Promise((resolve, reject) => {
+//         sql_query = "(";
+//         params.forEach(p => sql_query += (typeof p == 'string') ? `'${p}', ` : `${p}, `);
+//         sql_query = "CALL "  + proceedure + params + ");"
+//         await db.query(sql)
+//         .then(results => resolve(results))
+//         .catch(err => reject(err))
+//     });
+// }
 
 
 

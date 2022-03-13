@@ -13,16 +13,19 @@ import placeholder from '../../../images/profile-placeholder.jpg';
 import {getProfileData, getProfileImage, postProfileData, postProfilePicture } from '../../../hooks/server';
 
 export default function Fac_Profile(props) {
+
+    console.log('FAC')
+
     const [profileInfo, setProfileInfo] = useState(
         {Email: "temp@example.com", 
         PhoneNumber: "123-456-1111", 
-        FName: "John",
-        LName: "Williams",
+        FacName: "John",
         Verified: 0, //  0=unverified, 1=pending, 2=verified
         ImageAddr: null,
         Street:'1234 Park place',
         City:'Los Angeles',
         Country:'United States',
+        Descript:'None',
     })
 
     
@@ -262,6 +265,7 @@ function AboutPopup(props) {
         setOpen({...open, open:false})
     }
     const save = (e) => {
+        console.log("SAVE")
         console.log(tempInfo)
         postProfileData(tempInfo)
         setInfo({...tempInfo, gender: gender.label});

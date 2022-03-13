@@ -33,9 +33,18 @@ router.get('/jobs', STD_MIDWARE, (req, res) => {
 
 router.get('/profile', STD_MIDWARE, (req, res) => {
     if (req.user != 402) {
-        let sql = `CALL get_profile('${req.user.email}')`
+        console.log(req.user)
+
+        let sql = `('${req.user.email}')`
+        if (req.user['custom:type'] == 'Professional') {
+            sql = 'CALL get_professional_profile' + sql
+        } else if (req.user['custom:type'] == 'Facility') {
+            sql = 'CALL get_facility_profile' + sql
+        }
+
         let query = db.query(sql, (err, results) => {
             if (err) throw err;
+            console.log(results)
             res.end(JSON.stringify(results))
         })
     } else {
@@ -79,13 +88,27 @@ router.get('/profile_picture/:key', (req, res) => {
 router.post('/profile', STD_MIDWARE, (req, res) => {
     if (req.user != 402) {
         data = req.body;
-        let params = `'${data.Email}', '${data.FName}', '${data.LName}', '${data.Email}',`
-        params += `'${data.Specialization}', '${data.PhoneNumber}', '${data.MDCN}', '${data.Country}', '${data.City}', '${data.Street}'`
-        const sql = `CALL update_professional_profile(${params})`;
-        let query = db.query(sql, (err, results) => {
-            if (err);
-            res.end(JSON.stringify(results))
-        })
+        let params = ''
+        let sql = ''
+        
+        if (req.user['custom:type'] == 'Professional') {
+            params += `'${req.user.Email}', '${data.FName}', '${data.LName}', '${data.Email}',`
+            params += `'${data.Specialization}', '${data.PhoneNumber}', '${data.MDCN}', '${data.Country}', '${data.City}', '${data.Street}'`
+            sql = `CALL update_professional_profile(${params})`;
+            let query = db.query(sql, (err, results) => {
+                if (err);
+                res.end(JSON.stringify(results))
+            })
+        } 
+        
+        else if (req.user['custom:type'] == 'Facility') {
+            
+            params += `'${req.user.Email}', '${data.City}', '${data.Country}', '${data.Email}',`
+            params += `'${data.FacName}', '${data.ImageAddr}', '${data.State}', '${data.Descript}', '${data.Street}', '${data.ContactFname}'`
+            // params += `'${data.ContactFname}', '${data.Country}', '${data.Email}',`
+            // sql = `CALL update_facility_profile(${params})`;
+        }
+ 
     } else res.end(JSON.stringify(req.user));
 })
 
