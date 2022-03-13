@@ -29,7 +29,7 @@ const App = () => {
       </>
     );
   }
-
+//register_admin
   return (
     <Router>
       <Routes>
@@ -42,9 +42,9 @@ const App = () => {
           <Route path='/applications' element={<ViewApplications/>}/>
         </Route>
 
-        {/**pages without navbar go here */}
         <Route path="/login"  element={<Login/>}/>
-        <Route path="/register"  element={<Regisration/>} />
+        <Route path="/register"  element={<Regisration admin={false}/>} />
+        <Route path="/register_admin"  element={<Regisration admin={true}/>} />
         
       </Routes>
     </Router>

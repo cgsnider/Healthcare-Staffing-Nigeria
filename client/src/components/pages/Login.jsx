@@ -31,7 +31,14 @@ function Login(props) {
     const loginSuccess = () => {
         console.log("LOGIN")
         console.log(localStorage.getItem('type'))
-        navigate((localStorage.getItem('type') == 'Professional') ? '/jobs' : '/user', {replace: true})
+        if (localStorage.getItem('type') == 'Professional') {
+            navigate('/jobs', {replace: true})
+        } else if (localStorage.getItem('type') == 'Facility') {
+            navigate('/users', {replace: true})
+        } else if (localStorage.getItem('type') == 'Admin') {
+            navigate('/pendingVerifications')
+        }
+        
     }
     return (
         <div className="border font-mono">

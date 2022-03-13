@@ -13,6 +13,8 @@ import '../styling/ToggleSwitch.css'
 
 function Regisration (props){
 
+    const register_admin = props.admin;
+
     const users = ['Professional','Facility'];
     const [ttOpen, setOpen] = useState(false);
     const [user, setUser] = useState(users[0])
@@ -45,7 +47,7 @@ function Regisration (props){
             console.log('password match')
             const reg_data = {
                 name: (user == users[0]) ? `${formData.fname}$${formData.lname}` : formData.org,
-                type: user,
+                type: (register_admin) ? "Admin" : user,
                 email: formData.email,
                 password: formData.password
             }
