@@ -133,3 +133,13 @@ create procedure user_exists (
 end //
 DELIMITER ;
 
+drop procedure if exists get_professional_by_verification; 
+DELIMITER //
+create procedure get_professional_by_verification (
+	in i_verification int
+) begin
+
+	select * from Professional where Verified = i_verification;
+
+end //
+DELIMITER ;

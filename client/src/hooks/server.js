@@ -22,7 +22,6 @@ export async function postEducation(data) {
 }
 
 export async function getEducation() {
-    console.log('GET EDUCATION');
     return await getData('/education');
 }
 

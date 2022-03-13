@@ -10,6 +10,7 @@ import Home from './components/pages/Home';
 import Profile from './components/pages/Profile.jsx';
 import PendingVerifications from './components/pages/Admins/PendingVerifications.jsx';
 import ViewApplications from "./components/pages/professionals/ViewApplications";
+import Fac_Profile from './components/pages/facility/Fac_Profile';
 //import Drop from './components/pages/Drop';
 //import Elogin from './components/examples/Elogin';
 
@@ -36,7 +37,7 @@ const App = () => {
         <Route path="/" element={<LayoutsWithNavbar/>}>
           <Route path="/" element={<Home/>}/>
           <Route path="/jobs" element={<Jobs/>} />
-          <Route path='/user' element={<Profile/>} />
+          <Route path='/user' element={(localStorage.getItem('type') == 'Professional') ? <Profile/> : <Fac_Profile/>} />
           <Route path='/pendingVerifications' element={<PendingVerifications/>} />
           <Route path='/applications' element={<ViewApplications/>}/>
         </Route>
