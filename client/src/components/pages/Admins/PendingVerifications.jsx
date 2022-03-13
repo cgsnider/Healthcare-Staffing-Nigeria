@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
 
+
 import PendingProfile from "../../parts/PendingProfile";
 import placeholder from '../../../images/profile-placeholder.jpg';
 import PendingProfileFac from "../../parts/PendingProfileFac";
@@ -19,7 +20,7 @@ function PendingVerifications(props) {
             Gender: "Male",
             DoB: "January 01, 2000",
             Specialization: "Cardiologist",
-            Bio: "Short Description",
+            Bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             Verified: 1, //-1=neverLoggedIn  0=unverified, 1=pending, 2=verified
             resume: null,
             image: null,
@@ -51,6 +52,7 @@ function PendingVerifications(props) {
         [{Email: "NigerianHospital@hosp.org",
             FacName:"Nigerian Hospital",
             Bio: "Short Description",
+            PhoneNumber: "123-456-7890",
             Verified: 1, //-1=neverLoggedIn  0=unverified, 1=pending, 2=verified
             image: null,
             Street:"123 Street",
@@ -61,6 +63,7 @@ function PendingVerifications(props) {
             Email: "NigerianHospital@hosp.org",
             FacName:"Nigerian Hospital",
             Bio: "Short Description",
+            PhoneNumber: "123-456-7890",
             Verified: 1, //-1=neverLoggedIn  0=unverified, 1=pending, 2=verified
             image: null,
             Street:'123 Street',
@@ -98,7 +101,12 @@ function PendingVerifications(props) {
                                             image={(e.image) ? e.image : placeholder}
                                             specialty={e.Specialization}
                                             resume={e.resume}
-                                            email={e.Email}/>
+                                            email={e.Email}
+                                            number={e.PhoneNumber}
+                                            mdcn={e.MDCN}
+                                            dob={e.DoB}
+                                            bio={e.Bio}
+                                            loc={`${e.Street}, ${e.City}, ${e.Country}`}/>
                         )
                     })}
                 </div>
@@ -109,8 +117,10 @@ function PendingVerifications(props) {
                             <PendingProfileFac name={e.FacName}
                                             image={(e.image) ? e.image : placeholder}
                                             street={e.Street}
-                                            loc={`${e.City}, ${e.State}`}
-                                            email={e.Email}/>
+                                            loc={`${e.City}, ${e.State}, ${e.Country}`}
+                                            email={e.Email}
+                                            number={e.PhoneNumber}
+                                            bio={e.Bio}/>
                         )
                     })}
                 </div>

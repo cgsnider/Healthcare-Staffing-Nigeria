@@ -64,6 +64,7 @@ export default function Profile(props) {
     const ApplyVerification =(e) => {
         applyForVerification();
     }
+
     const handleRemoveEducation = (e) => {
         let index = e.target.getAttribute('data-index')
         setNewEducation(newEducation.filter(item=> {return item.count != index}))
@@ -556,6 +557,7 @@ function AboutPopup(props) {
     const close = (e) => {
         setOpen({...open, open:false})
     }
+    
     const save = (e) => {
         console.log(tempInfo)
         postProfileData(tempInfo)
