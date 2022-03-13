@@ -37,19 +37,20 @@ export async function getCategories() {
     return await getData('/categories')
 }
 
+export async function applyForVerification() {
+    return await postData('/apply_verification')
+}
 
 export async function postProfilePicture(img) {
     let formData = new FormData();
     formData.append("image", img);
     return await postImage('/profile_picture', formData)
 }
+
 export async function getProfileImage() {
     const img = await getImage('/profile_picture');
     console.log(img)
 }
-
-
-
 
 
 /**

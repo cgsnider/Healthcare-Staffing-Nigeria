@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState, useEffect } from 'react';
 import {Drop2 , Drop} from '../../parts/Drop';
 import placeholder from '../../../images/profile-placeholder.jpg';
-import {getProfileData, getProfileImage, postProfileData, postProfilePicture } from '../../../hooks/server';
+import {applyForVerification, getProfileData, getProfileImage, postProfileData, postProfilePicture } from '../../../hooks/server';
 
 export default function Fac_Profile(props) {
 
@@ -46,13 +46,14 @@ export default function Fac_Profile(props) {
 
 
     const ApplyVerification =(e) => {
-
+        applyForVerification();
+        console.log()
     }
 
     const submitVerification = (e) => {
-        //check for invalid fields
-        //Verify()
-        console.log('submitted for verification')
+        applyForVerification()
+            .then(res => setProfileInfo({...profileInfo, Verified : 1}))
+            .catch(err => console.loga(err));
     }
 
     const Verificationdrop = (props) => {

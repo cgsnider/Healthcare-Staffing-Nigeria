@@ -313,3 +313,53 @@ insert into SYSTEMLOG (uid, act) value
 select 200;
 end //
 DELIMITER ;
+
+drop procedure if exists professionals_apply_for_verification;
+DELIMITER //
+create procedure professionals_apply_for_verification (
+	in i_email varchar(255)
+) begin 
+	
+
+	SELECT id, Verified FROM PROFESSIONAL WHERE Email = i_email into @id, @verified;
+	
+    IF @verified < 1
+    THEN
+		UPDATE PROFESSIONAL
+		SET
+			Verified = 1
+		WHERE
+			ID = @id;
+	END IF;
+    
+	insert into SYSTEMLOG (uid, act) value 
+		(@id, 'create_application');
+end //
+DELIMITER ;
+
+drop procedure if exists facility_apply_for_verification;
+DELIMITER //
+create procedure facility_apply_for_verification (
+	in i_email varchar(255)
+) begin 
+	
+	SET @pending := 1;
+    
+	SELECT id, Verified FROM FACILITY WHERE Email = i_email into @id, @verified;
+	
+    IF @verified < @pending
+    THEN
+		UPDATE FACILITY
+		SET
+			Verified = @pending
+		WHERE
+			ID = @id;
+		
+        SELECT @pending;
+	END IF;
+    
+    
+	insert into SYSTEMLOG (uid, act) value 
+		(@id, 'create_application');
+end //
+DELIMITER ;

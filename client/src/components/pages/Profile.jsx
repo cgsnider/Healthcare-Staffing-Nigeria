@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState, useEffect } from 'react';
 import {Drop2 , Drop} from '../parts/Drop';
 import placeholder from '../../images/profile-placeholder.jpg';
-import { getEducation, getProfileData, getProfileImage, postEducation, postProfileData, postProfilePicture } from '../../hooks/server';
+import { applyForVerification, getEducation, getProfileData, getProfileImage, postEducation, postProfileData, postProfilePicture } from '../../hooks/server';
 export default function Profile(props) {
     const [profileInfo, setProfileInfo] = useState(
         {Email: "temp@example.com", 
@@ -62,7 +62,7 @@ export default function Profile(props) {
     }
 
     const ApplyVerification =(e) => {
-
+        applyForVerification();
     }
     const handleRemoveEducation = (e) => {
         let index = e.target.getAttribute('data-index')
@@ -74,9 +74,9 @@ export default function Profile(props) {
         setNewExperience(newExperience.filter(item=> {return item.count != index}))
     }
     const submitVerification = (e) => {
-        //check for invalid fields
-        //Verify()
-        console.log('submitted for verification')
+        applyForVerification()
+            .then(res => setProfileInfo({...profileInfo, Verified : 1}))
+            .catch(err => console.loga(err));
     }
 
     const Verificationdrop = (props) => {

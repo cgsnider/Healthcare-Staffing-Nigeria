@@ -99,6 +99,24 @@ router.get('/profile_picture/:key', (req, res) => {
     readstream.pipe(res);
 })
 
+router.post('/apply_verification', STD_MIDWARE, (req, res) => {
+    console.log("apply_verification ", req.user);
+    if (req.user != 402) {
+        sql = '';
+        if (req.user['custom:type'] == 'Professional') {
+            sql = `CALL professionals_apply_for_verification ('${req.user.email}')`
+        } else if (req.user['custom:type'] == 'Facility') {
+            sql = `CALL facility_apply_for_verification ('${req.user.email}')`
+        }
+        
+        db.query(sql, (err, results) => {
+            if (err);
+            res.end(JSON.stringify(results))
+        })
+
+    } else res.end(JSON.stringify(req.user));
+})
+
 
 router.post('/profile', STD_MIDWARE, (req, res) => {
     if (req.user != 402) {
