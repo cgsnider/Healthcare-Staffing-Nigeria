@@ -21,6 +21,7 @@ db.connect(error => {
 function handleNewUser (req, res, next) {
 
     const sql = `CALL user_exists('${req.user.email}')`
+    console.log(sql)
     db.query(sql, (err, results) => {
         if (err) console.log('DB FAILURE')
         else if (results[0][0].Status === -1){
@@ -37,7 +38,7 @@ function handleNewUser (req, res, next) {
 
 function addNewUser(user) {
     return new Promise((resolve, reject) => {
-        console.log(user)
+        console.log("ADD NEW USER", user)
         let sql;
         
         if (user['custom:type'] == 'Professional') {

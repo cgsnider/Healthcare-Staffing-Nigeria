@@ -34,7 +34,7 @@ function Login(props) {
         if (localStorage.getItem('type') == 'Professional') {
             navigate('/jobs', {replace: true})
         } else if (localStorage.getItem('type') == 'Facility') {
-            navigate('/users', {replace: true})
+            navigate('/user', {replace: true})
         } else if (localStorage.getItem('type') == 'Admin') {
             navigate('/pendingVerifications')
         }

@@ -39,7 +39,7 @@ export default function Fac_Profile(props) {
     }, []);
     const fetchProfileData = async(isMounted) => {
         let data = await getProfileData()
-        console.log(data[0][0])
+        console.log("FETCH DATA: ",data[0][0])
         if (isMounted) setProfileInfo(data[0][0], console.log(profileInfo))
         else console.log('aborted setPostings on unmounted component')
     }

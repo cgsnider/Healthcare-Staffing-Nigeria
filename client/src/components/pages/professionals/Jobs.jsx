@@ -178,6 +178,7 @@ function ApplicationPage (props) {
     const verifiedClick = (e) => {
         /** do apply here */
         postApplications({'cover': cover, 'email': post.Email, 'title': post.Title})
+        props.setOpen(false)
         console.log(cover)
     }
     const unverifiedClick = (e) => {
