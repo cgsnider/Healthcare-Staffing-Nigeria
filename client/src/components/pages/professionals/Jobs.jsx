@@ -4,7 +4,7 @@ import JobListing from '../../parts/JobListings'
 import TopBar from '../../parts/TopBar';
 import { Drop } from '../../parts/Drop';
 import Popup from 'reactjs-popup';
-
+import CircleLoader from 'react-spinners/CircleLoader'
 import '../../styling/Jobs.css'
 import '../../../App.css'
 import '../../styling/Application.css'
@@ -38,10 +38,14 @@ function Jobs (props) {
     const [fetchError, setFetchError] = useState(false);
     const [openApply, setOpen] = useState(false);
     const [applyPos, setApplyPosition] = useState({});
+
+    const [posFetchEnd, setPosFetchEnd] = useState(false);
+    const [catFetchEnd, setCatFetchEnd] = useState(false);
     const fetchPostings = async(isMounted) => {
         let items = await getJobPosts()
         .catch(err=>setFetchError(true))
         if (isMounted) {
+            setPosFetchEnd(true);
             setPostings(items[0]);
             console.log(items[0]);
         }
@@ -52,6 +56,7 @@ function Jobs (props) {
         let items = await getCategories()
         .catch(err=>{setFetchError(true); console.error(err);})
         if (isMounted) {
+            setCatFetchEnd(true);
             items[0].unshift({Category:'All'})
             console.log('list: ',items[0])
             setCategories(items[0].map(cat => {
@@ -94,42 +99,49 @@ function Jobs (props) {
     }
     
 
-    if((fetchError !== true && postings!==null)) {
+    if(fetchError !== true) {
+        if (posFetchEnd && catFetchEnd) {
+            return (
+                <div>
+                    <OptionsBar search={search} setSearch={setSearch} click={handleClick}/>
+                    <div className="justify-center content-center flex">
+                        <Drop position={position} setPosition={setPosition} label='Select a Position' options={categories}/>
+                    </div>
+                    {(position !== null) ?
 
-        return (
-            <div>
-                <OptionsBar search={search} setSearch={setSearch} click={handleClick}/>
-                <div className="justify-center content-center flex">
-                    <Drop position={position} setPosition={setPosition} label='Select a Position' options={categories}/>
+                        <ul className="prof_job_grid content-center flex flex-wrap mx-32">
+                        {[...postings].filter(filterPosition).filter(filterSearch)
+                        .map(e => {
+                        return ( <li className='prof_job_node mx-16 mb-8' key={key++}>
+                                <JobListing
+                                image={(e.Image) ? e.Image : 'resources/cmg_logo.png'}
+                                position={e.Title}
+                                location={`${e.City}, ${e.Country}`}
+                                shifts={e.Shifts}
+                                salary={e.Salary}
+                                setOpen={setOpen}
+                                setPosting={setApplyPosition}
+                                posting={e}
+                                />
+                                
+                            </li> )
+                        })}
+
+                
+                        </ul>
+                        :
+                        <div className="flex content-center justify-center">Choose a Position to See Job Listings</div>
+                    }
+                    <ApplicationPage open={openApply} setOpen={setOpen} posting={applyPos}/>
                 </div>
-                {(position !== null) ?
-
-                    <ul className="prof_job_grid content-center flex flex-wrap mx-32">
-                    {[...postings].filter(filterPosition).filter(filterSearch)
-                      .map(e => {
-                       return ( <li className='prof_job_node mx-16 mb-8' key={key++}>
-                            <JobListing
-                            image={(e.Image) ? e.Image : 'resources/cmg_logo.png'}
-                            position={e.Title}
-                            location={`${e.City}, ${e.Country}`}
-                            shifts={e.Shifts}
-                            salary={e.Salary}
-                            setOpen={setOpen}
-                            setPosting={setApplyPosition}
-                            posting={e}
-                            />
-                            
-                        </li> )
-                    })}
-
-            
-                    </ul>
-                    :
-                    <div className="flex content-center justify-center">Choose a Position to See Job Listings</div>
-                }
-                <ApplicationPage open={openApply} setOpen={setOpen} posting={applyPos}/>
-            </div>
-        );
+            );
+        } else {
+            return(
+                <div className='flex content-center justify-center py-10'>
+                    <CircleLoader loading={!posFetchEnd || !catFetchEnd} color={'#3a8c3c'}/>
+                </div>
+            )
+        }
     } else {
         return(
             <div>Error retrieving job postings

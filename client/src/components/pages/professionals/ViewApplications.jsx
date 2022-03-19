@@ -6,12 +6,13 @@ import '../../../App.css'
 
 import { getJobPosts, getApplications } from '../../../hooks/server';
 import ApplicationListing from "../../parts/ApplicationListings";
+import CircleLoader from 'react-spinners/CircleLoader';
 
 function ViewApplications (props) {
 
     let key = 0;
     const [loggedIn, setLoggedIn] = useState(false);
-
+    const [postFetchEnd, setPostFetchEnd] = useState(false);
     useEffect( ()=> {
         let isMounted2 = true;
         if(!loggedIn){
@@ -26,10 +27,12 @@ function ViewApplications (props) {
     const [applications, setApplications] = useState(null);
     const [search, setSearch] = useState('');
     const [fetchError, setFetchError] = useState(false);
+
     const fetchPostings = async(isMounted) => {
         let items = await getApplications()
             .catch(err=>setFetchError(true))
         if (isMounted) {
+            setPostFetchEnd(true);
             setApplications(items[0]);
             console.log(items[0]);
         }
@@ -53,14 +56,10 @@ function ViewApplications (props) {
         return !!((search === '') || posts.Title.includes(search) || posts.City.includes(search));
     }
 
-
-    if((fetchError !== true)) {
-
-        return (
-            <div>
-                <OptionsBar search={search} setSearch={setSearch} click={handleClick}/>
-                <h3 className="my-4 flex justify-center text-3xl">Submitted Applications</h3>
-                {(applications !== null) ?
+    const LoadApps = (props) => {
+        if (postFetchEnd) {
+            if(applications !== null && applications.length>0) {
+                return(
                     <ul className="prof_job_grid content-center flex flex-wrap mx-32">
                         {[...applications].filter(filterSearch)
                             .map(e => {
@@ -74,14 +73,34 @@ function ViewApplications (props) {
                                 </li> )
                             })}
                     </ul>
-                    :
+                );
+            } else {
+                return (
                     <div className="flex flex-col items-center mt-32">
                         <h4 className="text-2xl">No Submitted Applications</h4>
                         <Link to="/jobs">
                             <div href="#" className="outline outline-1 rounded-md py-2 px-3 mt-4 text-white hover:bg-green-900 bg-cmg-mid">View Listings</div>
                         </Link>
                     </div>
-                }
+                );
+            }
+        } else {
+            return(
+                <div className='flex content-center justify-center py-10'>
+                    <CircleLoader loading={!postFetchEnd} color={'#3a8c3c'}/>
+                </div>
+            )
+        }
+    }
+
+
+    if((fetchError !== true)) {
+
+        return (
+            <div>
+                <OptionsBar search={search} setSearch={setSearch} click={handleClick}/>
+                <h3 className="my-4 flex justify-center text-3xl">Submitted Applications</h3>
+                <LoadApps />
             </div>
         );
     } else {

@@ -1,5 +1,16 @@
 import {arrayObject} from './util.js';
 
+// functions for testing delay 
+function timeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+//call sleep with function to delay and args for func.
+async function sleep(fn, ...args) {
+    await timeout(3000);
+    return await fn(...args);
+}
+
+
 /**
  * Gets Job Postings from server
  * @returns Data that represents a job posting
