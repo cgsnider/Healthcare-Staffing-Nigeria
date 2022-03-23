@@ -160,7 +160,7 @@ export default function Profile(props) {
                                             </div>
                                             
                                         </div>
-                                        <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">{profileInfo.FName}</h1>
+                                        <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">{profileInfo.FName} {profileInfo.LName}</h1>
                                         <h3 className="text-gray-600 font-lg text-semibold leading-6">{profileInfo.Specialization}</h3>
                                         <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">
                                             {profileInfo.Bio}</p>
