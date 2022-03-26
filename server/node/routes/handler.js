@@ -19,15 +19,15 @@ const STD_MIDWARE = [authenticate, db.handleNewUser]
 
 
 router.get('/jobs', STD_MIDWARE, (req, res) => {
-    console.log("JOBS ")
     if (req.user != 402) {
-        console.log("Jobs 2")
+
         const procedure = 'get_postings';
         const params = [req.user.email, req.body.category];
-        console.log("JOBS 3: ", procedure, params)
+        
         db.call(procedure, params)
             .then(results => res.end(JSON.stringify(results)))
             .catch(err => res.end(JSON.stringify('Error fetching jobs')));
+
     } else {
         res.end(JSON.stringify('402'));
     }
@@ -46,6 +46,7 @@ router.get('/applications', STD_MIDWARE, (req, res) => {
 });
 
 router.get('/profile', STD_MIDWARE, (req, res) => {
+    console.log("PROFILE")
     if (req.user != 402) {
         const params = [req.user.email];
         let procedure = '';
@@ -77,6 +78,7 @@ router.get('/categories', STD_MIDWARE, (req, res) => {
 });
 
 router.get('/education', STD_MIDWARE, (req, res) => {
+    console.log("EDUCATION")
     if (req.user != 402) {
         let sql = `CALL get_education('${req.user.email}')`;
         const procedure = 'get_education';
@@ -195,39 +197,5 @@ router.post('/jobs', STD_MIDWARE, (req, res) => {
 
     } else res.end(req.user);
 })
-
-// router.post('/register', (req, res) => {
-    
-//     const newUser = {
-//         email: req.body.email,
-//         password: req.body.password,
-//         fname: req.body.fname,
-//         lname: req.body.lname
-//     }
-
-//     if (auth.RegisterUser(newUser)) {
-//         console.log('Created User')
-//         res.status(201).send('Created User');
-//     } else {
-//         console.log('Failed to Create user')
-//         res.status(200).send('Failed to Create user')
-//     }
-// });
-
-// router.post('/login', (req, res) => {
-//     const {email, password} = req.body;
-
-//     console.log(`email: ${email}, password:${password}`);
-//     auth.SignIn({email, password});
-//     res.status(200).send("recieved");
-
-// });
-
-
-// Other
-
-
-
-
 
 module.exports = router;

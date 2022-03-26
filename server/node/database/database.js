@@ -46,14 +46,14 @@ async function call (procedure="", params=[]) {
 
         if (params.length > 0)
             sql = sql.slice(0, sql.length - 2);
-            
+
         sql += ");"
 
-        console.log("DB Query: ", sql)
+        console.log("call: ", sql)
         
         db.query(sql)
             .then(result => {
-                console.log(result[0])
+                console.log(sql, "\n", result[0])
                 resolve(result[0])})
             .catch(err => reject(err))
     });
