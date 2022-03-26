@@ -62,8 +62,10 @@ export default function Profile(props) {
     }
 
     const fetchEducation = async(isMounted) => {
+        console.log("EDUCATION 1")
         let data = await getEducation()
-        console.log(data);
+        console.log("EDUCATION 2")
+        console.log("EDUCATION: ", data);
         if (isMounted) {
             setEdFetchEnd(true);
             setNewEducation([...data[0]]);

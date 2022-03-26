@@ -70,6 +70,7 @@ export async function getProfileImage() {
  * @returns the data from the get request with JSON processing completed
  */
 async function getData(url='', body={}) {
+    
     const data = await fetch(`api${url}`, {
         method: 'GET',
         mode: 'cors',
@@ -83,7 +84,9 @@ async function getData(url='', body={}) {
         referrerPolicy: 'no-referrer', 
 
     })
+    console.log(url, "\n", data.body)
     const items = await data.json();
+    console.log(url, " ", items)
     return items;
 }
 

@@ -46,7 +46,6 @@ router.get('/applications', STD_MIDWARE, (req, res) => {
 });
 
 router.get('/profile', STD_MIDWARE, (req, res) => {
-    console.log("PROFILE")
     if (req.user != 402) {
         const params = [req.user.email];
         let procedure = '';
@@ -78,13 +77,12 @@ router.get('/categories', STD_MIDWARE, (req, res) => {
 });
 
 router.get('/education', STD_MIDWARE, (req, res) => {
-    console.log("EDUCATION")
     if (req.user != 402) {
         let sql = `CALL get_education('${req.user.email}')`;
         const procedure = 'get_education';
         const params = [req.user.email];
         db.call(procedure, params)
-            .then(results => res.end(results))
+            .then(results => res.end(JSON.stringify(results)))
             .catch(err => res.end('Error fetching education'))
     } else {
         res.end(JSON.stringify('402'));
@@ -95,7 +93,6 @@ router.get('/education', STD_MIDWARE, (req, res) => {
 router.get('/profile_picture/:key', (req, res) => {
     const key = req.params.key;
     const readstream = s3.download(key);
-    console.log(readstream)
     readstream.pipe(res);
 })
 

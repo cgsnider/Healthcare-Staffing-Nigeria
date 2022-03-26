@@ -1,26 +1,11 @@
 const mysql = require('mysql2/promise');
 
-
-
 const promised_connection = mysql.createConnection({
         host: 'localhost',
         user: 'root',
         password: '',
         database: 'cmg_staffing_nigeria'
     });
-
-
-    // .then(res => console.log('Database is Connected!'))
-    // .catch(err => console.log('Error connecting to mySQL DB'));
-
-// db.connect(error => {
-//     if (!error) {
-//         console.log('Database is Connected!');
-//     } else {
-//         console.log('Error connecting to mySQL DB')
-//         throw error;
-//     }
-// })
 
 /**
  * Makes a query call to the data base.
@@ -100,8 +85,5 @@ async function addNewUser(user) {
 }
 
 
-
-
-// module.exports = db;
 module.exports.call = call;
 module.exports.handleNewUser = handleNewUser;
