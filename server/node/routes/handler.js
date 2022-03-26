@@ -19,13 +19,12 @@ const STD_MIDWARE = [authenticate, db.handleNewUser]
 
 
 router.get('/jobs', STD_MIDWARE, (req, res) => {
-
     if (req.user != 402) {
-        let sql = `CALL get_postings('${req.user.email}', ${(req.body.category != undefined) ? "'req.body.category'" : 'null'})`
-        let query = db.query(sql, (err, results) => {
-            if (err);
-            res.end(JSON.stringify(results))
-        })
+        const procedure = 'get_postings';
+        const params = [req.user.email, req.body.category];
+        db.call(procedure, params)
+            .then(results => res.end(JSON.stringify(results)))
+            .catch(err => res.end(JSON.stringify('Error fetching jobs')));
     } else {
         res.end(JSON.stringify('402'));
     }
@@ -33,13 +32,11 @@ router.get('/jobs', STD_MIDWARE, (req, res) => {
 
 router.get('/applications', STD_MIDWARE, (req, res) => {
     if (req.user != 402) {
-        let sql = `CALL get_applications('${req.user.email}')`
-        let query = db.query(sql, (err, results) => {
-            if (err) {
-                console.log("Error in getting applications");
-            }
-            res.end(JSON.stringify(results));
-        })
+        const procedure = 'get_applications';
+        const params = [req.user.email]
+        db.call(procedure, params)
+            .then(results => res.end(JSON.stringify(results)))
+            .catch(err => res.end("Error Getting Applications"));
     } else {
         res.end(JSON.stringify('402'));
     }
@@ -47,21 +44,18 @@ router.get('/applications', STD_MIDWARE, (req, res) => {
 
 router.get('/profile', STD_MIDWARE, (req, res) => {
     if (req.user != 402) {
-        console.log(req.user)
-
-        let sql = `('${req.user.email}')`
+        const params = [req.user.email];
+        let procedure = '';
         if (req.user['custom:type'] == 'Professional') {
-            sql = 'CALL get_professional_profile' + sql
+            procedure = 'get_professional_profile';
         } else if (req.user['custom:type'] == 'Facility') {
-            sql = 'CALL get_facility_profile' + sql
+            procedure = 'get_facility_profile';
         }
-        console.log("SQL: ", sql)
 
-        let query = db.query(sql, (err, results) => {
-            if (err) throw err;
-            console.log(results)
-            res.end(JSON.stringify(results))
-        })
+        db.call(procedure, params)
+            .then(results => res.end(JSON.stringify(results)))
+            .catch(err => res.end(JSON.stringify('Error fetching profile')));
+
     } else {
         res.end(JSON.stringify('402'));
     }
@@ -69,11 +63,11 @@ router.get('/profile', STD_MIDWARE, (req, res) => {
 
 router.get('/categories', STD_MIDWARE, (req, res) => {
     if (req.user != 402) {
+        const procedure = 'get_posting_categories';
         let sql = `CALL get_posting_categories`;
-        let query = db.query(sql, (err, results) => {
-            if (err);
-            res.end(JSON.stringify(results))
-        })
+        db.call(procedure)
+            .then(results => res.end(JSON.stringify(results)))
+            .catch(err => res.end(JSON.stringify("Error fetching categories")));
     } else {
         res.end(JSON.stringify('402'));
     }
@@ -82,10 +76,11 @@ router.get('/categories', STD_MIDWARE, (req, res) => {
 router.get('/education', STD_MIDWARE, (req, res) => {
     if (req.user != 402) {
         let sql = `CALL get_education('${req.user.email}')`;
-        let query = db.query(sql, (err, results) => {
-            if (err);
-            res.end(JSON.stringify(results))
-        })
+        const procedure = 'get_education';
+        const params = [req.user.email];
+        db.call(procedure, params)
+            .then(results => res.end(results))
+            .catch(err => res.end('Error fetching education'))
     } else {
         res.end(JSON.stringify('402'));
     }
@@ -100,19 +95,18 @@ router.get('/profile_picture/:key', (req, res) => {
 })
 
 router.post('/apply_verification', STD_MIDWARE, (req, res) => {
-    console.log("apply_verification ", req.user);
     if (req.user != 402) {
-        sql = '';
+        const params = [req.user.email];
+        let procedure = '';
         if (req.user['custom:type'] == 'Professional') {
-            sql = `CALL professionals_apply_for_verification ('${req.user.email}')`
+            procedure = 'professionals_apply_for_verification'
         } else if (req.user['custom:type'] == 'Facility') {
-            sql = `CALL facility_apply_for_verification ('${req.user.email}')`
+            procedure = 'facility_apply_for_verification';
         }
-        
-        db.query(sql, (err, results) => {
-            if (err);
-            res.end(JSON.stringify(results))
-        })
+
+        db.call(procedure, params)
+            .then(results => res.end(JSON.stringify(results)))
+            .catch(err => res.end(JSON.stringify('Error applying for verification')));
 
     } else res.end(JSON.stringify(req.user));
 })
@@ -121,24 +115,24 @@ router.post('/apply_verification', STD_MIDWARE, (req, res) => {
 router.post('/profile', STD_MIDWARE, (req, res) => {
     if (req.user != 402) {
         data = req.body;
-        let params = ''
-        let sql = ''
+        let params;
+        let procedure;
         
         if (req.user['custom:type'] == 'Professional') {
-            params += `'${req.user.email}', '${data.FName}', '${data.LName}', '${data.Email}',`
-            params += `'${data.Specialization}', '${data.PhoneNumber}', '${data.MDCN}', '${data.Country}', '${data.City}', '${data.Street}'`
-            sql = `CALL update_professional_profile(${params})`;
+            procedure = 'update_professional_profile';
+            params = [req.user.email, data.FName, data.LName, data.Email, data.Specialization, 
+                data.PhoneNumber, data.MDCN, data.Country, data.City, data.Street];
         } 
         else if (req.user['custom:type'] == 'Facility') {
-            console.log(data)
-            params += `'${req.user.email}', '${data.City}', '${data.Country}', '${data.Email}',`
-            params += `'${data.FacName}', '${data.State}', '${data.Descript}', '${data.Street}', '${data.CName}', '${data.PhoneNumber}'`
-            sql = `CALL update_facility_profile(${params})`;
+            procedure = 'update_facility_profile';
+            params = [req.user.email, data.City, data.Country, data.Email, data.FacName, data.State, 
+                data.Descript, data.Street, data.CName, data.PhoneNumber];
         }
-        let query = db.query(sql, (err, results) => {
-            if (err);
-            res.end(JSON.stringify(results))
-        })
+
+        db.call(procedure, params)
+            .then(results => res.end(JSON.stringify(results)))
+            .catch(err => res.end("Error saving profile"));
+
     } else res.end(JSON.stringify(req.user));
 })
 
@@ -147,36 +141,38 @@ router.post('/profile_picture', [...STD_MIDWARE, upload.single('image')], async 
     await util.formatImage(file.path);
 
     const upload = await s3.upload(file);
-    let sql = ` ('${req.user.email}', '${upload.Key}')`
+
+    let procedure;
+    const params = [req.user.email, upload.Key];
 
     if (req.user['custom:type'] == 'Professional') {
-        sql = `CALL update_professional_picture` + sql;
+        procedure = 'update_professional_picture';
     } else if (req.user['custom:type'] == 'Facility') {
-        sql = `CALL update_facility_picture` + sql;
+        procedure = 'update_facility_picture'
     }
 
-    query = db.query(sql, (err, results) => {
-        if (err) console.log("FAILED TO LOG PROFILE PICTURE IN DB");
-        else res.end(JSON.stringify(upload.Key))
-    })
+    db.call(procedure, params)
+        .then(res.end(JSON.stringify(upload.Key)))
+        .catch(err => res.end("FAILED TO LOG PROFILE PICTURE IN DB"))
 
 })
 
-router.post('/education', STD_MIDWARE, (req, res) => {
+router.post('/education', STD_MIDWARE, async (req, res) => {
     if(req.user != 402) {
         let data = util.objectArray(req.body);
         let out = []
         if(data.College != 'undefined') {
-        data.forEach(e => {
-            const sql = `call cmg_staffing_nigeria.add_education('${req.user.email}', '${e.College}', '${e.Degree}', '${e.StartDate}', '${e.EndDate}')`
-            let query = db.query(sql, (err, results) => {
-                if (err);
-                out.push(results);
-            })
-        });
-        res.end(JSON.stringify(util.arrayObject(out)));
-    }
-    } else res.end();
+            const procedure = 'add_education';
+
+            data.forEach(async e => {
+                const params = [req.user.email, e.College, e.Degree, e.StartDate, e.EndDate];
+                const result = await db.call(procedure, params);
+                out.push(result);
+            });
+
+            res.end(JSON.stringify(util.arrayObject(out)));
+            }
+    } else res.end(req.user);
 })
 
 router.post('/jobs', STD_MIDWARE, (req, res) => {
@@ -187,13 +183,14 @@ router.post('/jobs', STD_MIDWARE, (req, res) => {
         time = t.getHours() + ":" + t.getMinutes() + ":" + t.getSeconds();
         datetime = date + ' ' + time;
         cover = Object.keys(data.cover).map(function (key) { return data.cover[key] }).join("");
-        let params = `'${data.email}', '${req.user.email}', '${data.title}', '${cover}', '${datetime}'`
-        const sql = `CALL create_application(${params})`;
-        let query = db.query(sql, (err, results) => {
-            if (err);
-            res.end(JSON.stringify(results))
-        })
-    } else res.end();
+
+        const params = [data.email, req.user.email, data.title, cover, datetime];
+        const procedure = 'create_application';
+
+        db.call(procedure, params)
+            .then(results => res.end(JSON.stringify(results)));
+
+    } else res.end(req.user);
 })
 
 // router.post('/register', (req, res) => {
