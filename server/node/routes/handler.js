@@ -19,9 +19,12 @@ const STD_MIDWARE = [authenticate, db.handleNewUser]
 
 
 router.get('/jobs', STD_MIDWARE, (req, res) => {
+    console.log("JOBS ")
     if (req.user != 402) {
+        console.log("Jobs 2")
         const procedure = 'get_postings';
         const params = [req.user.email, req.body.category];
+        console.log("JOBS 3: ", procedure, params)
         db.call(procedure, params)
             .then(results => res.end(JSON.stringify(results)))
             .catch(err => res.end(JSON.stringify('Error fetching jobs')));
