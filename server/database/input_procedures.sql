@@ -66,7 +66,7 @@ CREATE PROCEDURE update_professional_picture (
     IN i_imgAddr VARCHAR(255)
 ) BEGIN 
     
-	SELECT ID FROM PROFESSIONAL WHERE email = i_email INTO @id;
+	select ID FROM PROFESSIONAL WHERE email = i_email INTO @id;
     
     UPDATE PROFESSIONAL 
     SET
@@ -105,7 +105,7 @@ CREATE PROCEDURE update_facility_picture (
     in i_imgAddr VARCHAR(255)
 ) BEGIN 
     
-	SELECT ID FROM FACILITY WHERE email = i_email INTO @id;
+	select ID FROM FACILITY WHERE email = i_email INTO @id;
     
     UPDATE FACILITY 
     SET
@@ -256,8 +256,8 @@ select id, title from JOBPOSTING as J left join FACILITY as F on F.ID = J.FID
 
 select id from PROFESSIONAL where email = i_email into @pid;
 
-insert into APPLICATION (fid, pid, postingtitle, coverletter, timecreated) VALUES
-    (@fid, @pid, @title, i_coverletter, i_timecreated);
+insert into APPLICATION (fid, pid, postingtitle, coverletter, timecreated, progress) VALUES
+    (@fid, @pid, @title, i_coverletter, i_timecreated, 0);
 	
 insert into SYSTEMLOG (uid, act) value 
 	(@pid, 'create_application');
@@ -321,7 +321,7 @@ create procedure professionals_apply_for_verification (
 ) begin 
 	
 
-	SELECT id, Verified FROM PROFESSIONAL WHERE Email = i_email into @id, @verified;
+	select id, Verified FROM PROFESSIONAL WHERE Email = i_email into @id, @verified;
 	
     IF @verified < 1
     THEN
@@ -345,7 +345,7 @@ create procedure facility_apply_for_verification (
 	
 	SET @pending := 1;
     
-	SELECT id, Verified FROM FACILITY WHERE Email = i_email into @id, @verified;
+	select id, Verified FROM FACILITY WHERE Email = i_email into @id, @verified;
 	
     IF @verified < @pending
     THEN
@@ -355,7 +355,7 @@ create procedure facility_apply_for_verification (
 		WHERE
 			ID = @id;
 		
-        SELECT @pending;
+        select @pending;
 	END IF;
     
     
@@ -373,7 +373,7 @@ create procedure admin_verify_professional (
 	
 	SET @newStatus := 2;
     
-	SELECT id FROM ADMINISTRATOR WHERE Email = i_email into @id;
+	select id FROM ADMINISTRATOR WHERE Email = i_email into @id;
 	
 	UPDATE PROFESSIONAL
 	SET
@@ -381,7 +381,7 @@ create procedure admin_verify_professional (
 	WHERE
 		Email = i_prof_email;
 	
-	SELECT @newStatus;
+	select @newStatus;
     
     
 	insert into SYSTEMLOG (uid, act) value 
@@ -389,7 +389,7 @@ create procedure admin_verify_professional (
 end //
 DELIMITER ;
 
-drop procedure if exists admin_verify_professional;
+drop procedure if exists admin_verify_facility;
 DELIMITER //
 create procedure admin_verify_facility (
 	in i_admin_email varchar(255),
@@ -398,7 +398,7 @@ create procedure admin_verify_facility (
 	
 	SET @newStatus := 2;
     
-	SELECT id FROM ADMINISTRATOR WHERE Email = i_email into @id;
+	select id FROM ADMINISTRATOR WHERE Email = i_email into @id;
 	
 	UPDATE FACILITY
 	SET
@@ -406,7 +406,7 @@ create procedure admin_verify_facility (
 	WHERE
 		Email = i_prof_email;
 	
-	SELECT @newStatus;
+	select @newStatus;
     
     
 	insert into SYSTEMLOG (uid, act) value 
@@ -428,5 +428,30 @@ create procedure admin_create_admin (
 
 	insert into SYSTEMLOG (uid, act) value 
 		(@id, 'admin_create_admin');
+end //
+DELIMITER ;
+
+drop procedure if exists hire_applicant;
+DELIMITER //
+create procedure hire_applicant (
+	in i_fac_email varchar(255),
+    in i_prof_email varchar(255),
+    in i_title varchar(255)
+) begin 
+	    
+	select id from PROFESSIONAL where i_prof_email = Email into @pid;
+	select id from FACILITY where i_fac_email = Email into @fid;
+	
+	UPDATE APPLICATION 
+    set
+		Progress = 100
+	where 
+		FID = @fid 
+        and PID = @pid
+        and PostingTitle = i_title;
+        
+
+	insert into SYSTEMLOG (uid, act) value 
+		(@fid, 'hire_applicant');
 end //
 DELIMITER ;

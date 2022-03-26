@@ -135,9 +135,9 @@ DELIMITER ;
 
 
 
-drop procedure if exists get_applications; 
+drop procedure if exists get_professional_applications; 
 DELIMITER //
-create procedure get_applications (
+create procedure get_professional_applications (
 	in i_email varchar(255)
 ) begin
 
@@ -145,9 +145,9 @@ create procedure get_applications (
 select id from PROFESSIONAL where email = i_email into @id;
 
 
-select J.Title, J.Salary, J.Descript, J.Slots, J.Shifts, J.Category, F.FacName, F.City, F.Country, F.State, F.Street, F.Email
+select J.Title, J.Salary, J.Descript, J.Slots, J.Shifts, J.Category, F.FacName, F.City, F.Country, F.State, F.Street, F.Email, A.Progess, A.TimeCreated
 	from JOBPOSTING as J join FACILITY as F on F.ID = J.FID
-	inner join APPLICATION on J.FID = APPLICATION.FID and J.Title = APPLICATION.PostingTitle 
+	inner join APPLICATION as A on J.FID = APPLICATION.FID and J.Title = APPLICATION.PostingTitle 
 	where APPLICATION.pid = @id;
 
 

@@ -53,7 +53,6 @@ export default function Profile(props) {
 
     const fetchProfileData = async(isMounted) => {
         let data = await getProfileData()
-        console.log(data[0][0])
         if (isMounted) {
             setInfoFetchEnd(true);
             setProfileInfo(data[0][0], console.log(profileInfo))
@@ -64,8 +63,6 @@ export default function Profile(props) {
     const fetchEducation = async(isMounted) => {
         console.log("EDUCATION 1")
         let data = await getEducation()
-        console.log("EDUCATION 2")
-        console.log("EDUCATION: ", data);
         if (isMounted) {
             setEdFetchEnd(true);
             setNewEducation([...data[0]]);

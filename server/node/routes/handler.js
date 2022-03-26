@@ -26,13 +26,13 @@ const STD_MIDWARE = [authenticate, db.handleNewUser]
  * Most of the routes follows the following basic structure:
  * 
  *  router.api_call_type(url, middleware (request, result) => {
- *     if (req.user != 402) { -> If the user is valid according to authenticate middleware 
+ *     if (req.user != 401) { -> If the user is valid according to authenticate middleware 
  *         const procedure = ...; -> Specifies the MySQL procedure to be use
  *         const params = [...]; -> Specifies any paramaters to be passed in as a list in appropriate order for the MySQL procedure (see .sql files in server/database)
  *         db.call(procedure, params) -> Calls db.call to asynchronously
  *              .then(results => res.end(JSON.stringify(results))) -> sends back the results of the query if successful
  *              .catch(err => res.end(JSON.stringify('Error fetching jobs'))); -> sends back an error message to client if query failed
- *     } else res.end(JSON.stringify(req.user)); -> if the user is not valid, sends back appropriate code (402)
+ *     } else res.end(JSON.stringify(req.user)); -> if the user is not valid, sends back appropriate code (401)
  *  });
  * 
  *  Exact route structure varies. Common variation includes selecting different proceedures or parameters 
@@ -47,7 +47,7 @@ const STD_MIDWARE = [authenticate, db.handleNewUser]
 
 
 router.get('/jobs', STD_MIDWARE, (req, res) => {
-    if (req.user != 402) {
+    if (req.user != 401) {
 
         const procedure = 'get_postings';
         const params = [req.user.email, req.body.category];
@@ -60,18 +60,28 @@ router.get('/jobs', STD_MIDWARE, (req, res) => {
 });
 
 router.get('/applications', STD_MIDWARE, (req, res) => {
-    if (req.user != 402) {
-        const procedure = 'get_applications';
+    if (req.user != 401) {
+        let procedure;
+        if (req.user['custom:type'] == 'Professional') {
+            procedure = 'get_professional_applications';
+        } else if (req.user['custom:type'] == 'Facility') {
+            procedure = 'get_facility_applications';
+        }
+
         const params = [req.user.email]
         db.call(procedure, params)
-            .then(results => res.end(JSON.stringify(results)))
-            .catch(err => res.end("Error Getting Applications"));
+            .then(results => {
+                console.log(results)
+                res.end(JSON.stringify(results))})
+            .catch(err => {
+                console.log(err)
+                res.end("Error Getting Applications")});
     } else res.end(JSON.stringify(req.user));
 
 });
 
 router.get('/profile', STD_MIDWARE, (req, res) => {
-    if (req.user != 402) {
+    if (req.user != 401) {
         const params = [req.user.email];
         let procedure = '';
         if (req.user['custom:type'] == 'Professional') {
@@ -88,9 +98,8 @@ router.get('/profile', STD_MIDWARE, (req, res) => {
 });
 
 router.get('/categories', STD_MIDWARE, (req, res) => {
-    if (req.user != 402) {
+    if (req.user != 401) {
         const procedure = 'get_posting_categories';
-        let sql = `CALL get_posting_categories`;
         db.call(procedure)
             .then(results => res.end(JSON.stringify(results)))
             .catch(err => res.end(JSON.stringify("Error fetching categories")));
@@ -100,8 +109,7 @@ router.get('/categories', STD_MIDWARE, (req, res) => {
 });
 
 router.get('/education', STD_MIDWARE, (req, res) => {
-    if (req.user != 402) {
-        let sql = `CALL get_education('${req.user.email}')`;
+    if (req.user != 401) {
         const procedure = 'get_education';
         const params = [req.user.email];
         db.call(procedure, params)
@@ -119,8 +127,37 @@ router.get('/profile_picture/:key', (req, res) => {
     readstream.pipe(res);
 })
 
+router.post('/opening', STD_MIDWARE, (req, res) => {
+    if (req.user != 401) {
+        if (req.user['custom:type'] == 'Facility') {
+            const procedure = 'create_job_posting';
+            const params = [req.user.email, req.body.Title, req.body.Salary, 
+                req.body.Descript, req.body.Slots, req.body.Category, req.body.Shifts];
+
+            db.call(procedure, params)
+                .then(results => res.end(JSON.stringify(results)))
+                .catch(err => res.end(418));
+
+        } else res.end(JSON.stringify(401))
+    } else res.end(JSON.stringify(req.user));
+});
+
+router.post('/hire_applicant', STD_MIDWARE, (req, res) => {
+    if (req.user != 401) {
+        if (req.user['custom:type'] == 'Facility') {
+            const procedure = 'hire_applicant'
+            const params = [req.user.email, req.body.ApplicantEmail, req.body.PostingTitle]
+
+            db.call(procedure, params)
+                .then(results => res.end(JSON.stringify(results)))
+                .catch(err => res.end(418));
+        }
+    }
+});
+
+
 router.post('/apply_verification', STD_MIDWARE, (req, res) => {
-    if (req.user != 402) {
+    if (req.user != 401) {
         const params = [req.user.email];
         let procedure = '';
         if (req.user['custom:type'] == 'Professional') {
@@ -138,7 +175,7 @@ router.post('/apply_verification', STD_MIDWARE, (req, res) => {
 
 
 router.post('/profile', STD_MIDWARE, (req, res) => {
-    if (req.user != 402) {
+    if (req.user != 401) {
         data = req.body;
         let params;
         let procedure;
@@ -183,7 +220,7 @@ router.post('/profile_picture', [...STD_MIDWARE, upload.single('image')], async 
 })
 
 router.post('/education', STD_MIDWARE, async (req, res) => {
-    if(req.user != 402) {
+    if(req.user != 401) {
         let data = util.objectArray(req.body);
         let out = []
         if(data.College != 'undefined') {
@@ -201,7 +238,7 @@ router.post('/education', STD_MIDWARE, async (req, res) => {
 })
 
 router.post('/jobs', STD_MIDWARE, (req, res) => {
-    if (req.user != 402) {
+    if (req.user != 401) {
         data = req.body;
         t = new Date();
         date = t.getFullYear() + '-' + (t.getMonth()+1) + '-' + t.getDate();

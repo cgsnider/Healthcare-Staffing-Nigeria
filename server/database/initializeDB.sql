@@ -86,7 +86,8 @@ create table APPLICATION (
   PostingTitle varchar(30),
   CoverLetter text,
   TimeCreated datetime not null,
-  primary key (PID, FID),
+  Progress int,
+  primary key (PID, FID, PostingTitle),
   foreign key (FID, PostingTitle) references JOBPOSTING(FID, Title),
   foreign key (PID) references PROFESSIONAL(ID)
 );

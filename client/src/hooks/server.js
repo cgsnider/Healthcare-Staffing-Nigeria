@@ -52,6 +52,26 @@ export async function applyForVerification() {
     return await postData('/apply_verification')
 }
 
+/**
+ * Sends job posting data to node server.
+ * @param {{Title: string not null, Salary: int , Descript: string, Slots: int not null, Category: string not null, Shifts: string}} data 
+ *  information for job posting
+ * @returns 402 if user is unauthorized, 418 if database failure, or sql results if successful
+ */
+export async function postJobPosting(data) {
+    return await postData('/opening', data);
+}
+
+/**
+ * Sends request to hire applicant to node server.
+ * @param {{ApplicantEmail, PostingTitle}} data 
+ *  information to identify which of the user's applicants to be hired
+ * @returns 402 if user is unauthorized, 418 if database failure, or sql results if successful
+ */
+export async function postHireApplicant(data) {
+    return await postData('/hire_applicant', data);
+}
+
 export async function postProfilePicture(img) {
     let formData = new FormData();
     formData.append("image", img);
