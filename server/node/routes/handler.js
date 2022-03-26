@@ -18,6 +18,34 @@ router.use(express.urlencoded({extended: false}));
 const STD_MIDWARE = [authenticate, db.handleNewUser]
 
 
+/**
+ * Code Overview
+ * 
+ * This file contains a list of all routes that the front end can request to this Node Server.
+ * 
+ * Most of the routes follows the following basic structure:
+ * 
+ *  router.api_call_type(url, middleware (request, result) => {
+ *     if (req.user != 402) { -> If the user is valid according to authenticate middleware 
+ *         const procedure = ...; -> Specifies the MySQL procedure to be use
+ *         const params = [...]; -> Specifies any paramaters to be passed in as a list in appropriate order for the MySQL procedure (see .sql files in server/database)
+ *         db.call(procedure, params) -> Calls db.call to asynchronously
+ *              .then(results => res.end(JSON.stringify(results))) -> sends back the results of the query if successful
+ *              .catch(err => res.end(JSON.stringify('Error fetching jobs'))); -> sends back an error message to client if query failed
+ *     } else res.end(JSON.stringify(req.user)); -> if the user is not valid, sends back appropriate code (402)
+ *  });
+ * 
+ *  Exact route structure varies. Common variation includes selecting different proceedures or parameters 
+ *  depending on the type of client making the request.
+ * 
+ *  STD_MIDWARE contains middleware for authenitcating the user and checking/handling edge case for new users.
+ * 
+ *  S3 connects to the amazonAWS bucket for storing mass media
+ *  multer handles sending mass media from client to node server
+ * 
+ */
+
+
 router.get('/jobs', STD_MIDWARE, (req, res) => {
     if (req.user != 402) {
 
@@ -28,9 +56,7 @@ router.get('/jobs', STD_MIDWARE, (req, res) => {
             .then(results => res.end(JSON.stringify(results)))
             .catch(err => res.end(JSON.stringify('Error fetching jobs')));
 
-    } else {
-        res.end(JSON.stringify('402'));
-    }
+    } else res.end(JSON.stringify(req.user));
 });
 
 router.get('/applications', STD_MIDWARE, (req, res) => {
@@ -40,9 +66,8 @@ router.get('/applications', STD_MIDWARE, (req, res) => {
         db.call(procedure, params)
             .then(results => res.end(JSON.stringify(results)))
             .catch(err => res.end("Error Getting Applications"));
-    } else {
-        res.end(JSON.stringify('402'));
-    }
+    } else res.end(JSON.stringify(req.user));
+
 });
 
 router.get('/profile', STD_MIDWARE, (req, res) => {
@@ -59,9 +84,7 @@ router.get('/profile', STD_MIDWARE, (req, res) => {
             .then(results => res.end(JSON.stringify(results)))
             .catch(err => res.end(JSON.stringify('Error fetching profile')));
 
-    } else {
-        res.end(JSON.stringify('402'));
-    }
+    } else res.end(JSON.stringify(req.user));
 });
 
 router.get('/categories', STD_MIDWARE, (req, res) => {
@@ -72,7 +95,7 @@ router.get('/categories', STD_MIDWARE, (req, res) => {
             .then(results => res.end(JSON.stringify(results)))
             .catch(err => res.end(JSON.stringify("Error fetching categories")));
     } else {
-        res.end(JSON.stringify('402'));
+        res.end(JSON.stringify(req.user));
     }
 });
 
@@ -85,7 +108,7 @@ router.get('/education', STD_MIDWARE, (req, res) => {
             .then(results => res.end(JSON.stringify(results)))
             .catch(err => res.end('Error fetching education'))
     } else {
-        res.end(JSON.stringify('402'));
+        res.end(JSON.stringify(req.user));
     }
 });
 
