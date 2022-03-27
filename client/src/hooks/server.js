@@ -83,6 +83,10 @@ export async function getProfileImage() {
     console.log(img)
 }
 
+export async function getResume() {
+
+}
+
 
 /**
  * Generic method for making a GET request. 
