@@ -37,10 +37,12 @@ export default function Fac_Profile(props) {
             isMounted = false
         }
     }, []);
+
     const fetchProfileData = async(isMounted) => {
         let data = await getProfileData()
-        console.log("FETCH DATA: ",data[0][0])
-        if (isMounted) setProfileInfo(data[0][0], console.log(profileInfo))
+        .catch(err=>{console.log(err)})
+        console.log("FETCH DATA: ",data)
+        if (isMounted) setProfileInfo(data[0][0], console.log('pinfo', profileInfo))
         else console.log('aborted setPostings on unmounted component')
     }
 
@@ -101,9 +103,10 @@ export default function Fac_Profile(props) {
     const handleImageUpload = (e) => {
         postProfilePicture(e.target.files[0]);
         fetchProfileData(true);
+        console.log(profileInfo.ImageAddr);
     }
 
-
+if(profileInfo){
     return (
         <div>
            <Verificationdrop />
@@ -117,7 +120,7 @@ export default function Fac_Profile(props) {
                                 <div>
                                     <label htmlFor='pfp-upload' >
                                         <img className="h-auto w-full mx-auto hover:cursor-pointer hover:border-2"
-                                            src={(profileInfo.ImageAddr) ?  `/api/profile_picture/${profileInfo.ImageAddr}` : placeholder}
+                                            src={(profileInfo.ImageAddr!==null) ?  `/api/profile_picture/${profileInfo.ImageAddr}` : placeholder}
                                             alt="Profile Picture"/>
                                     </label>
                                     {/** use attribute to specify accepted file types: accept={comma-separated list of unique file type specifiers.}*/}
@@ -247,6 +250,11 @@ export default function Fac_Profile(props) {
     </div>
     </div>
     );
+    } else {
+        return (
+            <div>null</div>
+        );
+    }
 }
 
 function AboutPopup(props) {
