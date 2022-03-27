@@ -12,6 +12,7 @@ import PendingVerifications from './components/pages/Admins/PendingVerifications
 import ViewApplications from "./components/pages/professionals/ViewApplications";
 import Fac_Profile from './components/pages/facility/Fac_Profile';
 import ViewApplicants from "./components/pages/facility/ViewApplicants";
+import ViewMaster from "./components/pages/facility/ViewMaster";
 //import Drop from './components/pages/Drop';
 //import Elogin from './components/examples/Elogin';
 
@@ -41,7 +42,7 @@ const App = () => {
           <Route path='/user' element={(localStorage.getItem('type') == 'Professional') ? <Profile/> : <Fac_Profile/>} />
           <Route path='/pendingVerifications' element={<PendingVerifications/>} />
           <Route path='/applications' element={<ViewApplications/>}/>
-          <Route path='/applicants' element={<ViewApplicants/>}/>
+          <Route path='/facilityManage' element={<ViewMaster/>}/>
         </Route>
 
         <Route path="/login"  element={<Login/>}/>

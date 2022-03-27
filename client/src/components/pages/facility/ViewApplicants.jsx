@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import placeholder from "../../../images/profile-placeholder.jpg";
 import Applicant from "../../parts/Applicant";
-import {Link} from "react-router-dom";
 
 function ViewApplicants(props) {
 
@@ -20,9 +19,11 @@ function ViewApplicants(props) {
             resume: null,
             image: null,
             MDCN: 123456,
-            Street:'1234 Park place',
+            Street:'1234 Park Place',
             City:'Los Angeles',
             Country:'United States',
+            CoverLetter: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi",
+            PostingTitle: "",
         }, {
             Email: "temp@example.com",
             PhoneNumber: "123-456-1111",
@@ -38,39 +39,35 @@ function ViewApplicants(props) {
             resume: '/robots.txt',
             image: null,
             MDCN: 123456,
-            Street:'1234 Park place',
+            Street:'1234 Park Place',
             City:'Los Angeles',
             Country:'United States',
+            CoverLetter: "",
+            PostingTitle: "",
         }]);
 
     return (
         <div>
-            <div className="flex justify-between pt-6 pb-4">
-                <h3 className="text-3xl indent-12">Applicants</h3>
-                <div className="flex items-center mr-4">
-                    <Link to="/jobs">
-                        <div href="#" className="bg-gray-200 hover:bg-gray-400 outline outline-1 rounded px-3">Back to Postings</div>
-                    </Link>
-                </div>
+            <div className="flex flex-col items-center">
+                {[...practitioners].map(e => {
+                    return (
+                        <Applicant name={`${e.FName} ${e.LName}`}
+                                        image={(e.image) ? e.image : placeholder}
+                                        specialty={e.Specialization}
+                                        resume={e.resume}
+                                        email={e.Email}
+                                        number={e.PhoneNumber}
+                                        mdcn={e.MDCN}
+                                        dob={e.DoB}
+                                        bio={e.Bio}
+                                        cl={e.CoverLetter}
+                                        loc={e.Street}
+                                        area={`${e.City}, ${e.Country}`}
+                                        postTitle={e.PostingTitle}/>
+                    )
+                })}
             </div>
-                <div className="flex flex-col items-center">
-                    {[...practitioners].map(e => {
-                        return (
-                            <Applicant name={`${e.FName} ${e.LName}`}
-                                            image={(e.image) ? e.image : placeholder}
-                                            specialty={e.Specialization}
-                                            resume={e.resume}
-                                            email={e.Email}
-                                            number={e.PhoneNumber}
-                                            mdcn={e.MDCN}
-                                            dob={e.DoB}
-                                            bio={e.Bio}
-                                            loc={`${e.Street}, ${e.City}, ${e.Country}`}/>
-                        )
-                    })}
-                </div>
         </div>
-
     );
 }
 
