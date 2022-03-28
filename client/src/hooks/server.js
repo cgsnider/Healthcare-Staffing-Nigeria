@@ -108,9 +108,7 @@ async function getData(url='', body={}) {
         referrerPolicy: 'no-referrer', 
 
     })
-    console.log(url, "\n", data.body)
     const items = await data.json();
-    console.log(url, " ", items)
     return items;
 }
 

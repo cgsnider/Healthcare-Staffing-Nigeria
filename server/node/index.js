@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const routesHandler = require('./routes/handler.js');
+const process = require('process');
 
 const PORT = 4000;
 
@@ -13,7 +14,7 @@ app.use('/api', routesHandler);
 
 // Connects app to port
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`)
+const server = app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 })
 

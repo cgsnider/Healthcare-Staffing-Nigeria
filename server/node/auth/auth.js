@@ -44,7 +44,6 @@ function authenticateToken(req, res, next) {
             next()})
         .catch(fail => {
             req.user = 401
-
         });
     return;
 }

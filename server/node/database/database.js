@@ -50,7 +50,7 @@ async function handleNewUser (req, res, next) {
     const sql = `CALL user_exists('${req.user.email}')`
     db.query(sql)
         .then(results => {
-            if (results[0][0].Status === -1){
+            if (results[0][0][0].Status === -1){
                 addNewUser(req.user)
                     .then(res => next())
                     .catch(err => next());
