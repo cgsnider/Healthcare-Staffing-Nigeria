@@ -183,7 +183,7 @@ router.post('/profile', STD_MIDWARE, (req, res) => {
         if (req.user['custom:type'] == 'Professional') {
             procedure = 'update_professional_profile';
             params = [req.user.email, data.FName, data.LName, data.Email, data.Specialization, 
-                data.PhoneNumber, data.MDCN, data.Country, data.City, data.Street];
+                data.PhoneNumber, data.MDCN, data.Country, data.City, data.Street, data.LicenseNumber];
         } 
         else if (req.user['custom:type'] == 'Facility') {
             procedure = 'update_facility_profile';

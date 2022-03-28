@@ -218,7 +218,7 @@ export default function Profile(props) {
                                                 </div>
                                                 <div className="grid grid-cols-2">
                                                     <div className="px-4 py-2 font-semibold">Address</div>
-                                                    <div className="px-4 py-2">{(profileInfo.Street=='null')?`${profileInfo.Street}\n ${profileInfo.City}, ${profileInfo.Country}`: "None"}</div>
+                                                    <div className="px-4 py-2">{(profileInfo.Street !=='null')?`${profileInfo.Street}\n ${profileInfo.City}, ${profileInfo.Country}`: "None"}</div>
                                                 </div>
                                                 <div className="grid grid-cols-2">
                                                     <div className="px-4 py-2 font-semibold">Email</div>
@@ -597,8 +597,8 @@ function AboutPopup(props) {
                             <input type='text' className="rounded" value={tempInfo.LName} onInput={e=>setTempInfo({...tempInfo, LName: e.target.value})}/>
                         </div>
                         <div className="grid grid-cols-2  items-center">
-                            <div className="px-4 py-2 font-semibold">Gender</div>
-                            <Drop options={[{label:'Male', value: 'M'},{label: 'Female', Value:'F'},{label: 'Non-binary', value:'NB'},{label:'Other', value:'O'}]} initial={tempInfo.Gender} setPosition={setGender}/>
+                            <div className="px-4 py-2 font-semibold">License #</div>
+                            <input type='text' className="rounded" value={tempInfo.LicenseNumber} onInput={e=>setTempInfo({...tempInfo, LicenseNumber: e.target.value})}/>
                         </div>
                         <div className="grid grid-cols-2  items-center">
                             <div className="px-4 py-2 font-semibold">Contact No.</div>
@@ -631,7 +631,7 @@ function AboutPopup(props) {
                             <h1 className='text-2xl bold mb-5 border-b-2'>Career</h1>
                         </div>
                         <div className="grid grid-cols-2  items-center col-start-1">
-                            <div className="px-4 py-2 font-semibold">specialization</div>
+                            <div className="px-4 py-2 font-semibold">Specialization</div>
                             <input type='text' className="rounded" value={tempInfo.Specialization} onInput={e=>setTempInfo({...tempInfo, Specialization: e.target.value})}/>
                         </div>
                         <div className='my-4 w-full col-span-2'>
