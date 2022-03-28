@@ -8,7 +8,7 @@ import CircleLoader from 'react-spinners/CircleLoader'
 import '../../styling/Jobs.css'
 import '../../../App.css'
 import '../../styling/Application.css'
-import { getCategories, getJobPosts, postApplications } from '../../../hooks/server';
+import {getApplications, getCategories, getJobPosts, postApplications} from '../../../hooks/server';
 
 function Jobs (props) {
 
@@ -32,6 +32,7 @@ function Jobs (props) {
     }, [])
 
     const [postings, setPostings] = useState(null);
+    const [applications, setApplications] = useState(null);
     const [categories, setCategories] = useState(null);
     const [position, setPosition] = useState(null);
     const [search, setSearch] = useState('');
@@ -43,10 +44,13 @@ function Jobs (props) {
     const [catFetchEnd, setCatFetchEnd] = useState(false);
     const fetchPostings = async(isMounted) => {
         let items = await getJobPosts()
-        .catch(err=>setFetchError(true))
+            .catch(err=>setFetchError(true))
+        let items2 = await getApplications()
+            .catch(err=>setFetchError(true))
         if (isMounted) {
             setPosFetchEnd(true);
             setPostings(items[0]);
+            setApplications(items2[0]);
             console.log(items[0]);
         }
         else console.log('aborted setPostings on unmounted component')
@@ -74,7 +78,6 @@ function Jobs (props) {
     const handleClick = (e) =>{
         console.log(postings)
         const copy = [...postings]
-        //console.log(postings[0][e])
         if (e === 'salary') {
             copy.sort((a, b)=> a[e] < b[e]? 1:-1)
         } else {
@@ -82,14 +85,11 @@ function Jobs (props) {
         }
         
         setPostings(copy)
-        //console.log("sorted on " + e)
     }
     const filterSearch = (posts) =>{
         return !!((search === '') || posts.Title.includes(search) || posts.City.includes(search));
     }
     const filterPosition = (pos) => {
-        //console.log(pos, pos.position==position.label);
-        // console.log(pos)
         if (position.label === "All") {
             return true;
         }
@@ -97,7 +97,14 @@ function Jobs (props) {
             return pos.Category === position.label;
         }
     }
-    
+    const filterApplications = (post) => {
+        for (let i = 0; i < applications.length; i++) {
+            if ((applications[i].Title === post.Title) && (applications[i].FacName === post.FacName)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     if(fetchError !== true) {
         if (posFetchEnd && catFetchEnd) {
@@ -110,7 +117,7 @@ function Jobs (props) {
                     {(position !== null) ?
 
                         <ul className="prof_job_grid content-center flex flex-wrap mx-32">
-                        {[...postings].filter(filterPosition).filter(filterSearch)
+                        {[...postings].filter(filterApplications).filter(filterPosition).filter(filterSearch)
                         .map(e => {
                         return ( <li className='prof_job_node mx-16 mb-8' key={key++}>
                                 <JobListing

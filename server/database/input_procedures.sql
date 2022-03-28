@@ -33,7 +33,8 @@ create procedure update_professional_profile (
     in i_mdcn varchar(30),
 	in i_country varchar(50),
 	in i_city varchar(50),
-    in i_street varchar(50)
+    in i_street varchar(50),
+    in i_licensenumber varchar(50)
 ) begin 
 
 select ID from PROFESSIONAL where email = i_email_old into @id;
@@ -48,7 +49,8 @@ set
     country = i_country,
     city = i_city,
     street = i_street,
-    specialization = i_specialization
+    specialization = i_specialization,
+    licensenumber = i_licensenumber
 where 
 	id = @id;
 
