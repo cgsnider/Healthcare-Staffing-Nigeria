@@ -45,9 +45,9 @@ function TopBar(props) {
         if (userType === 'Professional') {
             return (
                 <>
-                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/user', {replace:true})}>Profile</button>
-                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/jobs', {replace:true})}>Jobs</button>
-                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/applications', {replace:true})}>Applications</button>
+                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/user')}>Profile</button>
+                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/jobs')}>Jobs</button>
+                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/applications')}>Applications</button>
 
                 </>
             );
@@ -55,9 +55,9 @@ function TopBar(props) {
         if (userType === 'Facility') {
             return (
                 <>
-                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/user', {replace:true})}>Profile</button>
-                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/newPosting', {replace:true})}>Create Posting</button>{/** link to page to post new job openings */}
-                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/myPostings', {replace:true})}>My Postings</button> {/** link to view facilities current active postings */}
+                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/user')}>Profile</button>
+                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/newPosting')}>Create Posting</button>{/** link to page to post new job openings */}
+                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/myPostings')}>My Postings</button> {/** link to view facilities current active postings */}
 
                 </>
             )

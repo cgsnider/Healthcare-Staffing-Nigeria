@@ -59,6 +59,7 @@ export async function applyForVerification() {
  * @returns 402 if user is unauthorized, 418 if database failure, or sql results if successful
  */
 export async function postJobPosting(data) {
+    console.log('posting');
     return await postData('/opening', data);
 }
 
