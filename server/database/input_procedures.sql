@@ -457,3 +457,22 @@ create procedure hire_applicant (
 		(@fid, 'hire_applicant');
 end //
 DELIMITER ;
+
+drop procedure if exists add_document_professional;
+DELIMITER //
+create procedure add_document_professional (
+	in i_owner_email varchar(255),
+    in i_category varchar(255),
+    in i_S3_key varchar(255),
+    in i_file_name varchar(255)
+) begin 
+	    
+	select id from PROFESSIONAL where i_owner_email = Email into @pid;
+	
+	insert into Document (OwnerId, Category, S3Key, FileName, TimeCreated)
+		value (@pid, UPPER(i_category), i_S3_key, i_file_name, CURDATE());
+
+	insert into SYSTEMLOG (uid, act) value 
+		(@pid, 'hire_applicant');
+end //
+DELIMITER ;

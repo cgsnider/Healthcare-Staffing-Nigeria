@@ -40,12 +40,13 @@ create table COVERLETTER (
   primary key(OwnerId, TimeCreated),
   foreign key (OwnerId) references PROFESSIONAL(ID)
 );
-create table DOCUMENTS (
+create table DOCUMENT (
   OwnerId int not null,
   FileName varchar(255) not null,
-  Content text not null,
+  S3Key varchar(255) not null,
+  Category varchar(255) not null,
   TimeCreated datetime not null,
-  primary key(OwnerId, FileName),
+  primary key(OwnerId, S3Key),
   foreign key (OwnerId) references PROFESSIONAL(ID)
 );
 create table FACILITY (

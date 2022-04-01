@@ -13,7 +13,7 @@ import placeholder from '../../../images/profile-placeholder.jpg';
 import {applyForVerification, getProfileData, getProfileImage, postProfileData, postProfilePicture } from '../../../hooks/server';
 
 export default function Fac_Profile(props) {
-
+    localStorage.getItem('type')
     console.log('FAC')
 
     const [profileInfo, setProfileInfo] = useState(

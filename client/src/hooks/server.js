@@ -76,7 +76,18 @@ export async function postHireApplicant(data) {
 export async function postProfilePicture(img) {
     let formData = new FormData();
     formData.append("image", img);
-    return await postImage('/profile_picture', formData)
+    return await postFile('/profile_picture', formData)
+}
+
+/**
+ * Uploads a file for the resume to the S3 Bucket
+ * @param {file} file the file for upload 
+ * @returns 402 if user is unauthorized, 418 if database failure, or sql results if successful
+ */
+export async function postResume(file) {
+    let formData = new FormData();
+    formData.append("pdf", file);
+    return await postFile('/resume', formData)
 }
 
 export async function getProfileImage() {
@@ -114,7 +125,7 @@ async function getData(url='', body={}) {
 }
 
 
-async function postImage(url='', data={}) {
+async function postFile(url='', data={}) {
     return new Promise(function (resolve, reject) {
         const response = fetch(`api${url}`, {
             method: 'POST',

@@ -199,24 +199,45 @@ router.post('/profile', STD_MIDWARE, (req, res) => {
 })
 
 router.post('/profile_picture', [...STD_MIDWARE, upload.single('image')], async (req, res) => {
-    const file = req.file;
-    await util.formatImage(file.path);
+    if (req.user != 401) {
+        const file = req.file;
+        await util.formatImage(file.path);
 
-    const upload = await s3.upload(file);
+        const upload = await s3.upload(file);
 
-    let procedure;
-    const params = [req.user.email, upload.Key];
+        let procedure;
+        const params = [req.user.email, upload.Key];
 
-    if (req.user['custom:type'] == 'Professional') {
-        procedure = 'update_professional_picture';
-    } else if (req.user['custom:type'] == 'Facility') {
-        procedure = 'update_facility_picture'
-    }
+        if (req.user['custom:type'] == 'Professional') {
+            procedure = 'update_professional_picture';
+        } else if (req.user['custom:type'] == 'Facility') {
+            procedure = 'update_facility_picture'
+        }
 
-    db.call(procedure, params)
-        .then(res.end(JSON.stringify(upload.Key)))
-        .catch(err => res.end("FAILED TO LOG PROFILE PICTURE IN DB"))
+        db.call(procedure, params)
+            .then(res.end(JSON.stringify(upload.Key)))
+            .catch(err => res.end("FAILED TO LOG PROFILE PICTURE IN DB"))
+    } else res.end(JSON.stringify(req.user));
+})
 
+router.post('/resume', [upload.single('pdf')], async (req, res) => {
+    if (req.user != 401) {
+        const file = req.file;
+
+        const upload = await s3.upload(file);
+
+        let procedure;
+        const params = [req.user.email, 'RESUME',upload.Key, file.originalname];
+
+        if (req.user['custom:type'] == 'Professional') {
+            procedure = 'add_resume';
+            db.call(procedure, params)
+                .then(res.end(JSON.stringify(upload.Key)))
+                .catch(err => res.end("FAILED TO LOG PROFILE PICTURE IN DB"))
+        }  else {
+            res.end(418)
+        }
+    } else res.end(JSON.stringify(req.user));
 })
 
 router.post('/education', STD_MIDWARE, async (req, res) => {
