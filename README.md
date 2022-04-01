@@ -25,6 +25,26 @@ A website where healthcare workers can apply for job postings in Nigeria, and it
 
 ## Release Notes
 
+### Version 0.4.0
+
+#### New Features:
+
+* Medical facilities can view their listed job postings
+* Medical facilities can delete listed job postings
+* Medical facilities can unlist job postings
+* Medical facilities can create postings
+* Medical facilities can view applicants for a job posting
+
+#### Bug Fixes:
+* System failed to log data for new users correctly causing website to fail
+* Facility profile checks for null values now
+* Postings that Practitioners have already applied to don’t show up in job postings page
+
+#### Known Issues:
+* Job listing needs to use html parser
+
+---
+
 ### Version 0.3.0
 
 #### New Features:
