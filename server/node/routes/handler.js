@@ -220,7 +220,7 @@ router.post('/profile_picture', [...STD_MIDWARE, upload.single('image')], async 
     } else res.end(JSON.stringify(req.user));
 })
 
-router.post('/resume', [upload.single('pdf')], async (req, res) => {
+router.post('/resume', [...STD_MIDWARE, upload.single('pdf')], async (req, res) => {
     if (req.user != 401) {
         const file = req.file;
 
