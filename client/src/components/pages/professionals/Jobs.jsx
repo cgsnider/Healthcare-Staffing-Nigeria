@@ -9,6 +9,7 @@ import '../../styling/Jobs.css'
 import '../../../App.css'
 import '../../styling/Application.css'
 import {getApplications, getCategories, getJobPosts, postApplications} from '../../../hooks/server';
+import ReactHtmlParser from 'react-html-parser';
 
 function Jobs (props) {
 
@@ -215,7 +216,7 @@ function ApplicationPage (props) {
             <div id='posting-body' className='mx-3'>
                 <div id='description' className='mb-4'>
                     <h3 className='font-bold text-lg'>Job Description</h3>
-                    <p>{post.Descript}</p>
+                    <p>{ReactHtmlParser(post.Descript)}</p>
                 </div>
                 <div className='flex my-2'>
                     <h6 className='font-bold'>Salary:&nbsp; </h6>
