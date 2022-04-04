@@ -29,9 +29,7 @@ A website where healthcare workers can apply for job postings in Nigeria, and it
 
 #### New Features:
 
-* Medical facilities can view their listed job postings
-* Medical facilities can delete listed job postings
-* Medical facilities can unlist job postings
+* Began framework for facility job listing page. 
 * Medical facilities can create postings
 * Medical facilities can view applicants for a job posting
 
