@@ -14,6 +14,8 @@ import Fac_Profile from './components/pages/facility/Fac_Profile';
 import ViewApplicants from "./components/pages/facility/ViewApplicants";
 import ViewMaster from "./components/pages/facility/ViewMaster";
 import CreatePosting from "./components/pages/facility/CreatePosting";
+import ManageProfessionals from "./components/pages/Admins/ManageProfessionals";
+import ManageFacilities from "./components/pages/Admins/ManageFacilities";
 //import Drop from './components/pages/Drop';
 //import Elogin from './components/examples/Elogin';
 
@@ -44,8 +46,9 @@ const App = () => {
           <Route path='/pendingVerifications' element={<PendingVerifications/>} />
           <Route path='/applications' element={<ViewApplications/>}/>
           <Route path='/facilityManage' element={<ViewMaster/>}/>
-          <Route path='/applicants' element={<ViewApplicants/>}/>
           <Route path='/newPosting' element={<CreatePosting/>} />
+          <Route path='/manageProfessionals' element={<ManageProfessionals/>}/>
+          <Route path='/manageFacilities' element={<ManageFacilities/>}/>
         </Route>
 
         <Route path="/login"  element={<Login/>}/>
