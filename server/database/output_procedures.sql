@@ -145,10 +145,10 @@ create procedure get_professional_applications (
 select id from PROFESSIONAL where email = i_email into @id;
 
 
-select J.Title, J.Salary, J.Descript, J.Slots, J.Shifts, J.Category, F.FacName, F.City, F.Country, F.State, F.Street, F.Email, A.Progess, A.TimeCreated
+select J.Title, J.Salary, J.Descript, J.Slots, J.Shifts, J.Category, F.FacName, F.City, F.Country, F.State, F.Street, F.Email, A.Progress, A.TimeCreated
 	from JOBPOSTING as J join FACILITY as F on F.ID = J.FID
-	inner join APPLICATION as A on J.FID = APPLICATION.FID and J.Title = APPLICATION.PostingTitle 
-	where APPLICATION.pid = @id;
+	inner join APPLICATION as A on J.FID = A.FID and J.Title = A.PostingTitle 
+	where A.PID = @id;
 
 
 insert into SYSTEMLOG (uid, act) value 

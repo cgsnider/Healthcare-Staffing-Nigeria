@@ -12,7 +12,9 @@ function PendingProfileFac(props) {
                         <div className="truncate">{props.loc}</div>
                     </div>
                     <div className="flex flex-initial basis-1/3 flex-col justify-between text-center">
-                        <div className="truncate">Unverified</div>
+                        <div className="ml-auto mr-0">
+                            <span className="bg-amber-500 py-1 px-2 rounded text-white text-sm">Pending</span>
+                        </div>
                         <a href={`mailto:${props.email}`} className="truncate">{props.email}</a>
                         <div className="invisible">placeholder</div>
                     </div>
