@@ -2,7 +2,7 @@ import React from 'react'
 import Popup from 'reactjs-popup';
 import placeholder from "../../images/profile-placeholder.jpg";
 
-function ProfessionalListing (props) {
+function FacilityListing (props) {
 
     const VerifiedInfo = () => {
         if(props.account.Verified===0) {
@@ -38,9 +38,9 @@ function ProfessionalListing (props) {
             <div className="outline outline-1 rounded-md w-1/2 min-w-fit">
                 <div className="flex content-center justify-between text-sm w-full px-2 py-1">
                     <div className="flex flex-initial basis-1/3 flex-col justify-between">
-                        <div className="truncate">{props.account.FName} {props.account.LName}</div>
-                        <div className="truncate">{props.account.Specialization}</div>
-                        <a href={props.account.resume} className="truncate text-blue-600" download>Resume</a>
+                        <div className="truncate">{props.account.FacName}</div>
+                        <div className="truncate">{props.account.Street}</div>
+                        <div className="truncate">{`${props.account.City}, ${props.account.State}, ${props.account.Country}`}</div>
                     </div>
                     <div className="flex flex-initial basis-1/3 flex-col justify-between text-center">
                         <div className="items-center">
@@ -63,4 +63,4 @@ function ProfessionalListing (props) {
 
 }
 
-export default ProfessionalListing
+export default FacilityListing

@@ -15,7 +15,7 @@ function ManageProfessionals (props) {
             DoB: "January 01, 2000",
             Specialization: "Cardiologist",
             Bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            Verified: 2, //-1=neverLoggedIn  0=unverified, 1=pending, 2=verified
+            Verified: 0, //-1=neverLoggedIn  0=unverified, 1=pending, 2=verified
             resume: null,
             image: null,
             MDCN: 123456,
@@ -33,8 +33,26 @@ function ManageProfessionals (props) {
             DoB: "January 01, 2000",
             Specialization: "Cardiologist",
             Bio: "Short Description",
-            Verified: 0, //-1=neverLoggedIn  0=unverified, 1=pending, 2=verified
-            resume: '/robots.txt',
+            Verified: 1, //-1=neverLoggedIn  0=unverified, 1=pending, 2=verified
+            resume: null,
+            image: null,
+            MDCN: 123456,
+            Street:'1234 Park place',
+            City:'Los Angeles',
+            Country:'United States',
+        }, {
+            Email: "temp@example.com",
+            PhoneNumber: "123-456-1111",
+            FName: "John",
+            LName: "Williams",
+            professionalInfo: "",
+            LicenseNumber: "",
+            Gender: "Male",
+            DoB: "January 01, 2000",
+            Specialization: "Cardiologist",
+            Bio: "Short Description",
+            Verified: 2, //-1=neverLoggedIn  0=unverified, 1=pending, 2=verified
+            resume: null,
             image: null,
             MDCN: 123456,
             Street:'1234 Park place',
@@ -44,11 +62,6 @@ function ManageProfessionals (props) {
 
     const [viewProfessionals, setViewProfessionals] = useState(true);
     const [profID, setProfID] = useState(null); //Whatever variable type that is needed will be fine
-
-    const handleClick = (e) => {
-        setProfID(e)
-        setViewProfessionals(false)
-    }
 
     const handleBack = () => {
         setViewProfessionals(true)
