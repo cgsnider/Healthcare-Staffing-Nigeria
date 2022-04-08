@@ -218,7 +218,7 @@ export default function Profile(props) {
                                                 </div>
                                                 <div className="grid grid-cols-2">
                                                     <div className="px-4 py-2 font-semibold">Address</div>
-                                                    <div className="px-4 py-2">{(profileInfo.Street !=='null')?`${profileInfo.Street}\n ${profileInfo.City}, ${profileInfo.Country}`: "None"}</div>
+                                                    <div className="px-4 py-2">{(profileInfo.Street != null)?`${profileInfo.Street}\n ${profileInfo.City}, ${profileInfo.Country}`: "None"}</div>
                                                 </div>
                                                 <div className="grid grid-cols-2">
                                                     <div className="px-4 py-2 font-semibold">Email</div>
@@ -398,8 +398,8 @@ function EducationPopup (props) {
                         <Drop2 setNewEducation={setInstitute} newEducation={institute} placeholder='School'/>
                         <div className='my-2'></div>
                         <Drop  options={[{label: 'Associates Degree', value: 'A'}, {label:'Bachelors Degree', value: 'B'},{label:'Masters Degree', value: 'M'},{label:'Doctoral Degree', value: 'D'}]} placeholder='Highest Degree Earned' setPosition={setDegree}/>
-                        <div className='mb-2 mt-4 grid grid-cols-3'>
-                            <label className=''>Start Date: </label>
+                        <div className='mb-2 mt-4 grid grid-cols-3 justify-items-end items-center'>
+                            <label className='mr-4'>Start Date: </label>
                             <div className='w-full col-span-2'>
                                 <DatePicker 
                                     selected={startDate}
@@ -409,8 +409,8 @@ function EducationPopup (props) {
                                 />
                             </div>
                         </div>
-                        <div className='mt-2 mb-2 grid grid-cols-3'>
-                            <label>End Date: </label>
+                        <div className='mt-2 mb-2 grid grid-cols-3 justify-items-end items-center'>
+                            <label className='mr-4'>End Date: </label>
                             <div className='w-full col-span-2'>
                                 <DatePicker 
                                     selected={endDate}
@@ -499,6 +499,7 @@ function ExperiencePopup(props) {
         <div>
            <button className="bg-green-500 rounded text-white py-1 text-sm px-2" onClick={e=>setOpen(true)}>Add</button> 
            <Popup open={open} position='right center' modal onClose={closeReset}>
+               <div className='p-4'>
                 <div className='grid grid-cols-3 items-center justify-items-end my-2'>
                     <label className='mr-4'>Company Name: </label>
                     <input className="w-full col-span-2" type='text' placeholder='Company'onInput={e=>setCompany(e.target.value)} />
@@ -530,8 +531,9 @@ function ExperiencePopup(props) {
                         />
                     </div>
                 </div>
-                <div className='w-full flex flex-col'>
-                <button className="bg-green-500 rounded text-white py-1 text-sm px-2" onClick={handleClick}>Add</button>
+                <div className='flex flex-col'>
+                    <button className="bg-green-500 rounded text-white py-1 text-sm px-2" onClick={handleClick}>Add</button>
+                </div>
                 </div>
 
                 <ul className='list-inside space-y-2 my-4'>
@@ -548,7 +550,7 @@ function ExperiencePopup(props) {
 
 
                 <div className='w-full flex flex-col'>
-                <button className="bg-green-500 rounded text-white py-1 text-sm px-2" onClick={save}>Save</button>
+                    <button className="bg-green-500 rounded text-white py-1 text-sm px-2" onClick={save}>Save</button>
                 </div>
             </Popup>
         </div>
@@ -564,6 +566,7 @@ function AboutPopup(props) {
     const contentStyle = { width: '90%' };
     
     useEffect( () => {
+        console.log(props.info)
         if (open.fresh) {
             setOpen({...open, fresh:false})
             setTempInfo(props.info);
