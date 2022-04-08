@@ -204,3 +204,76 @@ create procedure get_facility_pending(
     
 end //
 DELIMITER ;
+
+
+drop procedure if exists get_document_professional; 
+DELIMITER //
+create procedure get_document_professional(
+	in i_email varchar(255),
+    in i_cat varchar(255),
+    in i_S3Key varchar(255)
+) begin
+	
+    SELECT id FROM PROFESSIONAL WHERE Email = i_email into @id; 
+    IF (i_S3Key is null)
+		then select FileName, S3Key, Category, TimeCreated from DOCUMENT where OwnerId = @id and Category = UPPER(i_cat);
+	ELSE 
+		select FileName, S3Key, Category, TimeCreated from DOCUMENT where OwnerId = @id and Category = UPPER(i_cat) and S3Key = i_S3Key ;
+    END IF;
+    
+    insert into SYSTEMLOG (uid, act) value 
+		(@id, 'get_document');
+    
+end //
+DELIMITER ;
+
+drop procedure if exists get_applicants; 
+DELIMITER //
+create procedure get_applicants(
+	in i_email varchar(255),
+    in i_posting_title varchar(255)
+) begin
+	
+    SELECT id FROM FACILITY WHERE Email = i_email into @id; 
+    
+	SELECT P.Email, P.ImageAddr, P.FName, P.LName, P.PhoneNumber, P.LicenseNumber, P.Specialization, P.MDCN, P.City, P.Country, P.Street, P.Bio 
+    from APPLICATION as A join Professional as P on A.PID = P.ID where A.FID = @id and A.PostingTitle = i_posting_title;
+    
+    insert into SYSTEMLOG (uid, act) value 
+		(@id, 'get_applications');
+    
+end //
+DELIMITER ;
+
+drop procedure if exists admin_verification_pending_professional; 
+DELIMITER //
+create procedure admin_verification_pending_professional(
+	in i_email varchar(255)  
+) begin
+	
+    SELECT id FROM ADMINISTRATOR WHERE Email = i_email into @id; 
+    
+	SELECT * from PROFESSIONAL where Verified = 1;
+    
+    insert into SYSTEMLOG (uid, act) value 
+		(@id, 'admin_verification_pending_professional');
+    
+end //
+DELIMITER ;
+
+drop procedure if exists admin_verification_pending_facility; 
+DELIMITER //
+create procedure admin_verification_pending_facility(
+	in i_email varchar(255)  
+) begin
+	
+    SELECT id FROM ADMINISTRATOR WHERE Email = i_email into @id; 
+    
+	SELECT * from FACILITY where Verified = 1;
+    
+    insert into SYSTEMLOG (uid, act) value 
+		(@id, 'admin_verification_pending_professional');
+    
+end //
+DELIMITER ;
+

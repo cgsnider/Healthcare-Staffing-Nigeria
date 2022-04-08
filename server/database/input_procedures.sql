@@ -244,7 +244,7 @@ drop procedure if exists create_application;
 DELIMITER //
 create procedure create_application (
 
-    in i_fac_email varchar(55),
+    in i_fac_email varchar(255),
 	in i_email varchar(255),
     in i_title varchar(30), 
     in i_coverletter text,
@@ -253,13 +253,12 @@ create procedure create_application (
 ) begin 
 	
 
-select id, title from JOBPOSTING as J left join FACILITY as F on F.ID = J.FID 
-    where F.email = i_fac_email and J.title = i_title into @fid, @title;
+select id from FACILITY where Email = i_fac_email into @fid;
 
 select id from PROFESSIONAL where email = i_email into @pid;
 
 insert into APPLICATION (fid, pid, postingtitle, coverletter, timecreated, progress) VALUES
-    (@fid, @pid, @title, i_coverletter, i_timecreated, 0);
+    (@fid, @pid, i_title, i_coverletter, i_timecreated, 0);
 	
 insert into SYSTEMLOG (uid, act) value 
 	(@pid, 'create_application');

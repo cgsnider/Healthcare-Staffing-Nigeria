@@ -84,7 +84,7 @@ create table JOBPOSTING (
 create table APPLICATION (
   FID int not null,
   PID int not null,
-  PostingTitle varchar(30),
+  PostingTitle varchar(30) not null,
   CoverLetter text,
   TimeCreated datetime not null,
   Progress int,

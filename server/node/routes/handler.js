@@ -121,11 +121,38 @@ router.get('/education', STD_MIDWARE, (req, res) => {
 });
 
 
+router.get('/resume/:username', async(req, res) => {
+    const username = req.params.username
+
+    const params = [username, 'RESUME', null]
+    const procedure = 'get_document_professional'
+
+    const meta_doc = await db.call(procedure, params, null)
+    
+    console.log(meta_doc)
+
+    meta_doc[0].forEach(meta => {
+        console.log('META: ', meta)
+        s3.download(meta.S3Key)
+            .then(file => {
+                file.Metadata.FileName = meta.FileName
+                file.Metadata.TimeUploaded = meta.TimeCreated
+                console.log("File: ", file)
+                const msg = {Body:file.Body, MetaData:file.Metadata}
+                res.send(msg)
+                console.log("test")
+            })
+    })
+
+    res.end(JSON.stringify("200"))
+})
+
 router.get('/profile_picture/:key', (req, res) => {
-    const key = req.params.key;
-    const readstream = s3.download(key);
+    const filename = req.params.key
+    const readstream = s3.download_stream(key);
     readstream.pipe(res);
 })
+
 
 router.post('/opening', STD_MIDWARE, (req, res) => {
     if (req.user != 401) {
@@ -230,7 +257,7 @@ router.post('/resume', [...STD_MIDWARE, upload.single('pdf')], async (req, res) 
         const params = [req.user.email, 'RESUME',upload.Key, file.originalname];
 
         if (req.user['custom:type'] == 'Professional') {
-            procedure = 'add_resume';
+            procedure = 'add_document_professional';
             db.call(procedure, params)
                 .then(res.end(JSON.stringify(upload.Key)))
                 .catch(err => res.end("FAILED TO LOG PROFILE PICTURE IN DB"))
@@ -239,6 +266,24 @@ router.post('/resume', [...STD_MIDWARE, upload.single('pdf')], async (req, res) 
         }
     } else res.end(JSON.stringify(req.user));
 })
+
+
+router.post('/resume/:email', [upload.single('pdf')], async (req, res) => {
+    const username = req.params.email
+    const file = req.file;
+
+    const upload = await s3.upload(file);
+
+    let procedure;
+    const params = [username, 'RESUME',upload.Key, file.originalname];
+
+    procedure = 'add_document_professional';
+    db.call(procedure, params)
+        .then(result => res.end(JSON.stringify(upload.Key)))
+        .catch(err => {console.log(err); res.end("FAILED TO LOG PROFILE PICTURE IN DB")})
+
+})
+
 
 router.post('/education', STD_MIDWARE, async (req, res) => {
     if(req.user != 401) {
