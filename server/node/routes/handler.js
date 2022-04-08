@@ -153,6 +153,68 @@ router.get('/profile_picture/:key', (req, res) => {
     readstream.pipe(res);
 })
 
+router.get('/applicants', STD_MIDWARE, (req, res) => {
+    if (req.user != 401) {
+        const procedure = 'get_applicants';
+        const params = [req.user.email, req.body.PostingTitle];
+        db.call(procedure, params)
+            .then(results => res.end(JSON.stringify(results)))
+            .catch(err => res.end('Error fetching education'))
+    } else {
+        res.end(JSON.stringify(req.user));
+    }
+});
+
+router.get('/review_prof_verification', STD_MIDWARE, (req, res) => {
+    if (req.user != 401) {
+        const procedure = 'admin_verification_pending_professional';
+        const params = [req.user.email];
+        db.call(procedure, params)
+            .then(results => res.end(JSON.stringify(results)))
+            .catch(err => res.end('Error fetching education'))
+    } else {
+        res.end(JSON.stringify(req.user));
+    }
+});
+
+router.get('/review_fac_verification', STD_MIDWARE, (req, res) => {
+    if (req.user != 401) {
+        const procedure = 'admin_verification_pending_facility';
+        const params = [req.user.email];
+        db.call(procedure, params)
+            .then(results => res.end(JSON.stringify(results)))
+            .catch(err => res.end('Error fetching education'))
+    } else {
+        res.end(JSON.stringify(req.user));
+    }
+});
+
+router.post('/verify_professional', STD_MIDWARE, (req, res) => {
+    if (req.user != 401) {
+        if (req.user['custom:type'] == 'Admin') {
+            const procedure = 'hire_applicant'
+            const params = [req.user.email, req.body.ProfEmail]
+
+            db.call(procedure, params)
+                .then(results => res.end(JSON.stringify(results)))
+                .catch(err => res.end(418));
+        }
+    }
+});
+
+router.post('/verify_facility', STD_MIDWARE, (req, res) => {
+    if (req.user != 401) {
+        if (req.user['custom:type'] == 'Admin') {
+            const procedure = 'admin_verify_facility'
+            const params = [req.user.email, req.body.FacEmail]
+
+            db.call(procedure, params)
+                .then(results => res.end(JSON.stringify(results)))
+                .catch(err => res.end(418));
+        }
+    }
+});
+
 
 router.post('/opening', STD_MIDWARE, (req, res) => {
     if (req.user != 401) {
