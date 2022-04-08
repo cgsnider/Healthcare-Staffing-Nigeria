@@ -69,7 +69,8 @@ function ViewApplications (props) {
                                         position={e.Title}
                                         location={`${e.City}, ${e.Country}`}
                                         shifts={e.Shifts}
-                                        salary={e.Salary}/>
+                                        salary={e.Salary}
+                                        status={e.Progress}/>
                                 </li> )
                             })}
                     </ul>

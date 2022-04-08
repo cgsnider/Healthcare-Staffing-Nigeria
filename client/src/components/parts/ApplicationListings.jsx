@@ -25,7 +25,10 @@ export default class ApplicationListing extends React.Component {
                     }
                 </div>
                 <div className='details' id='status'>
-                    <div>Status: TODO</div>
+                    Status: {(this.props.status === 100) ?
+                        ("Hired") :
+                        ("In Review")
+                    }
                 </div>
             </div>
         );
