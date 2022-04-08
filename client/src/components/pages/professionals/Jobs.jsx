@@ -198,6 +198,7 @@ function ApplicationPage (props) {
     const verifiedClick = (e) => {
         /** do apply here */
         postApplications({'cover': cover, 'email': post.Email, 'title': post.Title})
+        window.location.reload(false)
         props.setOpen(false)
         console.log(cover)
     }
