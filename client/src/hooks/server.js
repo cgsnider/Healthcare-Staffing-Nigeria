@@ -49,6 +49,10 @@ export async function getCategories() {
     return await getData('/categories')
 }
 
+export async function getFacilityPostings() {
+    return await getData('/postings')
+}
+
 export async function applyForVerification() {
     return await postData('/apply_verification')
 }
@@ -95,6 +99,7 @@ export async function getProfileImage() {
     const img = await getImage('/profile_picture');
     console.log(img)
 }
+
 
 /**
  * Gets the resume data for the user
