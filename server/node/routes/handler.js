@@ -420,6 +420,23 @@ router.post('/education', STD_MIDWARE, async (req, res) => {
     } else res.end(req.user);
 })
 
+router.post('/update_posting', STD_MIDWARE, async (req, res) => {
+    if (req.user != 401) {
+
+        if (req.user['custom:type'] == 'Facility') {
+            const data = req.body
+            const params = [req.user.email, data.Title, data.Category, data.Category, data.Salary, data.Descript, data.Slots, data.Shifts];
+            procedure = 'update_posting';
+
+            db.call(procedure, params)
+                .then(results => res.end(JSON.stringify(results)))
+                .catch(err => res.end(JSON.stringify('Error Updating Posting')));
+        }
+
+
+    } else res.end(JSON.stringify(req.user));
+})
+
 router.post('/jobs', STD_MIDWARE, (req, res) => {
     if (req.user != 401) {
         data = req.body;

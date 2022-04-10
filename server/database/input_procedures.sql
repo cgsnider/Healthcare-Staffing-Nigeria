@@ -475,3 +475,33 @@ create procedure add_document_professional (
 		(@pid, 'hire_applicant');
 end //
 DELIMITER ;
+
+drop procedure if exists update_posting;
+DELIMITER //
+create procedure update_posting (
+	in i_email varchar(55),
+    in i_title varchar(30), 
+    in i_salary int,
+    in i_descript text,
+    in i_slots int,
+    in i_category varchar(30),
+    in i_shifts varchar(30)
+) begin 
+	
+	select id FROM FACILITY WHERE Email = i_email into @id;
+	
+	UPDATE JOBPOSTING
+	SET
+		  Title = i_title,
+		  Category = i_category,
+		  Salary = i_salary,
+		  Descript = i_descript,
+		  Slots = i_slots,
+		  Shifts = i_shifts
+	WHERE
+		FID = @id and Title = i_title;
+	
+	insert into SYSTEMLOG (uid, act) value 
+		(@id, 'update_posting');
+end //
+DELIMITER ;

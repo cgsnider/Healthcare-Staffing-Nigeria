@@ -110,7 +110,7 @@ export async function getResume(email) {
 
 /**
  * Downloads a professional's resume. Saves the file automatically using the name that was originally uploaded to the server.
- * @param {*} email The email of the professional whose resume will be fetched.
+ * @param {string} email The email of the professional whose resume will be fetched.
  */
 export async function downloadResume(email) {
     const data = await getFile('/resume', {Email: email});
@@ -121,7 +121,7 @@ export async function downloadResume(email) {
 
 /**
  * 
- * @param {*} profEmail the email of the professional the admin wishes to verify
+ * @param {string} profEmail the email of the professional the admin wishes to verify
  * @returns 
  */
 export async function postVerifyProfessional(profEmail) {
@@ -130,11 +130,21 @@ export async function postVerifyProfessional(profEmail) {
 
 /**
  * 
- * @param {*} facEmail the email of the facility the admin wishes to verify
+ * @param {string} facEmail the email of the facility the admin wishes to verify
  * @returns 
  */
 export async function postVerifyFacility(facEmail) {
     return await postData('/verify_facility', {FacEmail: facEmail});
+}
+
+/**
+ * Updates a specific job posting for the current facility.
+ * @param {{Title: String, Category: String, Category: String, Salary: int, Descript: String, Slots: int, Shifts: String}} data 
+ *  The data that the posting should be set to
+ * @returns The results of the post
+ */
+export async function updatePosting(data) {
+     return await postData('/update_posting', data)
 }
 
 /**
