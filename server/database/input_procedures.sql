@@ -374,7 +374,7 @@ create procedure admin_verify_professional (
 	
 	SET @newStatus := 2;
     
-	select id FROM ADMINISTRATOR WHERE Email = i_email into @id;
+	select id FROM ADMINISTRATOR WHERE Email = i_admin_email into @id;
 	
 	UPDATE PROFESSIONAL
 	SET
@@ -399,7 +399,7 @@ create procedure admin_verify_facility (
 	
 	SET @newStatus := 2;
     
-	select id FROM ADMINISTRATOR WHERE Email = i_email into @id;
+	select id FROM ADMINISTRATOR WHERE Email = i_admin_email into @id;
 	
 	UPDATE FACILITY
 	SET

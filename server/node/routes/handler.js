@@ -159,8 +159,9 @@ router.get('/profile_picture/:key', (req, res) => {
 
 router.get('/applicants', STD_MIDWARE, (req, res) => {
     if (req.user != 401) {
+        console.log(req.headers.params)
         const procedure = 'get_applicants';
-        const params = [req.user.email, req.header.params.PostingTitle];
+        const params = [req.user.email, req.headers.params.PostingTitle];
         db.call(procedure, params)
             .then(results => res.end(JSON.stringify(results)))
             .catch(err => res.end('Error fetching education'))
@@ -209,13 +210,16 @@ router.get('/review_fac_verification', STD_MIDWARE, (req, res) => {
 
 router.post('/verify_professional', STD_MIDWARE, (req, res) => {
     if (req.user != 401) {
+
         if (req.user['custom:type'] == 'Admin') {
-            const procedure = 'hire_applicant'
+            const procedure = 'admin_verify_professional'
             const params = [req.user.email, req.body.ProfEmail]
 
+            console.log('PARAMS: ', params)
+
             db.call(procedure, params)
-                .then(results => res.end(JSON.stringify(results)))
-                .catch(err => res.end(418));
+                .then(results => {console.log('RESULTS: ', results); res.end(JSON.stringify(results))})
+                .catch(err => {console.log('ERROR: ', err);; res.end(418)});
         }
     }
 });

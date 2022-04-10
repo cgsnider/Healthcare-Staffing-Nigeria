@@ -1,7 +1,13 @@
 import React from 'react'
 import Popup from 'reactjs-popup';
+import { postVerifyProfessional } from '../../hooks/server';
 
 function PendingProfile(props) {
+
+    console.log('PENDING PROFILE')
+
+
+
     return (
         <div className="mt-4 flex justify-center w-full">
             <div className="outline outline-1 rounded-md w-1/2 min-w-fit">
@@ -61,7 +67,7 @@ function PendingProfile(props) {
                                     </div>
                                </div>
                                <div className="flex text-center justify-center gap-2 m-5">
-                                    <button className="h-2/3 px-4 bg-green-500 rounded text-white pr-15">Approve</button>
+                                    <button className="h-2/3 px-4 bg-green-500 rounded text-white pr-15" onClick={() => postVerifyProfessional(props.email)}>Approve</button>
                                     <button className="h-2/3 px-4 bg-red-500 rounded text-white pl-15">Decline</button>
                                     <button className="h-2/3 px-4 bg-gray-500 rounded text-white" onClick={()=>{close();}}>Close</button>
                                </div>
