@@ -120,6 +120,7 @@ export async function downloadResume(email) {
  * @returns 
  */
 export async function postVerifyProfessional(profEmail) {
+    console.log('------------postVerifyProfessional')
     return await postData('/verify_professional', {ProfEmail: profEmail});
 }
 
@@ -181,8 +182,6 @@ export async function getBulkFacilities() {
  * @returns the data from the get request with JSON processing completed
  */
 async function getData(url='', body={}) {
-
-    const formBody = Object.keys(body).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(body[key])).join('&');
     
     const data = await fetch(`api${url}`, {
         method: 'GET',
@@ -192,10 +191,10 @@ async function getData(url='', body={}) {
         headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
             ID: localStorage.getItem('IDToken'),
+            params: body
         },
         redirect: 'follow',
         referrerPolicy: 'no-referrer', 
-        body: formBody
     })
     const items = await data.json();
     return items;

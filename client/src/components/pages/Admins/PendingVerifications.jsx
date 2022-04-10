@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import PendingProfile from "../../parts/PendingProfile";
 import placeholder from '../../../images/profile-placeholder.jpg';
 import PendingProfileFac from "../../parts/PendingProfileFac";
+import { getVerifiedPendingFac, getVerifiedPendingProf } from '../../../hooks/server';
 
 function PendingVerifications(props) {
 
@@ -83,6 +84,16 @@ function PendingVerifications(props) {
     const handlePractitionersView = () => {
         setPractitionersView(true);
     }
+
+    useEffect(() => {
+        let isMounted = true;
+        console.log('USEEFFECT')
+        if (practitionersView == true) {
+            console.log(getVerifiedPendingProf());
+        } else {
+            console.log(getVerifiedPendingFac());
+        }
+    });
 
     return (
         <div>

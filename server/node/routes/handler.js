@@ -160,7 +160,7 @@ router.get('/profile_picture/:key', (req, res) => {
 router.get('/applicants', STD_MIDWARE, (req, res) => {
     if (req.user != 401) {
         const procedure = 'get_applicants';
-        const params = [req.user.email, req.body.PostingTitle];
+        const params = [req.user.email, req.header.params.PostingTitle];
         db.call(procedure, params)
             .then(results => res.end(JSON.stringify(results)))
             .catch(err => res.end('Error fetching education'))
