@@ -174,8 +174,10 @@ router.get('/review_prof_verification', STD_MIDWARE, (req, res) => {
         const procedure = 'admin_verification_pending_professional';
         const params = [req.user.email];
         db.call(procedure, params)
-            .then(results => res.end(JSON.stringify(results)))
-            .catch(err => res.end('Error fetching education'))
+            .then(results => { console.log("results: ", results)
+                res.end(JSON.stringify(results[0]))})
+            .catch(err => { console.log("ERROR: ", err)
+                res.end('Error fetching education')})
     } else {
         res.end(JSON.stringify(req.user));
     }

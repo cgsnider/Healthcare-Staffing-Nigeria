@@ -11,67 +11,9 @@ function PendingVerifications(props) {
 
     const [practitionersView, setPractitionersView] = useState(true);
 
-    const [practitioners, setPractitioners] = useState(
-        [{Email: "temp@example.com",
-            PhoneNumber: "123-456-1111",
-            FName: "John",
-            LName: "Williams",
-            professionalInfo: "",
-            LicenseNumber: "",
-            Gender: "Male",
-            DoB: "January 01, 2000",
-            Specialization: "Cardiologist",
-            Bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            Verified: 1, //-1=neverLoggedIn  0=unverified, 1=pending, 2=verified
-            resume: null,
-            image: null,
-            MDCN: 123456,
-            Street:'1234 Park place',
-            City:'Los Angeles',
-            Country:'United States',
-        }, {
-            Email: "temp@example.com",
-            PhoneNumber: "123-456-1111",
-            FName: "John",
-            LName: "Williams",
-            professionalInfo: "",
-            LicenseNumber: "",
-            Gender: "Male",
-            DoB: "January 01, 2000",
-            Specialization: "Cardiologist",
-            Bio: "Short Description",
-            Verified: 1, //-1=neverLoggedIn  0=unverified, 1=pending, 2=verified
-            resume: '/robots.txt',
-            image: null,
-            MDCN: 123456,
-            Street:'1234 Park place',
-            City:'Los Angeles',
-            Country:'United States',
-        }]);
+    const [practitioners, setPractitioners] = useState([]);
 
-    const [facilities, setFacilities] = useState(
-        [{Email: "NigerianHospital@hosp.org",
-            FacName:"Nigerian Hospital",
-            Bio: "Short Description",
-            PhoneNumber: "123-456-7890",
-            Verified: 1, //-1=neverLoggedIn  0=unverified, 1=pending, 2=verified
-            image: null,
-            Street:"123 Street",
-            City:"Ibadan",
-            Country:"Nigeria",
-            State:"Oyo",
-        }, {
-            Email: "NigerianHospital@hosp.org",
-            FacName:"Nigerian Hospital",
-            Bio: "Short Description",
-            PhoneNumber: "123-456-7890",
-            Verified: 1, //-1=neverLoggedIn  0=unverified, 1=pending, 2=verified
-            image: null,
-            Street:'123 Street',
-            City:'Ibadan',
-            Country:'Nigeria',
-            State:'Oyo',
-        }]);
+    const [facilities, setFacilities] = useState([]);
 
     const filter = (e) => {
         return e.Verified === 1;
@@ -85,15 +27,17 @@ function PendingVerifications(props) {
         setPractitionersView(true);
     }
 
-    useEffect(() => {
+    useEffect(async () => {
         let isMounted = true;
-        console.log('USEEFFECT')
         if (practitionersView == true) {
-            console.log(getVerifiedPendingProf());
+            setPractitioners(await getVerifiedPendingProf());
         } else {
-            console.log(getVerifiedPendingFac());
+            setFacilities(await getVerifiedPendingFac())
         }
-    });
+        return () => {
+            isMounted = false;
+        };
+    }, []);
 
     return (
         <div>

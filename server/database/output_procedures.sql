@@ -127,7 +127,9 @@ create procedure user_exists (
 		then select 1 as Status;
 	elseif (select count(*) FROM FACILITY where email = i_email) != 0
 		then select 2 as Status;
-	else 
+	elseif (select count(*) FROM ADMINISTRATOR where email = i_email) != 0
+		then select 3 as Status;
+	else
 		select -1 as Status;
 	end if;
 
@@ -318,7 +320,7 @@ create procedure get_fac_job_postings(
 	
     SELECT id FROM FACILITY WHERE Email = i_email into @id; 
     
-	SELECT * from JOBPOSTING where FID = @id;
+	SELECT Title, Category, Salary, Descript, Slots, Shifts from JOBPOSTING where FID = @id;
     
     insert into SYSTEMLOG (uid, act) value 
 		(@id, 'get_fac_job_postings');
