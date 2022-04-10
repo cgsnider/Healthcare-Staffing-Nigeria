@@ -149,9 +149,24 @@ export async function getVerifiedPendingFac() {
  * @returns The data for the applicants for a given job posting
  */
 export async function getApplicants(postingTitle) {
-    return await getData('/applicants', {PostingTitle: postingTitle})
+    return await getData('/applicants', {PostingTitle: postingTitle});
 }
 
+/**
+ * 
+ * @returns All nonsesnsitive text data for all professionals. Requries Admin access
+ */
+export async function getBulkProfessional() {
+    return await getData('/bulk_professionals');
+}
+
+/**
+ * 
+ * @returns All nonsensitive text data for all facilities. Requires Admin access
+ */
+export async function getBulkFacilities() {
+    return await getData('/bulk_facilities');
+}
 
 
 
