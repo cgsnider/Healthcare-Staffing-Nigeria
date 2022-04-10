@@ -121,13 +121,9 @@ router.get('/education', STD_MIDWARE, (req, res) => {
 });
 
 router.get('/resume', STD_MIDWARE, (req, res) => {
-    console.log('GET RESUME')
-    // req.user = {email: req.params.email}
-    req.headers.params = JSON.parse(req.headers.params)
-    req.user = {email:req.headers.params.Email}
     if (req.user != 401) {
-    console.log(req.user)
-    let username = req.user.email;
+
+    let username = null;
 
     if (req.user['custom:type'] == 'Professional') {
         username = req.user.email;
@@ -136,7 +132,6 @@ router.get('/resume', STD_MIDWARE, (req, res) => {
     }
 
     const params = [username, 'RESUME', null]
-    console.log(params)
     const procedure = 'get_document_professional'
 
     db.call(procedure, params, null)
@@ -150,7 +145,6 @@ router.get('/resume', STD_MIDWARE, (req, res) => {
                 })
                 .catch(err => console.log(err))
         }).catch(err => {
-            console.log('ERROR: ', err)
             res.end('err')
         })
 

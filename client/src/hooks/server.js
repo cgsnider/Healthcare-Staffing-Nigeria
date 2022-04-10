@@ -108,6 +108,10 @@ export async function getResume(email) {
     return await getData('/resume', {Email: email})
 }
 
+/**
+ * Downloads a professional's resume. Saves the file automatically using the name that was originally uploaded to the server.
+ * @param {*} email The email of the professional whose resume will be fetched.
+ */
 export async function downloadResume(email) {
     const data = await getFile('/resume', {Email: email});
     const headers = [...data.headers]
