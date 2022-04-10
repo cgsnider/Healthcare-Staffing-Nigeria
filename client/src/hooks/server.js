@@ -182,7 +182,7 @@ export async function getBulkFacilities() {
  */
 async function getData(url='', body={}) {
 
-    const formBody = Object.keys(data).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key])).join('&');
+    const formBody = Object.keys(body).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(body[key])).join('&');
     
     const data = await fetch(`api${url}`, {
         method: 'GET',
