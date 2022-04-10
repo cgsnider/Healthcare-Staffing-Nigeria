@@ -1,15 +1,17 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import '../styling/JobListings.css'
 
 export default function JobListing (props) {
-    const handleApply = () => {
+    let handleApply = () => {
         props.setOpen(true);
         props.setPosting(props.posting)
         console.log(props.posting)
     }
+    const handleClick = (e) => {
+    }
 
     return (
-        <button onClick={handleApply}>
+        <button onClick={(props.type=='apply')?handleApply:handleClick}>
             <div id='JobList'>
                 <img src={props.image} alt="Logo" id="jobImage"/>
                 <div className='truncate' id='title'>{props.position}</div>

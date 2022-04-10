@@ -1,28 +1,43 @@
-import React, { useRef, useState, useEffect } from 'react'
-
+import React, { useState, useEffect, useRef } from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { getFacilityPostings, updatePosting, getCategories } from '../../../hooks/server.js'
 import { Editor } from '@tinymce/tinymce-react';
-import ReactHtmlParser from 'react-html-parser';
 import { Drop } from '../../parts/Drop';
-import { useNavigate } from 'react-router-dom';
-import { getCategories, postJobPosting } from '../../../hooks/server';
-export default function CreatePosting(props) {
-
-    useEffect( () => {
-        let isMounted = true;
-        fetchCategories(isMounted);
-        return()=> {
-            isMounted=false;
-        }
-    }, []);
-
-    
-
+import CircleLoader from 'react-spinners/CircleLoader';
+export default function EditPost(props) {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const navigate = useNavigate();
+    const [postExists, setPostExists] = useState(true);
+    const postingTitle = searchParams.get('post');
     const editorRef = useRef(null);
 
     const [categories, setCategories] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState({label: 'Cardiology', value: 'cardiology'});
     const [formData, setFormData] = useState({Title: '', Salary: 0, Descript: '', Slots: 1, Category: '', Shifts: 1});
-    const navigate = useNavigate();
+
+    const [posting, setPosting] = useState(null);
+    useEffect(() => {
+        if (localStorage.getItem('type')!=='Facility') navigate('/', {replace: true});
+        let isMounted = true;
+        fetchPostings(isMounted);
+        fetchCategories(isMounted);
+    }, []);
+
+    const fetchPostings = async (mounted) => {
+        let res = await getFacilityPostings(postingTitle)
+        .catch(err=>{console.error(err);})
+        let findposting = res.find(post => post.Title === postingTitle);
+        if (mounted) {
+            if(findposting) {
+            setPosting(findposting);
+            setFormData({...formData, Title: findposting.Title, Salary: findposting.Salary, Descript: findposting.Descript, Slots: findposting.Slots, Category: findposting.Category, Shifts: findposting.Shifts});
+            setSelectedCategory({label: findposting.Category, value: findposting.Category});
+            } else {
+                setPostExists(false);
+            }
+        }
+        console.log(findposting);
+    }
 
     const fetchCategories = async(isMounted) => {
         let items = await getCategories()
@@ -40,32 +55,27 @@ export default function CreatePosting(props) {
         else console.log('aborted setCategories on unmounted component')
     }
 
+    const formatString = (str) => {
+        return str.trim().split(/\s+/).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    }
     const log = () => {
         if (editorRef.current) {
             setFormData({...formData, Descript: editorRef.current.getContent()});
             setFormData({...formData, Category: selectedCategory});
         }
     };
-
-    //navigate back to home page
     const cancel = (e) => {
         e.preventDefault();
-        navigate('/');
+        navigate('/myPostings');
     }
-
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log({...formData, Descript: editorRef.current.getContent(), Category: selectedCategory.label});
-        postJobPosting({...formData, Descript: editorRef.current.getContent(), Category: selectedCategory.label})
-        .catch(err=>{console.error(err);});
+        updatePosting({OldTitle: postingTitle, NewTitle: formData.Title, Salary: formData.Salary, Descript: formData.Descript, Slots: formData.Slots, Category: formData.Category, Shifts: formData.Shifts})
+        .then(res => {navigate('/myPostings')})
+        .catch(err => {console.error(err)})
     }
-
-    //remove whitespace from beginning and end of string and capitalize first letter of each word
-    const formatString = (str) => {
-        return str.trim().split(/\s+/).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-    }
-
-
+    if (posting) {
     return (
         <>
         <div className='mx-5'>
@@ -95,7 +105,7 @@ export default function CreatePosting(props) {
                         <Editor
                         apiKey='n7yht7pqtyj6b2zgy4pspu604122cie6snn96p044m2vi9fu'
                         onInit={(evt, editor) => editorRef.current = editor}
-                        initialValue="<p>initial Job Description.</p>"
+                        initialValue={formData.Descript}
                         init={{
                         height: 250,
                         width: '100%',
@@ -127,7 +137,7 @@ export default function CreatePosting(props) {
                 <div className='form-element block py-3'>
                     <div className='left-side w-1/12 inline-block text-lg float-left text-right pr-3 font-bold text-[#777] overflow-x-auto'>Category</div>
                     <div className='right-side w-auto inline-block'>
-                        <Drop options={categories} initial='Cardiology' setPosition={setSelectedCategory}/>
+                        <Drop options={categories} initial={posting.Category} setPosition={setSelectedCategory}/>
                     </div>
                 </div>
 
@@ -158,7 +168,7 @@ export default function CreatePosting(props) {
                 <div className='form-element block py-3'>
                     <div className='h-1 left-side w-1/12 inline-block text-lg float-left text-right pr-3 font-bold text-[#777] overflow-x-hidden '></div>
                     <div className='right-side w-8/12 inline-block'>
-                        <button onClick={log} className='border border-b-gray-800 border-slate-500 py-1 px-4 mb-10 w-auto mr-1 bg-cmg-mid text-slate-100 rounded'>Create Posting</button>
+                        <button onClick={log} className='border border-b-gray-800 border-slate-500 py-1 px-4 mb-10 w-auto mr-1 bg-cmg-mid text-slate-100 rounded'>Save</button>
                         <button onClick={cancel} className='border border-b-gray-800 border-slat-500 py-1 px-2 mb-10 w-auto ml-1 bg-red-600 text-slate-200 rounded'>Cancel</button>
 
                     </div>
@@ -167,5 +177,13 @@ export default function CreatePosting(props) {
             
         </div>
         </>
-    );
+
+
+    )} else {
+        if(postExists){
+        return (<CircleLoader loading={true} color={'#3a8c3c'}/>)
+        } else {
+            return (<div>post does not exist</div>)
+        }
+    }
 }

@@ -43,6 +43,7 @@ function Jobs (props) {
 
     const [posFetchEnd, setPosFetchEnd] = useState(false);
     const [catFetchEnd, setCatFetchEnd] = useState(false);
+
     const fetchPostings = async(isMounted) => {
         let items = await getJobPosts()
             .catch(err=>setFetchError(true))
@@ -130,6 +131,7 @@ function Jobs (props) {
                                 setOpen={setOpen}
                                 setPosting={setApplyPosition}
                                 posting={e}
+                                type='apply'
                                 />
                                 
                             </li> )

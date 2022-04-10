@@ -189,7 +189,7 @@ router.get('/postings', STD_MIDWARE, (req, res) => {
         const procedure = 'get_fac_job_postings';
         const params = [req.user.email];
         db.call(procedure, params)
-            .then(results => res.end(JSON.stringify(results)))
+            .then(results => res.end(JSON.stringify(results[0])))
             .catch(err => res.end('Error fetching postings'))
     } else {
         res.end(JSON.stringify(req.user));
@@ -430,7 +430,7 @@ router.post('/update_posting', STD_MIDWARE, async (req, res) => {
 
             db.call(procedure, params)
                 .then(results => res.end(JSON.stringify(results)))
-                .catch(err => res.end(JSON.stringify('Error Updating Posting')));
+                .catch(err => {console.log(err);res.end(JSON.stringify('Error Updating Posting'))});
         }
 
 
