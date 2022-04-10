@@ -278,5 +278,52 @@ create procedure admin_verification_pending_facility(
 end //
 DELIMITER ;
 
+drop procedure if exists admin_bulk_professionals; 
+DELIMITER //
+create procedure admin_bulk_professionals(
+	in i_email varchar(255)  
+) begin
+	
+    SELECT id FROM ADMINISTRATOR WHERE Email = i_email into @id; 
+    
+	SELECT * from PROFESSIONAL;
+    
+    insert into SYSTEMLOG (uid, act) value 
+		(@id, 'admin_bulk_professionals');
+    
+end //
+DELIMITER ;
+
+drop procedure if exists admin_bulk_facilities; 
+DELIMITER //
+create procedure admin_bulk_facilities(
+	in i_email varchar(255)  
+) begin
+	
+    SELECT id FROM ADMINISTRATOR WHERE Email = i_email into @id; 
+    
+	SELECT * from FACILITY;
+    
+    insert into SYSTEMLOG (uid, act) value 
+		(@id, 'admin_bulk_facilities');
+    
+end //
+DELIMITER ;
+
+drop procedure if exists get_fac_job_postings; 
+DELIMITER //
+create procedure get_fac_job_postings(
+	in i_email varchar(255)  
+) begin
+	
+    SELECT id FROM FACILITY WHERE Email = i_email into @id; 
+    
+	SELECT * from JOBPOSTING where FID = @id;
+    
+    insert into SYSTEMLOG (uid, act) value 
+		(@id, 'get_fac_job_postings');
+    
+end //
+DELIMITER ;
 
 

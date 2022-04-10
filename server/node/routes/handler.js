@@ -120,9 +120,17 @@ router.get('/education', STD_MIDWARE, (req, res) => {
     }
 });
 
-
 router.get('/resume', STD_MIDWARE, (req, res) => {
     if (req.user != 401) {
+    
+    let username = null;
+
+    if (req.user['custom:type'] == 'Professional') {
+        username = req.user.email;
+    } else if (req.user['custom:type'] == 'Facility') {
+        username = req.body.Email
+    }
+
     const params = [username, 'RESUME', null]
     const procedure = 'get_document_professional'
 
@@ -173,6 +181,18 @@ router.get('/review_prof_verification', STD_MIDWARE, (req, res) => {
     }
 });
 
+router.get('/postings', STD_MIDWARE, (req, res) => {
+    if (req.user != 401) {
+        const procedure = 'get_fac_job_postings';
+        const params = [req.user.email];
+        db.call(procedure, params)
+            .then(results => res.end(JSON.stringify(results)))
+            .catch(err => res.end('Error fetching postings'))
+    } else {
+        res.end(JSON.stringify(req.user));
+    }
+});
+
 router.get('/review_fac_verification', STD_MIDWARE, (req, res) => {
     if (req.user != 401) {
         const procedure = 'admin_verification_pending_facility';
@@ -198,11 +218,24 @@ router.post('/verify_professional', STD_MIDWARE, (req, res) => {
     }
 });
 
-router.post('/verify_facility', STD_MIDWARE, (req, res) => {
+router.post('/bulk_professionals', STD_MIDWARE, (req, res) => {
     if (req.user != 401) {
         if (req.user['custom:type'] == 'Admin') {
-            const procedure = 'admin_verify_facility'
-            const params = [req.user.email, req.body.FacEmail]
+            const procedure = 'admin_bulk_professionals'
+            const params = [req.user.email]
+
+            db.call(procedure, params)
+                .then(results => res.end(JSON.stringify(results)))
+                .catch(err => res.end(418));
+        }
+    }
+});
+
+router.post('/bulk_facilities', STD_MIDWARE, (req, res) => {
+    if (req.user != 401) {
+        if (req.user['custom:type'] == 'Admin') {
+            const procedure = 'admin_bulk_facilities'
+            const params = [req.user.email]
 
             db.call(procedure, params)
                 .then(results => res.end(JSON.stringify(results)))
