@@ -218,8 +218,24 @@ router.post('/verify_professional', STD_MIDWARE, (req, res) => {
             console.log('PARAMS: ', params)
 
             db.call(procedure, params)
-                .then(results => {console.log('RESULTS: ', results); res.end(JSON.stringify(results))})
-                .catch(err => {console.log('ERROR: ', err);; res.end(418)});
+                .then(results => {res.end(JSON.stringify(results))})
+                .catch(err => {res.end(418)});
+        }
+    }
+});
+
+router.post('/verify_facility', STD_MIDWARE, (req, res) => {
+    if (req.user != 401) {
+
+        if (req.user['custom:type'] == 'Admin') {
+            const procedure = 'admin_verify_facility'
+            const params = [req.user.email, req.body.FacEmail]
+
+            console.log('PARAMS: ', params)
+
+            db.call(procedure, params)
+                .then(results => {res.end(JSON.stringify(results))})
+                .catch(err => {res.end(418)});
         }
     }
 });

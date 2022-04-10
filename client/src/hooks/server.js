@@ -120,7 +120,6 @@ export async function downloadResume(email) {
  * @returns 
  */
 export async function postVerifyProfessional(profEmail) {
-    console.log('------------postVerifyProfessional')
     return await postData('/verify_professional', {ProfEmail: profEmail});
 }
 

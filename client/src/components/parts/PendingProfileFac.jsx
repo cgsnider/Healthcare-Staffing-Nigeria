@@ -1,5 +1,7 @@
 import React from 'react'
 import Popup from 'reactjs-popup';
+import { postVerifyFacility } from '../../hooks/server';
+
 
 function PendingProfileFac(props) {
     return (
@@ -56,7 +58,7 @@ function PendingProfileFac(props) {
                                     </div>
                                </div>
                                <div className="flex text-center justify-center gap-2 m-5">
-                                    <button className="h-2/3 px-4 bg-green-500 rounded text-white pr-15">Approve</button>
+                                    <button className="h-2/3 px-4 bg-green-500 rounded text-white pr-15" onClick={() => postVerifyFacility(props.email)}>Approve</button>
                                     <button className="h-2/3 px-4 bg-red-500 rounded text-white pl-15">Decline</button>
                                     <button className="h-2/3 px-4 bg-gray-500 rounded text-white" onClick={()=>{close();}}>Close</button>
                                </div>
