@@ -1,4 +1,5 @@
 import {arrayObject} from './util.js';
+import { saveAs } from "file-saver";
 
 // functions for testing delay 
 function timeout(ms) {
@@ -95,9 +96,63 @@ export async function getProfileImage() {
     console.log(img)
 }
 
-export async function getResume() {
-
+/**
+ * Gets the resume data for the user
+ * @param {string} email the email of the account who's resume should be downloaded. Pass in null will download current user's resume
+ * @returns The resume data of the user. 
+ */
+export async function getResume(email) {
+    return await getData('/resume', {Email: email})
 }
+
+export async function downloadResume(email) {
+    const data = await getData('/resume', {Email: email});
+}
+
+/**
+ * 
+ * @param {*} profEmail the email of the professional the admin wishes to verify
+ * @returns 
+ */
+export async function postVerifyProfessional(profEmail) {
+    return await postData('/verify_professional', {ProfEmail: profEmail});
+}
+
+/**
+ * 
+ * @param {*} facEmail the email of the facility the admin wishes to verify
+ * @returns 
+ */
+export async function postVerifyFacility(facEmail) {
+    return await postData('/verify_facility', {FacEmail: facEmail});
+}
+
+/**
+ * 
+ * @returns The professionals pending verification
+ */
+export async function getVerifiedPendingProf() {
+    return await getData('/review_prof_verification');
+}
+
+/**
+ * 
+ * @returns The facilities pending verification
+ */
+export async function getVerifiedPendingFac() {
+    return await getData('/review_fac_verification');
+}
+
+/**
+ * Fetches all the applicants for a given job posting.
+ * @param {string} postingTitle the title of the job posting for the user to get all the applicants from.
+ * @returns The data for the applicants for a given job posting
+ */
+export async function getApplicants(postingTitle) {
+    return await getData('/applicants', {PostingTitle: postingTitle})
+}
+
+
 
 
 /**
@@ -106,6 +161,8 @@ export async function getResume() {
  * @returns the data from the get request with JSON processing completed
  */
 async function getData(url='', body={}) {
+
+    const formBody = Object.keys(data).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key])).join('&');
     
     const data = await fetch(`api${url}`, {
         method: 'GET',
@@ -118,7 +175,7 @@ async function getData(url='', body={}) {
         },
         redirect: 'follow',
         referrerPolicy: 'no-referrer', 
-
+        body: formBody
     })
     const items = await data.json();
     return items;

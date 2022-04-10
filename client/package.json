@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@tinymce/tinymce-react": "^3.13.1",
     "amazon-cognito-identity-js": "^5.2.4",
+    "file-saver": "^2.0.5",
     "http-proxy-middleware": "^2.0.1",
     "react": "^17.0.2",
     "react-datepicker": "^4.6.0",
