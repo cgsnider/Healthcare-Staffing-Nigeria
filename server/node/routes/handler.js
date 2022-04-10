@@ -121,30 +121,26 @@ router.get('/education', STD_MIDWARE, (req, res) => {
 });
 
 
-router.get('/resume/:username', async(req, res) => {
-    const username = req.params.username
-
+router.get('/resume', STD_MIDWARE, (req, res) => {
+    if (req.user != 401) {
     const params = [username, 'RESUME', null]
     const procedure = 'get_document_professional'
 
-    const meta_doc = await db.call(procedure, params, null)
-    
-    console.log(meta_doc)
+    db.call(procedure, params, null)
+        .then(result => {
+            const meta = result[0][0]
+            s3.download(meta.S3Key)
+                .then(file => {
+                    res.set('FileName', meta.FileName)
+                    res.set('TimeUploaded', meta.TimeCreated)
+                    res.end(file.Body)
+                })
+                .catch(err => console.log(err))
+        }).catch(err => {
+            res.end('err')
+        })
 
-    meta_doc[0].forEach(meta => {
-        console.log('META: ', meta)
-        s3.download(meta.S3Key)
-            .then(file => {
-                file.Metadata.FileName = meta.FileName
-                file.Metadata.TimeUploaded = meta.TimeCreated
-                console.log("File: ", file)
-                const msg = {Body:file.Body, MetaData:file.Metadata}
-                res.send(msg)
-                console.log("test")
-            })
-    })
-
-    res.end(JSON.stringify("200"))
+    } else res.end(JSON.stringify(req.user));
 })
 
 router.get('/profile_picture/:key', (req, res) => {
