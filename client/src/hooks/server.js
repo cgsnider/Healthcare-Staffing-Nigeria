@@ -137,6 +137,8 @@ export async function postVerifyFacility(facEmail) {
  * @returns The professionals pending verification
  */
 export async function getVerifiedPendingProf() {
+    let test = await downloadResume('csnider32@gatech.edu')
+    console.log('TEST: ', test)
     return await getData('/review_prof_verification');
 }
 
@@ -162,6 +164,7 @@ export async function getApplicants(postingTitle) {
  * @returns All nonsesnsitive text data for all professionals. Requries Admin access
  */
 export async function getBulkProfessional() {
+    console.log('GET BULK PROF')
     return await getData('/bulk_professionals');
 }
 
@@ -190,12 +193,13 @@ async function getData(url='', body={}) {
         headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
             ID: localStorage.getItem('IDToken'),
-            params: body
+            params: JSON.stringify(body)
         },
         redirect: 'follow',
         referrerPolicy: 'no-referrer', 
     })
     const items = await data.json();
+    console.log(data)
     return items;
 }
 

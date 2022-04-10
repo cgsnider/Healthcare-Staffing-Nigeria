@@ -48,7 +48,7 @@ const STD_MIDWARE = [authenticate, db.handleNewUser]
 
 router.get('/jobs', STD_MIDWARE, (req, res) => {
     if (req.user != 401) {
-
+        req.headers.params = JSON.parse(req.headers.params);
         const procedure = 'get_postings';
         const params = [req.user.email, req.body.category];
         
@@ -121,9 +121,12 @@ router.get('/education', STD_MIDWARE, (req, res) => {
 });
 
 router.get('/resume', STD_MIDWARE, (req, res) => {
+    console.log('GET RESUME')
+    req.headers.params = JSON.parse(req.headers.params)
+    req.user = {email:req.headers.params.Email}
     if (req.user != 401) {
-    
-    let username = null;
+    console.log(req.user)
+    let username = req.user.email;
 
     if (req.user['custom:type'] == 'Professional') {
         username = req.user.email;
@@ -132,6 +135,7 @@ router.get('/resume', STD_MIDWARE, (req, res) => {
     }
 
     const params = [username, 'RESUME', null]
+    console.log(params)
     const procedure = 'get_document_professional'
 
     db.call(procedure, params, null)
@@ -159,7 +163,7 @@ router.get('/profile_picture/:key', (req, res) => {
 
 router.get('/applicants', STD_MIDWARE, (req, res) => {
     if (req.user != 401) {
-        console.log(req.headers.params)
+        req.headers.params = JSON.parse(req.headers.params)
         const procedure = 'get_applicants';
         const params = [req.user.email, req.headers.params.PostingTitle];
         db.call(procedure, params)
@@ -240,8 +244,10 @@ router.post('/verify_facility', STD_MIDWARE, (req, res) => {
     }
 });
 
-router.post('/bulk_professionals', STD_MIDWARE, (req, res) => {
+router.get('/bulk_professionals', STD_MIDWARE, (req, res) => {
+    console.log('BULK PROF')
     if (req.user != 401) {
+        console.log('BULK PROF')
         if (req.user['custom:type'] == 'Admin') {
             const procedure = 'admin_bulk_professionals'
             const params = [req.user.email]
@@ -253,7 +259,7 @@ router.post('/bulk_professionals', STD_MIDWARE, (req, res) => {
     }
 });
 
-router.post('/bulk_facilities', STD_MIDWARE, (req, res) => {
+router.get('/bulk_facilities', STD_MIDWARE, (req, res) => {
     if (req.user != 401) {
         if (req.user['custom:type'] == 'Admin') {
             const procedure = 'admin_bulk_facilities'
@@ -396,6 +402,8 @@ router.post('/resume/:email', [upload.single('pdf')], async (req, res) => {
         .catch(err => {console.log(err); res.end("FAILED TO LOG PROFILE PICTURE IN DB")})
 
 })
+
+
 
 
 router.post('/education', STD_MIDWARE, async (req, res) => {

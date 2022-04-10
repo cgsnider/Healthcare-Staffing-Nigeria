@@ -32,7 +32,7 @@ function PendingVerifications(props) {
         if (practitionersView == true) {
             setPractitioners(await getVerifiedPendingProf());
         } else {
-            setFacilities(await getVerifiedPendingFac())
+            setFacilities(await getVerifiedPendingFac());
         }
         return () => {
             isMounted = false;
