@@ -425,7 +425,7 @@ router.post('/update_posting', STD_MIDWARE, async (req, res) => {
 
         if (req.user['custom:type'] == 'Facility') {
             const data = req.body
-            const params = [req.user.email, data.Title, data.Category, data.Category, data.Salary, data.Descript, data.Slots, data.Shifts];
+            const params = [req.user.email, data.OldTitle, data.NewTitle, data.Category, data.Category, data.Salary, data.Descript, data.Slots, data.Shifts];
             procedure = 'update_posting';
 
             db.call(procedure, params)

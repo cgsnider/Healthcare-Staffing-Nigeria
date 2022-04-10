@@ -139,7 +139,7 @@ export async function postVerifyFacility(facEmail) {
 
 /**
  * Updates a specific job posting for the current facility.
- * @param {{Title: String, Category: String, Category: String, Salary: int, Descript: String, Slots: int, Shifts: String}} data 
+ * @param {{OldTitle: String, NewTitle: String, Category: String, Category: String, Salary: int, Descript: String, Slots: int, Shifts: String}} data 
  *  The data that the posting should be set to
  * @returns The results of the post
  */

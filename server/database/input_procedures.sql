@@ -480,7 +480,8 @@ drop procedure if exists update_posting;
 DELIMITER //
 create procedure update_posting (
 	in i_email varchar(55),
-    in i_title varchar(30), 
+    in i_old_title varchar(30), 
+    in i_new_title varchar(30),
     in i_salary int,
     in i_descript text,
     in i_slots int,
@@ -492,14 +493,14 @@ create procedure update_posting (
 	
 	UPDATE JOBPOSTING
 	SET
-		  Title = i_title,
+		  Title = i_new_title,
 		  Category = i_category,
 		  Salary = i_salary,
 		  Descript = i_descript,
 		  Slots = i_slots,
 		  Shifts = i_shifts
 	WHERE
-		FID = @id and Title = i_title;
+		FID = @id and Title = i_old_title;
 	
 	insert into SYSTEMLOG (uid, act) value 
 		(@id, 'update_posting');
