@@ -122,6 +122,7 @@ router.get('/education', STD_MIDWARE, (req, res) => {
 
 router.get('/resume', STD_MIDWARE, (req, res) => {
     console.log('GET RESUME')
+    // req.user = {email: req.params.email}
     req.headers.params = JSON.parse(req.headers.params)
     req.user = {email:req.headers.params.Email}
     if (req.user != 401) {
@@ -149,6 +150,7 @@ router.get('/resume', STD_MIDWARE, (req, res) => {
                 })
                 .catch(err => console.log(err))
         }).catch(err => {
+            console.log('ERROR: ', err)
             res.end('err')
         })
 

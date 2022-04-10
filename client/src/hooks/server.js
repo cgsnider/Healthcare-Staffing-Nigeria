@@ -64,7 +64,6 @@ export async function applyForVerification() {
  * @returns 402 if user is unauthorized, 418 if database failure, or sql results if successful
  */
 export async function postJobPosting(data) {
-    console.log('posting');
     return await postData('/opening', data);
 }
 
@@ -97,7 +96,6 @@ export async function postResume(file) {
 
 export async function getProfileImage() {
     const img = await getImage('/profile_picture');
-    console.log(img)
 }
 
 
@@ -111,7 +109,10 @@ export async function getResume(email) {
 }
 
 export async function downloadResume(email) {
-    const data = await getData('/resume', {Email: email});
+    const data = await getFile('/resume', {Email: email});
+    const headers = [...data.headers]
+    const filename = headers[3][1]
+    await saveAs(await data.blob(), filename)
 }
 
 /**
@@ -137,8 +138,6 @@ export async function postVerifyFacility(facEmail) {
  * @returns The professionals pending verification
  */
 export async function getVerifiedPendingProf() {
-    let test = await downloadResume('csnider32@gatech.edu')
-    console.log('TEST: ', test)
     return await getData('/review_prof_verification');
 }
 
@@ -164,7 +163,6 @@ export async function getApplicants(postingTitle) {
  * @returns All nonsesnsitive text data for all professionals. Requries Admin access
  */
 export async function getBulkProfessional() {
-    console.log('GET BULK PROF')
     return await getData('/bulk_professionals');
 }
 
@@ -199,10 +197,32 @@ async function getData(url='', body={}) {
         referrerPolicy: 'no-referrer', 
     })
     const items = await data.json();
-    console.log(data)
     return items;
 }
 
+/**
+ * Generic method for making a GET request. 
+ * @param {string} url The url for the resources being searched for. (api is included)
+ * @returns the data from the get request with JSON processing completed
+ */
+ async function getFile(url='', body={}) {
+    
+    const data = await fetch(`api${url}`, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            ID: localStorage.getItem('IDToken'),
+            params: JSON.stringify(body)
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer', 
+    })
+
+    return data;
+}
 
 async function postFile(url='', data={}) {
     return new Promise(function (resolve, reject) {
@@ -218,7 +238,7 @@ async function postFile(url='', data={}) {
             redirect: 'follow',
             referrerPolicy: 'no-referrer', 
             body: data
-        }).then(response => { console.log(response); resolve(response)});
+        }).then(response => {resolve(response)});
     });
 }
 
@@ -235,7 +255,7 @@ async function getImage(url='', data={}) {
             },
             redirect: 'follow',
             referrerPolicy: 'no-referrer', 
-        }).then(response => { console.log(response); resolve(response)});
+        }).then(response => {resolve(response)});
     });
 }
 
@@ -256,6 +276,6 @@ async function postData(url = '', data ={}) {
             redirect: 'follow',
             referrerPolicy: 'no-referrer', 
             body: formBody
-        }).then(response => { console.log(response); resolve(response)});
+        }).then(response => {resolve(response)});
     });
 }
