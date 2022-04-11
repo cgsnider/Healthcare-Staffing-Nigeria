@@ -274,7 +274,7 @@ router.post('/opening', STD_MIDWARE, (req, res) => {
         if (req.user['custom:type'] == 'Facility') {
             const procedure = 'create_job_posting';
             const params = [req.user.email, req.body.Title, req.body.Salary, 
-                req.body.Descript, req.body.Slots, req.body.Category, req.body.Shifts];
+                req.body.Descript, req.body.Slots, req.body.Category, req.body.Shifts, req.body.Visibility];
 
             db.call(procedure, params)
                 .then(results => res.end(JSON.stringify(results)))
@@ -425,7 +425,7 @@ router.post('/update_posting', STD_MIDWARE, async (req, res) => {
 
         if (req.user['custom:type'] == 'Facility') {
             const data = req.body
-            const params = [req.user.email, data.OldTitle, data.NewTitle, data.Category, data.Category, data.Salary, data.Descript, data.Slots, data.Shifts];
+            const params = [req.user.email, data.OldTitle, data.NewTitle, data.Category, data.Category, data.Salary, data.Descript, data.Slots, data.Shifts, data.Visibility];
             procedure = 'update_posting';
 
             db.call(procedure, params)

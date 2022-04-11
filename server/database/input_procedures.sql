@@ -149,14 +149,15 @@ create procedure create_job_posting (
     in i_descript text,
     in i_slots int,
     in i_category varchar(30),
-    in i_shifts varchar(30)
+    in i_shifts varchar(30),
+    in i_visibility int
     
 ) begin 
 	
 select id from FACILITY where email = i_fac_email into @id;
 
-insert into JOBPOSTING (fid, title, salary, descript, category, slots, shifts) values
-	(@id, i_title, i_salary, i_descript, i_category, i_slots, i_shifts);
+insert into JOBPOSTING (fid, title, salary, descript, category, slots, shifts, visibility) values
+	(@id, i_title, i_salary, i_descript, i_category, i_slots, i_shifts, i_visibility);
 	
 insert into SYSTEMLOG (uid, act) value 
 	(@id, 'create_job_posting');

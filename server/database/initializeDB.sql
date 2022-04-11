@@ -78,6 +78,7 @@ create table JOBPOSTING (
   Descript text,
   Slots int not null,
   Shifts varchar(30),
+  Visibility int,
   primary key (FID, Title),
   foreign key (FID) references FACILITY(ID)
 );
