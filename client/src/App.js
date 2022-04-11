@@ -11,6 +11,7 @@ import Profile from './components/pages/Profile.jsx';
 import PendingVerifications from './components/pages/Admins/PendingVerifications.jsx';
 import ViewApplications from "./components/pages/professionals/ViewApplications";
 import Fac_Profile from './components/pages/facility/Fac_Profile';
+import EditPost from './components/pages/facility/EditPost';
 import ViewApplicants from "./components/pages/facility/ViewApplicants";
 import ViewMaster from "./components/pages/facility/ViewMaster";
 import CreatePosting from "./components/pages/facility/CreatePosting";
@@ -49,6 +50,8 @@ const App = () => {
           <Route path='/newPosting' element={<CreatePosting/>} />
           <Route path='/manageProfessionals' element={<ManageProfessionals/>}/>
           <Route path='/manageFacilities' element={<ManageFacilities/>}/>
+          <Route path='/myPostings' element={<ViewMaster/>}/>
+          <Route path='/editPosting' element={<EditPost />}/>
         </Route>
 
         <Route path="/login"  element={<Login/>}/>
