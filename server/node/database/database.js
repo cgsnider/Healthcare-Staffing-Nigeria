@@ -72,9 +72,8 @@ async function addNewUser(user) {
         let sql;
         
         if (user['custom:type'] == 'Professional') {
-
             fullName = user.name.split("$")
-            sql = `call cmg_staffing_nigeria.register_professional('${fullName[0]}', '${fullName[1]}', '${user.email}');`
+            sql = `call cmg_staffing_nigeria.register_professional('${fullName[0]}', '${(fullName.length >= 2) ? fullName[1] : 'N/A'}', '${user.email}');`
         } else if (user['custom:type'] == 'Facility') {
             sql = `CALL register_facility('${user.name}', '${user.email}')`
         } else if (user['custom:type'] == 'Admin') {
