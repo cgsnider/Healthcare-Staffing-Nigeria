@@ -1,4 +1,5 @@
 const mysql = require('mysql2/promise');
+const Code = require('../code.js')
 
 const promised_connection = mysql.createConnection({
         host: 'localhost',
@@ -39,8 +40,8 @@ async function call (procedure="", params=[]) {
         db.query(sql)
             .then(result => {
                 console.log(sql, "\n", result[0])
-                resolve(result[0])})
-            .catch(err => reject(err))
+                resolve(result[0])
+            }).catch(err => reject(Code.internal_server_error))
     });
 }
 
@@ -55,12 +56,21 @@ async function handleNewUser (req, res, next) {
             if (results[0][0][0].Exist_Status === -1){
                 addNewUser(req.user)
                     .then(res => next())
-                    .catch(err => next());
+                    .catch(err => {
+                        console.log('ERROR');
+                        res.sendStatus(Code.internal_server_error);
+                        res.end();
+                    });
             } else {
+                console.log('NEXT')
                 next();
             }
         })
-        .catch(err => console.log('DB FAILURE'))
+        .catch(err => {
+            console.log('ERROR 2');
+            res.sendStatus(Code.internal_server_error);
+            res.end();
+        })
 }
 
 async function addNewUser(user) {
@@ -81,7 +91,7 @@ async function addNewUser(user) {
 
         db.query(sql)
             .then(results => resolve(results))
-            .catch(err => reject(err));
+            .catch(err => reject(Code.internal_server_error));
             
     });
 }

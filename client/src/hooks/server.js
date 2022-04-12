@@ -210,6 +210,7 @@ async function getData(url='', body={}) {
         redirect: 'follow',
         referrerPolicy: 'no-referrer', 
     })
+    console.log(data)
     const items = await data.json();
     return items;
 }

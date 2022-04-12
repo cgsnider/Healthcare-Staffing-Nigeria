@@ -1,6 +1,7 @@
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 const CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
 const AWS = require('aws-sdk');
+const Code = require('../code.js');
 
 
 const request = require('request');
@@ -34,16 +35,20 @@ function authenticateToken(req, res, next) {
 
     const token = authHeader && authHeader.split(' ')[1];
     if (token == null) {
-        return res.sendStatus(401);
+        res.sendStatus(Code.unauthenticated);
+        res.end();
+        return;
     }
     verifyUser(token, idHeader)
         .then(out => {
-
+            console.log('NEXT Auth')
             req.user = out['idRes'];
-            req.auth = out['asRes']
-            next()})
-        .catch(fail => {
-            req.user = 401
+            req.auth = out['asRes'];
+            next();
+        }).catch(fail => {
+            console.log('ERROR 3')
+            res.sendStatus(Code.unauthenticated);
+            res.end();
         });
     return;
 }
