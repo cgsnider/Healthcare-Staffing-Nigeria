@@ -48,8 +48,10 @@ const App = () => {
           <Route path='/applications' element={<ViewApplications/>}/>
           <Route path='/facilityManage' element={<ViewMaster/>}/>
           <Route path='/newPosting' element={<CreatePosting/>} />
-          <Route path='/manageProfessionals' element={<ManageProfessionals/>}/>
-          <Route path='/manageFacilities' element={<ManageFacilities/>}/>
+          <Route path='/manage' >
+            <Route path='/manage/professionals' element={<ManageProfessionals/>}/>
+            <Route path='/manage/facilities' element={<ManageFacilities/>}/>
+          </Route>
           <Route path='/myPostings' element={<ViewMaster/>}/>
           <Route path='/editPosting' element={<EditPost />}/>
         </Route>
