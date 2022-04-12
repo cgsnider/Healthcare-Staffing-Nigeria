@@ -21,7 +21,10 @@ create table PROFESSIONAL (
   Street varchar(75),
   Bio text,
   primary key(ID),
-  foreign key (ID) references PERSON(ID)
+  foreign key (ID) 
+	references PERSON(ID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 create table EDUCATION (
   PID int not null,
@@ -30,7 +33,10 @@ create table EDUCATION (
   StartDate varchar(15),
   EndDate varchar(15),
   primary key(PID, College, Degree, StartDate, EndDate),
-  foreign key(PID) references PROFESSIONAL(ID)
+  foreign key(PID) 
+	references PROFESSIONAL(ID)
+	ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 create table COVERLETTER (
   OwnerId int not null,
@@ -38,7 +44,10 @@ create table COVERLETTER (
   Content text not null,
   TimeCreated datetime not null,
   primary key(OwnerId, TimeCreated),
-  foreign key (OwnerId) references PROFESSIONAL(ID)
+  foreign key (OwnerId) 
+	references PROFESSIONAL(ID)
+	ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 create table DOCUMENT (
   OwnerId int not null,
@@ -47,7 +56,10 @@ create table DOCUMENT (
   Category varchar(255) not null,
   TimeCreated datetime not null,
   primary key(OwnerId, S3Key),
-  foreign key (OwnerId) references PROFESSIONAL(ID)
+  foreign key (OwnerId) 
+	references PROFESSIONAL(ID)
+	ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 create table FACILITY (
   ID int not null,
@@ -61,14 +73,20 @@ create table FACILITY (
   Descript text,
   FacName varchar(255),
   primary key(ID),
-  foreign key(ID) references PERSON(ID)
+  foreign key(ID) 
+	references PERSON(ID)
+	ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 create table CONTACT (
   FID int not null,
   CName varchar(255),
   PhoneNumber varchar(20),
   primary key(FID),
-  foreign key(FID) references FACILITY(ID)
+  foreign key(FID) 
+	references FACILITY(ID)
+	ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 create table JOBPOSTING (
   FID int not null,
@@ -80,7 +98,10 @@ create table JOBPOSTING (
   Shifts varchar(30),
   Visibility int,
   primary key (FID, Title),
-  foreign key (FID) references FACILITY(ID)
+  foreign key (FID) 
+	references FACILITY(ID)
+	ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 create table APPLICATION (
   FID int not null,
@@ -90,8 +111,14 @@ create table APPLICATION (
   TimeCreated datetime not null,
   Progress int,
   primary key (PID, FID, PostingTitle),
-  foreign key (FID, PostingTitle) references JOBPOSTING(FID, Title),
-  foreign key (PID) references PROFESSIONAL(ID)
+  foreign key (FID, PostingTitle) 
+	references JOBPOSTING(FID, Title)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  foreign key (PID) 
+	references PROFESSIONAL(ID)
+	ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 create table MESSAGE (
   FID int not null,
@@ -99,14 +126,23 @@ create table MESSAGE (
   Content text not null,
   TimeCreated datetime not null,
   primary key(PID, FID),
-  foreign key (FID) references FACILITY(ID),
-  foreign key (PID) references PROFESSIONAL(ID)
+  foreign key (FID) 
+	references FACILITY(ID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  foreign key (PID) 
+	references PROFESSIONAL(ID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 create table SYSTEMLOG (
   UID int not null,
   Act varchar(255),
   TimeCreated datetime default current_timestamp on update current_timestamp,
-  foreign key(UID) references PERSON(ID)
+  foreign key(UID) 
+	references PERSON(ID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 create table ADMINISTRATOR (
 ID int not null, 
@@ -117,5 +153,8 @@ create table PRIVLEGES (
   AID int not null,
   privilege varchar(10),
   primary key (privilege, AID),
-  foreign key (AID) references ADMINISTRATOR(ID)
+  foreign key (AID) 
+	references ADMINISTRATOR(ID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
