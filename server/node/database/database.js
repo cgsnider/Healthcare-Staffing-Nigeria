@@ -56,21 +56,13 @@ async function handleNewUser (req, res, next) {
             if (results[0][0][0].Exist_Status === -1){
                 addNewUser(req.user)
                     .then(res => next())
-                    .catch(err => {
-                        console.log('ERROR');
-                        res.sendStatus(Code.internal_server_error);
-                        res.end();
-                    });
+                    .catch(err => res.status(Code.internal_server_error).end());
             } else {
                 console.log('NEXT')
                 next();
             }
         })
-        .catch(err => {
-            console.log('ERROR 2');
-            res.sendStatus(Code.internal_server_error);
-            res.end();
-        })
+        .catch(err => res.status(Code.internal_server_error).end())
 }
 
 async function addNewUser(user) {

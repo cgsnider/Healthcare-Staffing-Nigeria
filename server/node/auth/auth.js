@@ -41,14 +41,11 @@ function authenticateToken(req, res, next) {
     }
     verifyUser(token, idHeader)
         .then(out => {
-            console.log('NEXT Auth')
             req.user = out['idRes'];
             req.auth = out['asRes'];
             next();
         }).catch(fail => {
-            console.log('ERROR 3')
-            res.sendStatus(Code.unauthenticated);
-            res.end();
+            res.status(Code.unauthenticated).end();
         });
     return;
 }

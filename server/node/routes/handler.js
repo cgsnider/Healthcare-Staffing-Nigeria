@@ -65,8 +65,7 @@ router.get('/applications', STD_MIDWARE, (req, res) => {
     } else if (req.user['custom:type'] == 'Facility') {
         procedure = 'get_facility_applications';
     } else {
-        res.sendStatus(Code.forbidden);
-        res.end(JSON.stringify("Incorrect User Type"));
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
         return;
     }
 
@@ -76,10 +75,7 @@ router.get('/applications', STD_MIDWARE, (req, res) => {
         .then(results => {
             console.log(results)
             res.end(JSON.stringify(results))
-        }).catch(err => {
-            res.sendStatus(err);
-            res.end(JSON.stringify("Error Fetching Data from Database"));
-        });
+        }).catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
 });
 
 router.get('/profile', STD_MIDWARE, (req, res) => {
@@ -90,27 +86,20 @@ router.get('/profile', STD_MIDWARE, (req, res) => {
     } else if (req.user['custom:type'] == 'Facility') {
         procedure = 'get_facility_profile';
     } else {
-        res.sendStatus(Code.forbidden);
-        res.end(JSON.stringify("Incorrect User Type"));
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
         return;
     }
 
     db.call(procedure, params)
         .then(results => res.end(JSON.stringify(results)))
-        .catch(err => {
-            res.sendStatus(err);
-            res.end(JSON.stringify("Error Fetching Data from Database"));
-        });
+        .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
 });
 
 router.get('/categories', STD_MIDWARE, (req, res) => {
     const procedure = 'get_posting_categories';
     db.call(procedure)
         .then(results => res.end(JSON.stringify(results)))
-        .catch(err => {
-            res.sendStatus(err);
-            res.end(JSON.stringify("Error Fetching Data from Database"));
-        });
+        .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
 });
 
 router.get('/education', STD_MIDWARE, (req, res) => {
@@ -118,10 +107,7 @@ router.get('/education', STD_MIDWARE, (req, res) => {
     const params = [req.user.email];
     db.call(procedure, params)
         .then(results => res.end(JSON.stringify(results)))
-        .catch(err => {
-            res.sendStatus(err);
-            res.end(JSON.stringify("Error Fetching Data from Database"));
-        });
+        .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
 });
 
 router.get('/resume', STD_MIDWARE, (req, res) => {
@@ -132,8 +118,7 @@ router.get('/resume', STD_MIDWARE, (req, res) => {
     } else if (req.user['custom:type'] == 'Facility') {
         username = req.body.Email
     } else {
-        res.sendStatus(Code.forbidden);
-        res.end(JSON.stringify("Incorrect User Type"));
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
         return;
     }
 
@@ -150,10 +135,7 @@ router.get('/resume', STD_MIDWARE, (req, res) => {
                     res.end(file.Body)
                 })
                 .catch(err => console.log(err))
-        }).catch(err => {
-            res.sendStatus(err);
-            res.end(JSON.stringify("Error Fetching Data from Database"));
-        });
+        }).catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
 });
 
 router.get('/profile_picture/:key', (req, res) => {
@@ -168,10 +150,7 @@ router.get('/applicants', STD_MIDWARE, (req, res) => {
     const params = [req.user.email, req.headers.params.PostingTitle];
     db.call(procedure, params)
         .then(results => res.end(JSON.stringify(results)))
-        .catch(err => {
-            res.sendStatus(err);
-            res.end(JSON.stringify("Error Fetching Data from Database"));
-        });
+        .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
 });
 
 router.get('/review_prof_verification', STD_MIDWARE, async (req, res) => {
@@ -182,14 +161,10 @@ router.get('/review_prof_verification', STD_MIDWARE, async (req, res) => {
         db.call(procedure, params)
             .then(results => { console.log("results: ", results)
                 res.end(JSON.stringify(results[0]))
-            }).catch(err => {
-                res.sendStatus(err);
-                res.end(JSON.stringify("Error Fetching Data from Database"));
-            });
+            }).catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
     } else {
         console.log("SENT: ", res.headersSent)
-        res.sendStatus(Code.forbidden);
-        res.end(JSON.stringify("Incorrect User Type"));
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
         return;
     }
 });
@@ -199,10 +174,7 @@ router.get('/postings', STD_MIDWARE, (req, res) => {
     const params = [req.user.email];
     db.call(procedure, params)
         .then(results => res.end(JSON.stringify(results[0])))
-        .catch(err => {
-            res.sendStatus(err);
-            res.end(JSON.stringify("Error Fetching Data from Database"));
-        });
+        .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
 });
 
 router.get('/review_fac_verification', STD_MIDWARE, (req, res) => {
@@ -211,13 +183,9 @@ router.get('/review_fac_verification', STD_MIDWARE, (req, res) => {
         const params = [req.user.email];
         db.call(procedure, params)
             .then(results => res.end(JSON.stringify(results)))
-            .catch(err => {
-                res.sendStatus(err);
-                res.end(JSON.stringify("Error Fetching Data from Database"));
-            });
+            .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
     } else {
-        res.sendStatus(Code.forbidden);
-        res.end(JSON.stringify("Incorrect User Type"));
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
         return;
     }
 });
@@ -229,13 +197,9 @@ router.post('/verify_professional', STD_MIDWARE, (req, res) => {
 
         db.call(procedure, params)
             .then(results => {res.end(JSON.stringify(results))})
-            .catch(err => {
-                res.sendStatus(err);
-                res.end(JSON.stringify("Error Fetching Data from Database"));
-            });
+            .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
     } else {
-        res.sendStatus(Code.forbidden);
-        res.end(JSON.stringify("Incorrect User Type"));
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
         return;
     }
 });
@@ -254,8 +218,7 @@ router.post('/verify_facility', STD_MIDWARE, (req, res) => {
                     res.end(JSON.stringify("Error Fetching Data from Database"));
                 });
         } else {
-            res.sendStatus(Code.forbidden);
-            res.end(JSON.stringify("Incorrect User Type"));
+            res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
             return;
         }
 });
@@ -267,13 +230,9 @@ router.get('/bulk_professionals', STD_MIDWARE, (req, res) => {
 
         db.call(procedure, params)
             .then(results => res.end(JSON.stringify(results)))
-            .catch(err => {
-                res.sendStatus(err);
-                res.end(JSON.stringify("Error Fetching Data from Database"));
-            });
+            .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
     } else {
-        res.sendStatus(Code.forbidden);
-        res.end(JSON.stringify("Incorrect User Type"));
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
         return;
     }
 });
@@ -285,13 +244,9 @@ router.get('/bulk_facilities', STD_MIDWARE, (req, res) => {
 
         db.call(procedure, params)
             .then(results => res.end(JSON.stringify(results)))
-            .catch(err => {
-                res.sendStatus(err);
-                res.end(JSON.stringify("Error Fetching Data from Database"));
-            });
+            .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
     } else {
-        res.sendStatus(Code.forbidden);
-        res.end(JSON.stringify("Incorrect User Type"));
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
         return;
     }
 });
@@ -306,13 +261,11 @@ router.post('/opening', STD_MIDWARE, (req, res) => {
         db.call(procedure, params)
             .then(results => res.end(JSON.stringify(results)))
             .catch(err => {
-                res.sendStatus(err);
-                res.end(JSON.stringify("Error Fetching Data from Database"));
+                res.status(err).end(JSON.stringify("Error Fetching Data from Database"));
             });
 
     } else {
-        res.sendStatus(Code.forbidden);
-        res.end(JSON.stringify("Incorrect User Type"));
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
         return;
     }
 });
@@ -324,10 +277,7 @@ router.post('/hire_applicant', STD_MIDWARE, (req, res) => {
 
         db.call(procedure, params)
             .then(results => res.end(JSON.stringify(results)))
-            .catch(err => {
-                res.sendStatus(err);
-                res.end(JSON.stringify("Error Fetching Data from Database"));
-            });
+            .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
     } else {
 
     }
@@ -342,17 +292,13 @@ router.post('/apply_verification', STD_MIDWARE, (req, res) => {
     } else if (req.user['custom:type'] == 'Facility') {
         procedure = 'facility_apply_for_verification';
     } else {
-        res.sendStatus(Code.forbidden);
-        res.end(JSON.stringify("Incorrect User Type"));
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
         return;
     }
 
     db.call(procedure, params)
         .then(results => res.end(JSON.stringify(results)))
-        .catch(err => {
-            res.sendStatus(err);
-            res.end(JSON.stringify("Error Fetching Data from Database"));
-        });
+        .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
 })
 
 
@@ -370,17 +316,13 @@ router.post('/profile', STD_MIDWARE, (req, res) => {
         params = [req.user.email, data.City, data.Country, data.Email, data.FacName, data.State, 
             data.Descript, data.Street, data.CName, data.PhoneNumber];
     } else {
-        res.sendStatus(Code.forbidden);
-        res.end(JSON.stringify("Incorrect User Type"));
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
         return;
     }
 
     db.call(procedure, params)
         .then(results => res.end(JSON.stringify(results)))
-        .catch(err => {
-            res.sendStatus(err);
-            res.end(JSON.stringify("Error Fetching Data from Database"));
-        });
+        .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
 })
 
 router.post('/profile_picture', [...STD_MIDWARE, upload.single('image')], async (req, res) => {
@@ -397,17 +339,13 @@ router.post('/profile_picture', [...STD_MIDWARE, upload.single('image')], async 
     } else if (req.user['custom:type'] == 'Facility') {
         procedure = 'update_facility_picture'
     } else {
-        res.sendStatus(Code.forbidden);
-        res.end(JSON.stringify("Incorrect User Type"));
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
         return;
     }
 
     db.call(procedure, params)
         .then(res.end(JSON.stringify(upload.Key)))
-        .catch(err => {
-            res.sendStatus(err);
-            res.end(JSON.stringify("Error Fetching Data from Database"));
-        });
+        .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
 })
 
 router.post('/resume', [...STD_MIDWARE, upload.single('pdf')], async (req, res) => {
@@ -422,13 +360,9 @@ router.post('/resume', [...STD_MIDWARE, upload.single('pdf')], async (req, res) 
         procedure = 'add_document_professional';
         db.call(procedure, params)
             .then(res.end(JSON.stringify(upload.Key)))
-            .catch(err => {
-                res.sendStatus(err);
-                res.end(JSON.stringify("Error Fetching Data from Database"));
-            });
+            .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
     }  else {
-        res.sendStatus(Code.forbidden);
-        res.end(JSON.stringify("Incorrect User Type"));
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
         return;
     }
 })
@@ -485,8 +419,7 @@ router.post('/update_posting', STD_MIDWARE, async (req, res) => {
                 res.end(JSON.stringify("Error Posting Data into Database"));
             });
     } else {
-        res.sendStatus(Code.forbidden);
-        res.end(JSON.stringify("Incorrect User Type"));
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
         return;
     }
 });
