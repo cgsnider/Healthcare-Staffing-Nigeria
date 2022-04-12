@@ -406,7 +406,7 @@ CREATE PROCEDURE admin_verify_facility (
 	SET
 		Verified = @newStatus
 	WHERE
-		Email = i_prof_email;
+		Email = i_fac_email;
 	
 	SELECT @newStatus;
     

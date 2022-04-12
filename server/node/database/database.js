@@ -41,7 +41,10 @@ async function call (procedure="", params=[]) {
             .then(result => {
                 console.log(sql, "\n", result[0])
                 resolve(result[0])
-            }).catch(err => reject(Code.internal_server_error))
+            }).catch(err => {
+                console.error(`Querying Database Error: ${err}`);
+                reject(Code.internal_server_error);
+            })
     });
 }
 

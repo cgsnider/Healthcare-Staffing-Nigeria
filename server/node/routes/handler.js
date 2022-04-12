@@ -182,7 +182,7 @@ router.get('/review_fac_verification', STD_MIDWARE, (req, res) => {
         const procedure = 'admin_verification_pending_facility';
         const params = [req.user.email];
         db.call(procedure, params)
-            .then(results => res.end(JSON.stringify(results)))
+            .then(results => res.end(JSON.stringify(results[0])))
             .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
     } else {
         res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
@@ -213,10 +213,7 @@ router.post('/verify_facility', STD_MIDWARE, (req, res) => {
 
             db.call(procedure, params)
                 .then(results => {res.end(JSON.stringify(results))})
-                .catch(err => {
-                    res.sendStatus(err);
-                    res.end(JSON.stringify("Error Fetching Data from Database"));
-                });
+                .catch(err => {res.status(err).end(JSON.stringify("Error Fetching Data from Database"))});
         } else {
             res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
             return;
@@ -260,9 +257,7 @@ router.post('/opening', STD_MIDWARE, (req, res) => {
 
         db.call(procedure, params)
             .then(results => res.end(JSON.stringify(results)))
-            .catch(err => {
-                res.status(err).end(JSON.stringify("Error Fetching Data from Database"));
-            });
+            .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
 
     } else {
         res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));

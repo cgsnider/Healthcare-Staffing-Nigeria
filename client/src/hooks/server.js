@@ -291,6 +291,6 @@ async function postData(url = '', data ={}) {
             redirect: 'follow',
             referrerPolicy: 'no-referrer', 
             body: formBody
-        }).then(response => {resolve(response)});
+        }).then(response => {resolve(response.status)});
     });
 }
