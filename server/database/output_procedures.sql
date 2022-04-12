@@ -1,331 +1,332 @@
 
-use cmg_staffing_nigeria;
+USE cmg_staffing_nigeria;
 
-drop procedure if exists get_postings; 
+DROP PROCEDURE IF EXISTS get_postings; 
 DELIMITER //
-create procedure get_postings (
-	in i_email varchar(255),
-    in i_category varchar(30)
-) begin
+CREATE PROCEDURE get_postings (
+	IN i_email varchar(255),
+    IN i_category varchar(30)
+) BEGIN
 
-select verified, id from PROFESSIONAL where email = i_email into @verified, @id;
+SELECT verified, id FROM PROFESSIONAL WHERE email = i_email INTO @verified, @id;
 
-if @verified = 2
-then 
-	select J.Title, J.Salary, J.Descript, J.Slots, J.Shifts, J.Category, F.FacName, F.City, F.Country, F.State, F.Street, F.Email
-		from JOBPOSTING as J join FACILITY as F join Application as A on F.ID = J.FID and not (A.PostingTitle = J.Title and J.FID = A.FID and A.PID = @id)
-        where category = i_category or i_category is null;
-else 
-	select distinct Title, Salary, Category, Descript, Slots from JOBPOSTING where Category = i_category or i_category is null;
-end if;
+IF @verified = 2
+THEN 
+	SELECT J.Title, J.Salary, J.Descript, J.Slots, J.Shifts, J.Category, F.FacName, F.City, F.Country, F.State, F.Street, F.Email
+		FROM JOBPOSTING AS J JOIN FACILITY AS F JOIN Application AS A ON F.ID = J.FID AND NOT (A.PostingTitle = J.Title AND J.FID = A.FID AND A.PID = @id)
+        WHERE category = i_category OR i_category IS NULL;
+ELSE 
+	SELECT DISTINCT Title, Salary, Category, Descript, Slots FROM JOBPOSTING WHERE Category = i_category OR i_category IS NULL;
+END IF;
 
 
-insert into SYSTEMLOG (uid, act) value 
+INSERT INTO SYSTEMLOG (uid, act) VALUE 
     (@id, 'get_postings');
 
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists get_professional_profile; 
+DROP PROCEDURE IF EXISTS get_professional_profile; 
 DELIMITER //
-create procedure get_professional_profile (
-	in i_email varchar(255)
-) begin
+CREATE PROCEDURE get_professional_profile (
+	IN i_email varchar(255)
+) BEGIN
 
 
-if (select count(*) FROM PROFESSIONAL where email = i_email) != 0
-then
-select * from PROFESSIONAL where email = i_email;
-select id from PROFESSIONAL where email = i_email into @id;
-else
-select * from FACILITY where email = i_email;
-select id from FACILITY where email = i_email into @id;
-end if;
+IF (select count(*) FROM PROFESSIONAL WHERE email = i_email) != 0
+THEN
+SELECT * FROM PROFESSIONAL WHERE email = i_email;
+SELECT id FROM PROFESSIONAL WHERE email = i_email INTO @id;
+ELSE
+SELECT * FROM FACILITY WHERE email = i_email;
+SELECT id FROM FACILITY WHERE email = i_email INTO @id;
+END IF;
 
-insert into SYSTEMLOG (uid, act) value 
+INSERT INTO SYSTEMLOG (uid, act) VALUE 
     (@id, 'get_profile');
 
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists get_id; 
+DROP PROCEDURE IF EXISTS get_id; 
 DELIMITER //
-create procedure get_id (
-	in i_email varchar(255),
-    out id int
-) begin
+CREATE PROCEDURE get_id (
+	IN i_email varchar(255),
+    OUT id INT
+) BEGIN
 
 	
-	if (select count(*) FROM PROFESSIONAL where email = i_email) != 0
-	then
-		select ID from PROFESSIONAL where email = i_email;
-	else
-		select id from FACILITY where email = i_email into id;
-	end if;
+	IF (select count(*) FROM PROFESSIONAL WHERE email = i_email) != 0
+	THEN
+		SELECT ID FROM PROFESSIONAL WHERE email = i_email;
+	ELSE
+		SELECT id FROM FACILITY WHERE email = i_email INTO id;
+	END IF;
 
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists get_professional_picture; 
+DROP PROCEDURE IF EXISTS get_professional_picture; 
 DELIMITER //
-create procedure get_professional_picture (
-	in i_email varchar(255)
-) begin
+CREATE PROCEDURE get_professional_picture (
+	IN i_email varchar(255)
+) BEGIN
 
-	select ImageAddr from PROFESSIONAL where email = i_email;
+	SELECT ImageAddr FROM PROFESSIONAL WHERE email = i_email;
 
-end //
-DELIMITER ;
-
-
-drop procedure if exists get_facility_picture; 
-DELIMITER //
-create procedure get_facility_picture (
-	in i_email varchar(255)
-) begin
-
-	select ImageAddr from FACILITY where email = i_email;
-
-end //
+END //
 DELIMITER ;
 
 
-drop procedure if exists get_posting_categories; 
+DROP PROCEDURE IF EXISTS get_facility_picture; 
 DELIMITER //
-create procedure get_posting_categories (
-) begin
+CREATE PROCEDURE get_facility_picture (
+	IN i_email varchar(255)
+) BEGIN
 
-    select distinct Category from JOBPOSTING; 
+	SELECT ImageAddr FROM FACILITY WHERE email = i_email;
+
+END //
+DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS get_posting_categories; 
+DELIMITER //
+CREATE PROCEDURE get_posting_categories (
+) BEGIN
+
+    SELECT DISTINCT Category FROM JOBPOSTING; 
     
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists get_education; 
+DROP PROCEDURE IF EXISTS get_education; 
 DELIMITER //
-create procedure get_education (
-	in i_email varchar(255)
-) begin
+CREATE PROCEDURE get_education (
+	IN i_email varchar(255)
+) BEGIN
 	
-    select id from PROFESSIONAL where email = i_email into @id;
+    SELECT id FROM PROFESSIONAL WHERE email = i_email INTO @id;
     
-    select distinct * from EDUCATION where PID = @id; 
+    SELECT DISTINCT * FROM EDUCATION WHERE PID = @id; 
     
     
-    insert into SYSTEMLOG (uid, act) value 
+    INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'get_education');
     
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists user_exists; 
+DROP PROCEDURE IF EXISTS user_exists; 
 DELIMITER //
-create procedure user_exists (
-	in i_email varchar(255)
-) begin
+CREATE PROCEDURE user_exists (
+	IN i_email varchar(255)
+) BEGIN
 
-	if (select count(*) FROM PROFESSIONAL where email = i_email) != 0
-		then select 1 as Status;
-	elseif (select count(*) FROM FACILITY where email = i_email) != 0
-		then select 2 as Status;
-	elseif (select count(*) FROM ADMINISTRATOR where email = i_email) != 0
-		then select 3 as Status;
-	else
-		select -1 as Status;
-	end if;
+	IF (select count(*) FROM PROFESSIONAL WHERE email = i_email) != 0
+		THEN SELECT 1 AS STATUS;
+	ELSEIF (select count(*) FROM FACILITY WHERE email = i_email) != 0
+		THEN SELECT 2 AS STATUS;
+	ELSEIF (select count(*) FROM ADMINISTRATOR WHERE email = i_email) != 0
+		THEN SELECT 3 AS STATUS;
+	ELSE
+		SELECT -1 AS STATUS;
+	END IF;
 
-end //
+END //
 DELIMITER ;
 
 
 
-drop procedure if exists get_professional_applications; 
+DROP PROCEDURE IF EXISTS get_professional_applications; 
 DELIMITER //
-create procedure get_professional_applications (
-	in i_email varchar(255)
-) begin
+CREATE PROCEDURE get_professional_applications (
+	IN i_email varchar(255)
+) BEGIN
 
 
-select id from PROFESSIONAL where email = i_email into @id;
+SELECT id FROM PROFESSIONAL WHERE email = i_email INTO @id;
 
 
-select J.Title, J.Salary, J.Descript, J.Slots, J.Shifts, J.Category, F.FacName, F.City, F.Country, F.State, F.Street, F.Email, A.Progress, A.TimeCreated
-	from JOBPOSTING as J join FACILITY as F on F.ID = J.FID
-	inner join APPLICATION as A on J.FID = A.FID and J.Title = A.PostingTitle 
-	where A.PID = @id;
+SELECT J.Title, J.Salary, J.Descript, J.Slots, J.Shifts, J.Category, F.FacName, F.City, F.Country, F.State, F.Street, F.Email, A.Progress, A.TimeCreated
+	FROM JOBPOSTING AS J JOIN FACILITY AS F ON F.ID = J.FID
+	INNER JOIN APPLICATION AS A ON J.FID = A.FID AND J.Title = A.PostingTitle 
+	WHERE A.PID = @id;
 
 
-insert into SYSTEMLOG (uid, act) value 
+INSERT INTO SYSTEMLOG (uid, act) VALUE 
     (@id, 'get_applications');
 
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists get_facility_profile; 
+DROP PROCEDURE IF EXISTS get_facility_profile; 
 DELIMITER //
-create procedure get_facility_profile (
-	in i_email varchar(255)
-) begin
+CREATE PROCEDURE get_facility_profile (
+	IN i_email varchar(255)
+) BEGIN
 	
-	select F.Email, F.Verified, F.ImageAddr, F.City, F.Country, F.State, F.Street, F.Descript, F.FacName, C.CName, C.PhoneNumber
-		from FACILITY as F left join CONTACT as C on C.FID = F.ID where email = i_email;
+	SELECT F.Email, F.Verified, F.ImageAddr, F.City, F.Country, F.State, F.Street, F.Descript, F.FacName, C.CName, C.PhoneNumber
+		FROM FACILITY AS F LEFT JOIN CONTACT AS C ON C.FID = F.ID WHERE email = i_email;
 
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists get_professionals_pending; 
+DROP PROCEDURE IF EXISTS get_professionals_pending; 
 DELIMITER //
-create procedure get_professionals_pending(
-	in i_email varchar(255)
-) begin
+CREATE PROCEDURE get_professionals_pending(
+	IN i_email varchar(255)
+) BEGIN
 	
     SET @pending := 1;
     
-    SELECT id FROM ADMINISTRATOR WHERE Email = i_email into @id; 
+    SELECT id FROM ADMINISTRATOR WHERE Email = i_email INTO @id; 
     
-	select * from PROFESSIONAL where Verified = @pending;
+	SELECT * FROM PROFESSIONAL WHERE Verified = @pending;
     
-    insert into SYSTEMLOG (uid, act) value 
+    INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'get_professionals_pending');
     
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists get_facility_pending; 
+DROP PROCEDURE IF EXISTS get_facility_pending; 
 DELIMITER //
-create procedure get_facility_pending(
-	in i_email varchar(255)
-) begin
+CREATE PROCEDURE get_facility_pending(
+	IN i_email varchar(255)
+) BEGIN
 	
     SET @pending := 1;
     
-    SELECT id FROM ADMINISTRATOR WHERE Email = i_email into @id; 
+    SELECT id FROM ADMINISTRATOR WHERE Email = i_email INTO @id; 
     
-	select * from FACILITY where Verified = @pending;
+	SELECT * FROM FACILITY WHERE Verified = @pending;
     
-    insert into SYSTEMLOG (uid, act) value 
+    INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'get_facility_pending');
     
-end //
+END //
 DELIMITER ;
 
 
-drop procedure if exists get_document_professional; 
+DROP PROCEDURE IF EXISTS get_document_professional; 
 DELIMITER //
-create procedure get_document_professional(
-	in i_email varchar(255),
-    in i_cat varchar(255),
-    in i_S3Key varchar(255)
-) begin
+CREATE PROCEDURE get_document_professional(
+	IN i_email varchar(255),
+    IN i_cat varchar(255),
+    IN i_S3Key varchar(255)
+) BEGIN
 	
-    SELECT id FROM PROFESSIONAL WHERE Email = i_email into @id; 
-    IF (i_S3Key is null)
-		then select FileName, S3Key, Category, TimeCreated from DOCUMENT where OwnerId = @id and Category = UPPER(i_cat);
+    SELECT id FROM PROFESSIONAL WHERE Email = i_email INTO @id; 
+    IF (i_S3Key IS null)
+		THEN SELECT FileName, S3Key, Category, TimeCreated FROM DOCUMENT WHERE OwnerId = @id AND Category = UPPER(i_cat);
 	ELSE 
-		select FileName, S3Key, Category, TimeCreated from DOCUMENT where OwnerId = @id and Category = UPPER(i_cat) and S3Key = i_S3Key ;
+		SELECT FileName, S3Key, Category, TimeCreated FROM DOCUMENT WHERE OwnerId = @id AND Category = UPPER(i_cat) AND S3Key = i_S3Key ;
     END IF;
     
-    insert into SYSTEMLOG (uid, act) value 
+    INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'get_document');
     
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists get_applicants; 
+DROP PROCEDURE IF EXISTS get_applicants; 
 DELIMITER //
-create procedure get_applicants(
-	in i_email varchar(255),
-    in i_posting_title varchar(255)
-) begin
+CREATE PROCEDURE get_applicants(
+	IN i_email varchar(255),
+    IN i_posting_title varchar(255)
+) BEGIN
 	
-    SELECT id FROM FACILITY WHERE Email = i_email into @id; 
+    SELECT id FROM FACILITY WHERE Email = i_email INTO @id; 
     
 	SELECT P.Email, P.ImageAddr, P.FName, P.LName, P.PhoneNumber, P.LicenseNumber, P.Specialization, P.MDCN, P.City, P.Country, P.Street, P.Bio 
-    from APPLICATION as A join Professional as P on A.PID = P.ID where A.FID = @id and A.PostingTitle = i_posting_title;
+    FROM APPLICATION AS A JOIN Professional AS P ON A.PID = P.ID WHERE A.FID = @id AND A.PostingTitle = i_posting_title;
     
-    insert into SYSTEMLOG (uid, act) value 
+    INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'get_applications');
     
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists admin_verification_pending_professional; 
+DROP PROCEDURE IF EXISTS admin_verification_pending_professional; 
 DELIMITER //
-create procedure admin_verification_pending_professional(
-	in i_email varchar(255)  
-) begin
+CREATE PROCEDURE admin_verification_pending_professional(
+	IN i_email varchar(255)  
+) BEGIN
 	
-    SELECT id FROM ADMINISTRATOR WHERE Email = i_email into @id; 
+    SELECT id FROM ADMINISTRATOR WHERE Email = i_email INTO @id; 
     
-	SELECT * from PROFESSIONAL where Verified = 1;
+	SELECT * FROM PROFESSIONAL WHERE Verified = 1;
     
-    insert into SYSTEMLOG (uid, act) value 
+    INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'admin_verification_pending_professional');
     
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists admin_verification_pending_facility; 
+DROP PROCEDURE IF EXISTS admin_verification_pending_facility; 
 DELIMITER //
-create procedure admin_verification_pending_facility(
-	in i_email varchar(255)  
-) begin
+CREATE PROCEDURE admin_verification_pending_facility(
+	IN i_email varchar(255)  
+) BEGIN
 	
-    SELECT id FROM ADMINISTRATOR WHERE Email = i_email into @id; 
+    SELECT id FROM ADMINISTRATOR WHERE Email = i_email INTO @id; 
     
-	SELECT * from FACILITY where Verified = 1;
+	SELECT * FROM FACILITY WHERE Verified = 1;
     
-    insert into SYSTEMLOG (uid, act) value 
+    INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'admin_verification_pending_professional');
     
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists admin_bulk_professionals; 
+DROP PROCEDURE IF EXISTS admin_bulk_professionals; 
 DELIMITER //
-create procedure admin_bulk_professionals(
-	in i_email varchar(255)  
-) begin
+CREATE PROCEDURE admin_bulk_professionals(
+	IN i_email varchar(255)  
+) BEGIN
 	
-    SELECT id FROM ADMINISTRATOR WHERE Email = i_email into @id; 
+    SELECT id FROM ADMINISTRATOR WHERE Email = i_email INTO @id; 
     
-	SELECT * from PROFESSIONAL;
+	SELECT * FROM PROFESSIONAL;
     
-    insert into SYSTEMLOG (uid, act) value 
+    INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'admin_bulk_professionals');
     
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists admin_bulk_facilities; 
+DROP PROCEDURE IF EXISTS admin_bulk_facilities; 
 DELIMITER //
-create procedure admin_bulk_facilities(
-	in i_email varchar(255)  
-) begin
+CREATE PROCEDURE admin_bulk_facilities(
+	IN i_email varchar(255)  
+) BEGIN
 	
-    SELECT id FROM ADMINISTRATOR WHERE Email = i_email into @id; 
+    SELECT id FROM ADMINISTRATOR WHERE Email = i_email INTO @id; 
     
-	SELECT * from FACILITY;
+	SELECT * FROM FACILITY;
     
-    insert into SYSTEMLOG (uid, act) value 
+    INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'admin_bulk_facilities');
     
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists get_fac_job_postings; 
+DROP PROCEDURE IF EXISTS get_fac_job_postings; 
 DELIMITER //
-create procedure get_fac_job_postings(
-	in i_email varchar(255)  
-) begin
+CREATE PROCEDURE get_fac_job_postings(
+	IN i_email varchar(255)  
+) BEGIN
 	
-    SELECT id FROM FACILITY WHERE Email = i_email into @id; 
+    SELECT id FROM FACILITY WHERE Email = i_email INTO @id; 
     
-	SELECT Title, Category, Salary, Descript, Slots, Shifts from JOBPOSTING where FID = @id;
+	SELECT Title, Category, Salary, Descript, Slots, Shifts FROM JOBPOSTING WHERE FID = @id;
     
-    insert into SYSTEMLOG (uid, act) value 
+    INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'get_fac_job_postings');
     
-end //
+END //
 DELIMITER ;
+
 
 

@@ -1,160 +1,160 @@
-drop database if exists cmg_staffing_nigeria;
-create database if not exists cmg_staffing_nigeria;
-use cmg_staffing_nigeria;
-create table PERSON (
-  ID int not null AUTO_INCREMENT,
-  primary key(ID)
+DROP DATABASE IF EXISTS cmg_staffing_nigeria;
+CREATE DATABASE IF NOT EXISTS cmg_staffing_nigeria;
+USE cmg_staffing_nigeria;
+CREATE TABLE PERSON (
+  ID INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY(ID)
 );
-create table PROFESSIONAL (
-  ID int not null,
-  Email varchar(255) not null unique,
-  Verified int not null,
-  ImageAddr varchar(255),
-  FName varchar(55),
-  LName varchar(55),
-  PhoneNumber varchar(20),
-  LicenseNumber varchar(50),
-  Specialization varchar(50),
-  MDCN varchar(30),
-  City varchar(50),
-  Country varchar(50),
-  Street varchar(75),
-  Bio text,
-  primary key(ID),
-  foreign key (ID) 
-	references PERSON(ID)
+CREATE TABLE PROFESSIONAL (
+  ID INT NOT NULL,
+  Email VARCHAR(255) NOT NULL UNIQUE,
+  Verified INT NOT NULL,
+  ImageAddr VARCHAR(255),
+  FName VARCHAR(55),
+  LName VARCHAR(55),
+  PhoneNumber VARCHAR(20),
+  LicenseNumber VARCHAR(50),
+  Specialization VARCHAR(50),
+  MDCN VARCHAR(30),
+  City VARCHAR(50),
+  Country VARCHAR(50),
+  Street VARCHAR(75),
+  Bio TEXT,
+  PRIMARY KEY(ID),
+  FOREIGN KEY (ID) 
+	REFERENCES PERSON(ID)
     ON DELETE CASCADE
     ON UPDATE CASCADE
 );
-create table EDUCATION (
-  PID int not null,
-  College varchar(255),
-  Degree varchar(20),
-  StartDate varchar(15),
-  EndDate varchar(15),
-  primary key(PID, College, Degree, StartDate, EndDate),
-  foreign key(PID) 
-	references PROFESSIONAL(ID)
+CREATE TABLE EDUCATION (
+  PID INT NOT NULL,
+  College VARCHAR(255),
+  DEGREE VARCHAR(20),
+  StartDate VARCHAR(15),
+  EndDate VARCHAR(15),
+  PRIMARY KEY(PID, College, DEGREE, StartDate, EndDate),
+  FOREIGN KEY(PID) 
+	REFERENCES PROFESSIONAL(ID)
 	ON DELETE CASCADE
     ON UPDATE CASCADE
 );
-create table COVERLETTER (
-  OwnerId int not null,
-  Title varchar(200),
-  Content text not null,
-  TimeCreated datetime not null,
-  primary key(OwnerId, TimeCreated),
-  foreign key (OwnerId) 
-	references PROFESSIONAL(ID)
+CREATE TABLE COVERLETTER (
+  OwnerId INT NOT NULL,
+  Title VARCHAR(200),
+  Content TEXT NOT NULL,
+  TimeCREATEd DATETIME NOT NULL,
+  PRIMARY KEY(OwnerId, TimeCREATEd),
+  FOREIGN KEY (OwnerId) 
+	REFERENCES PROFESSIONAL(ID)
 	ON DELETE CASCADE
     ON UPDATE CASCADE
 );
-create table DOCUMENT (
-  OwnerId int not null,
-  FileName varchar(255) not null,
-  S3Key varchar(255) not null,
-  Category varchar(255) not null,
-  TimeCreated datetime not null,
-  primary key(OwnerId, S3Key),
-  foreign key (OwnerId) 
-	references PROFESSIONAL(ID)
+CREATE TABLE DOCUMENT (
+  OwnerId INT NOT NULL,
+  FileName VARCHAR(255) NOT NULL,
+  S3KEY VARCHAR(255) NOT NULL,
+  Category VARCHAR(255) NOT NULL,
+  TimeCREATEd DATETIME NOT NULL,
+  PRIMARY KEY(OwnerId, S3KEY),
+  FOREIGN KEY (OwnerId) 
+	REFERENCES PROFESSIONAL(ID)
 	ON DELETE CASCADE
     ON UPDATE CASCADE
 );
-create table FACILITY (
-  ID int not null,
-  Email varchar(254) not null unique,
-  Verified int not null,
-  ImageAddr varchar(255),
-  City varchar(50),
-  Country varchar(50),
-  State varchar(50),
-  Street varchar(75),
-  Descript text,
-  FacName varchar(255),
-  primary key(ID),
-  foreign key(ID) 
-	references PERSON(ID)
+CREATE TABLE FACILITY (
+  ID INT NOT NULL,
+  Email VARCHAR(254) NOT NULL UNIQUE,
+  Verified INT NOT NULL,
+  ImageAddr VARCHAR(255),
+  City VARCHAR(50),
+  Country VARCHAR(50),
+  STATE VARCHAR(50),
+  Street VARCHAR(75),
+  Descript TEXT,
+  FacName VARCHAR(255),
+  PRIMARY KEY(ID),
+  FOREIGN KEY(ID) 
+	REFERENCES PERSON(ID)
 	ON DELETE CASCADE
     ON UPDATE CASCADE
 );
-create table CONTACT (
-  FID int not null,
-  CName varchar(255),
-  PhoneNumber varchar(20),
-  primary key(FID),
-  foreign key(FID) 
-	references FACILITY(ID)
+CREATE TABLE CONTACT (
+  FID INT NOT NULL,
+  CName VARCHAR(255),
+  PhoneNumber VARCHAR(20),
+  PRIMARY KEY(FID),
+  FOREIGN KEY(FID) 
+	REFERENCES FACILITY(ID)
 	ON DELETE CASCADE
     ON UPDATE CASCADE
 );
-create table JOBPOSTING (
-  FID int not null,
-  Title varchar(30) not null,
-  Category varchar(30) not null,
-  Salary int,
-  Descript text,
-  Slots int not null,
-  Shifts varchar(30),
-  Visibility int,
-  primary key (FID, Title),
-  foreign key (FID) 
-	references FACILITY(ID)
+CREATE TABLE JOBPOSTING (
+  FID INT NOT NULL,
+  Title VARCHAR(30) NOT NULL,
+  Category VARCHAR(30) NOT NULL,
+  Salary INT,
+  Descript TEXT,
+  Slots INT NOT NULL,
+  Shifts VARCHAR(30),
+  Visibility INT,
+  PRIMARY KEY (FID, Title),
+  FOREIGN KEY (FID) 
+	REFERENCES FACILITY(ID)
 	ON DELETE CASCADE
     ON UPDATE CASCADE
 );
-create table APPLICATION (
-  FID int not null,
-  PID int not null,
-  PostingTitle varchar(30) not null,
-  CoverLetter text,
-  TimeCreated datetime not null,
-  Progress int,
-  primary key (PID, FID, PostingTitle),
-  foreign key (FID, PostingTitle) 
-	references JOBPOSTING(FID, Title)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  foreign key (PID) 
-	references PROFESSIONAL(ID)
-	ON DELETE CASCADE
-    ON UPDATE CASCADE
-);
-create table MESSAGE (
-  FID int not null,
-  PID int not null,
-  Content text not null,
-  TimeCreated datetime not null,
-  primary key(PID, FID),
-  foreign key (FID) 
-	references FACILITY(ID)
+CREATE TABLE APPLICATION (
+  FID INT NOT NULL,
+  PID INT NOT NULL,
+  PostingTitle VARCHAR(30) NOT NULL,
+  CoverLetter TEXT,
+  TimeCREATEd DATETIME NOT NULL,
+  Progress INT,
+  PRIMARY KEY (PID, FID, PostingTitle),
+  FOREIGN KEY (FID, PostingTitle) 
+	REFERENCES JOBPOSTING(FID, Title)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  foreign key (PID) 
-	references PROFESSIONAL(ID)
+  FOREIGN KEY (PID) 
+	REFERENCES PROFESSIONAL(ID)
+	ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+CREATE TABLE MESSAGE (
+  FID INT NOT NULL,
+  PID INT NOT NULL,
+  Content TEXT NOT NULL,
+  TimeCREATEd DATETIME NOT NULL,
+  PRIMARY KEY(PID, FID),
+  FOREIGN KEY (FID) 
+	REFERENCES FACILITY(ID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  FOREIGN KEY (PID) 
+	REFERENCES PROFESSIONAL(ID)
     ON DELETE CASCADE
     ON UPDATE CASCADE
 );
-create table SYSTEMLOG (
-  UID int not null,
-  Act varchar(255),
-  TimeCreated datetime default current_timestamp on update current_timestamp,
-  foreign key(UID) 
-	references PERSON(ID)
+CREATE TABLE SYSTEMLOG (
+  UID INT NOT NULL,
+  Act VARCHAR(255),
+  TimeCREATEd DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY(UID) 
+	REFERENCES PERSON(ID)
     ON DELETE CASCADE
     ON UPDATE CASCADE
 );
-create table ADMINISTRATOR (
-ID int not null, 
-Email varchar(255),
-primary key (ID)
+CREATE TABLE ADMINISTRATOR (
+ID INT NOT NULL, 
+Email VARCHAR(255),
+PRIMARY KEY (ID)
 );
-create table PRIVLEGES (
-  AID int not null,
-  privilege varchar(10),
-  primary key (privilege, AID),
-  foreign key (AID) 
-	references ADMINISTRATOR(ID)
+CREATE TABLE PRIVLEGES (
+  AID INT NOT NULL,
+  privilege VARCHAR(10),
+  PRIMARY KEY (privilege, AID),
+  FOREIGN KEY (AID) 
+	REFERENCES ADMINISTRATOR(ID)
     ON DELETE CASCADE
     ON UPDATE CASCADE
 );

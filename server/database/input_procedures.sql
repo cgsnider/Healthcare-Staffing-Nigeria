@@ -1,74 +1,74 @@
 
-use cmg_staffing_nigeria;
+USE cmg_staffing_nigeria;
 
-drop procedure if exists register_professional;
+DROP PROCEDURE IF EXISTS register_professional;
 DELIMITER //
-create procedure register_professional (
-	in i_fname varchar(55),
-    in i_lname varchar(55),
-    in i_email varchar(254)
-) begin 
+CREATE PROCEDURE register_professional (
+	IN i_fname varchar(55),
+    IN i_lname varchar(55),
+    IN i_email varchar(254)
+) BEGIN 
 
-insert into PERSON (id) value (null);
+	INSERT INTO PERSON (id) VALUE (null);
 
-select max(id) from PERSON into @id;
+	SELECT max(id) FROM PERSON INTO @id;
 
-insert into PROFESSIONAL(id, email, verified, fname, lname, phoneNumber, MDCN) value 
-	(@id, i_email, 0, i_fname, i_lname, null, null);
+	INSERT INTO PROFESSIONAL(id, email, verified, fname, lname, phoneNumber, MDCN) VALUE 
+		(@id, i_email, 0, i_fname, i_lname, NULL, null);
 
-insert into SYSTEMLOG (uid, act) value 
-    (@id, 'register_professional');
-end //
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
+		(@id, 'register_professional');
+END //
 DELIMITER ;
 
-drop procedure if exists update_professional_profile;
+DROP PROCEDURE IF EXISTS update_professional_profile;
 DELIMITER //
-create procedure update_professional_profile (
-	in i_email_old varchar(254),
-    in i_fname varchar(55),
-    in i_lname varchar(55),
-    in i_email varchar(254),
-    in i_specialization varchar(50),
-    in i_phonenumber varchar(20),
-    in i_mdcn varchar(30),
-	in i_country varchar(50),
-	in i_city varchar(50),
-    in i_street varchar(50),
-    in i_licensenumber varchar(50)
-) begin 
+CREATE PROCEDURE update_professional_profile (
+	IN i_email_old varchar(254),
+    IN i_fname varchar(55),
+    IN i_lname varchar(55),
+    IN i_email varchar(254),
+    IN i_specialization varchar(50),
+    IN i_phonenumber varchar(20),
+    IN i_mdcn varchar(30),
+	IN i_country varchar(50),
+	IN i_city varchar(50),
+    IN i_street varchar(50),
+    IN i_licensenumber varchar(50)
+) BEGIN 
 
-select ID from PROFESSIONAL where email = i_email_old into @id;
+	SELECT ID FROM PROFESSIONAL WHERE email = i_email_old INTO @id;
 
-update PROFESSIONAL 
-set 
-	email = i_email,
-    fname = i_fname,
-    lname = i_lname,
-    phonenumber = i_phonenumber,
-    mdcn = i_mdcn,
-    country = i_country,
-    city = i_city,
-    street = i_street,
-    specialization = i_specialization,
-    licensenumber = i_licensenumber
-where 
-	id = @id;
+	UPDATE PROFESSIONAL 
+	SET 
+		email = i_email,
+		fname = i_fname,
+		lname = i_lname,
+		phonenumber = i_phonenumber,
+		mdcn = i_mdcn,
+		country = i_country,
+		city = i_city,
+		street = i_street,
+		specialization = i_specialization,
+		licensenumber = i_licensenumber
+	WHERE 
+		id = @id;
 
-insert into SYSTEMLOG (uid, act) value 
-    (@id, 'update_professional_profile');
-    
-select 200;
-end //
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
+		(@id, 'update_professional_profile');
+		
+	SELECT 200;
+END //
 DELIMITER ;
 
-drop procedure if exists update_professional_picture;
+DROP PROCEDURE IF EXISTS update_professional_picture;
 DELIMITER //
 CREATE PROCEDURE update_professional_picture (
 	IN i_email VARCHAR(255),
     IN i_imgAddr VARCHAR(255)
 ) BEGIN 
     
-	select ID FROM PROFESSIONAL WHERE email = i_email INTO @id;
+	SELECT ID FROM PROFESSIONAL WHERE email = i_email INTO @id;
     
     UPDATE PROFESSIONAL 
     SET
@@ -76,38 +76,38 @@ CREATE PROCEDURE update_professional_picture (
 	WHERE 
 		id = @id;
 	
-	INSERT INTO SYSTEMLOG (uid, act) value 
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
 	(@id, 'update_professional_picture');
     
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists prof_verified_pending;
+DROP PROCEDURE IF EXISTS prof_verified_pending;
 DELIMITER //
-create procedure prof_verified_pending (
-    in i_email varchar(254)
-) begin 
+CREATE PROCEDURE prof_verified_pending (
+    IN i_email varchar(254)
+) BEGIN 
 
-select id from PROFESSIONAL where email = i_email into @id;
+	SELECT id FROM PROFESSIONAL WHERE email = i_email INTO @id;
 
-update PROFESSIONAL 
-set 
-	verified = 1
-where 
-	id = @id;
-insert into SYSTEMLOG (uid, act) value 
-    (id, 'prof_verify_pending');
-end //
+	UPDATE PROFESSIONAL 
+	SET 
+		verified = 1
+	WHERE 
+		id = @id;
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
+		(id, 'prof_verify_pending');
+END //
 DELIMITER ;
 
-drop procedure if exists update_facility_picture;
+DROP PROCEDURE IF EXISTS update_facility_picture;
 DELIMITER //
 CREATE PROCEDURE update_facility_picture (
-	in i_email VARCHAR(255),
-    in i_imgAddr VARCHAR(255)
+	IN i_email VARCHAR(255),
+    IN i_imgAddr VARCHAR(255)
 ) BEGIN 
     
-	select ID FROM FACILITY WHERE email = i_email INTO @id;
+	SELECT ID FROM FACILITY WHERE email = i_email INTO @id;
     
     UPDATE FACILITY 
     SET
@@ -115,215 +115,215 @@ CREATE PROCEDURE update_facility_picture (
 	WHERE 
 		 id = @id;
 	
-	INSERT INTO SYSTEMLOG (uid, act) value 
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
 	(@id, 'update_facility_picture');
 END //
 DELIMITER ;
 
-drop procedure if exists register_facility;
+DROP PROCEDURE IF EXISTS register_facility;
 DELIMITER //
-create procedure register_facility (
-	in i_name varchar(55),
-    in i_email varchar(254)
-) begin 
+CREATE PROCEDURE register_facility (
+	IN i_name varchar(55),
+    IN i_email varchar(254)
+) BEGIN 
 
-insert into PERSON (id) value (null);
+	INSERT INTO PERSON (id) VALUE (null);
 
-select max(id) from PERSON into @id;
+	SELECT max(id) FROM PERSON INTO @id;
 
-insert into FACILITY(id, email, verified,facname) value 
-	(@id, i_email, 0, i_name);
+	INSERT INTO FACILITY(id, email, verified,facname) VALUE 
+		(@id, i_email, 0, i_name);
+		
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
+		(@id, 'register_facility');
     
-insert into SYSTEMLOG (uid, act) value 
-    (@id, 'register_facility');
-    
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists create_job_posting;
+DROP PROCEDURE IF EXISTS create_job_posting;
 DELIMITER //
-create procedure create_job_posting (
-	in i_fac_email varchar(55),
-    in i_title varchar(30), 
-    in i_salary int,
-    in i_descript text,
-    in i_slots int,
-    in i_category varchar(30),
-    in i_shifts varchar(30),
-    in i_visibility int
+CREATE PROCEDURE create_job_posting (
+	IN i_fac_email varchar(55),
+    IN i_title varchar(30), 
+    IN i_salary INT,
+    IN i_descript TEXT,
+    IN i_slots INT,
+    IN i_category varchar(30),
+    IN i_shifts varchar(30),
+    IN i_visibility INT
     
-) begin 
+) BEGIN 
 	
-select id from FACILITY where email = i_fac_email into @id;
+	SELECT id FROM FACILITY WHERE email = i_fac_email INTO @id;
 
-insert into JOBPOSTING (fid, title, salary, descript, category, slots, shifts, visibility) values
-	(@id, i_title, i_salary, i_descript, i_category, i_slots, i_shifts, i_visibility);
+	INSERT INTO JOBPOSTING (fid, title, salary, descript, category, slots, shifts, visibility) VALUES
+		(@id, i_title, i_salary, i_descript, i_category, i_slots, i_shifts, i_visibility);
+		
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
+		(@id, 'create_job_posting');
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS admin_create_facility;
+DELIMITER //
+CREATE PROCEDURE admin_create_facility (
+	IN i_email varchar(255),
+    IN i_facname varchar(55),
+    IN i_verified INT,
+    IN i_city varchar(50),
+    IN i_country varchar(50),
+    IN i_state varchar(50),
+    IN i_street varchar(50),
+    IN i_descript varchar(255)
+) BEGIN 
+	INSERT INTO PERSON (id) VALUE (null);
+
+	SELECT max(id) FROM PERSON INTO @id;
+
+	INSERT INTO FACILITY(id, email, verified,facname, city, country, STATE, street, descript) VALUE 
+		(@id, i_email, i_verified, i_facname, i_city, i_country, i_state, i_street, i_descript);
+		
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
+		(@id, 'admin_create_facility');
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS admin_create_professional;
+DELIMITER //
+CREATE PROCEDURE admin_create_professional (
+    IN i_fname varchar(55),
+    IN i_lname varchar(55),
+    IN i_email varchar(254),
+    IN i_verified INT,
+    IN i_licenseNumber varchar(50),
+    IN i_specialization varchar(50),
+    IN i_phonenumber varchar(20),
+    IN i_mdcn varchar(30),
+	IN i_country varchar(50),
+	IN i_city varchar(50),
+    IN i_street varchar(50),
+    IN i_Bio TEXT
+) BEGIN 
+	INSERT INTO PERSON (id) VALUE (null);
+
+	SELECT max(id) FROM PERSON INTO @id;
+
+	INSERT INTO PROFESSIONAL
+		(id, email, verified, fname, lname,licenseNumber, specialization, phoneNumber, MDCN, country, city, street, Bio) 
+	VALUE 
+		(@id, i_email, i_verified, i_fname, i_lname, i_licenseNumber, i_specialization, i_phonenumber, i_mdcn, i_country, i_city, i_street, i_Bio);
+
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
+		(@id, 'admin_create_professional');
+END //
+DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS add_education;
+DELIMITER //
+CREATE PROCEDURE add_education (
+	IN i_email varchar(255),
+	IN i_college varchar(255),
+    IN i_degree varchar(20),
+    IN i_endDate varchar(15),
+    IN i_startDate varchar(15)
+) BEGIN 
 	
-insert into SYSTEMLOG (uid, act) value 
-	(@id, 'create_job_posting');
-end //
-DELIMITER ;
-
-drop procedure if exists admin_create_facility;
-DELIMITER //
-create procedure admin_create_facility (
-	in i_email varchar(255),
-    in i_facname varchar(55),
-    in i_verified int,
-    in i_city varchar(50),
-    in i_country varchar(50),
-    in i_state varchar(50),
-    in i_street varchar(50),
-    in i_descript varchar(255)
-) begin 
-insert into PERSON (id) value (null);
-
-select max(id) from PERSON into @id;
-
-insert into FACILITY(id, email, verified,facname, city, country, state, street, descript) value 
-	(@id, i_email, i_verified, i_facname, i_city, i_country, i_state, i_street, i_descript);
+    SELECT id FROM PROFESSIONAL WHERE email = i_email INTO @id;
     
-insert into SYSTEMLOG (uid, act) value 
-    (@id, 'admin_create_facility');
-end //
-DELIMITER ;
-
-drop procedure if exists admin_create_professional;
-DELIMITER //
-create procedure admin_create_professional (
-    in i_fname varchar(55),
-    in i_lname varchar(55),
-    in i_email varchar(254),
-    in i_verified int,
-    in i_licenseNumber varchar(50),
-    in i_specialization varchar(50),
-    in i_phonenumber varchar(20),
-    in i_mdcn varchar(30),
-	in i_country varchar(50),
-	in i_city varchar(50),
-    in i_street varchar(50),
-    in i_Bio text
-) begin 
-insert into PERSON (id) value (null);
-
-select max(id) from PERSON into @id;
-
-insert into PROFESSIONAL
-	(id, email, verified, fname, lname,licenseNumber, specialization, phoneNumber, MDCN, country, city, street, Bio) 
-value 
-	(@id, i_email, i_verified, i_fname, i_lname, i_licenseNumber, i_specialization, i_phonenumber, i_mdcn, i_country, i_city, i_street, i_Bio);
-
-insert into SYSTEMLOG (uid, act) value 
-    (@id, 'admin_create_professional');
-end //
-DELIMITER ;
-
-
-drop procedure if exists add_education;
-DELIMITER //
-create procedure add_education (
-	in i_email varchar(255),
-	in i_college varchar(255),
-    in i_degree varchar(20),
-    in i_endDate varchar(15),
-    in i_startDate varchar(15)
-) begin 
-	
-    select id from PROFESSIONAL where email = i_email into @id;
-    
-    insert into EDUCATION (PID, College, Degree, EndDate, StartDate) value
+    INSERT INTO EDUCATION (PID, College, DEGREE, EndDate, StartDate) VALUE
 		(@id, i_college, i_degree, i_endDate, i_startDate);
         
-	insert into SYSTEMLOG (uid, act) value 
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'add_education');
 	
 
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists create_application;
+DROP PROCEDURE IF EXISTS create_application;
 DELIMITER //
-create procedure create_application (
+CREATE PROCEDURE create_application (
 
-    in i_fac_email varchar(255),
-	in i_email varchar(255),
-    in i_title varchar(30), 
-    in i_coverletter text,
-    in i_timecreated datetime
+    IN i_fac_email varchar(255),
+	IN i_email varchar(255),
+    IN i_title varchar(30), 
+    IN i_coverletter TEXT,
+    IN i_timecreated DATETIME
     
-) begin 
+) BEGIN 
 	
 
-select id from FACILITY where Email = i_fac_email into @fid;
+	SELECT id FROM FACILITY WHERE Email = i_fac_email INTO @fid;
 
-select id from PROFESSIONAL where email = i_email into @pid;
+	SELECT id FROM PROFESSIONAL WHERE email = i_email INTO @pid;
 
-insert into APPLICATION (fid, pid, postingtitle, coverletter, timecreated, progress) VALUES
-    (@fid, @pid, i_title, i_coverletter, i_timecreated, 0);
-	
-insert into SYSTEMLOG (uid, act) value 
-	(@pid, 'create_application');
-end //
+	INSERT INTO APPLICATION (fid, pid, postingtitle, coverletter, timecreated, progress) VALUES
+		(@fid, @pid, i_title, i_coverletter, i_timecreated, 0);
+		
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
+		(@pid, 'create_application');
+END //
 DELIMITER ;
 
-drop procedure if exists update_facility_profile;
+DROP PROCEDURE IF EXISTS update_facility_profile;
 DELIMITER //
-create procedure update_facility_profile (
-	in i_Email_Old varchar(255),
-    in i_City varchar(55),
-    in i_Country varchar(55),
-    in i_Email varchar(255),
-    in i_FacName varchar(255),
-    in i_State varchar(255),
-	in i_Descript text,
-    in i_Street varchar(255),
-    in i_Contact_Name varchar(255),
-    in i_Contact_PhoneNumber varchar(255)
-) begin 
+CREATE PROCEDURE update_facility_profile (
+	IN i_Email_Old varchar(255),
+    IN i_City varchar(55),
+    IN i_Country varchar(55),
+    IN i_Email varchar(255),
+    IN i_FacName varchar(255),
+    IN i_State varchar(255),
+	IN i_Descript TEXT,
+    IN i_Street varchar(255),
+    IN i_Contact_Name varchar(255),
+    IN i_Contact_PhoneNumber varchar(255)
+) BEGIN 
 
-select ID from FACILITY where email = i_Email_Old into @id;
+	SELECT ID FROM FACILITY WHERE email = i_Email_Old INTO @id;
 
-update Facility 
-set 
--- 	email = i_Email,
-	FacName = i_FacName,
-    country = i_country,
-    city = i_city,
-    street = i_street,
-    State = i_State,
-    Descript = i_Descript
-where 
-	id = @id;
+	UPDATE Facility 
+	SET 
+	-- 	email = i_Email,
+		FacName = i_FacName,
+		country = i_country,
+		city = i_city,
+		street = i_street,
+		STATE = i_State,
+		Descript = i_Descript
+	WHERE 
+		id = @id;
 
-IF (select count(*) FROM CONTACT where FID = @id) != 0
-THEN
-	update Facility
-    set 
-		CName = i_Contact_Name,
-        PhoneNumber = i_Contact_PhoneNumber
-	where
-		FID = @id;
-ELSE
-	insert into CONTACT (FID, CName, PhoneNumber)
-		value (@id, i_Contact_Name, i_Contact_PhoneNumber);
+	IF (select count(*) FROM CONTACT WHERE FID = @id) != 0
+	THEN
+		UPDATE Facility
+		SET 
+			CName = i_Contact_Name,
+			PhoneNumber = i_Contact_PhoneNumber
+		WHERE
+			FID = @id;
+	ELSE
+		INSERT INTO CONTACT (FID, CName, PhoneNumber)
+			VALUE (@id, i_Contact_Name, i_Contact_PhoneNumber);
 
-END IF;
+	END IF;
 
-insert into SYSTEMLOG (uid, act) value 
-    (@id, 'update_facility_profile');
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
+		(@id, 'update_facility_profile');
 
-select 200;
-end //
+	SELECT 200;
+END //
 DELIMITER ;
 
-drop procedure if exists professionals_apply_for_verification;
+DROP PROCEDURE IF EXISTS professionals_apply_for_verification;
 DELIMITER //
-create procedure professionals_apply_for_verification (
-	in i_email varchar(255)
-) begin 
+CREATE PROCEDURE professionals_apply_for_verification (
+	IN i_email varchar(255)
+) BEGIN 
 	
 
-	select id, Verified FROM PROFESSIONAL WHERE Email = i_email into @id, @verified;
+	SELECT id, Verified FROM PROFESSIONAL WHERE Email = i_email INTO @id, @verified;
 	
     IF @verified < 1
     THEN
@@ -334,20 +334,20 @@ create procedure professionals_apply_for_verification (
 			ID = @id;
 	END IF;
     
-	insert into SYSTEMLOG (uid, act) value 
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'create_application');
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists facility_apply_for_verification;
+DROP PROCEDURE IF EXISTS facility_apply_for_verification;
 DELIMITER //
-create procedure facility_apply_for_verification (
-	in i_email varchar(255)
-) begin 
+CREATE PROCEDURE facility_apply_for_verification (
+	IN i_email varchar(255)
+) BEGIN 
 	
 	SET @pending := 1;
     
-	select id, Verified FROM FACILITY WHERE Email = i_email into @id, @verified;
+	SELECT id, Verified FROM FACILITY WHERE Email = i_email INTO @id, @verified;
 	
     IF @verified < @pending
     THEN
@@ -357,25 +357,25 @@ create procedure facility_apply_for_verification (
 		WHERE
 			ID = @id;
 		
-        select @pending;
+        SELECT @pending;
 	END IF;
     
     
-	insert into SYSTEMLOG (uid, act) value 
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'create_application');
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists admin_verify_professional;
+DROP PROCEDURE IF EXISTS admin_verify_professional;
 DELIMITER //
-create procedure admin_verify_professional (
-	in i_admin_email varchar(255),
-    in i_prof_email varchar(255)
-) begin 
+CREATE PROCEDURE admin_verify_professional (
+	IN i_admin_email varchar(255),
+    IN i_prof_email varchar(255)
+) BEGIN 
 	
 	SET @newStatus := 2;
     
-	select id FROM ADMINISTRATOR WHERE Email = i_admin_email into @id;
+	SELECT id FROM ADMINISTRATOR WHERE Email = i_admin_email INTO @id;
 	
 	UPDATE PROFESSIONAL
 	SET
@@ -383,24 +383,24 @@ create procedure admin_verify_professional (
 	WHERE
 		Email = i_prof_email;
 	
-	select @newStatus;
+	SELECT @newStatus;
     
     
-	insert into SYSTEMLOG (uid, act) value 
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'appprove_verification');
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists admin_verify_facility;
+DROP PROCEDURE IF EXISTS admin_verify_facility;
 DELIMITER //
-create procedure admin_verify_facility (
-	in i_admin_email varchar(255),
-    in i_fac_email varchar(255)
-) begin 
+CREATE PROCEDURE admin_verify_facility (
+	IN i_admin_email varchar(255),
+    IN i_fac_email varchar(255)
+) BEGIN 
 	
 	SET @newStatus := 2;
     
-	select id FROM ADMINISTRATOR WHERE Email = i_admin_email into @id;
+	SELECT id FROM ADMINISTRATOR WHERE Email = i_admin_email INTO @id;
 	
 	UPDATE FACILITY
 	SET
@@ -408,89 +408,89 @@ create procedure admin_verify_facility (
 	WHERE
 		Email = i_prof_email;
 	
-	select @newStatus;
+	SELECT @newStatus;
     
     
-	insert into SYSTEMLOG (uid, act) value 
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'appprove_verification');
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists admin_create_admin;
+DROP PROCEDURE IF EXISTS admin_create_admin;
 DELIMITER //
-create procedure admin_create_admin (
-	in i_email varchar(255)
-) begin 
+CREATE PROCEDURE admin_create_admin (
+	IN i_email varchar(255)
+) BEGIN 
 	    
-	insert into PERSON (id) value (null);
+	INSERT INTO PERSON (id) VALUE (null);
 
-	select max(id) from PERSON into @id;
+	SELECT max(id) FROM PERSON INTO @id;
 
-	insert into ADMINISTRATOR (id, Email) value (@id, i_email);
+	INSERT INTO ADMINISTRATOR (id, Email) VALUE (@id, i_email);
 
-	insert into SYSTEMLOG (uid, act) value 
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'admin_create_admin');
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists hire_applicant;
+DROP PROCEDURE IF EXISTS hire_applicant;
 DELIMITER //
-create procedure hire_applicant (
-	in i_fac_email varchar(255),
-    in i_prof_email varchar(255),
-    in i_title varchar(255)
-) begin 
+CREATE PROCEDURE hire_applicant (
+	IN i_fac_email varchar(255),
+    IN i_prof_email varchar(255),
+    IN i_title varchar(255)
+) BEGIN 
 	    
-	select id from PROFESSIONAL where i_prof_email = Email into @pid;
-	select id from FACILITY where i_fac_email = Email into @fid;
+	SELECT id FROM PROFESSIONAL WHERE i_prof_email = Email INTO @pid;
+	SELECT id FROM FACILITY WHERE i_fac_email = Email INTO @fid;
 	
 	UPDATE APPLICATION 
-    set
+    SET
 		Progress = 100
-	where 
+	WHERE 
 		FID = @fid 
-        and PID = @pid
-        and PostingTitle = i_title;
+        AND PID = @pid
+        AND PostingTitle = i_title;
         
 
-	insert into SYSTEMLOG (uid, act) value 
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@fid, 'hire_applicant');
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists add_document_professional;
+DROP PROCEDURE IF EXISTS add_document_professional;
 DELIMITER //
-create procedure add_document_professional (
-	in i_owner_email varchar(255),
-    in i_category varchar(255),
-    in i_S3_key varchar(255),
-    in i_file_name varchar(255)
-) begin 
+CREATE PROCEDURE add_document_professional (
+	IN i_owner_email varchar(255),
+    IN i_category varchar(255),
+    IN i_S3_key varchar(255),
+    IN i_file_name varchar(255)
+) BEGIN 
 	    
-	select id from PROFESSIONAL where i_owner_email = Email into @pid;
+	SELECT id FROM PROFESSIONAL WHERE i_owner_email = Email INTO @pid;
 	
-	insert into Document (OwnerId, Category, S3Key, FileName, TimeCreated)
-		value (@pid, UPPER(i_category), i_S3_key, i_file_name, CURDATE());
+	INSERT INTO Document (OwnerId, Category, S3Key, FileName, TimeCreated)
+		VALUE (@pid, UPPER(i_category), i_S3_key, i_file_name, CURDATE());
 
-	insert into SYSTEMLOG (uid, act) value 
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@pid, 'hire_applicant');
-end //
+END //
 DELIMITER ;
 
-drop procedure if exists update_posting;
+DROP PROCEDURE IF EXISTS update_posting;
 DELIMITER //
-create procedure update_posting (
-	in i_email varchar(55),
-    in i_old_title varchar(30), 
-    in i_new_title varchar(30),
-    in i_salary int,
-    in i_descript text,
-    in i_slots int,
-    in i_category varchar(30),
-    in i_shifts varchar(30)
-) begin 
+CREATE PROCEDURE update_posting (
+	IN i_email varchar(55),
+    IN i_old_title varchar(30), 
+    IN i_new_title varchar(30),
+    IN i_salary INT,
+    IN i_descript TEXT,
+    IN i_slots INT,
+    IN i_category varchar(30),
+    IN i_shifts varchar(30)
+) BEGIN 
 	
-	select id FROM FACILITY WHERE Email = i_email into @id;
+	SELECT id FROM FACILITY WHERE Email = i_email INTO @id;
 	
 	UPDATE JOBPOSTING
 	SET
@@ -501,9 +501,9 @@ create procedure update_posting (
 		  Slots = i_slots,
 		  Shifts = i_shifts
 	WHERE
-		FID = @id and Title = i_old_title;
+		FID = @id AND Title = i_old_title;
 	
-	insert into SYSTEMLOG (uid, act) value 
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'update_posting');
-end //
+END //
 DELIMITER ;
