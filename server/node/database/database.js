@@ -47,10 +47,12 @@ async function call (procedure="", params=[]) {
 
 async function handleNewUser (req, res, next) {
     const db = await promised_connection;
+    console.log("HANDLE NEW USER")
     const sql = `CALL user_exists('${req.user.email}')`
     db.query(sql)
         .then(results => {
-            if (results[0][0][0].Status === -1){
+            console.log(results[0][0])
+            if (results[0][0][0].Exist_Status === -1){
                 addNewUser(req.user)
                     .then(res => next())
                     .catch(err => next());

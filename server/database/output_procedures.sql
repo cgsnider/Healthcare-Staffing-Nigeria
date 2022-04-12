@@ -124,13 +124,13 @@ CREATE PROCEDURE user_exists (
 ) BEGIN
 
 	IF (select count(*) FROM PROFESSIONAL WHERE email = i_email) != 0
-		THEN SELECT 1 AS STATUS;
+		THEN SELECT 1 AS Exist_Status;
 	ELSEIF (select count(*) FROM FACILITY WHERE email = i_email) != 0
-		THEN SELECT 2 AS STATUS;
+		THEN SELECT 2 AS Exist_Status;
 	ELSEIF (select count(*) FROM ADMINISTRATOR WHERE email = i_email) != 0
-		THEN SELECT 3 AS STATUS;
+		THEN SELECT 3 AS Exist_Status;
 	ELSE
-		SELECT -1 AS STATUS;
+		SELECT -1 AS Exist_Status;
 	END IF;
 
 END //
