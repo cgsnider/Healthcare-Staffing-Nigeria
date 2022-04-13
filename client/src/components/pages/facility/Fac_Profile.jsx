@@ -146,7 +146,7 @@ if(profileInfo){
                         <div className="my-4"></div>
                         
                     </div>
-                    <div className="w-full md:w-9/12 mx-2 h-64">
+                    <div className="w-full md:w-9/12 mx-2 h-64 ">
                         <div className="bg-white p-3 shadow-sm rounded-sm">
                             <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
                                 <span clas="text-green-500">
@@ -185,7 +185,7 @@ if(profileInfo){
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Email</div>
-                                        <div className="px-4 py-2">
+                                        <div className="px-4 py-2 overflow-auto">
                                             <a className="text-blue-800 overflow-clip" href={`mailto:${profileInfo.Email}`}>{profileInfo.Email}</a>
                                         </div>
                                     </div>
