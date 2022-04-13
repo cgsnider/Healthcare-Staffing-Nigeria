@@ -23,7 +23,7 @@ function Jobs (props) {
         }
         if(!fetchOnce){
             setFetchOnce(true);
-            fetchPostings(isMounted);
+            // fetchPostings(isMounted);
             fetchCategories(isMounted);
         }
 
@@ -32,7 +32,7 @@ function Jobs (props) {
         };
     }, [])
 
-    const [postings, setPostings] = useState(null);
+    const [postings, setPostings] = useState([]);
     const [categories, setCategories] = useState(null);
     const [position, setPosition] = useState(null);
     const [search, setSearch] = useState('');
@@ -44,7 +44,8 @@ function Jobs (props) {
     const [catFetchEnd, setCatFetchEnd] = useState(false);
 
     const fetchPostings = async(isMounted) => {
-        let items = await getJobPosts()
+        setPosFetchEnd(false);
+        let items = await getJobPosts((position.value == 'All') ? null : position.value)
             .catch(err=>setFetchError(true))
         if (isMounted) {
             setPosFetchEnd(true);
@@ -53,6 +54,14 @@ function Jobs (props) {
         }
         else console.log('aborted setPostings on unmounted component')
     }
+
+    useEffect( () => {
+        let isMounted = true;
+        fetchPostings(isMounted);
+        return () => {
+            isMounted = false;
+        };
+    }, [position]) 
 
     const fetchCategories = async(isMounted) => {
         let items = await getCategories()
@@ -67,6 +76,7 @@ function Jobs (props) {
                     value: cat.Category
                 })
             }), console.log(categories))
+            setPosFetchEnd(true);
         }
         else console.log('aborted setCategories on unmounted component')
     }

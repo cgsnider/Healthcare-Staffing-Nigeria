@@ -17,7 +17,8 @@ async function sleep(fn, ...args) {
  * @returns Data that represents a job posting
  */
 export async function getJobPosts(category) {
-    return await getData('/jobs');
+    console.log(category)
+    return await getData('/jobs', {Category: category});
 }
 
 export async function getApplications(category) {

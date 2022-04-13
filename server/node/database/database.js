@@ -59,7 +59,7 @@ async function handleNewUser (req, res, next) {
             if (results[0][0][0].Exist_Status === -1){
                 addNewUser(req.user)
                     .then(res => next())
-                    .catch(err => res.status(Code.internal_server_error).end());
+                    .catch(err => {console.log(err); res.status(Code.internal_server_error).end()});
             } else {
                 console.log('NEXT')
                 next();
@@ -85,7 +85,13 @@ async function addNewUser(user) {
 
         db.query(sql)
             .then(results => resolve(results))
-            .catch(err => reject(Code.internal_server_error));
+            .catch(err => {
+                if (err.includes("Duplicate entry")) {
+                    resolve(err)
+                } else {
+                    reject(err);
+                }
+            });
             
     });
 }

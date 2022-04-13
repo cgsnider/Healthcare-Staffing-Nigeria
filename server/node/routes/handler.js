@@ -49,8 +49,9 @@ const STD_MIDWARE = [authenticate, db.handleNewUser]
 
 router.get('/jobs', STD_MIDWARE, (req, res) => {
     req.headers.params = JSON.parse(req.headers.params);
+    console.log("req.headers.params: ", req.headers.params)
     const procedure = 'get_postings';
-    const params = [req.user.email, req.body.category];
+    const params = [req.user.email, req.headers.params.Category];
     
     db.call(procedure, params)
         .then(results => res.end(JSON.stringify(results)))
