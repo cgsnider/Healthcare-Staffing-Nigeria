@@ -190,7 +190,6 @@ export async function getApplicants(postingTitle) {
  * @returns All nonsesnsitive text data for all professionals. Requries Admin access
  */
 export async function getBulkProfessional() {
-    console.log('getBulkProfessional'.toUpperCase())
     return await getData('/bulk_professionals');
 }
 

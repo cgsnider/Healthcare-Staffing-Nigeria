@@ -243,7 +243,9 @@ router.get('/bulk_professionals', STD_MIDWARE, (req, res) => {
         const params = [req.user.email]
 
         db.call(procedure, params)
-            .then(results => res.end(JSON.stringify(results[0])))
+            .then(results => {
+                console.log("RESULTS: ", results[0]);
+                res.end(JSON.stringify(results[0]))})
             .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
     } else {
         res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
@@ -284,14 +286,15 @@ router.post('/opening', STD_MIDWARE, (req, res) => {
 
 router.post('/hire_applicant', STD_MIDWARE, (req, res) => {
     if (req.user['custom:type'] == 'Facility') {
-        const procedure = 'hire_applicant'
-        const params = [req.user.email, req.body.ApplicantEmail, req.body.PostingTitle]
+        const procedure = 'hire_applicant';
+        const params = [req.user.email, req.body.ApplicantEmail, req.body.PostingTitle];
 
         db.call(procedure, params)
             .then(results => res.end(JSON.stringify(results)))
             .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
     } else {
-
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
+        return;
     }
 });
 

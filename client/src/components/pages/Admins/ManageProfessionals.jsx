@@ -17,11 +17,17 @@ function ManageProfessionals (props) {
 
     useEffect(async () => {
         let isMounted = true;
+        console.log('USE EFFECT 1');
         setPractitioners(await getBulkProfessional());
+        console.log('USE EFFECT 2');
         return () => {
             isMounted = false;
         };
     }, [])
+
+    useEffect(() => {
+        console.log("practitioners: ", practitioners)
+    }, [practitioners])
 
     if (viewProfessionals === true) {
         return (
@@ -31,7 +37,7 @@ function ManageProfessionals (props) {
                 </div>
                 {(practitioners !== null && practitioners.length > 0) ?
                     <div className="flex flex-col items-center w-full">
-                        {[...practitioners].map(e => {
+                        {[...practitioners].map(e => { 
                             return (
                                 <ProfessionalListing account={e}
                                                      setView={setViewProfessionals}
