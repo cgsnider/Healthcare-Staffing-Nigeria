@@ -177,6 +177,7 @@ export async function getApplicants(postingTitle) {
  * @returns All nonsesnsitive text data for all professionals. Requries Admin access
  */
 export async function getBulkProfessional() {
+    console.log('getBulkProfessional'.toUpperCase())
     return await getData('/bulk_professionals');
 }
 
@@ -210,6 +211,7 @@ async function getData(url='', body={}) {
         redirect: 'follow',
         referrerPolicy: 'no-referrer', 
     })
+    console.log(data)
     const items = await data.json();
     return items;
 }
@@ -290,6 +292,6 @@ async function postData(url = '', data ={}) {
             redirect: 'follow',
             referrerPolicy: 'no-referrer', 
             body: formBody
-        }).then(response => {resolve(response)});
+        }).then(response => {resolve(response.status)});
     });
 }

@@ -10,28 +10,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState, useEffect } from 'react';
 import {Drop2 , Drop} from '../parts/Drop';
 import placeholder from '../../images/profile-placeholder.jpg';
-import { applyForVerification, getEducation, getProfileData, getProfileImage, postEducation, postProfileData, postProfilePicture } from '../../hooks/server';
+import { applyForVerification, getEducation, getProfileData, getProfileImage, postEducation, postProfileData, postProfilePicture, getResume, postResume, downloadResume } from '../../hooks/server';
 import CircleLoader from 'react-spinners/CircleLoader';
 export default function Profile(props) {
-    const [profileInfo, setProfileInfo] = useState(
-        {Email: "temp@example.com", 
-        PhoneNumber: "123-456-1111", 
-        FName: "John",
-        LName: "Williams",
-        professionalInfo: "", 
-        LicenseNumber: "", 
-        Gender: "Male", 
-        DoB: "January 01, 2000", 
-        Specialization: "Cardiologist",
-        Bio: "Short Description",
-        Verified: 0, //-1=neverLoggedIn  0=unverified, 1=pending, 2=verified
-        ImageAddr: null,
-        resume: null,
-        MDCN: 123456,
-        Street:'1234 Park place',
-        City:'Los Angeles',
-        Country:'United States',
-    })
+    const [profileInfo, setProfileInfo] = useState(null);
 
 
     const [newExperience, setNewExperience] = useState([]);
@@ -51,11 +33,22 @@ export default function Profile(props) {
         }
     }, []);
 
+    const fetchResume = (email) => {
+        console.log(email);
+        getResume(email)
+        .then(res => {
+            console.log(res);
+            setProfileInfo({...profileInfo, Resume: res}, console.log('t',profileInfo));
+        })
+        .catch(err=>console.error(err))
+    }
+
     const fetchProfileData = async(isMounted) => {
         let data = await getProfileData()
         if (isMounted) {
             setInfoFetchEnd(true);
-            setProfileInfo(data[0][0], console.log(profileInfo))
+            setProfileInfo(data[0][0], console.log(profileInfo));
+            fetchResume(data[0][0].Email);
         }
         else console.log('aborted setPostings on unmounted component')
     }
@@ -136,7 +129,12 @@ export default function Profile(props) {
         fetchProfileData(true);
     }
 
-    if (edFetchEnd && infoFetchEnd){
+    const handleResumeUplaod = (e) => {
+        postResume(e.target.files[0]);
+        fetchProfileData(true);
+    }
+
+    if (edFetchEnd && infoFetchEnd && profileInfo) {
         return (
             <div>
                 <Verificationdrop />
@@ -173,10 +171,13 @@ export default function Profile(props) {
                                             </li>
                                             <li className="flex items-center py-3">
                                                 <span>CV/Resume</span>
-                                                {(profileInfo.resume!==null)?
-                                                <span className="ml-auto">Resume</span>
+                                                {(profileInfo.Resume)?
+                                                <span className="ml-auto" onClick={(e)=>{downloadResume(profileInfo.Email)}}>Resume</span>
                                                 :
-                                                <button className="bg-green-500 rounded text-white text-md py-1 px-4 ml-auto">Upload</button>
+                                                <>
+                                                <label className="hover:cursor-pointer bg-green-500 rounded text-white text-md py-1 px-4 ml-auto" htmlFor='resume-upload'>Upload</label>
+                                                <input type="file" id='resume-upload' className='hidden' onChange={handleResumeUplaod} />
+                                                </>
                                                 }
                                             </li>
                                         </ul>
