@@ -17,17 +17,11 @@ function ManageProfessionals (props) {
 
     useEffect(async () => {
         let isMounted = true;
-        console.log('USE EFFECT 1');
         setPractitioners(await getBulkProfessional());
-        console.log('USE EFFECT 2');
         return () => {
             isMounted = false;
         };
     }, [])
-
-    useEffect(() => {
-        console.log("practitioners: ", practitioners)
-    }, [practitioners])
 
     if (viewProfessionals === true) {
         return (
