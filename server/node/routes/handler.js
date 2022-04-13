@@ -201,7 +201,7 @@ router.get('/review_fac_verification', STD_MIDWARE, (req, res) => {
         const procedure = 'admin_verification_pending_facility';
         const params = [req.user.email];
         db.call(procedure, params)
-            .then(results => res.end(JSON.stringify(results)))
+            .then(results => res.end(JSON.stringify(results[0])))
             .catch(err => res.end('Error fetching education'))
     } else {
         res.end(JSON.stringify(req.user));
@@ -249,7 +249,7 @@ router.get('/bulk_professionals', STD_MIDWARE, (req, res) => {
             const params = [req.user.email]
 
             db.call(procedure, params)
-                .then(results => res.end(JSON.stringify(results)))
+                .then(results => res.end(JSON.stringify(results[0])))
                 .catch(err => res.end(418));
         }
     }
@@ -262,7 +262,7 @@ router.get('/bulk_facilities', STD_MIDWARE, (req, res) => {
             const params = [req.user.email]
 
             db.call(procedure, params)
-                .then(results => res.end(JSON.stringify(results)))
+                .then(results => res.end(JSON.stringify(results[0])))
                 .catch(err => res.end(418));
         }
     }

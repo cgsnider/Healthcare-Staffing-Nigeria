@@ -65,7 +65,9 @@ function TopBar(props) {
         if (userType === 'Admin') {
             return (
                 <>
-                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/applications', {replace:true})}>Pending Verifications</button>
+                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/pendingVerifications')}>Pending Verifications</button>
+                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/manageProfessionals')}>Manage Professionals</button>
+                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/manageFacilities')}>Manage Facilities</button>
                 </>
             )
         }

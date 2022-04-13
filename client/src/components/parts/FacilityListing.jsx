@@ -39,8 +39,8 @@ function FacilityListing (props) {
                 <div className="flex content-center justify-between text-sm w-full px-2 py-1">
                     <div className="flex flex-initial basis-1/3 flex-col justify-between">
                         <div className="truncate">{props.account.FacName}</div>
-                        <div className="truncate">{props.account.Street}</div>
-                        <div className="truncate">{`${props.account.City}, ${props.account.State}, ${props.account.Country}`}</div>
+                        <div className="truncate">{props.account.Street || "Not Provided"}</div>
+                        <div className="truncate">{(`${props.account.City}, ${props.account.STATE}, ${props.account.Country}` !== "undefined, undefined, undefined") ? `${props.account.City}, ${props.account.STATE}, ${props.account.Country}` : "Not Provided"}</div>
                     </div>
                     <div className="flex flex-initial basis-1/3 flex-col justify-between text-center">
                         <div className="items-center">
