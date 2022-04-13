@@ -3,7 +3,8 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'logo': "url('../public/resources/cmg_logo.png')"
+        'logo': "url('../public/resources/cmg_logo.png')",
+        'home': "url('/src/images/home-bg.jpg')",
       },
       colors: {
         'cmg-light':'#00ff00',

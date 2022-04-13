@@ -7,6 +7,7 @@ import Regisration from './components/pages/Regisration';
 import Jobs from './components/pages/professionals/Jobs'
 import TopBar from './components/parts/TopBar';
 import Home from './components/pages/Home';
+import About from './components/pages/About';
 import Profile from './components/pages/Profile.jsx';
 import PendingVerifications from './components/pages/Admins/PendingVerifications.jsx';
 import ViewApplications from "./components/pages/professionals/ViewApplications";
@@ -42,16 +43,19 @@ const App = () => {
         {/** pages with navbar at top under this route */}
         <Route path="/" element={<LayoutsWithNavbar/>}>
           <Route path="/" element={<Home/>}/>
+          <Route path='/about' element={<About/>} />
           <Route path="/jobs" element={<Jobs/>} />
           <Route path='/user' element={(localStorage.getItem('type') == 'Professional') ? <Profile/> : <Fac_Profile/>} />
           <Route path='/pendingVerifications' element={<PendingVerifications/>} />
           <Route path='/applications' element={<ViewApplications/>}/>
           <Route path='/facilityManage' element={<ViewMaster/>}/>
           <Route path='/newPosting' element={<CreatePosting/>} />
+
           <Route path='/manage' >
             <Route path='/manage/professionals' element={<ManageProfessionals/>}/>
             <Route path='/manage/facilities' element={<ManageFacilities/>}/>
           </Route>
+
           <Route path='/myPostings' element={<ViewMaster/>}/>
           <Route path='/editPosting' element={<EditPost />}/>
         </Route>

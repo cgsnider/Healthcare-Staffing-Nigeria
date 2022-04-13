@@ -20,7 +20,7 @@ import logo from "../../images/cmg_logo.png";
 function TopBar(props) {
     const navigate = useNavigate();
     const {options} = (props.options != null) ? options : {
-        'options':[{text:'Home', to: '/'}, {text:'About', to: '/'}, {text:'Contact Us', to:'/'}]
+        'options':[{text:'Home', to: '/'}, {text:'About', to: '/about'}, {text:'Contact Us', to:'/'}]
     };
     const [loggedIn, setLoggedIn] = useState(false);
     const [userType, setUserType] = useState(null);
