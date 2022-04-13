@@ -11,15 +11,13 @@ function ProfessionalListing (props) {
                     <span className="bg-red-500 py-1 px-2 rounded text-white text-sm">Unverified</span>
                 </div>
             );
-        }
-        if(props.account.Verified===1) {
+        } else if(props.account.Verified===1) {
             return(
                 <div className="ml-auto mr-0">
                     <span className="bg-amber-500 py-1 px-2 rounded text-white text-sm">Pending</span>
                 </div>
             );
-        }
-        if(props.account.Verified===2) {
+        } else {
             return(
                 <div className="ml-auto mr-0">
                     <span className="bg-green-500 py-1 px-2 rounded text-white text-sm">Verified</span>
@@ -39,7 +37,7 @@ function ProfessionalListing (props) {
                 <div className="flex content-center justify-between text-sm w-full px-2 py-1">
                     <div className="flex flex-initial basis-1/3 flex-col justify-between">
                         <div className="truncate">{props.account.FName} {props.account.LName}</div>
-                        <div className="truncate">{props.account.Specialization}</div>
+                        <div className="truncate">{props.account.Specialization || "No Specialty Provided"}</div>
                         <a href={props.account.resume} className="truncate text-blue-600" download>Resume</a>
                     </div>
                     <div className="flex flex-initial basis-1/3 flex-col justify-between text-center">

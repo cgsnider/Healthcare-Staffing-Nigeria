@@ -1,22 +1,14 @@
 import React, {useEffect, useState} from 'react'
-import { getBulkProfessional } from '../../../hooks/server';
 
 import ProfessionalListing from "../../parts/ProfessionalListing";
+import {getBulkProfessional} from "../../../hooks/server";
 
 function ManageProfessionals (props) {
 
-    const [practitioners, setPractitioners] = useState([]);
+    const [practitioners, setPractitioners] = useState(null);
 
     const [viewProfessionals, setViewProfessionals] = useState(true);
     const [profID, setProfID] = useState(null); //Whatever variable type that is needed will be fine
-    const [update, setUpdate] = useState(0);
-
-    /**
-     * Causes any use effect hook to trigger if update its array of variables that the useEffect watches
-     */
-    const updateTrigger = () => {
-        setUpdate((update + 1) % 10);
-    }
 
     const handleBack = () => {
         setViewProfessionals(true)
@@ -25,14 +17,11 @@ function ManageProfessionals (props) {
 
     useEffect(async () => {
         let isMounted = true;
-        console.log()
-        if (viewProfessionals == true) {
-            setPractitioners(await getBulkProfessional());
-        }
+        setPractitioners(await getBulkProfessional());
         return () => {
             isMounted = false;
         };
-    }, [update, viewProfessionals]);
+    }, [])
 
     if (viewProfessionals === true) {
         return (
@@ -40,15 +29,20 @@ function ManageProfessionals (props) {
                 <div className="flex justify-between pt-6 pb-4">
                     <h3 className="text-3xl indent-12">Manage Professionals</h3>
                 </div>
-                <div className="flex flex-col items-center w-full">
-                    {[...practitioners].map(e => {
-                        return (
+                {(practitioners !== null && practitioners.length > 0) ?
+                    <div className="flex flex-col items-center w-full">
+                        {[...practitioners].map(e => {
+                            return (
                                 <ProfessionalListing account={e}
                                                      setView={setViewProfessionals}
                                                      setID={setProfID}/>
-                        )
-                    })}
-                </div>
+                            )
+                        })}
+                    </div>
+                    :
+                    <div className="mt-4 py-1 flex text-2xl justify-center items-center">No Professional Accounts</div>
+                }
+
             </div>
 
         );
