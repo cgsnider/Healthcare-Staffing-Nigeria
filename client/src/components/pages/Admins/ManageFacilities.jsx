@@ -2,51 +2,38 @@ import React, {useEffect, useState} from 'react'
 
 import ProfessionalListing from "../../parts/ProfessionalListing";
 import FacilityListing from "../../parts/FacilityListing";
+import { getBulkFacilities } from '../../../hooks/server';
 
 function ManageFacilities (props) {
 
-    const [facilities, setFacilities] = useState(
-        [{Email: "NigerianHospital@hosp.org",
-            FacName:"Nigerian Hospital",
-            Bio: "Short Description",
-            PhoneNumber: "123-456-7890",
-            Verified: 0, //-1=neverLoggedIn  0=unverified, 1=pending, 2=verified
-            image: null,
-            Street:"123 Street",
-            City:"Ibadan",
-            Country:"Nigeria",
-            State:"Oyo",
-        }, {
-            Email: "NigerianHospital@hosp.org",
-            FacName:"Nigerian Hospital",
-            Bio: "Short Description",
-            PhoneNumber: "123-456-7890",
-            Verified: 1, //-1=neverLoggedIn  0=unverified, 1=pending, 2=verified
-            image: null,
-            Street:'123 Street',
-            City:'Ibadan',
-            Country:'Nigeria',
-            State:'Oyo',
-        }, {
-            Email: "NigerianHospital@hosp.org",
-            FacName:"Nigerian Hospital",
-            Bio: "Short Description",
-            PhoneNumber: "123-456-7890",
-            Verified: 2, //-1=neverLoggedIn  0=unverified, 1=pending, 2=verified
-            image: null,
-            Street:'123 Street',
-            City:'Ibadan',
-            Country:'Nigeria',
-            State:'Oyo',
-        }]);
+    const [facilities, setFacilities] = useState([]);
 
     const [viewFacilities, setViewFacilities] = useState(true);
     const [facID, setFacID] = useState(null); //Whatever variable type that is needed will be fine
+    const [update, setUpdate] = useState(0);
+
+    /**
+     * Causes any use effect hook to trigger if update its array of variables that the useEffect watches
+     */
+    const updateTrigger = () => {
+        setUpdate((update + 1) % 10);
+    }
 
     const handleBack = () => {
         setViewFacilities(true)
         setFacID(null)
     }
+
+    useEffect(async () => {
+        let isMounted = true;
+        console.log()
+        if (viewFacilities == true) {
+            setFacilities(await getBulkFacilities());
+        }
+        return () => {
+            isMounted = false;
+        };
+    }, [update, viewFacilities]);
 
     if (viewFacilities === true) {
         return (
