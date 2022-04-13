@@ -174,14 +174,15 @@ CREATE PROCEDURE admin_create_facility (
     IN i_country VARCHAR(50),
     IN i_state VARCHAR(50),
     IN i_street VARCHAR(50),
-    IN i_descript VARCHAR(255)
+    IN i_descript VARCHAR(255),
+    IN i_image_addr VARCHAR(255)
 ) BEGIN 
 	INSERT INTO PERSON (id) VALUE (null);
 
 	SELECT max(id) FROM PERSON INTO @id;
 
-	INSERT INTO FACILITY(id, email, verified,facname, city, country, STATE, street, descript) VALUE 
-		(@id, i_email, i_verified, i_facname, i_city, i_country, i_state, i_street, i_descript);
+	INSERT INTO FACILITY(id, email, verified,facname, city, country, STATE, street, descript, ImageAddr) VALUE 
+		(@id, i_email, i_verified, i_facname, i_city, i_country, i_state, i_street, i_descript, i_image_addr);
 		
 	INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'admin_create_facility');
