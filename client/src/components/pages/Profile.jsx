@@ -45,13 +45,13 @@ export default function Profile(props) {
     }, [profileInfo])
 
     const fetchResume = (email) => {
-        console.log(email);
-        getResume(email)
-        .then(res => {
-            console.log(res);
-            setProfileInfo({...profileInfo, Resume: res}, console.log('t',profileInfo));
-        })
-        .catch(err=>console.error(err))
+        // console.log(email);
+        // getResume(email)
+        // .then(res => {
+        //     console.log(res);
+        //     setProfileInfo({...profileInfo, Resume: res}, console.log('t',profileInfo));
+        // })
+        // .catch(err=>console.error(err))
     }
 
     const fetchProfileData = async(isMounted) => {
@@ -60,7 +60,7 @@ export default function Profile(props) {
         if (isMounted) {
             setInfoFetchEnd(true);
             setProfileInfo(data[0][0], console.log(profileInfo));
-            fetchResume(data[0][0].Email);
+            // fetchResume(data[0][0].Email);
         }
         else console.log('aborted setPostings on unmounted component')
     }
@@ -193,7 +193,7 @@ export default function Profile(props) {
                                             </li>
                                             <li className="flex items-center py-3">
                                                 <span>CV/Resume</span>
-                                                {(profileInfo.Resume)?
+                                                {(profileInfo.ResumeExists)?
                                                 <span className="ml-auto" onClick={(e)=>{downloadResume(profileInfo.Email)}}>Resume</span>
                                                 :
                                                 <>

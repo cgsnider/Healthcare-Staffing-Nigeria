@@ -491,6 +491,12 @@ CREATE PROCEDURE add_document_professional (
 ) BEGIN 
 	    
 	SELECT id FROM PROFESSIONAL WHERE i_owner_email = Email INTO @pid;
+    
+    IF UPPER(i_category) = 'RESUME'
+		THEN UPDATE PROFESSIONAL 
+				SET ResumeExists = TRUE
+                WHERE ID = @id;
+	END IF;
 	
 	INSERT INTO Document (OwnerId, Category, S3Key, FileName, TimeCreated)
 		VALUE (@pid, UPPER(i_category), i_S3_key, i_file_name, CURDATE());
