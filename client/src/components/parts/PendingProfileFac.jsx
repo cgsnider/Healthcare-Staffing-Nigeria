@@ -17,7 +17,7 @@ function PendingProfileFac(props) {
                     <div className="flex flex-initial basis-1/3 flex-col justify-between">
                         <div className="truncate">{props.name}</div>
                         <div className="truncate">{props.street || "Not Provided"}</div>
-Add                        <div className="truncate">{(props.loc !== "undefined, undefined, undefined") ? props.loc : "Not Provided"}</div>
+                        <div className="truncate">{(props.loc !== "undefined, undefined, undefined") ? props.loc : "Not Provided"}</div>
                     </div>
                     <div className="flex flex-initial basis-1/3 flex-col justify-between text-center">
                         <div className="items-center">

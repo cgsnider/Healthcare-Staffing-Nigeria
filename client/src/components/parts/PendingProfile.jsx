@@ -1,6 +1,6 @@
 import React from 'react'
 import Popup from 'reactjs-popup';
-import { postVerifyProfessional } from '../../hooks/server';
+import { downloadResume, postVerifyProfessional } from '../../hooks/server';
 
 function PendingProfile(props) {
 
@@ -11,6 +11,13 @@ function PendingProfile(props) {
         window.location.reload(false);
     }
 
+    const resumeHandler = () => {
+        console.log('resumeHandler')
+        if(props.resume){
+            downloadResume(props.email);
+        }
+    }
+
     return (
         <div className="mt-4 flex justify-center w-full">
             <div className="outline outline-1 rounded-md w-1/2 min-w-fit">
@@ -18,7 +25,7 @@ function PendingProfile(props) {
                     <div className="flex flex-initial basis-1/3 flex-col justify-between">
                         <div className="truncate">{props.name}</div>
                         <div className="truncate">{props.specialty || "No Specialty Provided"}</div>
-                        <a href={props.resume} className="truncate text-blue-600" download>Resume</a>
+                        {(props.resume) ? <a onClick={resumeHandler} className="truncate text-blue-600 basis-1/3">Resume</a> :  <div className="basis-1/3">No Resume</div>}
                     </div>
                     <div className="flex flex-initial basis-1/3 flex-col justify-between text-center">
                         <div className="items-center">
@@ -62,7 +69,7 @@ function PendingProfile(props) {
                                <div className="flex flex-initial flex-wrap m-5 text-center">
                                     <div className="basis-1/3">{props.specialty || "No Specialty Provided"}</div>
                                     <div className="basis-1/3"><span className="font-medium">MDCN: </span>{props.mdcn || "Not Provided"}</div>
-                                    <a href={props.resume} className="truncate text-blue-600 basis-1/3" download>Resume</a>
+                                    {(props.resume) ? <a onClick={resumeHandler} className="truncate text-blue-600 basis-1/3">Resume</a> :  <div className="basis-1/3">No Resume</div>}
                                </div>
                                <div className="flex-col">
                                     <div className="justify-left text-base ml-10 font-medium">Description:</div>

@@ -119,22 +119,26 @@ router.get('/experience', STD_MIDWARE, (req, res) => {
 });
 
 router.get('/resume', STD_MIDWARE, (req, res) => {
-    let username = null;
+    req.headers.params = JSON.parse(req.headers.params);
+    console.log("req.headers.params: ", req.headers.params);
+
+    let email = null;
 
     if (req.user['custom:type'] == 'Professional') {
-        username = req.user.email;
-    } else if (req.user['custom:type'] == 'Facility') {
-        username = req.body.Email
+        email = req.user.email;
+    } else if (req.user['custom:type'] == 'Facility' || req.user['custom:type'] == 'Admin') {
+        email = req.headers.params.Email
     } else {
         res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
         return;
     }
 
-    const params = [username, 'RESUME', null]
+    const params = [email, 'RESUME', null]
     const procedure = 'get_document_professional'
 
     db.call(procedure, params, null)
         .then(result => {
+            console.log('RESULT: ', result)
             const meta = result[0][0]
             s3.download(meta.S3Key)
                 .then(file => {
@@ -143,7 +147,9 @@ router.get('/resume', STD_MIDWARE, (req, res) => {
                     res.end(file.Body)
                 })
                 .catch(err => console.log(err))
-        }).catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
+        }).catch(err => {
+            console.log("ERROR: ", err);
+            res.status(err).end(JSON.stringify("Error Fetching Data from Database"))});
 });
 
 router.get('/profile_picture/:key', (req, res) => {

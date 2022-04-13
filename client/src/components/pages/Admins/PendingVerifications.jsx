@@ -57,9 +57,9 @@ function PendingVerifications(props) {
                         {[...practitioners].map(e => {
                             return (
                                 <PendingProfile name={`${e.FName} ${e.LName}`}
-                                                image={(e.image) ? e.image : placeholder}
+                                                image={(e.ImageAddr) ? `/api/profile_picture/${e.ImageAddr}` : placeholder}
                                                 specialty={e.Specialization}
-                                                resume={e.resume}
+                                                resume={e.ResumeExists}
                                                 email={e.Email}
                                                 number={e.PhoneNumber}
                                                 mdcn={e.MDCN}
@@ -90,7 +90,7 @@ function PendingVerifications(props) {
                         {[...facilities].map(e => {
                             return (
                                 <PendingProfileFac name={e.FacName}
-                                                   image={(e.image) ? e.image : placeholder}
+                                                   image={(e.image) ?  `/api/profile_picture/${e.ImageAddr}` : placeholder}
                                                    street={e.Street}
                                                    loc={`${e.City}, ${e.STATE}, ${e.Country}`}
                                                    email={e.Email}
