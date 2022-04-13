@@ -6,8 +6,10 @@ function Applicant(props) {
 
     console.log('APPLICANT', props);
 
-    const handleHire = () => {
-        postHireApplicant({ApplicantEmail: props.email, PostingTitle: props.postTitle})
+    const handleHire = async () => {
+        await postHireApplicant({ApplicantEmail: props.email, PostingTitle: props.postTitle});
+        props.trigger();
+        return;
     }
 
     return (
@@ -89,7 +91,7 @@ function Applicant(props) {
                                 </div>
                             </div>
                             <div className="flex text-center justify-center gap-2 m-5">
-                                <button onClick={() => handleHire()} className="h-2/3 w-1/12 bg-green-500 rounded text-white px-15">Hire</button>
+                                <button onClick={() => {handleHire().then(res => close())}} className="h-2/3 w-1/12 bg-green-500 rounded text-white px-15">Hire</button>
                                 <button className="h-2/3 w-1/12 bg-red-500 rounded text-white px-15">Deny</button>
                                 <button className="h-2/3 w-1/12 bg-gray-500 rounded text-white px-15" onClick={()=>{close();}}>Close</button>
                             </div>
