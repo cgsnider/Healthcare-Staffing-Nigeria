@@ -202,16 +202,17 @@ CREATE PROCEDURE admin_create_professional (
 	IN i_country VARCHAR(50),
 	IN i_city VARCHAR(50),
     IN i_street VARCHAR(50),
-    IN i_Bio TEXT
+    IN i_Bio TEXT,
+    IN i_imageaddr VARCHAR(255)
 ) BEGIN 
 	INSERT INTO PERSON (id) VALUE (null);
 
 	SELECT max(id) FROM PERSON INTO @id;
 
 	INSERT INTO PROFESSIONAL
-		(id, email, verified, fname, lname,licenseNumber, specialization, phoneNumber, MDCN, country, city, street, Bio) 
+		(id, email, verified, fname, lname,licenseNumber, specialization, phoneNumber, MDCN, country, city, street, Bio, ImageAddr) 
 	VALUE 
-		(@id, i_email, i_verified, i_fname, i_lname, i_licenseNumber, i_specialization, i_phonenumber, i_mdcn, i_country, i_city, i_street, i_Bio);
+		(@id, i_email, i_verified, i_fname, i_lname, i_licenseNumber, i_specialization, i_phonenumber, i_mdcn, i_country, i_city, i_street, i_Bio, i_imageaddr);
 
 	INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'admin_create_professional');
@@ -236,6 +237,28 @@ CREATE PROCEDURE add_education (
         
 	INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'add_education');
+	
+
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS add_experience;
+DELIMITER //
+CREATE PROCEDURE add_experience (
+	IN i_email VARCHAR(255),
+	IN i_company_name VARCHAR(255),
+    IN i_title VARCHAR(20),
+    IN i_endDate VARCHAR(15),
+    IN i_startDate VARCHAR(15)
+) BEGIN 
+	
+    SELECT id FROM PROFESSIONAL WHERE email = i_email INTO @id;
+    
+    INSERT INTO EXPERIENCE (PID, Company, Title, EndDate, StartDate) VALUE
+		(@id, i_company_name, i_title, i_endDate, i_startDate);
+        
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
+		(@id, 'add_experience');
 	
 
 END //

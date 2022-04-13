@@ -17,8 +17,7 @@ CALL create_job_posting('GeneralHospital@hosp.org', 'Anesthesiologist', 40000, '
 CALL create_job_posting('GeneralHospital@hosp.org', 'Ortho. Surgeons', 70000, 'Specialize in diseases and conditions of the bones, muscles, ligaments, tendons, and joints', 5, 'Surgery', '7 Hr', 1);
 CALL create_job_posting('GeneralHospital@hosp.org', 'Head Neurologist', 70000, 'Lead the Neurology Department', 3, 'Neurology', '6 Hr', 1);
 
-CALL admin_create_professional('Charles', 'Snider', 'csnider32@gatech.edu', 2, 'AQ21-ASD-23', 'Student', '404-404-4040', '123456', 'United States', 'Atlanta', 'North Ave NW', 'This is an example Bio!');
-
+CALL admin_create_professional('Charles', 'Snider', 'csnider32@gatech.edu', 2, 'AQ21-ASD-23', 'Student', '404-404-4040', '123456', 'United States', 'Atlanta', 'North Ave NW', 'This is an example Bio!', '0510f172d37d7463103e924583924d02');
 CALL create_application('NigerianHospital@hosp.org', 'csnider32@gatech.edu', 'Cardiologist', 'COVER LETTER', NOW());
 -- CALL create_application('NigerianHospital@hosp.org', 'cgsnider@gatech.edu', 'Cardiology', 'COVER LETTER', NOW());
 

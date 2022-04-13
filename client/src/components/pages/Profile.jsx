@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState, useEffect } from 'react';
 import {Drop2 , Drop} from '../parts/Drop';
 import placeholder from '../../images/profile-placeholder.jpg';
-import { applyForVerification, getEducation, getProfileData, getProfileImage, postEducation, postProfileData, postProfilePicture, getResume, postResume, downloadResume } from '../../hooks/server';
+import { applyForVerification, getEducation, getProfileData, getProfileImage, postEducation, postProfileData, postProfilePicture, getResume, postResume, downloadResume, postExperience, getExperience } from '../../hooks/server';
 import CircleLoader from 'react-spinners/CircleLoader';
 export default function Profile(props) {
     const [profileInfo, setProfileInfo] = useState({});
@@ -33,6 +33,7 @@ export default function Profile(props) {
         let isMounted = true;
         fetchProfileData(isMounted);
         fetchEducation(isMounted);
+        fetchExperience(isMounted);
         return() => {
             isMounted = false
         }
@@ -70,6 +71,16 @@ export default function Profile(props) {
         if (isMounted) {
             setEdFetchEnd(true);
             setNewEducation([...data[0]]);
+        } 
+        else console.log('aborted setPostings on unmounted component')
+    }
+
+    const fetchExperience = async(isMounted) => {
+        console.log("EDUCATION 1")
+        let data = await getExperience()
+        if (isMounted) {
+            setInfoFetchEnd(true);
+            setNewExperience([...data[0]]);
         } 
         else console.log('aborted setPostings on unmounted component')
     }
@@ -266,11 +277,12 @@ export default function Profile(props) {
                                                 </div>
                                                 <ul className='list-inside space-y-2 mb-4'>
                                                     {(newExperience.length!=0)?newExperience.map((item, i)=> {
+                                                        console.log("i: ", i, "item: ", item)
                                                         return(
                                                             <li key={i} className='mb-4'>
-                                                                <div className='text-teal-600'>{`${item.title} at ${item.comapny}`}</div>
-                                                                <div className='text-gray-500 text-xs'>{`${item.startDate} to ${item.endDate}`}</div>
-                                                                <div className='text-xs underline text-blue-600 hover:cursor-pointer' data-index={item.count} onClick={handleRemoveExperience}>Remove</div>
+                                                                <div className='text-teal-600'>{`${item.Title} at ${item.Company}`}</div>
+                                                                <div className='text-gray-500 text-xs'>{`${item.StartDate} to ${item.EndDate}`}</div>
+                                                                <div className='text-xs underline text-blue-600 hover:cursor-pointer' data-index={item.Count} onClick={handleRemoveExperience}>Remove</div>
                                                             </li>
                                                         );
                                                     })
@@ -488,10 +500,25 @@ function ExperiencePopup(props) {
         if(company==='' || startDate===null||endDate===null|| endDate<startDate) {
             return;
         }
-        setAddExperience([...addExperience, {company: company, title: title, startDate: startDate.toLocaleDateString('en-US', options), endDate: endDate.toLocaleDateString('en-US', options), count: count}]);
+        setAddExperience([...addExperience, {Company: company, Title: title, StartDate: startDate.toLocaleDateString('en-US', options), EndDate: endDate.toLocaleDateString('en-US', options), Count: count}]);
         setCount(count+1)
 
     }
+
+    useEffect(() => {
+        console.log("USEEFFECT")
+        console.log(addExperience)
+        // console.log('NEW EDUCATION HFAKJDHSI: ', newEducation);
+        // console.log('ADD EDUCATION HFAKJDHSI: ', addEducation);
+        if (addExperience.length == 0) {
+            // Remove education
+        } else {
+            // Add Education
+            postExperience(addExperience);
+            // postEducationData()
+        }
+        // postEducationData()
+    }, [newExperience]);
 
     const handleRemove = (e) => {
         let index = e.target.getAttribute('data-index');
@@ -552,9 +579,9 @@ function ExperiencePopup(props) {
                     {addExperience.map((item, i)=> {
                         return(
                             <li key={i} className='border-b-2'>
-                                <div className='text-teal-600'>{`${item.title} at ${item.company}`}</div>
-                                <div className='text-gray-500 text-xs'>{`${item.startDate} to ${item.endDate}`}</div>
-                                <div className='text-xs underline text-blue-600 hover:cursor-pointer' data-index={item.count} onClick={handleRemove}>Remove</div>
+                                <div className='text-teal-600'>{`${item.Title} at ${item.Company}`}</div>
+                                <div className='text-gray-500 text-xs'>{`${item.StartDate} to ${item.EndDate}`}</div>
+                                <div className='text-xs underline text-blue-600 hover:cursor-pointer' data-index={item.Count} onClick={handleRemove}>Remove</div>
                             </li>
                         );
                     })}

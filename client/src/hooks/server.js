@@ -42,8 +42,18 @@ export async function postEducation(data) {
     return await postData('/education', arrayObject(data))
 }
 
+export async function postExperience(data) {
+    console.log('postExperience: ', data)
+    if (data.length == 0) return;
+    return await postData('/experience', arrayObject(data))
+}
+
 export async function getEducation() {
     return await getData('/education');
+}
+
+export async function getExperience() {
+    return await getData('/experience');
 }
 
 export async function getCategories() {

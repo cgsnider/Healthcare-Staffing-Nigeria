@@ -117,6 +117,23 @@ CREATE PROCEDURE get_education (
 END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS get_experience; 
+DELIMITER //
+CREATE PROCEDURE get_experience (
+	IN i_email varchar(255)
+) BEGIN
+	
+    SELECT id FROM PROFESSIONAL WHERE email = i_email INTO @id;
+    
+    SELECT DISTINCT * FROM EXPERIENCE WHERE PID = @id; 
+    
+    
+    INSERT INTO SYSTEMLOG (uid, act) VALUE 
+		(@id, 'get_education');
+    
+END //
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS user_exists; 
 DELIMITER //
 CREATE PROCEDURE user_exists (

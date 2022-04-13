@@ -110,6 +110,14 @@ router.get('/education', STD_MIDWARE, (req, res) => {
         .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
 });
 
+router.get('/experience', STD_MIDWARE, (req, res) => {
+    const procedure = 'get_experience';
+    const params = [req.user.email];
+    db.call(procedure, params)
+        .then(results => res.end(JSON.stringify(results)))
+        .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
+});
+
 router.get('/resume', STD_MIDWARE, (req, res) => {
     let username = null;
 
@@ -396,6 +404,22 @@ router.post('/education', STD_MIDWARE, async (req, res) => {
 
         data.forEach(async e => {
             const params = [req.user.email, e.College, e.Degree, e.StartDate, e.EndDate];
+            const result = await db.call(procedure, params);
+            out.push(result);
+        });
+
+        res.end(JSON.stringify(util.arrayObject(out)));
+        }
+});
+
+router.post('/experience', STD_MIDWARE, async (req, res) => {
+    let data = util.objectArray(req.body);
+    let out = []
+    if(data.CompanyName != 'undefined') {
+        const procedure = 'add_experience';
+
+        data.forEach(async e => {
+            const params = [req.user.email, e.Company, e.Title, e.StartDate, e.EndDate];
             const result = await db.call(procedure, params);
             out.push(result);
         });
