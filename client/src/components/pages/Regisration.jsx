@@ -101,27 +101,31 @@ function Regisration (props){
 					            ></div>
                                 <div className="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">       
                                     <h3 className="pt-4 text-2xl text-center">Create an Account!</h3>
-                                    <div className="flex justify-center mt-6">
-                                        <label>Professional</label>
-                                        <div className="mx-4" >
-                                            <label htmlFor="toogleButton" className="flex items-center cursor-pointer" >
+                                        {(register_admin == false) ?
+                                            <div className="flex justify-center mt-6">
+                                                <label>Professional</label>
+                                                <div className="mx-4" >
+                                                    <label htmlFor="toogleButton" className="flex items-center cursor-pointer" >
 
-                                            <div className="relative" >
-                                            <input id="toogleButton" type="checkbox" className="hidden" onClick={toggleUser}/>
+                                                        <div className="relative" >
+                                                            <input id="toogleButton" type="checkbox" className="hidden" onClick={toggleUser}/>
 
-                                            <div
-                                                className="toggle-path bg-gray-200 w-9 h-5 rounded-full shadow-inner"
-                                            ></div>
+                                                            <div
+                                                                className="toggle-path bg-gray-200 w-9 h-5 rounded-full shadow-inner"
+                                                            ></div>
 
-                                            <div
-                                                className="toggle-circle absolute w-3.5 h-3.5 bg-white rounded-full shadow inset-y-0 left-0"
-                                            ></div>
+                                                            <div
+                                                                className="toggle-circle absolute w-3.5 h-3.5 bg-white rounded-full shadow inset-y-0 left-0"
+                                                            ></div>
+                                                        </div>
+                                                    </label>
+
+                                                </div>
+                                                <label>Organization</label>
                                             </div>
-                                            </label>
-
-                                        </div>
-                                        <label>Organization</label>
-                                    </div>
+                                            :
+                                            <div className="flex justify-center mt-6 text-xl"><label>Admin</label></div>
+                                        }
                                     <form className="px-8 pt-6 pb-8 mb-4 bg-white rounded">
                                         {(user === users[0]) ? <RegisterProf data={formData} setData={setData}/> : <RegisterFac data={formData} setData={setData}/>}
                                         <div className="mb-4 mt-7">

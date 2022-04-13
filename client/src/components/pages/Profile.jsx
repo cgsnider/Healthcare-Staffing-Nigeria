@@ -215,7 +215,7 @@ export default function Profile(props) {
                                                 </div>
                                                 <div className="grid grid-cols-2">
                                                     <div className="px-4 py-2 font-semibold">Contact No.</div>
-                                                    <div className="px-4 py-2">+234 {profileInfo.PhoneNumber} {/**not sure how to handle country code formatting */}</div>
+                                                    <div className="px-4 py-2">{profileInfo.PhoneNumber} {/**not sure how to handle country code formatting */}</div>
                                                 </div>
                                                 <div className="grid grid-cols-2">
                                                     <div className="px-4 py-2 font-semibold">Address</div>
