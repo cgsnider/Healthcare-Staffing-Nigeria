@@ -28,19 +28,18 @@ const STD_MIDWARE = [authenticate, db.handleNewUser]
  * Most of the routes follows the following basic structure:
  * 
  *  router.api_call_type(url, middleware (request, result) => {
- *     if (req.user != Code.unauthenticated) { -> If the user is valid according to authenticate middleware 
  *         const procedure = ...; -> Specifies the MySQL procedure to be use
  *         const params = [...]; -> Specifies any paramaters to be passed in as a list in appropriate order for the MySQL procedure (see .sql files in server/database)
  *         db.call(procedure, params) -> Calls db.call to asynchronously
  *              .then(results => res.end(JSON.stringify(results))) -> sends back the results of the query if successful
  *              .catch(err => res.end(JSON.stringify('Error fetching jobs'))); -> sends back an error message to client if query failed
- *     } else res.end(JSON.stringify(req.user)); -> if the user is not valid, sends back appropriate code (Code.unauthenticated)
  *  });
  * 
  *  Exact route structure varies. Common variation includes selecting different proceedures or parameters 
  *  depending on the type of client making the request.
  * 
  *  STD_MIDWARE contains middleware for authenitcating the user and checking/handling edge case for new users.
+ *  If a user is unathenticated the authentication middleware will send back unauthorized as a response
  * 
  *  S3 connects to the amazonAWS bucket for storing mass media
  *  multer handles sending mass media from client to node server
@@ -140,7 +139,8 @@ router.get('/resume', STD_MIDWARE, (req, res) => {
 
 router.get('/profile_picture/:key', (req, res) => {
     const filename = req.params.key
-    const readstream = s3.download_stream(key);
+    console.log(req.params.key)
+    const readstream = s3.download_stream(filename);
     readstream.pipe(res);
 })
 
@@ -351,7 +351,7 @@ router.post('/resume', [...STD_MIDWARE, upload.single('pdf')], async (req, res) 
     const upload = await s3.upload(file);
 
     let procedure;
-    const params = [req.user.email, 'RESUME',upload.Key, file.originalname];
+    const params = [req.user.email, 'RESUME', upload.Key, file.originalname];
 
     if (req.user['custom:type'] == 'Professional') {
         procedure = 'add_document_professional';
@@ -406,15 +406,14 @@ router.post('/education', STD_MIDWARE, async (req, res) => {
 router.post('/update_posting', STD_MIDWARE, async (req, res) => {
     if (req.user['custom:type'] == 'Facility') {
         const data = req.body
-        const params = [req.user.email, data.OldTitle, data.NewTitle, data.Category, data.Category, data.Salary, data.Descript, data.Slots, data.Shifts, data.Visibility];
+        console.log("Salary: ", data.Category)
+        console.log("Salary: ", typeof(data.Category))
+        const params = [req.user.email, data.OldTitle, data.NewTitle, data.Salary, data.Descript, data.Slots, data.Category, data.Shifts, data.Visibility];
         procedure = 'update_posting';
 
         db.call(procedure, params)
             .then(results => res.end(JSON.stringify(results)))
-            .catch(err => {
-                res.sendStatus(err);
-                res.end(JSON.stringify("Error Posting Data into Database"));
-            });
+            .catch(err => res.status(err).end(JSON.stringify("Error Posting Data into Database")));
     } else {
         res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
         return;

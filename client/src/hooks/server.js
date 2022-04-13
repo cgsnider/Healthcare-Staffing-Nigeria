@@ -139,12 +139,13 @@ export async function postVerifyFacility(facEmail) {
 
 /**
  * Updates a specific job posting for the current facility.
- * @param {{OldTitle: String, NewTitle: String, Category: String, Salary: int, Descript: String, Slots: int, Shifts: String}} data 
+ * @param {{OldTitle: String, NewTitle: String, Category: String, Salary: int, Descript: String, Slots: int, Shifts: String, Visibility: int}} data 
  *  The data that the posting should be set to
  * @returns The results of the post
  */
 export async function updatePosting(data) {
-     return await postData('/update_posting', data)
+    console.log(data);
+    return await postData('/update_posting', data)
 }
 
 /**

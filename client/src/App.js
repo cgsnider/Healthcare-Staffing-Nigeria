@@ -45,7 +45,8 @@ const App = () => {
           <Route path="/" element={<Home/>}/>
           <Route path='/about' element={<About/>} />
           <Route path="/jobs" element={<Jobs/>} />
-          <Route path='/user' element={(localStorage.getItem('type') == 'Professional') ? <Profile/> : <Fac_Profile/>} />
+          <Route path='/user' element={<Profile/>} />
+          <Route path ='/facility' element = {<Fac_Profile/>} />
           <Route path='/pendingVerifications' element={<PendingVerifications/>} />
           <Route path='/applications' element={<ViewApplications/>}/>
           <Route path='/facilityManage' element={<ViewMaster/>}/>

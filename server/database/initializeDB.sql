@@ -109,7 +109,7 @@ CREATE TABLE APPLICATION (
   PID INT NOT NULL,
   PostingTitle VARCHAR(30) NOT NULL,
   CoverLetter TEXT,
- TimeCreated DATETIME NOT NULL,
+  TimeCreated DATETIME NOT NULL,
   Progress INT,
   PRIMARY KEY (PID, FID, PostingTitle),
   FOREIGN KEY (FID, PostingTitle) 

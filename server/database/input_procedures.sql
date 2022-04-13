@@ -4,9 +4,9 @@ USE cmg_staffing_nigeria;
 DROP PROCEDURE IF EXISTS register_professional;
 DELIMITER //
 CREATE PROCEDURE register_professional (
-	IN i_fname varchar(55),
-    IN i_lname varchar(55),
-    IN i_email varchar(254)
+	IN i_fname VARCHAR(55),
+    IN i_lname VARCHAR(55),
+    IN i_email VARCHAR(254)
 ) BEGIN 
 
 	INSERT INTO PERSON (id) VALUE (null);
@@ -24,17 +24,17 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS update_professional_profile;
 DELIMITER //
 CREATE PROCEDURE update_professional_profile (
-	IN i_email_old varchar(254),
-    IN i_fname varchar(55),
-    IN i_lname varchar(55),
-    IN i_email varchar(254),
-    IN i_specialization varchar(50),
-    IN i_phonenumber varchar(20),
-    IN i_mdcn varchar(30),
-	IN i_country varchar(50),
-	IN i_city varchar(50),
-    IN i_street varchar(50),
-    IN i_licensenumber varchar(50)
+	IN i_email_old VARCHAR(254),
+    IN i_fname VARCHAR(55),
+    IN i_lname VARCHAR(55),
+    IN i_email VARCHAR(254),
+    IN i_specialization VARCHAR(50),
+    IN i_phonenumber VARCHAR(20),
+    IN i_mdcn VARCHAR(30),
+	IN i_country VARCHAR(50),
+	IN i_city VARCHAR(50),
+    IN i_street VARCHAR(50),
+    IN i_licensenumber VARCHAR(50)
 ) BEGIN 
 
 	SELECT ID FROM PROFESSIONAL WHERE email = i_email_old INTO @id;
@@ -85,7 +85,7 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS prof_verified_pending;
 DELIMITER //
 CREATE PROCEDURE prof_verified_pending (
-    IN i_email varchar(254)
+    IN i_email VARCHAR(254)
 ) BEGIN 
 
 	SELECT id FROM PROFESSIONAL WHERE email = i_email INTO @id;
@@ -123,8 +123,8 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS register_facility;
 DELIMITER //
 CREATE PROCEDURE register_facility (
-	IN i_name varchar(55),
-    IN i_email varchar(254)
+	IN i_name VARCHAR(55),
+    IN i_email VARCHAR(254)
 ) BEGIN 
 
 	INSERT INTO PERSON (id) VALUE (null);
@@ -143,13 +143,13 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS create_job_posting;
 DELIMITER //
 CREATE PROCEDURE create_job_posting (
-	IN i_fac_email varchar(55),
-    IN i_title varchar(30), 
+	IN i_fac_email VARCHAR(55),
+    IN i_title VARCHAR(30), 
     IN i_salary INT,
     IN i_descript TEXT,
     IN i_slots INT,
-    IN i_category varchar(30),
-    IN i_shifts varchar(30),
+    IN i_category VARCHAR(30),
+    IN i_shifts VARCHAR(30),
     IN i_visibility INT
     
 ) BEGIN 
@@ -167,14 +167,14 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS admin_create_facility;
 DELIMITER //
 CREATE PROCEDURE admin_create_facility (
-	IN i_email varchar(255),
-    IN i_facname varchar(55),
+	IN i_email VARCHAR(255),
+    IN i_facname VARCHAR(55),
     IN i_verified INT,
-    IN i_city varchar(50),
-    IN i_country varchar(50),
-    IN i_state varchar(50),
-    IN i_street varchar(50),
-    IN i_descript varchar(255)
+    IN i_city VARCHAR(50),
+    IN i_country VARCHAR(50),
+    IN i_state VARCHAR(50),
+    IN i_street VARCHAR(50),
+    IN i_descript VARCHAR(255)
 ) BEGIN 
 	INSERT INTO PERSON (id) VALUE (null);
 
@@ -191,17 +191,17 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS admin_create_professional;
 DELIMITER //
 CREATE PROCEDURE admin_create_professional (
-    IN i_fname varchar(55),
-    IN i_lname varchar(55),
-    IN i_email varchar(254),
+    IN i_fname VARCHAR(55),
+    IN i_lname VARCHAR(55),
+    IN i_email VARCHAR(254),
     IN i_verified INT,
-    IN i_licenseNumber varchar(50),
-    IN i_specialization varchar(50),
-    IN i_phonenumber varchar(20),
-    IN i_mdcn varchar(30),
-	IN i_country varchar(50),
-	IN i_city varchar(50),
-    IN i_street varchar(50),
+    IN i_licenseNumber VARCHAR(50),
+    IN i_specialization VARCHAR(50),
+    IN i_phonenumber VARCHAR(20),
+    IN i_mdcn VARCHAR(30),
+	IN i_country VARCHAR(50),
+	IN i_city VARCHAR(50),
+    IN i_street VARCHAR(50),
     IN i_Bio TEXT
 ) BEGIN 
 	INSERT INTO PERSON (id) VALUE (null);
@@ -222,11 +222,11 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS add_education;
 DELIMITER //
 CREATE PROCEDURE add_education (
-	IN i_email varchar(255),
-	IN i_college varchar(255),
-    IN i_degree varchar(20),
-    IN i_endDate varchar(15),
-    IN i_startDate varchar(15)
+	IN i_email VARCHAR(255),
+	IN i_college VARCHAR(255),
+    IN i_degree VARCHAR(20),
+    IN i_endDate VARCHAR(15),
+    IN i_startDate VARCHAR(15)
 ) BEGIN 
 	
     SELECT id FROM PROFESSIONAL WHERE email = i_email INTO @id;
@@ -245,9 +245,9 @@ DROP PROCEDURE IF EXISTS create_application;
 DELIMITER //
 CREATE PROCEDURE create_application (
 
-    IN i_fac_email varchar(255),
-	IN i_email varchar(255),
-    IN i_title varchar(30), 
+    IN i_fac_email VARCHAR(255),
+	IN i_email VARCHAR(255),
+    IN i_title VARCHAR(30), 
     IN i_coverletter TEXT,
     IN i_timecreated DATETIME
     
@@ -269,16 +269,16 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS update_facility_profile;
 DELIMITER //
 CREATE PROCEDURE update_facility_profile (
-	IN i_Email_Old varchar(255),
-    IN i_City varchar(55),
-    IN i_Country varchar(55),
-    IN i_Email varchar(255),
-    IN i_FacName varchar(255),
-    IN i_State varchar(255),
+	IN i_Email_Old VARCHAR(255),
+    IN i_City VARCHAR(55),
+    IN i_Country VARCHAR(55),
+    IN i_Email VARCHAR(255),
+    IN i_FacName VARCHAR(255),
+    IN i_State VARCHAR(255),
 	IN i_Descript TEXT,
-    IN i_Street varchar(255),
-    IN i_Contact_Name varchar(255),
-    IN i_Contact_PhoneNumber varchar(255)
+    IN i_Street VARCHAR(255),
+    IN i_Contact_Name VARCHAR(255),
+    IN i_Contact_PhoneNumber VARCHAR(255)
 ) BEGIN 
 
 	SELECT ID FROM FACILITY WHERE email = i_Email_Old INTO @id;
@@ -319,7 +319,7 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS professionals_apply_for_verification;
 DELIMITER //
 CREATE PROCEDURE professionals_apply_for_verification (
-	IN i_email varchar(255)
+	IN i_email VARCHAR(255)
 ) BEGIN 
 	
 
@@ -342,7 +342,7 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS facility_apply_for_verification;
 DELIMITER //
 CREATE PROCEDURE facility_apply_for_verification (
-	IN i_email varchar(255)
+	IN i_email VARCHAR(255)
 ) BEGIN 
 	
 	SET @pending := 1;
@@ -369,8 +369,8 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS admin_verify_professional;
 DELIMITER //
 CREATE PROCEDURE admin_verify_professional (
-	IN i_admin_email varchar(255),
-    IN i_prof_email varchar(255)
+	IN i_admin_email VARCHAR(255),
+    IN i_prof_email VARCHAR(255)
 ) BEGIN 
 	
 	SET @newStatus := 2;
@@ -394,8 +394,8 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS admin_verify_facility;
 DELIMITER //
 CREATE PROCEDURE admin_verify_facility (
-	IN i_admin_email varchar(255),
-    IN i_fac_email varchar(255)
+	IN i_admin_email VARCHAR(255),
+    IN i_fac_email VARCHAR(255)
 ) BEGIN 
 	
 	SET @newStatus := 2;
@@ -419,7 +419,7 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS admin_create_admin;
 DELIMITER //
 CREATE PROCEDURE admin_create_admin (
-	IN i_email varchar(255)
+	IN i_email VARCHAR(255)
 ) BEGIN 
 	    
 	INSERT INTO PERSON (id) VALUE (null);
@@ -436,9 +436,9 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS hire_applicant;
 DELIMITER //
 CREATE PROCEDURE hire_applicant (
-	IN i_fac_email varchar(255),
-    IN i_prof_email varchar(255),
-    IN i_title varchar(255)
+	IN i_fac_email VARCHAR(255),
+    IN i_prof_email VARCHAR(255),
+    IN i_title VARCHAR(255)
 ) BEGIN 
 	    
 	SELECT id FROM PROFESSIONAL WHERE i_prof_email = Email INTO @pid;
@@ -461,10 +461,10 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS add_document_professional;
 DELIMITER //
 CREATE PROCEDURE add_document_professional (
-	IN i_owner_email varchar(255),
-    IN i_category varchar(255),
-    IN i_S3_key varchar(255),
-    IN i_file_name varchar(255)
+	IN i_owner_email VARCHAR(255),
+    IN i_category VARCHAR(255),
+    IN i_S3_key VARCHAR(255),
+    IN i_file_name VARCHAR(255)
 ) BEGIN 
 	    
 	SELECT id FROM PROFESSIONAL WHERE i_owner_email = Email INTO @pid;
@@ -480,14 +480,15 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS update_posting;
 DELIMITER //
 CREATE PROCEDURE update_posting (
-	IN i_email varchar(55),
-    IN i_old_title varchar(30), 
-    IN i_new_title varchar(30),
+	IN i_email VARCHAR(55),
+    IN i_old_title VARCHAR(30), 
+    IN i_new_title VARCHAR(30),
     IN i_salary INT,
     IN i_descript TEXT,
     IN i_slots INT,
-    IN i_category varchar(30),
-    IN i_shifts varchar(30)
+    IN i_category VARCHAR(30),
+    IN i_shifts VARCHAR(30),
+    IN i_visibility INT
 ) BEGIN 
 	
 	SELECT id FROM FACILITY WHERE Email = i_email INTO @id;
@@ -499,7 +500,8 @@ CREATE PROCEDURE update_posting (
 		  Salary = i_salary,
 		  Descript = i_descript,
 		  Slots = i_slots,
-		  Shifts = i_shifts
+		  Shifts = i_shifts,
+          Visibility = i_visibility
 	WHERE
 		FID = @id AND Title = i_old_title;
 	

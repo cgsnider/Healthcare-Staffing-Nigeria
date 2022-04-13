@@ -55,7 +55,7 @@ function TopBar(props) {
         if (userType === 'Facility') {
             return (
                 <>
-                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/user')}>Profile</button>
+                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/facility')}>Profile</button>
                     <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/newPosting')}>Create Posting</button>{/** link to page to post new job openings */}
                     <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/myPostings')}>My Postings</button> {/** link to view facilities current active postings */}
 

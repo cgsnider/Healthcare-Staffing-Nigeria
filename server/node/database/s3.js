@@ -52,3 +52,4 @@ async function download(fileKey) {
 
 module.exports.upload = upload;
 module.exports.download = download;
+module.exports.download_stream = download_stream;

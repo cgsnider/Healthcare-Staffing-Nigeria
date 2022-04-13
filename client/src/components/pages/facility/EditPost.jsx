@@ -71,7 +71,7 @@ export default function EditPost(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log({...formData, Descript: editorRef.current.getContent(), Category: selectedCategory.label});
-        updatePosting({OldTitle: postingTitle, NewTitle: formData.Title, Salary: formData.Salary, Descript: formData.Descript, Slots: formData.Slots, Category: formData.Category, Shifts: formData.Shifts})
+        updatePosting({OldTitle: postingTitle, NewTitle: formData.Title, Salary: formData.Salary, Descript: formData.Descript, Slots: formData.Slots, Category: formData.Category.value, Shifts: formData.Shifts})
         .then(res => {navigate('/myPostings')})
         .catch(err => {console.error(err)})
     }
