@@ -80,7 +80,8 @@ export async function postHireApplicant(data) {
 export async function postProfilePicture(img) {
     let formData = new FormData();
     formData.append("image", img);
-    return await postFile('/profile_picture', formData)
+    const response = await postFile('/profile_picture', formData)
+    return await response.json()
 }
 
 /**

@@ -13,7 +13,7 @@ import placeholder from '../../images/profile-placeholder.jpg';
 import { applyForVerification, getEducation, getProfileData, getProfileImage, postEducation, postProfileData, postProfilePicture, getResume, postResume, downloadResume } from '../../hooks/server';
 import CircleLoader from 'react-spinners/CircleLoader';
 export default function Profile(props) {
-    const [profileInfo, setProfileInfo] = useState(null);
+    const [profileInfo, setProfileInfo] = useState({});
 
 
     const [newExperience, setNewExperience] = useState([]);
@@ -24,6 +24,11 @@ export default function Profile(props) {
     
     const [infoFetchEnd, setInfoFetchEnd] = useState(false);
     const [edFetchEnd, setEdFetchEnd] = useState(false);
+
+    const [picture, setPicture] = useState(placeholder);
+
+
+
     useEffect( ()=> {
         let isMounted = true;
         fetchProfileData(isMounted);
@@ -32,6 +37,11 @@ export default function Profile(props) {
             isMounted = false
         }
     }, []);
+
+    useEffect( () => {
+        setPicture((profileInfo.ImageAddr) ?  `/api/profile_picture/${profileInfo.ImageAddr}` : placeholder)
+        console.log(profileInfo)
+    }, [profileInfo])
 
     const fetchResume = (email) => {
         console.log(email);
@@ -44,6 +54,7 @@ export default function Profile(props) {
     }
 
     const fetchProfileData = async(isMounted) => {
+        console.log('fetchProfileData')
         let data = await getProfileData()
         if (isMounted) {
             setInfoFetchEnd(true);
@@ -124,13 +135,13 @@ export default function Profile(props) {
         }
     }
 
-    const handleImageUpload = (e) => {
-        postProfilePicture(e.target.files[0]);
+    const handleImageUpload = async (e) => {
+        await postProfilePicture(e.target.files[0]);
         fetchProfileData(true);
     }
 
-    const handleResumeUplaod = (e) => {
-        postResume(e.target.files[0]);
+    const handleResumeUplaod = async (e) => {
+        await postResume(e.target.files[0]);
         fetchProfileData(true);
     }
 
@@ -148,7 +159,7 @@ export default function Profile(props) {
                                             <div>
                                                 <label htmlFor='pfp-upload' >
                                                     <img className="h-auto w-full mx-auto hover:cursor-pointer hover:border-2"
-                                                        src={(profileInfo.ImageAddr) ?  `/api/profile_picture/${profileInfo.ImageAddr}` : placeholder}
+                                                        src={picture}
                                                         alt="Profile Picture"/>
                                                 </label>
                                                 {/** use attribute to specify accepted file types: accept={comma-separated list of unique file type specifiers.}*/}

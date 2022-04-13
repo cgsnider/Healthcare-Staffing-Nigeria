@@ -13,8 +13,6 @@ import placeholder from '../../../images/profile-placeholder.jpg';
 import {applyForVerification, getProfileData, getProfileImage, postProfileData, postProfilePicture } from '../../../hooks/server';
 
 export default function Fac_Profile(props) {
-    localStorage.getItem('type')
-    console.log('FAC')
 
     const [profileInfo, setProfileInfo] = useState(
         {Email: null, 
@@ -27,8 +25,14 @@ export default function Fac_Profile(props) {
         Country:null,
         Descript:null,
         CName: null
-    })
+    });
 
+    const [picture, setPicture] = useState(placeholder);
+    const [update, setUpdate] = useState(0);
+
+    const triggerUpdate = () => {
+        setUpdate((update + 1) % 16);
+    }
     
     useEffect( ()=> {
         let isMounted = true;
@@ -38,11 +42,21 @@ export default function Fac_Profile(props) {
         }
     }, []);
 
+    useEffect( () => {
+        setPicture((profileInfo.ImageAddr) ?  `/api/profile_picture/${profileInfo.ImageAddr}` : placeholder)
+        console.log(profileInfo)
+    }, [update])
+
+
     const fetchProfileData = async(isMounted) => {
-        let data = await getProfileData()
-        .catch(err=>{console.log(err)})
-        console.log("FETCH DATA: ",data)
-        if (isMounted) setProfileInfo(data[0][0], console.log('pinfo', profileInfo))
+        let data = await getProfileData();
+        console.log("FETCH DATA: ",data);
+        console.log(isMounted);
+        if (isMounted) {
+            console.log('Trigger')
+            setProfileInfo(data[0][0])
+            triggerUpdate()
+        }
         else console.log('aborted setPostings on unmounted component')
     }
 

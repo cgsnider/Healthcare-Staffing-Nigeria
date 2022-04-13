@@ -15,6 +15,13 @@ function PendingVerifications(props) {
 
     const [facilities, setFacilities] = useState([]);
 
+    const [update, setUpdate] = useState(0);
+
+    const triggerUpdate = () => {
+        setUpdate((update + 1) % 16);
+    }
+
+
     const handleFacilitiesView = () => {
         setPractitionersView(false);
     }
@@ -25,12 +32,15 @@ function PendingVerifications(props) {
 
     useEffect(async () => {
         let isMounted = true;
-        setPractitioners(await getVerifiedPendingProf());
-        setFacilities(await getVerifiedPendingFac());
+        if (practitionersView) {
+            setPractitioners(await getVerifiedPendingProf());
+        } else {        
+            setFacilities(await getVerifiedPendingFac());
+        }
         return () => {
             isMounted = false;
         };
-    }, []);
+    }, [practitionersView, update]);
 
     if(practitionersView === true) {
         return (
@@ -55,7 +65,8 @@ function PendingVerifications(props) {
                                                 mdcn={e.MDCN}
                                                 dob={e.DoB}
                                                 bio={e.Bio}
-                                                loc={`${e.Street}, ${e.City}, ${e.Country}`}/>
+                                                loc={`${e.Street}, ${e.City}, ${e.Country}`}
+                                                trigger={triggerUpdate}/>
                             )
                         })}
                     </div>
@@ -84,7 +95,8 @@ function PendingVerifications(props) {
                                                    loc={`${e.City}, ${e.STATE}, ${e.Country}`}
                                                    email={e.Email}
                                                    number={e.PhoneNumber}
-                                                   bio={e.Bio}/>
+                                                   bio={e.Bio}
+                                                   trigger={triggerUpdate}/>
                             )
                         })}
                     </div>

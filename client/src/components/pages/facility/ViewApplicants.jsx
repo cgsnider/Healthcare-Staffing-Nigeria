@@ -6,12 +6,12 @@ import { getApplicants } from "../../../hooks/server.js";
 function ViewApplicants(props) {
 
     const [practitioners, setPractitioners] = useState([]);
-        useEffect( () => {
+        useEffect( async () => {
             let mounted = true;
             if (mounted) {
-                fetchApplicants()
+                setPractitioners(await getApplicants(props.postingID))
             }
-            
+            return () => mounted = false
         }, []);
 
         const fetchApplicants = async() => {
@@ -31,7 +31,7 @@ function ViewApplicants(props) {
                 {[...practitioners].map((e, i) => {
                     return (
                         <Applicant name={`${e.FName} ${e.LName}`}
-                                        image={(e.image) ? e.image : placeholder}
+                                        image={(e.ImageAddr) ? `/api/profile_picture/${e.ImageAddr}` : placeholder}
                                         specialty={e.Specialization}
                                         resume={e.resume}
                                         email={e.Email}
