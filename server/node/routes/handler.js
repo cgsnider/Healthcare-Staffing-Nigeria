@@ -149,7 +149,7 @@ router.get('/applicants', STD_MIDWARE, (req, res) => {
     const procedure = 'get_applicants';
     const params = [req.user.email, req.headers.params.PostingTitle];
     db.call(procedure, params)
-        .then(results => res.end(JSON.stringify(results)))
+        .then(results => res.end(JSON.stringify(results[0])))
         .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
 });
 
