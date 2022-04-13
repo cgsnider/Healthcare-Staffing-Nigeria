@@ -15,6 +15,12 @@ function PendingVerifications(props) {
 
     const [facilities, setFacilities] = useState([]);
 
+    const [update, setUpdate] = useState(0);
+
+    const updateTrigger = () => {
+        setUpdate((update + 1) % 10);
+    }
+
     const filter = (e) => {
         return e.Verified === 1;
     }
@@ -29,6 +35,7 @@ function PendingVerifications(props) {
 
     useEffect(async () => {
         let isMounted = true;
+        console.log('USE EFFECT');
         if (practitionersView == true) {
             setPractitioners(await getVerifiedPendingProf());
         } else {
@@ -37,7 +44,7 @@ function PendingVerifications(props) {
         return () => {
             isMounted = false;
         };
-    }, []);
+    }, [practitionersView, update]);
 
     return (
         <div>
@@ -61,7 +68,8 @@ function PendingVerifications(props) {
                                             mdcn={e.MDCN}
                                             dob={e.DoB}
                                             bio={e.Bio}
-                                            loc={`${e.Street}, ${e.City}, ${e.Country}`}/>
+                                            loc={`${e.Street}, ${e.City}, ${e.Country}`}
+                                            trigger={updateTrigger}/>
                         )
                     })}
                 </div>
@@ -75,7 +83,8 @@ function PendingVerifications(props) {
                                             loc={`${e.City}, ${e.State}, ${e.Country}`}
                                             email={e.Email}
                                             number={e.PhoneNumber}
-                                            bio={e.Bio}/>
+                                            bio={e.Bio}
+                                            trigger={updateTrigger}/>
                         )
                     })}
                 </div>

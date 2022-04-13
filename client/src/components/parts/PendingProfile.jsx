@@ -6,6 +6,17 @@ function PendingProfile(props) {
 
     console.log('PENDING PROFILE')
 
+    const approve = async () => {
+        return new Promise((resolve, reject) => {
+            postVerifyProfessional(props.email)
+                .then(res => {
+                    if (res == 200) {
+                        props.trigger();
+                        resolve(res)
+                    } else reject(res)
+                }).catch(err => reject(err));
+        });
+    };
 
 
     return (
@@ -67,8 +78,8 @@ function PendingProfile(props) {
                                     </div>
                                </div>
                                <div className="flex text-center justify-center gap-2 m-5">
-                                    <button className="h-2/3 px-4 bg-green-500 rounded text-white pr-15" onClick={() => postVerifyProfessional(props.email)}>Approve</button>
-                                    <button className="h-2/3 px-4 bg-red-500 rounded text-white pl-15">Decline</button>
+                                    <button className="h-2/3 px-4 bg-green-500 rounded text-white pr-15" onClick={() => approve().then(res => close())}>Approve</button>
+                                    <button className="h-2/3 px-4 bg-red-500 rounded text-white pl-15" onClick={() => close()} >Decline</button>
                                     <button className="h-2/3 px-4 bg-gray-500 rounded text-white" onClick={()=>{close();}}>Close</button>
                                </div>
                            </div>

@@ -210,6 +210,7 @@ async function getData(url='', body={}) {
         redirect: 'follow',
         referrerPolicy: 'no-referrer', 
     })
+    console.log(data)
     const items = await data.json();
     return items;
 }
@@ -290,6 +291,6 @@ async function postData(url = '', data ={}) {
             redirect: 'follow',
             referrerPolicy: 'no-referrer', 
             body: formBody
-        }).then(response => {resolve(response)});
+        }).then(response => {resolve(response.status)});
     });
 }

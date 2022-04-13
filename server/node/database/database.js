@@ -1,4 +1,5 @@
 const mysql = require('mysql2/promise');
+const Code = require('../code.js')
 
 const promised_connection = mysql.createConnection({
         host: 'localhost',
@@ -39,8 +40,11 @@ async function call (procedure="", params=[]) {
         db.query(sql)
             .then(result => {
                 console.log(sql, "\n", result[0])
-                resolve(result[0])})
-            .catch(err => reject(err))
+                resolve(result[0])
+            }).catch(err => {
+                console.error(`Querying Database Error: ${err}`);
+                reject(Code.internal_server_error);
+            })
     });
 }
 
@@ -55,12 +59,13 @@ async function handleNewUser (req, res, next) {
             if (results[0][0][0].Exist_Status === -1){
                 addNewUser(req.user)
                     .then(res => next())
-                    .catch(err => next());
+                    .catch(err => res.status(Code.internal_server_error).end());
             } else {
+                console.log('NEXT')
                 next();
             }
         })
-        .catch(err => console.log('DB FAILURE'))
+        .catch(err => res.status(Code.internal_server_error).end())
 }
 
 async function addNewUser(user) {
@@ -70,9 +75,8 @@ async function addNewUser(user) {
         let sql;
         
         if (user['custom:type'] == 'Professional') {
-
             fullName = user.name.split("$")
-            sql = `call cmg_staffing_nigeria.register_professional('${fullName[0]}', '${fullName[1]}', '${user.email}');`
+            sql = `call cmg_staffing_nigeria.register_professional('${fullName[0]}', '${(fullName.length >= 2) ? fullName[1] : 'N/A'}', '${user.email}');`
         } else if (user['custom:type'] == 'Facility') {
             sql = `CALL register_facility('${user.name}', '${user.email}')`
         } else if (user['custom:type'] == 'Admin') {
@@ -81,7 +85,7 @@ async function addNewUser(user) {
 
         db.query(sql)
             .then(results => resolve(results))
-            .catch(err => reject(err));
+            .catch(err => reject(Code.internal_server_error));
             
     });
 }
