@@ -108,10 +108,10 @@ function Jobs (props) {
 
                         <ul className="prof_job_grid content-center flex flex-wrap mx-32">
                         {[...postings].filter(filterPosition).filter(filterSearch)
-                        .map(e => {
+                        .map(e => {console.log(e)
                         return ( <li className='prof_job_node mx-16 mb-8' key={key++}>
                                 <JobListing
-                                image={(e.Image) ? e.Image : 'resources/cmg_logo.png'}
+                                image={(e.ImageAddr) ? `/api/profile_picture/${e.ImageAddr}` : 'resources/cmg_logo.png'}
                                 position={e.Title}
                                 location={`${e.City}, ${e.Country}`}
                                 shifts={e.Shifts}

@@ -12,7 +12,7 @@ SELECT verified, id FROM PROFESSIONAL WHERE email = i_email INTO @verified, @id;
 
 IF @verified = 2
 THEN 
-	SELECT J.Title, J.Salary, J.Descript, J.Slots, J.Shifts, J.Category, F.FacName, F.City, F.Country, F.State, F.Street, F.Email
+	SELECT J.Title, J.Salary, J.Descript, J.Slots, J.Shifts, J.Category, F.FacName, F.City, F.Country, F.State, F.Street, F.Email, F.ImageAddr
 		FROM JOBPOSTING AS J JOIN FACILITY AS F JOIN Application AS A ON F.ID = J.FID AND NOT (A.PostingTitle = J.Title AND J.FID = A.FID AND A.PID = @id)
         WHERE category = i_category OR i_category IS NULL;
 ELSE 
