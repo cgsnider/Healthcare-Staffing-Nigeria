@@ -283,7 +283,7 @@ CREATE PROCEDURE get_applicants(
 	
     SELECT id FROM FACILITY WHERE Email = i_email INTO @id; 
     
-	SELECT P.Email, P.ImageAddr, P.FName, P.LName, P.PhoneNumber, P.LicenseNumber, P.Specialization, P.MDCN, P.City, P.Country, P.Street, P.Bio 
+	SELECT P.Email, P.ImageAddr, P.FName, P.LName, P.PhoneNumber, P.LicenseNumber, P.Specialization, P.MDCN, P.City, P.Country, P.Street, P.Bio, A.Progress
     FROM APPLICATION AS A JOIN Professional AS P ON A.PID = P.ID WHERE A.FID = @id AND A.PostingTitle = i_posting_title;
     
     INSERT INTO SYSTEMLOG (uid, act) VALUE 
