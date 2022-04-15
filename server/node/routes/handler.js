@@ -192,6 +192,19 @@ router.get('/postings', STD_MIDWARE, (req, res) => {
         .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
 });
 
+router.get('/get_hired_postings', STD_MIDWARE, (req, res) => {
+    if (req.user['custom:type'] == 'Admin') {
+        const procedure = 'admin_view_hirings';
+        const params = [req.user.email];
+        db.call(procedure, params)
+            .then(results => res.end(JSON.stringify(results[0])))
+            .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
+    } else {
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
+        return;
+    }
+});
+
 router.get('/review_fac_verification', STD_MIDWARE, (req, res) => {
     if (req.user['custom:type'] == 'Admin') {
         const procedure = 'admin_verification_pending_facility';

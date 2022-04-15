@@ -64,6 +64,14 @@ export async function getFacilityPostings() {
     return await getData('/postings')
 }
 
+/**
+ * 
+ * @returns {Title: String, Category: String, FacName: String, TimeCreated: String, ProfEmail: String, FName: String, LName: String}
+ */
+export async function getHiredPostings() {
+    return await getData('/get_hired_postings')
+}
+
 export async function applyForVerification() {
     return await postData('/apply_verification')
 }
