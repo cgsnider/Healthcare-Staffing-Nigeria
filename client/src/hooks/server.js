@@ -79,6 +79,25 @@ export async function postJobPosting(data) {
 }
 
 /**
+ * 
+ * @param {{ProfEmail: String, Message: String}} data the data to be posted to the databse
+ * @returns 402 if user is unauthorized, 418 if database failure, or sql results if successful
+ */
+export async function rejectProfessional(data) {
+    return await postData('/reject_professional', data);
+}
+
+/**
+ * 
+ * @param {{FacEmail: String, Message: String}} data the data to be posted to the databse
+ * @returns 402 if user is unauthorized, 418 if database failure, or sql results if successful
+ */
+ export async function rejectFacility(data) {
+    return await postData('/reject_facility', data);
+}
+
+
+/**
  * Sends request to hire applicant to node server.
  * @param {{ApplicantEmail, PostingTitle}} data 
  *  information to identify which of the user's applicants to be hired
