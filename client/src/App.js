@@ -18,6 +18,7 @@ import ViewMaster from "./components/pages/facility/ViewMaster";
 import CreatePosting from "./components/pages/facility/CreatePosting";
 import ManageProfessionals from "./components/pages/Admins/ManageProfessionals";
 import ManageFacilities from "./components/pages/Admins/ManageFacilities";
+import ManageApplicants from "./components/pages/Admins/ManageApplicants";
 //import Drop from './components/pages/Drop';
 //import Elogin from './components/examples/Elogin';
 
@@ -54,6 +55,7 @@ const App = () => {
 
           <Route path='/manage_professionals' element={<ManageProfessionals/>}/>
           <Route path='/manage_facilities' element={<ManageFacilities/>}/>
+          <Route path='/hired_applicants' element={<ManageApplicants/>}/>
 
           <Route path='/myPostings' element={<ViewMaster/>}/>
           <Route path='/editPosting' element={<EditPost />}/>
