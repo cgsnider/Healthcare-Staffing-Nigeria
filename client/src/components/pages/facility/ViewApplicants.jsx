@@ -46,10 +46,10 @@ function ViewApplicants(props) {
                                         email={e.Email}
                                         number={e.PhoneNumber}
                                         mdcn={e.MDCN}
-                                        dob={e.DoB}
                                         bio={e.Bio}
                                         cl={e.CoverLetter}
                                         loc={e.Street}
+                                        status={e.Progress}
                                         area={`${e.City}, ${e.Country}`}
                                         postTitle={props.postingID}
                                         key={i}
