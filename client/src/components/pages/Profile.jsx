@@ -123,27 +123,28 @@ export default function Profile(props) {
     }
 
     const VerifiedIcon = (props) => {
-        if(profileInfo.Verified==0) {
+        if(profileInfo.Verified===0) {
             return(
                 <div className="ml-auto mr-0">
                     <span className="bg-red-500 py-1 px-2 rounded text-white text-sm">Unverified</span>
                 </div>
             );
         }
-        if(profileInfo.Verified==1) {
+        if(profileInfo.Verified===1) {
             return(
                 <div className="ml-auto mr-0">
                     <span className="bg-amber-500 py-1 px-2 rounded text-white text-sm">Pending</span>
                 </div>
             );
         }
-        if(profileInfo.Verified==2) {
+        if(profileInfo.Verified===2) {
             return(
                 <div className="ml-auto mr-0">
                     <span className="bg-green-500 py-1 px-2 rounded text-white text-sm">Verified</span>
                 </div>
             );
         }
+        return (null);
     }
 
     const handleImageUpload = async (e) => {
