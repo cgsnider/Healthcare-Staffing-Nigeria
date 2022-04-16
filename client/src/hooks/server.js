@@ -228,7 +228,108 @@ export async function getBulkFacilities() {
     return await getData('/bulk_facilities');
 }
 
+/**
+ * Deltes professional data (Only works for admins)
+ * @param {{Email: String}} data email of the user to be deleted
+ * @returns 204 if successful, otherwise corresponding error code
+ */
+export async function deleteProfessional(data) {
+    return await deleteData('/professional', data);
+}
 
+/**
+ * Deltes facility data (Only works for admins)
+ * @param {{Email: String}} data email of the user to be deleted
+ * @returns 204 if successful, otherwise corresponding error code
+ */
+export async function deleteFacility(data) {
+    return await deleteData('/facility', data);
+}
+/**
+ * Deletes education
+ * @param {{College: String, Degree: College, StartDate: String, EndDate: String}} data 
+ * @returns 204 if successful, otherwise corresponding error code
+ */
+export async function deleteEducation(data) {
+    return await deleteData('/education', data);
+}
+
+/**
+ * Deletes document data from database (Does not touch bucket).
+ * @param {{Category: String (Optional), S3Key: String (Optional)}} data 
+ * @returns 204 if successful, otherwise corresponding error code
+ */
+export async function deleteDocument(data) {
+    return await deleteData('/document', data);
+}
+
+/**
+ * Deletes Resume (only works for professionals)
+ * @returns 204 if successful, otherwise corresponding error code
+ */
+export async function deleteResume() {
+    return await deleteData('/resume');
+}
+/**
+ * Deletes contact (Only works for facility)
+ * @returns 204 if successful, otherwise corresponding error code
+ */
+export async function deleteContact() {
+    return await deleteData('/contact');
+}
+
+/**
+ * Deletes a job posting. (Only works for facilities)
+ * @param {{Title: String}} data 
+ * @returns 204 if successful, otherwise corresponding error code
+ */
+export async function deletePosting(data) {
+    return await deleteData('/posting', data);
+}
+
+/**
+ * Deletes an application from server
+ * @param {{ProfEmail: String (Optional), FacEmail: String (Optional), Title: String}} data 
+ * Data denoting the user to be deleted. (Facilities must provide ProfEmail, Professioanls must provide FacEmail)
+ * @returns 204 if successful, otherwise corresponding error code
+ */
+export async function deleteApplication(data) {
+    return await deleteData('/application', data);
+}
+/**
+ * Deletes the admin
+ * @returns the status of code from the request. (204 if successul)
+ */
+export async function deleteAdmin() {
+    return await deleteData('/admin');
+}
+
+/**
+ * Generic method for making a DELTE request. 
+ * @param {string} url The url for the resources being searched for. (api is included)
+ * @returns the data from the get request with JSON processing completed
+ */
+ async function deleteData(url='', body={}) {
+    
+    const data = await fetch(`api${url}`, {
+        method: 'DELETE',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            ID: localStorage.getItem('IDToken'),
+            params: JSON.stringify(body)
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer', 
+    })
+
+    if (data.status == 200) {
+        const items = await data.json();
+        return items;
+    } else return data.status;
+}
 
 /**
  * Generic method for making a GET request. 
@@ -251,8 +352,10 @@ async function getData(url='', body={}) {
         referrerPolicy: 'no-referrer', 
     })
     console.log(data)
-    const items = await data.json();
-    return items;
+    if (data.status == 200) {
+        const items = await data.json();
+        return items;
+    } else return data.status;
 }
 
 /**
