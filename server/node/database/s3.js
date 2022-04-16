@@ -27,9 +27,7 @@ async function upload(file) {
     
     fs.unlinkSync(file.path)
 
-    console.log("image")
-
-    return s3.upload(uploadData).promise()
+    return s3.upload(uploadData).promise();
 }
 
 function download_stream(fileKey) {
@@ -38,7 +36,7 @@ function download_stream(fileKey) {
     Bucket: bucketName
   }
 
-  return s3.getObject(downloadData).createReadStream()
+  return s3.getObject(downloadData).createReadStream();
 }
 
 async function download(fileKey) {
@@ -47,9 +45,19 @@ async function download(fileKey) {
     Bucket: bucketName
   }
 
-  return await s3.getObject(downloadData).promise()
+  return await s3.getObject(downloadData).promise();
+}
+
+async function destroy(fileKey) {
+  const deleteData = {
+    Key: fileKey,
+    Bucket: bucketName
+  }
+
+  return await s3.deleteObject(deleteData).promise();
 }
 
 module.exports.upload = upload;
 module.exports.download = download;
 module.exports.download_stream = download_stream;
+module.exports.delete = destroy; 

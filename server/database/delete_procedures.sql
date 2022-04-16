@@ -55,14 +55,35 @@ DROP PROCEDURE IF EXISTS delete_document;
 DELIMITER //
 CREATE PROCEDURE delete_document (
 	IN i_email VARCHAR(255),
+    IN i_category VARCHAR(255),
     IN i_s3key VARCHAR(255)
 ) BEGIN 
 
 	SELECT IFNULL((SELECT id FROM PROFESSIONAL WHERE Email = i_email), (SELECT id FROM FACILITY WHERE Email = i_email)) 
         INTO @id;
-
+        
+	SELECT S3Key FROM DOCUMENT 
+		WHERE 
+			OwnerID = @id
+            AND (S3Key = i_s3key OR i_s3key is NULL)
+            AND (Category = i_category OR i_category is NULL);
+            
+	UPDATE PROFESSIONAL
+		SET
+			S3Key = null
+		WHERE
+			ID = @id;
+		
+	UPDATE FACILITY
+		SET
+			S3Key = null
+		WHERE
+			ID = @id;
+    
 	DELETE FROM DOCUMENT 
-		WHERE OwnerId = @id AND S3Key = i_s3key;
+		WHERE OwnerId = @id 
+			AND (S3Key = i_s3key OR i_s3key is NULL)
+            AND (Category = i_category OR i_category is NULL);
 
 	INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'delete_document');
@@ -161,7 +182,7 @@ CREATE PROCEDURE admin_delete_facility (
 ) BEGIN 
 
 	SELECT id FROM ADMINISTRATOR WHERE Email = i_admin_email INTO @aid;
-	SELECT id FROM PROFESSIONAL WHERE Email = i_fac_email INTO @fid;
+	SELECT id FROM FACILITY WHERE Email = i_fac_email INTO @fid;
 
 	DELETE FROM PERSON WHERE ID = @fid;
 

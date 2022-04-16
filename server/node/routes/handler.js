@@ -405,18 +405,27 @@ router.post('/profile_picture', [...STD_MIDWARE, upload.single('image')], async 
 })
 
 router.post('/resume', [...STD_MIDWARE, upload.single('pdf')], async (req, res) => {
-    const file = req.file;
-
-    const upload = await s3.upload(file);
-
-    let procedure;
-    const params = [req.user.email, 'RESUME', upload.Key, file.originalname];
-
     if (req.user['custom:type'] == 'Professional') {
-        procedure = 'add_document_professional';
+        const file = req.file;
+
+        const upload = await s3.upload(file);
+
+        const delete_params = [req.user.email, 'RESUME', null];
+        const delete_procedure = 'delete_document';
+
+        const procedure = 'add_document_professional';
+        const params = [req.user.email, 'RESUME', upload.Key, file.originalname];
+
+        const delete_key = await db.call(delete_procedure, delete_params)[0];
+        
+        if (delete_key != null) {
+            s3.delete(delete_key);
+        }
+
         db.call(procedure, params)
-            .then(res.end(JSON.stringify(upload.Key)))
+            .then(result =>res.end(JSON.stringify(upload.Key)))
             .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
+
     }  else {
         res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
         return;
@@ -508,10 +517,147 @@ router.post('/jobs', STD_MIDWARE, (req, res) => {
 
     db.call(procedure, params)
         .then(results => res.end(JSON.stringify(results)))
-        .catch(err => {
-            res.sendStatus(err);
-            res.end(JSON.stringify("Error Posting Data into Database"));
-        });
+        .catch(err => res.status(err).end(JSON.stringify("Error Posting Data into Database")));
 })
+
+router.delete('/professional', STD_MIDWARE, (req, res) => {
+    if (req.user['custom:type'] == 'Admin') {
+        const params = [req.user.email, data.Email];
+        const procedure = 'admin_delete_professional';
+
+        db.call(procedure, params)
+        .then(results => res.end(JSON.stringify(results)))
+        .catch(err => res.status(err).end(JSON.stringify("Error Posting Data into Database")));
+    } else {
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
+        return;
+    }
+});
+router.delete('/facility', STD_MIDWARE, (req, res) => {
+    if (req.user['custom:type'] == 'Admin') {
+        const params = [req.user.email, data.Email];
+        const procedure = 'admin_delete_facility';
+
+        db.call(procedure, params)
+        .then(results => res.end(JSON.stringify(results)))
+        .catch(err => res.status(err).end(JSON.stringify("Error Posting Data into Database")));
+
+    } else {
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
+        return;
+    }
+});
+
+router.delete('/education', STD_MIDWARE, (req, res) => {
+    if (req.user['custom:type'] == 'Professional') {
+        const params = [req.user.email, data.College, data.Degree, data.StartData, data.EndDate];
+        const procedure = 'delete_education';
+
+        db.call(procedure, params)
+        .then(results => res.end(JSON.stringify(results)))
+        .catch(err => res.status(err).end(JSON.stringify("Error Posting Data into Database")));
+    } else {
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
+        return;
+    }
+});
+
+router.delete('/document', STD_MIDWARE, (req, res) => {
+    if (req.user['custom:type'] == 'Professional') {
+        const params = [req.user.email, data.Category, data.S3Key];
+        const procedure = 'delete_education';
+
+        db.call(procedure, params)
+        .then(results => res.end(JSON.stringify(results)))
+        .catch(err => res.status(err).end(JSON.stringify("Error Posting Data into Database")));
+    } else {
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
+        return;
+    }
+});
+
+router.delete('/resume', STD_MIDWARE, async (req, res) => {
+    if (req.user['custom:type'] == 'Facility' || req.user['custom:type'] == 'Professional') {
+        const params = [req.user.email, 'RESUME', null];
+        const procedure = 'delete_education';
+
+        db.call(params, procedure)
+            .then(result => {
+                const key = result[0];
+                if (key != null) {
+                    s3.delete(key)
+                        .then(r => res.status(Code.no_content).end())
+                        .catch(e => res.status(Code.internal_server_error));
+                }
+            }).catch(error => res.status(Code.internal_server_error).end());
+        
+    } else {
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
+        return;
+    }
+});
+
+router.delete('/contact', STD_MIDWARE, (req, res) => {
+    if (req.user['custom:type'] == 'Facility') {
+        const params = [req.user.email];
+        const procedure = 'delete_contact';
+
+        db.call(procedure, params)
+        .then(results => res.end(JSON.stringify(results)))
+        .catch(err => res.status(err).end(JSON.stringify("Error Posting Data into Database")));
+    } else {
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
+        return;
+    }
+});
+
+router.delete('/posting', STD_MIDWARE, (req, res) => {
+    if (req.user['custom:type'] == 'Facility' || req.user['custom:type'] == 'Admin') {
+        const params = [req.user.email, req.body.Title];
+        const procedure = 'delete_contact';
+
+        db.call(procedure, params)
+        .then(results => res.end(JSON.stringify(results)))
+        .catch(err => res.status(err).end(JSON.stringify("Error Posting Data into Database")));
+    } else {
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
+        return;
+    }
+});
+
+router.delete('/application', STD_MIDWARE, (req, res) => {
+    if (req.user['custom:type'] == 'Facility') {
+        const params = [req.user.email, req.body.ProfEmail, req.body.Title];
+        const procedure = 'delete_application';
+
+        db.call(procedure, params)
+        .then(results => res.end(JSON.stringify(results)))
+        .catch(err => res.status(err).end(JSON.stringify("Error Posting Data into Database")));
+    } else if (req.user['custom:type'] == 'Professional') {
+        const params = [req.body.FacEmail, req.user.email, req.body.Title];
+        const procedure = 'delete_application';
+
+        db.call(procedure, params)
+        .then(results => res.end(JSON.stringify(results)))
+        .catch(err => res.status(err).end(JSON.stringify("Error Posting Data into Database")));
+    } else {
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
+        return;
+    }
+});
+
+router.delete('/admin', STD_MIDWARE, (req, res) => {
+    if (req.user['custom:type'] == 'Admin') {
+        const params = [req.user.email];
+        const procedure = 'delete_administrator';
+
+        db.call(procedure, params)
+        .then(results => res.end(JSON.stringify(results)))
+        .catch(err => res.status(err).end(JSON.stringify("Error Posting Data into Database")));
+    } else {
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
+        return;
+    }
+});
 
 module.exports = router;
