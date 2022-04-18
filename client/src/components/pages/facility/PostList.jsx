@@ -4,10 +4,13 @@ import JobListing from '../../parts/JobListings'
 import CircleLoader from 'react-spinners/CircleLoader'
 import TopBar from '../../parts/TopBar'
 import Popup from 'reactjs-popup'
-import {getFacilityPostings, getJobPosts} from '../../../hooks/server'
+import {getFacilityPostings, getJobPosts, getCategories} from '../../../hooks/server'
 import ReactHtmlParser from 'react-html-parser'
+import { Drop } from '../../parts/Drop';
+
 
 function PostList (props) {
+
     let key = 0;
     const [loggedIn, setLoggedIn] = useState(false);
     const [postings, setPostings] = useState([]);
@@ -17,6 +20,63 @@ function PostList (props) {
     const [position, setPosition] = useState(null);
     const [openApply, setOpen] = useState(false);
     const [applyPos, setApplyPosition] = useState({});
+    const [fetchOnce, setFetchOnce] = useState(false);
+    const [catFetchEnd, setCatFetchEnd] = useState(false);
+    const [categories, setCategories] = useState(null);
+
+    useEffect( ()=> {
+        let isMounted = true;
+        if(!loggedIn){
+            setLoggedIn(localStorage.getItem('loggedIn'));
+        }
+        if(!fetchOnce){
+            setFetchOnce(true);
+            fetchPosts(isMounted);
+            fetchCategories(isMounted);
+        }
+
+        return () => {
+            isMounted = false;
+        };
+    }, [])
+
+    const fetchPosts = async(isMounted) => {
+        setPosFetchEnd(false);
+        let items = await getFacilityPostings((position.value == 'All') ? null : position.value)
+            .catch(err=>setFetchError(true));
+        if (isMounted) {
+            setPosFetchEnd(true);
+            setPostings(items[0]);
+            console.log(items[0]);
+        }
+        else console.log('aborted setPostings on unmounted component');
+    }
+
+    useEffect (() => {
+        let isMounted = true;
+        fetchPosts(isMounted);
+        return () => {
+            isMounted = false;
+        };
+    }, [position])
+
+    const fetchCategories = async(isMounted) => {
+        let items = await getCategories()
+        .catch(err=>{setFetchError(true); console.error(err);})
+        if (isMounted) {
+            setCatFetchEnd(true);
+            items[0].unshift({Category:'All'})
+            console.log('list: ',items[0])
+            setCategories(items[0].map(cat => {
+                return ({
+                    label: cat.Category,
+                    value: cat.Category
+                })
+            }), console.log(categories))
+            setPosFetchEnd(true);
+        }
+        else console.log('aborted setCategories on unmounted component')
+    }
 
     const handleClick = (e) =>{
         console.log(postings)
@@ -42,32 +102,14 @@ function PostList (props) {
         }
     }
 
-    const fetchPosts = async(isMounted) => {
-        setPosFetchEnd(false);
-        let items = await getFacilityPostings((position.value == 'All') ? null : position.value)
-            .catch(err=>setFetchError(true));
-        if (isMounted) {
-            setPosFetchEnd(true);
-            setPostings(items[0]);
-            console.log(items[0]);
-        }
-        else console.log('aborted setPostings on unmounted component');
-    }
-
-    useEffect (() => {
-        let isMounted = true;
-        fetchPosts(isMounted);
-        return () => {
-            isMounted = false;
-        };
-    }, [position])
-
     if(fetchError !== true) {
-        if (posFetchEnd) {
+        if (posFetchEnd && catFetchEnd) {
             return (
                 <div>
                      <OptionsBar search={search} setSearch={setSearch} click={handleClick}/>
-                
+                     <div className="justify-center content-center flex">
+                        <Drop position={position} setPosition={setPosition} label='Select a Position' options={categories}/>
+                    </div>
                     {(position !== null) ?
 
                         <ul className="prof_job_grid content-center flex flex-wrap mx-32">
@@ -83,16 +125,15 @@ function PostList (props) {
                                 setOpen={setOpen}
                                 setPosting={setApplyPosition}
                                 posting={e}
-                                //type='apply'
+                                type='apply'
                                 />
-                                
                             </li> )
                         })}
 
                 
                         </ul>
                         :
-                        <div className="flex content-center justify-center">Choose a Position to See Job Listings</div>
+                        <div className="flex content-center justify-center">No Jobs Posted</div>
                     }
                 </div>
             )

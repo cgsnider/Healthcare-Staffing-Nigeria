@@ -61,7 +61,7 @@ export async function getCategories() {
 }
 
 export async function getFacilityPostings() {
-    return await getData('/postings')
+    return await getData('/postings');
 }
 
 export async function applyForVerification() {
