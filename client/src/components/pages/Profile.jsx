@@ -10,7 +10,21 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState, useEffect } from 'react';
 import {Drop2 , Drop} from '../parts/Drop';
 import placeholder from '../../images/profile-placeholder.jpg';
-import { applyForVerification, getEducation, getProfileData, getProfileImage, postEducation, postProfileData, postProfilePicture, getResume, postResume, downloadResume, postExperience, getExperience } from '../../hooks/server';
+import {
+    applyForVerification,
+    getEducation,
+    getProfileData,
+    getProfileImage,
+    postEducation,
+    postProfileData,
+    postProfilePicture,
+    getResume,
+    postResume,
+    downloadResume,
+    postExperience,
+    getExperience,
+    deleteEducation
+} from '../../hooks/server';
 import CircleLoader from 'react-spinners/CircleLoader';
 export default function Profile(props) {
     const [profileInfo, setProfileInfo] = useState({});
@@ -91,7 +105,9 @@ export default function Profile(props) {
 
     const handleRemoveEducation = (e) => {
         let index = e.target.getAttribute('data-index')
-        setNewEducation(newEducation.filter(item => {return item.count !== index}))
+        let item = e.target.getAttribute('itemSpec')
+        deleteEducation({College: item.College, Degree: item.Degree, StartDate: item.StartDate, EndDate: item.EndDate})
+        setNewEducation(newEducation.filter(item0 => {return item0.count !== index}))
     }
 
     const handleRemoveExperience = (e) => {
@@ -283,7 +299,7 @@ export default function Profile(props) {
                                                             <li key={i} className='mb-4'>
                                                                 <div className='text-teal-600'>{`${item.Title} at ${item.Company}`}</div>
                                                                 <div className='text-gray-500 text-xs'>{`${item.StartDate} to ${item.EndDate}`}</div>
-                                                                <div className='text-xs underline text-blue-600 hover:cursor-pointer' data-index={item.Count} onClick={handleRemoveExperience}>Remove</div>
+                                                                <div className='text-xs underline text-blue-600 hover:cursor-pointer' itemSpec={item} data-index={item.Count} onClick={handleRemoveExperience}>Remove</div>
                                                             </li>
                                                         );
                                                     })
