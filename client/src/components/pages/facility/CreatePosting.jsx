@@ -90,7 +90,7 @@ export default function CreatePosting(props) {
                     <div className='pl-4 inline text-xl text-semibold'> Your account is not verified</div>
                     <div className='pl-12'>Your account must be verified to create job listings. 
                     You can apply for verification on your 
-                    <span className='text-blue-600 underline hover:cursor-pointer' onClick={(e)=>navigate('/user')}>profile page</span>.
+                    <span className='text-blue-600 underline hover:cursor-pointer' onClick={(e)=>navigate('/facility')}>profile page</span>.
                     If you have already submitted for verification, you can view your status on your Profile page while a member of our team 
                     reviews your profile for verification
                     </div>
