@@ -18,6 +18,7 @@ import ViewMaster from "./components/pages/facility/ViewMaster";
 import CreatePosting from "./components/pages/facility/CreatePosting";
 import ManageProfessionals from "./components/pages/Admins/ManageProfessionals";
 import ManageFacilities from "./components/pages/Admins/ManageFacilities";
+import PostList from "./components/pages/facility/PostList";
 //import Drop from './components/pages/Drop';
 //import Elogin from './components/examples/Elogin';
 
@@ -50,12 +51,13 @@ const App = () => {
           <Route path='/pendingVerifications' element={<PendingVerifications/>} />
           <Route path='/applications' element={<ViewApplications/>}/>
           <Route path='/facilityManage' element={<ViewMaster/>}/>
-          <Route path='/newPosting' element={<CreatePosting/>} />
+          <Route path='/newPosting' element={<CreatePosting/>}/>
+          <Route path='/postings' element={<PostList/>}/>
 
           <Route path='/manage_professionals' element={<ManageProfessionals/>}/>
           <Route path='/manage_facilities' element={<ManageFacilities/>}/>
 
-          <Route path='/myPostings' element={<ViewMaster/>}/>
+          
           <Route path='/editPosting' element={<EditPost />}/>
         </Route>
 

@@ -152,7 +152,7 @@ function Jobs (props) {
         }
     } else {
         return(
-            <div>Error retrieving job postings
+            <div>Error retrieving job postings!
                 <Link to="/" >
                 <h1>Return Home</h1>
                 </Link>
