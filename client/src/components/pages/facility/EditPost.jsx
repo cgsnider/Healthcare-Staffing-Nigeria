@@ -150,7 +150,7 @@ export default function EditPost(props) {
                 </div>
 
                 <div className='form-element block py-3'>
-                    <div className='left-side w-1/12 inline-block text-lg float-left text-right pr-3 font-bold text-[#777] overflow-x-auto'>visibility</div>
+                    <div className='left-side w-1/12 inline-block text-lg float-left text-right pr-3 font-bold text-[#777] overflow-x-auto'>Visibility</div>
                     <div className='right-side w-8/12 inline-block'>
                         {/**set values to whatever values represent active or not in db */}
                         <input type="radio" id="visChoice1"

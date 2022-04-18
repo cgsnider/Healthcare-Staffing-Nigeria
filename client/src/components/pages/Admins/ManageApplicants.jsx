@@ -1,37 +1,20 @@
 import React, {useState, useEffect} from 'react'
 import placeholder from "../../../images/profile-placeholder.jpg";
 import Applicant from "../../parts/Applicant";
-import { getApplicants } from "../../../hooks/server.js";
+import {getApplicants, getHiredPostings} from "../../../hooks/server.js";
 import HiredApplicant from "../../parts/HiredApplicant";
 
 function ManageApplicants(props) {
 
-    const [practitioners, setPractitioners] = useState([{
-        FName: "William",
-        LName: "Leonard",
-        ImageAddr: null,
-        Specialization: "Cardiologist",
-        Email: "william@ngcci.com",
-        PostingTitle: "General Surgeon",
-        FacName: "Nigerian Memorial Hospital"
-    },{
-        FName: "Charles",
-        LName: "Snider",
-        ImageAddr: null,
-        Specialization: "Neurology",
-        Email: "csnider@gatech.edu",
-        PostingTitle: "Head Neurologist",
-        FacName: "Nigeria General Hospital"
-    }
-    ]);
+    const [practitioners, setPractitioners] = useState([]);
 
-    /* useEffect( async () => {
+    useEffect( async () => {
         let mounted = true;
         if (mounted) {
-            setPractitioners(await getApplicants(props.postingID))
+            setPractitioners(await getHiredPostings())
         }
         return () => mounted = false
-    }, [update]); */
+    }, []);
 
     if (practitioners.length === 0) {
         return (
@@ -51,8 +34,8 @@ function ManageApplicants(props) {
                         <HiredApplicant name={`${e.FName} ${e.LName}`}
                                    image={(e.ImageAddr) ? `/api/profile_picture/${e.ImageAddr}` : placeholder}
                                    specialty={e.Specialization}
-                                   email={e.Email}
-                                   postTitle={e.PostingTitle}
+                                   email={e.ProfEmail}
+                                   postTitle={e.Title}
                                    facName={e.FacName}/>
                     )
                 })}
