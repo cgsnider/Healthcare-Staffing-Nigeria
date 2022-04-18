@@ -191,7 +191,7 @@ SELECT id FROM ADMINISTRATOR WHERE email = i_email INTO @id;
 SELECT J.Title, J.Category, 
 	F.FacName, F.Email as FacEmail, 
 	A.TimeCreated,
-    P.Email as ProfEmail, P.FName, P.LName
+    P.Email as ProfEmail, P.FName, P.LName, P.Specialization, P.ImageAddr
 		FROM JOBPOSTING AS J JOIN FACILITY AS F ON F.ID = J.FID 
 		INNER JOIN APPLICATION AS A ON J.FID = A.FID AND J.Title = A.PostingTitle 
 		JOIN PROFESSIONAL AS P ON P.ID = A.PID

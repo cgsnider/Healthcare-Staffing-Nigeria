@@ -76,7 +76,7 @@ export default function Profile(props) {
     }
 
     const fetchExperience = async(isMounted) => {
-        console.log("EDUCATION 1")
+        console.log("EXPERIENCE 1")
         let data = await getExperience()
         if (isMounted) {
             setInfoFetchEnd(true);
@@ -91,12 +91,12 @@ export default function Profile(props) {
 
     const handleRemoveEducation = (e) => {
         let index = e.target.getAttribute('data-index')
-        setNewEducation(newEducation.filter(item=> {return item.count != index}))
+        setNewEducation(newEducation.filter(item => {return item.count !== index}))
     }
 
     const handleRemoveExperience = (e) => {
         let index = e.target.getAttribute('data-index')
-        setNewExperience(newExperience.filter(item=> {return item.count != index}))
+        setNewExperience(newExperience.filter(item=> {return item.count !== index}))
     }
     const submitVerification = (e) => {
         applyForVerification()
