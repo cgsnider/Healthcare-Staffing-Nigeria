@@ -10,7 +10,21 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState, useEffect } from 'react';
 import {Drop2 , Drop} from '../parts/Drop';
 import placeholder from '../../images/profile-placeholder.jpg';
-import { applyForVerification, getEducation, getProfileData, getProfileImage, postEducation, postProfileData, postProfilePicture, getResume, postResume, downloadResume, postExperience, getExperience } from '../../hooks/server';
+import {
+    applyForVerification,
+    getEducation,
+    getProfileData,
+    getProfileImage,
+    postEducation,
+    postProfileData,
+    postProfilePicture,
+    getResume,
+    postResume,
+    downloadResume,
+    postExperience,
+    getExperience,
+    deleteEducation
+} from '../../hooks/server';
 import CircleLoader from 'react-spinners/CircleLoader';
 
 export default function Profile(props) {
@@ -77,7 +91,7 @@ export default function Profile(props) {
     }
 
     const fetchExperience = async(isMounted) => {
-        console.log("EDUCATION 1")
+        console.log("EXPERIENCE 1")
         let data = await getExperience()
         if (isMounted) {
             setInfoFetchEnd(true);
@@ -92,12 +106,14 @@ export default function Profile(props) {
 
     const handleRemoveEducation = (e) => {
         let index = e.target.getAttribute('data-index')
-        setNewEducation(newEducation.filter(item=> {return item.count != index}))
+        let item = e.target.getAttribute('itemSpec')
+        deleteEducation({College: item.College, Degree: item.Degree, StartDate: item.StartDate, EndDate: item.EndDate})
+        setNewEducation(newEducation.filter(item0 => {return item0.count !== index}))
     }
 
     const handleRemoveExperience = (e) => {
         let index = e.target.getAttribute('data-index')
-        setNewExperience(newExperience.filter(item=> {return item.count != index}))
+        setNewExperience(newExperience.filter(item=> {return item.count !== index}))
     }
     const submitVerification = (e) => {
         applyForVerification()
@@ -124,27 +140,28 @@ export default function Profile(props) {
     }
 
     const VerifiedIcon = (props) => {
-        if(profileInfo.Verified==0) {
+        if(profileInfo.Verified===0) {
             return(
                 <div className="ml-auto mr-0">
                     <span className="bg-red-500 py-1 px-2 rounded text-white text-sm">Unverified</span>
                 </div>
             );
         }
-        if(profileInfo.Verified==1) {
+        if(profileInfo.Verified===1) {
             return(
                 <div className="ml-auto mr-0">
                     <span className="bg-amber-500 py-1 px-2 rounded text-white text-sm">Pending</span>
                 </div>
             );
         }
-        if(profileInfo.Verified==2) {
+        if(profileInfo.Verified===2) {
             return(
                 <div className="ml-auto mr-0">
                     <span className="bg-green-500 py-1 px-2 rounded text-white text-sm">Verified</span>
                 </div>
             );
         }
+        return (null);
     }
 
     const handleImageUpload = async (e) => {
@@ -283,7 +300,7 @@ export default function Profile(props) {
                                                             <li key={i} className='mb-4'>
                                                                 <div className='text-teal-600'>{`${item.Title} at ${item.Company}`}</div>
                                                                 <div className='text-gray-500 text-xs'>{`${item.StartDate} to ${item.EndDate}`}</div>
-                                                                <div className='text-xs underline text-blue-600 hover:cursor-pointer' data-index={item.Count} onClick={handleRemoveExperience}>Remove</div>
+                                                                <div className='text-xs underline text-blue-600 hover:cursor-pointer' itemSpec={item} data-index={item.Count} onClick={handleRemoveExperience}>Remove</div>
                                                             </li>
                                                         );
                                                     })

@@ -177,6 +177,33 @@ INSERT INTO SYSTEMLOG (uid, act) VALUE
 END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS admin_view_hirings; 
+DELIMITER //
+CREATE PROCEDURE admin_view_hirings (
+	IN i_email varchar(255)
+) BEGIN
+
+SET @hired_progress = 100;
+
+SELECT id FROM ADMINISTRATOR WHERE email = i_email INTO @id;
+
+
+SELECT J.Title, J.Category, 
+	F.FacName, F.Email as FacEmail, 
+	A.TimeCreated,
+    P.Email as ProfEmail, P.FName, P.LName, P.Specialization, P.ImageAddr
+		FROM JOBPOSTING AS J JOIN FACILITY AS F ON F.ID = J.FID 
+		INNER JOIN APPLICATION AS A ON J.FID = A.FID AND J.Title = A.PostingTitle 
+		JOIN PROFESSIONAL AS P ON P.ID = A.PID
+		WHERE A.Progress = @hired_progress;
+
+
+INSERT INTO SYSTEMLOG (uid, act) VALUE 
+    (@id, 'get_applications');
+
+END //
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS get_facility_profile; 
 DELIMITER //
 CREATE PROCEDURE get_facility_profile (
@@ -256,8 +283,9 @@ CREATE PROCEDURE get_applicants(
 	
     SELECT id FROM FACILITY WHERE Email = i_email INTO @id; 
     
-	SELECT P.Email, P.ImageAddr, P.FName, P.LName, P.PhoneNumber, P.LicenseNumber, P.Specialization, P.MDCN, P.City, P.Country, P.Street, P.Bio 
-    FROM APPLICATION AS A JOIN Professional AS P ON A.PID = P.ID WHERE A.FID = @id AND A.PostingTitle = i_posting_title;
+	SELECT P.Email, P.ImageAddr, P.FName, P.LName, P.PhoneNumber, P.LicenseNumber, P.Specialization, P.MDCN, P.City, P.Country, P.Street, P.Bio, 
+		A.Progress, A.CoverLetter
+			FROM APPLICATION AS A JOIN Professional AS P ON A.PID = P.ID WHERE A.FID = @id AND A.PostingTitle = i_posting_title;
     
     INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'get_applications');

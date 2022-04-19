@@ -415,6 +415,33 @@ CREATE PROCEDURE admin_verify_professional (
 END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS admin_reject_professional;
+DELIMITER //
+CREATE PROCEDURE admin_reject_professional (
+	IN i_admin_email VARCHAR(255),
+    IN i_prof_email VARCHAR(255),
+    IN i_message TEXT
+) BEGIN 
+	
+	SET @newStatus := 0;
+    
+	SELECT id FROM ADMINISTRATOR WHERE Email = i_admin_email INTO @id;
+	
+	UPDATE PROFESSIONAL
+	SET
+		Verified = @newStatus,
+        AdminMessage = i_message
+	WHERE
+		Email = i_prof_email;
+	
+	SELECT @newStatus;
+    
+    
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
+		(@id, 'reject_verification');
+END //
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS admin_verify_facility;
 DELIMITER //
 CREATE PROCEDURE admin_verify_facility (
@@ -437,6 +464,33 @@ CREATE PROCEDURE admin_verify_facility (
     
 	INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'appprove_verification');
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS admin_reject_facility;
+DELIMITER //
+CREATE PROCEDURE admin_reject_facility (
+	IN i_admin_email VARCHAR(255),
+    IN i_fac_email VARCHAR(255),
+    IN i_message TEXT
+) BEGIN 
+	
+	SET @newStatus := 0;
+    
+	SELECT id FROM ADMINISTRATOR WHERE Email = i_admin_email INTO @id;
+	
+	UPDATE FACILITY
+	SET
+		Verified = @newStatus,
+        AdminMessage = i_message
+	WHERE
+		Email = i_fac_email;
+	
+	SELECT @newStatus;
+    
+    
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
+		(@id, 'reject_verification');
 END //
 DELIMITER ;
 

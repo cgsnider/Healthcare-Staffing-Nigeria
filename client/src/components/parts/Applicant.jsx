@@ -14,7 +14,7 @@ function Applicant(props) {
 
     return (
         <div className="mt-4 flex justify-center w-full">
-            <div className="outline outline-1 rounded-md w-1/2 min-w-fit">
+            <div className={`outline ${(props.status === 100) ? "outline-green-600" : "outline-black"} outline-1 rounded-md w-1/2 min-w-fit`}>
                 <div className="flex content-center justify-between text-sm w-full px-2 py-1">
                     <div className="flex flex-initial basis-1/3 flex-col justify-between">
                         <div className="truncate">{props.name}</div>
@@ -22,8 +22,10 @@ function Applicant(props) {
                         <a href={props.resume} className="truncate text-blue-600" download>Resume</a>
                     </div>
                     <div className="flex flex-initial basis-1/3 flex-col justify-between text-center">
-                        <div className="ml-auto mr-0">
-                            <span className="bg-green-500 py-1 px-2 rounded text-white text-sm">Verified</span>
+                        <div className="items-center">
+                            <div className="ml-auto mr-0">
+                                <span className="bg-green-500 py-1 px-2 rounded text-white text-sm">Verified</span>
+                            </div>
                         </div>
                         <a href={`mailto:${props.email}`} className="truncate">{props.email}</a>
                         <div className="invisible">placeholder</div>
@@ -51,10 +53,6 @@ function Applicant(props) {
                                     <div className="flex">
                                         <div className="truncate mr-1 font-medium">Phone No.</div>
                                         <div className="truncate">{props.number}</div>
-                                    </div>
-                                    <div className="flex">
-                                        <div className="truncate mr-2 font-medium">DoB:</div>
-                                        <div className="truncate">{props.dob}</div>
                                     </div>
                                 </div>
                                 <div className="flex-col ml-16">
