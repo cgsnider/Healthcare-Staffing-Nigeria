@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import Popup from 'reactjs-popup';
 import FacilityListing from "../../parts/FacilityListing";
-import {getBulkFacilities, postVerifyFacility} from "../../../hooks/server";
+import {getBulkFacilities, postVerifyFacility, deleteFacility} from "../../../hooks/server";
 import placeholder from '../../../images/profile-placeholder.jpg';
 import '../../styling/AdminAccountManagement.css';
 
@@ -18,7 +18,7 @@ function ManageFacilities (props) {
     }
 
     const handleDelete = () => {
-        //Delete account
+        deleteFacility(facID)
         setViewFacilities(true)
         setFacID(null)
     }
@@ -28,7 +28,7 @@ function ManageFacilities (props) {
     }
 
     const handleUnverify = () => {
-
+        
     }
 
     useEffect(async () => {

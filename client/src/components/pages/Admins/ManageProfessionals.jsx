@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import Popup from 'reactjs-popup';
 import ProfessionalListing from "../../parts/ProfessionalListing";
-import {getBulkProfessional, downloadResume, postVerifyProfessional, getEducation, getExperience} from "../../../hooks/server";
+import {getBulkProfessional, downloadResume, postVerifyProfessional, getEducation, getExperience, deleteProfessional} from "../../../hooks/server";
 import placeholder from '../../../images/profile-placeholder.jpg';
 import '../../styling/AdminAccountManagement.css';
 
@@ -22,7 +22,7 @@ function ManageProfessionals (props) {
     }
 
     const handleDelete = () => {
-        //Delete account
+        deleteProfessional(profID)
         setViewProfessionals(true)
         setProfID(null)
     }
