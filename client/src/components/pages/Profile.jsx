@@ -26,6 +26,7 @@ import {
     deleteEducation
 } from '../../hooks/server';
 import CircleLoader from 'react-spinners/CircleLoader';
+
 export default function Profile(props) {
     const [profileInfo, setProfileInfo] = useState({});
 

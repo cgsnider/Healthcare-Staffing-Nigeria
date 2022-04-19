@@ -59,8 +59,6 @@ function FacilityListing (props) {
             </div>
         </div>
     );
-
-
 }
 
 export default FacilityListing

@@ -57,7 +57,7 @@ function TopBar(props) {
                 <>
                     <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/facility')}>Profile</button>
                     <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/newPosting')}>Create Posting</button>{/** link to page to post new job openings */}
-                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/myPostings')}>My Postings</button> {/** link to view facilities current active postings */}
+                    <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/postings')}>My Postings</button> {/** link to view facilities current active postings */}
 
                 </>
             )
@@ -69,6 +69,7 @@ function TopBar(props) {
                     <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/manage_professionals')}>Manage Professionals</button>
                     <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/manage_facilities')}>Manage Facilities</button>
                     <button className='menu_item' type='button' role='menuitem' onClick={()=>navigate('/hired_applicants')}>Hired Applicants</button>
+
                 </>
             )
         }

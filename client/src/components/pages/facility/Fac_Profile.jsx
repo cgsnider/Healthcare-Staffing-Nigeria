@@ -47,7 +47,6 @@ export default function Fac_Profile(props) {
         console.log(profileInfo)
     }, [update])
 
-
     const fetchProfileData = async(isMounted) => {
         let data = await getProfileData();
         console.log("FETCH DATA: ",data);

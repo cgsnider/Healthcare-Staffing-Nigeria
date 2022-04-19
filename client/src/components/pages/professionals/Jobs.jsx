@@ -152,7 +152,7 @@ function Jobs (props) {
         }
     } else {
         return(
-            <div>Error retrieving job postings
+            <div>Error retrieving job postings!
                 <Link to="/" >
                 <h1>Return Home</h1>
                 </Link>
@@ -176,17 +176,24 @@ function OptionsBar (props) {
                 {/*Onclick sets isHighlight from 0-3 based on which filter option is selected. If the value of 
                 // isHighlight matches the value of the filter button
                 // it will get highlighted. This is handled in the ternary operator under each buttons className*/}
-                <button type='button' value='Location A-Z' className={`outline outline-1 min-w-fit px-1 py-0 ${isHighlight===0?'button_primary_highlighted':'button_primary'}`} onClick={() => {highlight(0); props.click('location');}}>Location A-Z</button>
-                <button type='button' value='Postion A-Z' className={`outline outline-1 min-w-fit px-1 py-0 ${isHighlight===1?'button_primary_highlighted':'button_primary'}`} onClick={() => {highlight(1); props.click('position');}}>Position A-Z</button>
-                <button type='button' value='Hours' className={`outline outline-1 min-w-fit px-1 py-0 ${isHighlight===2?'button_primary_highlighted':'button_primary'}`} onClick={() => {highlight(2); props.click('shifts');}}>Hours</button>
-                <button type='button' value='Pay' className={`outline outline-1 min-w-fit px-1 py-0 ${isHighlight===3?'button_primary_highlighted':'button_primary'}`} onClick={() => {highlight(3); props.click('salary');}}>Pay</button>
+                <button type='button' value='Location A-Z' className={`outline outline-1 min-w-fit px-1 py-0 ${isHighlight===0?
+                    'button_primary_highlighted':'button_primary'}`} 
+                    onClick={() => {highlight(0); props.click('location');}}>Location A-Z</button>
+                <button type='button' value='Postion A-Z' className={`outline outline-1 min-w-fit px-1 py-0 ${isHighlight===1?
+                    'button_primary_highlighted':'button_primary'}`} 
+                    onClick={() => {highlight(1); props.click('position');}}>Position A-Z</button>
+                <button type='button' value='Hours' className={`outline outline-1 min-w-fit px-1 py-0 ${isHighlight===2?
+                    'button_primary_highlighted':'button_primary'}`} 
+                    onClick={() => {highlight(2); props.click('shifts');}}>Hours</button>
+                <button type='button' value='Pay' className={`outline outline-1 min-w-fit px-1 py-0 ${isHighlight===3?
+                    'button_primary_highlighted':'button_primary'}`} 
+                    onClick={() => {highlight(3); props.click('salary');}}>Pay</button>
             </div>
             <div className='flex items-center space-x-1 pr-1'>
                 <label>{" Search: "}</label> 
                 <input type='text' className="rounded h-7" onInput={ (e) => props.setSearch(e.target.value)}/>
             </div>
         </div>
-        
     )
 }
 
