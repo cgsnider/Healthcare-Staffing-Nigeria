@@ -12,6 +12,7 @@ import {Drop2 , Drop} from '../parts/Drop';
 import placeholder from '../../images/profile-placeholder.jpg';
 import { applyForVerification, getEducation, getProfileData, getProfileImage, postEducation, postProfileData, postProfilePicture, getResume, postResume, downloadResume, postExperience, getExperience } from '../../hooks/server';
 import CircleLoader from 'react-spinners/CircleLoader';
+
 export default function Profile(props) {
     const [profileInfo, setProfileInfo] = useState({});
 
