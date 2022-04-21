@@ -34,7 +34,7 @@ function Jobs (props) {
 
     const [postings, setPostings] = useState([]);
     const [categories, setCategories] = useState(null);
-    const [position, setPosition] = useState(null);
+    const [position, setPosition] = useState({value:'All'});
     const [search, setSearch] = useState('');
     const [fetchError, setFetchError] = useState(false);
     const [openApply, setOpen] = useState(false);
