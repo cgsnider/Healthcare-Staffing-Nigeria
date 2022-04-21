@@ -23,7 +23,8 @@ import {
     downloadResume,
     postExperience,
     getExperience,
-    deleteEducation
+    deleteEducation,
+    deleteExperience
 } from '../../hooks/server';
 import CircleLoader from 'react-spinners/CircleLoader';
 
@@ -59,23 +60,12 @@ export default function Profile(props) {
         console.log(profileInfo)
     }, [profileInfo])
 
-    const fetchResume = (email) => {
-        // console.log(email);
-        // getResume(email)
-        // .then(res => {
-        //     console.log(res);
-        //     setProfileInfo({...profileInfo, Resume: res}, console.log('t',profileInfo));
-        // })
-        // .catch(err=>console.error(err))
-    }
-
     const fetchProfileData = async(isMounted) => {
         console.log('fetchProfileData')
         let data = await getProfileData()
         if (isMounted) {
             setInfoFetchEnd(true);
             setProfileInfo(data[0][0], console.log(profileInfo));
-            // fetchResume(data[0][0].Email);
         }
         else console.log('aborted setPostings on unmounted component')
     }
@@ -104,17 +94,20 @@ export default function Profile(props) {
         applyForVerification();
     }
 
-    const handleRemoveEducation = (e) => {
-        let index = e.target.getAttribute('data-index')
-        let item = e.target.getAttribute('itemSpec')
-        deleteEducation({College: item.College, Degree: item.Degree, StartDate: item.StartDate, EndDate: item.EndDate})
-        setNewEducation(newEducation.filter(item0 => {return item0.count !== index}))
+    const handleRemoveEducation = async (item) => {
+        const status = await deleteEducation(item)
+        if (status == 204 || status == 200){
+            fetchEducation(true)
+        }
     }
 
-    const handleRemoveExperience = (e) => {
-        let index = e.target.getAttribute('data-index')
-        setNewExperience(newExperience.filter(item=> {return item.count !== index}))
+    const handleRemoveExperience = async(item) => {
+        const status = await deleteExperience(item)
+        if (status == 204 || status == 200){
+            fetchExperience(true)
+        }
     }
+
     const submitVerification = (e) => {
         applyForVerification()
             .then(res => setProfileInfo({...profileInfo, Verified : 1}))
@@ -300,7 +293,7 @@ export default function Profile(props) {
                                                             <li key={i} className='mb-4'>
                                                                 <div className='text-teal-600'>{`${item.Title} at ${item.Company}`}</div>
                                                                 <div className='text-gray-500 text-xs'>{`${item.StartDate} to ${item.EndDate}`}</div>
-                                                                <div className='text-xs underline text-blue-600 hover:cursor-pointer' itemSpec={item} data-index={item.Count} onClick={handleRemoveExperience}>Remove</div>
+                                                                <div className='text-xs underline text-blue-600 hover:cursor-pointer' itemSpec={item} onClick={() => handleRemoveExperience(item)}>Remove</div>
                                                             </li>
                                                         );
                                                     })
@@ -330,7 +323,7 @@ export default function Profile(props) {
                                                             <li key={i} className='mb-4'>
                                                                 <div className='text-teal-600'>{`${item.Degree} at ${item.College}`}</div>
                                                                 <div className='text-gray-500 text-xs'>{`${item.StartDate} to ${item.EndDate}`}</div>
-                                                                <div className='text-xs underline text-blue-600 hover:cursor-pointer' data-index={item.Count} onClick={handleRemoveEducation}>Remove</div>
+                                                                <div className='text-xs underline text-blue-600 hover:cursor-pointer' data-index={item.Count} onClick={() => handleRemoveEducation(item)}>Remove</div>
                                                             </li>
                                                         );
                                                     })

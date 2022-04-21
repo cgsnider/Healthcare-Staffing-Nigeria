@@ -17,7 +17,6 @@ async function sleep(fn, ...args) {
  * @returns Data that represents a job posting
  */
 export async function getJobPosts(category) {
-    console.log(category)
     return await getData('/jobs', {Category: category});
 }
 
@@ -43,7 +42,6 @@ export async function postEducation(data) {
 }
 
 export async function postExperience(data) {
-    console.log('postExperience: ', data)
     if (data.length == 0) return;
     return await postData('/experience', arrayObject(data))
 }
@@ -253,6 +251,16 @@ export async function deleteFacility(data) {
 export async function deleteEducation(data) {
     return await deleteData('/education', data);
 }
+
+/**
+ * Deletes education
+ * @param {{College: String, Degree: College, StartDate: String, EndDate: String}} data 
+ * @returns 204 if successful, otherwise corresponding error code
+ */
+ export async function deleteExperience(data) {
+    return await deleteData('/experience', data);
+}
+
 
 /**
  * Deletes document data from database (Does not touch bucket).

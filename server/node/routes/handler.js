@@ -553,8 +553,23 @@ router.delete('/facility', STD_MIDWARE, (req, res) => {
 router.delete('/education', STD_MIDWARE, (req, res) => {
     if (req.user['custom:type'] == 'Professional') {
         const data = JSON.parse(req.headers.params);
-        const params = [req.user.email, data.College, data.Degree, data.StartData, data.EndDate];
+        const params = [req.user.email, data.College, data.Degree, data.StartDate, data.EndDate];
         const procedure = 'delete_education';
+
+        db.call(procedure, params)
+        .then(results => res.status(Code.no_content).end())
+        .catch(err => res.status(err).end(JSON.stringify("Error Posting Data into Database")));
+    } else {
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
+        return;
+    }
+});
+
+router.delete('/experience', STD_MIDWARE, (req, res) => {
+    if (req.user['custom:type'] == 'Professional') {
+        const data = JSON.parse(req.headers.params);
+        const params = [req.user.email, data.Company, data.Title, data.StartDate, data.EndDate];
+        const procedure = 'delete_experience';
 
         db.call(procedure, params)
         .then(results => res.status(Code.no_content).end())
