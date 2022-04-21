@@ -8,7 +8,7 @@ import Jobs from './components/pages/professionals/Jobs'
 import TopBar from './components/parts/TopBar';
 import Home from './components/pages/Home';
 import About from './components/pages/About';
-import Profile from './components/pages/Profile.jsx';
+import Profile from './components/pages/Profile';
 import PendingVerifications from './components/pages/Admins/PendingVerifications.jsx';
 import ViewApplications from "./components/pages/professionals/ViewApplications";
 import Fac_Profile from './components/pages/facility/Fac_Profile';

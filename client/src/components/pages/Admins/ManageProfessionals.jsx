@@ -97,11 +97,12 @@ function ManageProfessionals (props) {
                 </div>
                 {(practitioners !== null && practitioners.length > 0) ?
                     <div className="flex flex-col items-center w-full">
-                        {[...practitioners].map(e => { 
+                        {[...practitioners].map((e, i) => { 
                             return (
                                 <ProfessionalListing account={e}
                                                      setView={setViewProfessionals}
-                                                     setID={setProfID}/>
+                                                     setID={setProfID}
+                                                     key={i}/>
                             )
                         })}
                     </div>

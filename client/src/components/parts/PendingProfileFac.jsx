@@ -1,13 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Popup from 'reactjs-popup';
-import { postVerifyFacility } from '../../hooks/server';
+import { postVerifyFacility, rejectFacility } from '../../hooks/server';
 
 
 function PendingProfileFac(props) {
 
-    const handleApprove = () => {
-        postVerifyFacility(props.email);
-        window.location.reload(false);
+    const [checked, setChecked] = useState(false);
+    const [accept, setAccept] = useState(false);
+    const [reject, setReject] = useState(false);
+    const [message, setMessage] = useState('');
+
+    const handleCheck = () => {
+        setChecked(!checked);
+    }
+
+    const handleAccept = () => {
+        setAccept(!accept);
+    }
+
+    const handleReject = () => {
+        setReject(!reject);
+    }
+
+    const handleSubmit = () => {
+        if (accept){
+            postVerifyFacility(props.email);
+        }
+        if (reject){
+            rejectFacility({FacEmail: props.email, Message: message});
+        }
+    }
+
+    const reset = () => {
+        setChecked(false);
+        setAccept(false);
+        setReject(false);
+        setMessage('');
     }
 
     return (
@@ -49,14 +77,14 @@ function PendingProfileFac(props) {
                                             <a href={`mailto:${props.email}`} className="truncate">{props.email}</a>
                                         </div>
                                         <div className="flex">
-                                            <div className="truncate mr-1 font-medium">Phone No.</div>
+                                            <div className="truncate mr-1 font-medium">Phone No. :</div>
                                             <div className="truncate">{props.number || "Not Provided"}</div>
                                         </div>
                                     </div>
                                </div>
                                <div className="flex flex-initial m-5 text-center justify-center">
                                     <div className="font-medium">Location: </div>
-                                    <div className="truncate ml-1">{(props.loc !== "undefined, undefined, undefined") ? props.loc : "Not Provided"}</div>
+                                    <div className="truncate ml-1">{(props.loc !== "null, null, null") ? props.loc : "Not Provided"}</div>
                                </div>
                                <div className="flex-col">
                                     <div className="justify-left text-lg ml-10 font-medium">Description:</div>
@@ -65,10 +93,30 @@ function PendingProfileFac(props) {
                                         <div className="basis-2/3 overflow-auto">{props.bio || "Not Provided"}</div>
                                     </div>
                                </div>
-                               <div className="flex text-center justify-center gap-2 m-5">
-                                    <button className="h-2/3 px-4 bg-green-500 rounded text-white pr-15" onClick={() => handleApprove() && close()}>Approve</button>
-                                    <button className="h-2/3 px-4 bg-red-500 rounded text-white pl-15" onClick={() => window.location.reload(false) && close()}>Decline</button>
-                                    <button className="h-2/3 px-4 bg-gray-500 rounded text-white" onClick={()=>{close();}}>Close</button>
+                               <div className="flex text-center gap-2 m-5 flex-wrap">
+                                    <input type='checkbox' id='accept' className='hidden' onChange={()=>{handleCheck();handleAccept();}}/>
+                                    <label htmlFor='accept' className={`h-2/3 px-4 pb-1 bg-green-500 rounded text-white ${reject? "hidden": ""} hover:cursor-pointer`} >Approve<span className='text-xl pl-1 font-semibold'>{checked? "-":"+"}</span> </label>
+                                    
+                                    <input type='checkbox' id='deny' className='hidden' onChange={()=>{handleCheck();handleReject();}}/>
+                                    <label htmlFor='deny' className={`h-2/3 px-4 pb-1 bg-red-500 rounded text-white ${accept? "hidden": ""} hover:cursor-pointer`} >Decline<span className='text-xl pl-1 font-semibold'>{checked? "-":"+"}</span> </label>
+                                    <div className={`${checked? "": "hidden"} basis-full grow`} >
+                                        
+                                        <label htmlFor='reason' className='font-semibold text-xs'>Add a Note to the User</label>
+                                        <span className='pl-0.5 text-xs'>(Optional)</span>
+                                        
+                                        <textarea 
+                                            className="w-full h-3/4 p-2 rounded border-2 focus:ring-0 focus:border-cmg-mid focus:border-2"
+                                            id="reason" 
+                                            rows="2" 
+                                            cols="50" 
+                                            placeholder={accept?"Reason for Approval": "Reason for Declining"}
+                                            onChange={(e)=>{setMessage(e.target.value)}}
+                                            value={message}
+                                        >
+                                        </textarea>
+                                    </div>
+                                    <button className={`h-2/3 px-4 py-1 ml-auto mr-0 mt-auto bg-gray-500 rounded text-white disabled:opacity-50 ${checked? "":"hidden"}`} onClick={()=>{reset();close();} }>Cancel</button>
+                                    <button className={`h-2/3 px-4 py-1 ${checked? "":"ml-auto"} mr-0 bg-cmg-mid disabled:bg-gray-500 rounded text-white disabled:opacity-50`} onClick={()=>{handleSubmit();reset();close();} } disabled={!checked}>{checked? `Send ${accept? "Approve":"Decline" } Decision`:"Next: Finalize"}</button>
                                </div>
                            </div>
                         )}

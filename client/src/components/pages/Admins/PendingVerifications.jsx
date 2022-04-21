@@ -54,7 +54,7 @@ function PendingVerifications(props) {
                 </div>
                 {(practitioners !== null && practitioners.length > 0) ?
                     <div className="flex flex-col items-center h-full">
-                        {[...practitioners].map(e => {
+                        {[...practitioners].map((e, i) => {
                             return (
                                 <PendingProfile name={`${e.FName} ${e.LName}`}
                                                 image={(e.ImageAddr) ? `/api/profile_picture/${e.ImageAddr}` : placeholder}
@@ -66,6 +66,7 @@ function PendingVerifications(props) {
                                                 dob={e.DoB}
                                                 bio={e.Bio}
                                                 loc={`${e.Street}, ${e.City}, ${e.Country}`}
+                                                key={i}
                                                 trigger={triggerUpdate}/>
                             )
                         })}
@@ -87,7 +88,7 @@ function PendingVerifications(props) {
                 </div>
                 {(facilities !== null && facilities.length > 0) ?
                     <div className="flex flex-col items-center h-full">
-                        {[...facilities].map(e => {
+                        {[...facilities].map((e, i) => {
                             return (
                                 <PendingProfileFac name={e.FacName}
                                                    image={(e.image) ?  `/api/profile_picture/${e.ImageAddr}` : placeholder}
@@ -96,6 +97,7 @@ function PendingVerifications(props) {
                                                    email={e.Email}
                                                    number={e.PhoneNumber}
                                                    bio={e.Bio}
+                                                   key={i}
                                                    trigger={triggerUpdate}/>
                             )
                         })}

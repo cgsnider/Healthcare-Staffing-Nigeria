@@ -71,11 +71,12 @@ function ManageFacilities (props) {
                 </div>
                 {(facilities !== null && facilities.length > 0) ?
                     <div className="flex flex-col items-center w-full">
-                        {[...facilities].map(e => {
+                        {[...facilities].map((e, i) => {
                             return (
                                 <FacilityListing account={e}
                                                  setView={setViewFacilities}
-                                                 setID={setFacID}/>
+                                                 setID={setFacID}
+                                                 key={i}/>
                             )
                         })}
                     </div>
