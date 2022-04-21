@@ -52,6 +52,7 @@ const App = () => {
           <Route path='/pendingVerifications' element={<PendingVerifications/>} />
           <Route path='/applications' element={<ViewApplications/>}/>
           <Route path='/facilityManage' element={<ViewMaster/>}/>
+          <Route path='/manage_postings' element={<ViewMaster/>}/>
           <Route path='/newPosting' element={<CreatePosting/>}/>
           <Route path='/postings' element={<PostList/>}/>
 

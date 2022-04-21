@@ -66,7 +66,7 @@ export default function EditPost(props) {
     };
     const cancel = (e) => {
         e.preventDefault();
-        navigate('/myPostings');
+        navigate('/manage_postings');
     }
     const handleSubmit = (e) => {
         e.preventDefault();
