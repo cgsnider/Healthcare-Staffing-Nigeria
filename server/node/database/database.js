@@ -1,11 +1,13 @@
+require('dotenv').config('../.env')
+
 const mysql = require('mysql2/promise');
 const Code = require('../code.js')
 
 const promised_connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'cmg_staffing_nigeria'
+        host: process.env.HOST,
+        user: process.env.DBUSER,
+        password: process.env.PASSWORD,
+        database: process.env.DATABASE
     });
 
 /**
