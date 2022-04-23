@@ -34,23 +34,25 @@ CREATE PROCEDURE update_professional_profile (
 	IN i_country VARCHAR(50),
 	IN i_city VARCHAR(50),
     IN i_street VARCHAR(50),
-    IN i_licensenumber VARCHAR(50)
+    IN i_licensenumber VARCHAR(50),
+    IN i_bio TEXT
 ) BEGIN 
 
 	SELECT ID FROM PROFESSIONAL WHERE email = i_email_old INTO @id;
 
 	UPDATE PROFESSIONAL 
 	SET 
-		email = i_email,
-		fname = i_fname,
-		lname = i_lname,
-		phonenumber = i_phonenumber,
-		mdcn = i_mdcn,
-		country = i_country,
-		city = i_city,
-		street = i_street,
-		specialization = i_specialization,
-		licensenumber = i_licensenumber
+		Email = i_email,
+		FName = i_fname,
+		LName = i_lname,
+		PhoneNumber = i_phonenumber,
+		MDCN = i_mdcn,
+		Country = i_country,
+		City = i_city,
+		Street = i_street,
+		Specialization = i_specialization,
+		Licensenumber = i_licensenumber,
+        Bio = i_bio
 	WHERE 
 		id = @id;
 
@@ -321,7 +323,7 @@ CREATE PROCEDURE update_facility_profile (
 
 	IF (select count(*) FROM CONTACT WHERE FID = @id) != 0
 	THEN
-		UPDATE Facility
+		UPDATE CONTACT
 		SET 
 			CName = i_Contact_Name,
 			PhoneNumber = i_Contact_PhoneNumber

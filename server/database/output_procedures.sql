@@ -245,7 +245,7 @@ CREATE PROCEDURE get_facility_pending(
     
     SELECT id FROM ADMINISTRATOR WHERE Email = i_email INTO @id; 
     
-	SELECT * FROM FACILITY WHERE Verified = @pending;
+	SELECT F.*, C.PhoneNumber FROM FACILITY AS F JOIN CONTACT AS C ON C.FID = F.ID WHERE Verified = @pending;
     
     INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'get_facility_pending');
@@ -318,7 +318,7 @@ CREATE PROCEDURE admin_verification_pending_facility(
 	
     SELECT id FROM ADMINISTRATOR WHERE Email = i_email INTO @id; 
     
-	SELECT * FROM FACILITY WHERE Verified = 1;
+	SELECT F.*, C.PhoneNumber, C.CName FROM FACILITY as F LEFT JOIN CONTACT AS C ON C.FID = F.ID WHERE Verified = 1;
     
     INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'admin_verification_pending_professional');
@@ -350,7 +350,7 @@ CREATE PROCEDURE admin_bulk_facilities(
 	
     SELECT id FROM ADMINISTRATOR WHERE Email = i_email INTO @id; 
     
-	SELECT * FROM FACILITY;
+	SELECT F.*, C.PhoneNumber FROM FACILITY as F JOIN CONTACT AS C ON C.FID = F.ID;
     
     INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'admin_bulk_facilities');

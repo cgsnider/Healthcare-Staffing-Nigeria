@@ -9,6 +9,7 @@ function PendingProfile(props) {
     const [reject, setReject] = useState(false);
     const [message, setMessage] = useState('');
 
+    console.log("Props.bio: ", props.bio)
     const handleCheck = () => {
         setChecked(!checked);
     }
@@ -90,11 +91,11 @@ function PendingProfile(props) {
                                     </div>
                                </div>
                                <div className="flex flex-initial m-5 text-center">
-                                    <div className="basis-1/2"><span className="font-medium">DoB:</span> {props.dob || "Not Provided"}</div>
+                                    <div className="basis-1/2"><span className="font-medium">License #:</span> {props.license}</div>
                                     <div className="basis-1/2"><span className="font-medium">Location:</span> {(props.loc !== "null, null, null") ? props.loc : "Not Provided"}</div>
                                </div>
                                <div className="flex flex-initial flex-wrap m-5 text-center">
-                                    <div className="basis-1/3">{props.specialty || "No Specialty Provided"}</div>
+                                    <div className="basis-1/3">Specialization: {props.specialty || "No Specialty Provided"}</div>
                                     <div className="basis-1/3"><span className="font-medium">MDCN: </span>{props.mdcn || "Not Provided"}</div>
                                     {(props.resume) ? <a onClick={resumeHandler} className="truncate text-blue-600 basis-1/3">Resume</a> :  <div className="basis-1/3">No Resume</div>}
                                </div>
@@ -102,7 +103,7 @@ function PendingProfile(props) {
                                     <div className="justify-left text-base ml-10 font-medium">Description:</div>
                                     <div className="flex">
                                         <div className="invisible basis-1/12">placeholder</div>
-                                        <div className="basis-2/3 overflow-auto">{props.bio || "Not Provided"}</div>
+                                        <div className="basis-2/3 overflow-auto">{(props.bio) ? props.bio : "Not Provided"}</div>
                                     </div>
                                </div>
                                <div className="flex text-center gap-2 m-5 flex-wrap">

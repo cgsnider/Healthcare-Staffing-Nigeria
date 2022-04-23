@@ -55,6 +55,7 @@ function PendingVerifications(props) {
                 {(practitioners !== null && practitioners.length > 0) ?
                     <div className="flex flex-col items-center h-full">
                         {[...practitioners].map((e, i) => {
+                            console.log("e: ", e, "\te.Bio: ", e.Bio)
                             return (
                                 <PendingProfile name={`${e.FName} ${e.LName}`}
                                                 image={(e.ImageAddr) ? `/api/profile_picture/${e.ImageAddr}` : placeholder}
@@ -63,9 +64,9 @@ function PendingVerifications(props) {
                                                 email={e.Email}
                                                 number={e.PhoneNumber}
                                                 mdcn={e.MDCN}
-                                                dob={e.DoB}
                                                 bio={e.Bio}
                                                 loc={`${e.Street}, ${e.City}, ${e.Country}`}
+                                                license={e.LicenseNumber}
                                                 key={i}
                                                 trigger={triggerUpdate}/>
                             )
@@ -89,6 +90,7 @@ function PendingVerifications(props) {
                 {(facilities !== null && facilities.length > 0) ?
                     <div className="flex flex-col items-center h-full">
                         {[...facilities].map((e, i) => {
+                            console.log(e.PhoneNumber)
                             return (
                                 <PendingProfileFac name={e.FacName}
                                                    image={(e.ImageAddr) ?  `/api/profile_picture/${e.ImageAddr}` : placeholder}
@@ -96,7 +98,7 @@ function PendingVerifications(props) {
                                                    loc={`${e.City}, ${e.STATE}, ${e.Country}`}
                                                    email={e.Email}
                                                    number={e.PhoneNumber}
-                                                   bio={e.Bio}
+                                                   bio={e.Descript}
                                                    key={i}
                                                    trigger={triggerUpdate}/>
                             )

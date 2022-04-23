@@ -628,7 +628,7 @@ function AboutPopup(props) {
     }
     
     const save = (e) => {
-        console.log(tempInfo)
+        console.log("TEMP INFO: ", tempInfo)
         postProfileData(tempInfo)
         setInfo({...tempInfo, gender: gender.label});
         setOpen({...open, open:false});

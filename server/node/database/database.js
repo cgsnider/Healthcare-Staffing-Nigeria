@@ -21,7 +21,7 @@ async function call (procedure="", params=[]) {
         let sql = "CALL " + procedure + "( ";
         params.forEach(p => {
             if (typeof(p) == 'string') {
-                sql += `'${p}', `
+                sql += `'${p.replace(/\'/g, '\\\'')}', `
             } else if (typeof(p) == 'number' || typeof(p) == 'boolean') {
                 sql += `${p}, `
             } else {
@@ -76,9 +76,9 @@ async function addNewUser(user) {
         
         if (user['custom:type'] == 'Professional') {
             fullName = user.name.split("$")
-            sql = `call cmg_staffing_nigeria.register_professional('${fullName[0]}', '${(fullName.length >= 2) ? fullName[1] : 'N/A'}', '${user.email}');`
+            sql = `call cmg_staffing_nigeria.register_professional('${fullName[0].replace(/\'/g, '\\\'')}', '${(fullName.length >= 2) ? fullName[1].replace(/\'/g, '\\\'') : 'N/A'}', '${user.email}');`
         } else if (user['custom:type'] == 'Facility') {
-            sql = `CALL register_facility('${user.name}', '${user.email}')`
+            sql = `CALL register_facility('${user.name.replace(/\'/g, '\\\'')}', '${user.email.replace(/\'/g, '\\\'')}')`
         } else if (user['custom:type'] == 'Admin') {
             sql = `CALL admin_create_admin('${user.email}')`
         }
