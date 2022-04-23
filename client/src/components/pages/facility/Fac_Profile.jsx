@@ -11,6 +11,9 @@ import { useState, useEffect } from 'react';
 import {Drop2 , Drop} from '../../parts/Drop';
 import placeholder from '../../../images/profile-placeholder.jpg';
 import {applyForVerification, getProfileData, getProfileImage, postProfileData, postProfilePicture } from '../../../hooks/server';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons'
+import MessagePopup from '../../parts/MessagePopup';
 
 export default function Fac_Profile(props) {
 
@@ -29,6 +32,7 @@ export default function Fac_Profile(props) {
 
     const [picture, setPicture] = useState(placeholder);
     const [update, setUpdate] = useState(0);
+    const [viewMessage, setViewMessage] = useState(false);
 
     const triggerUpdate = () => {
         setUpdate((update + 1) % 16);
@@ -106,8 +110,19 @@ export default function Fac_Profile(props) {
         }
         if(profileInfo.Verified==2) {
             return(
-                <div className="ml-auto mr-0">
-                    <span className="bg-green-500 py-1 px-2 rounded text-white text-sm">Verified</span>
+                <div className="ml-auto mr-0 hover:cursor-pointer" onClick={()=>setViewMessage(true)}>
+                    <span className="bg-green-500 py-1 px-2 rounded text-white text-md">Verified</span>  
+                    <div className='relative w-0 h-0'><FontAwesomeIcon icon={faCircleQuestion} size='md' className='absolute -top-8 -right-[79px] bg-white rounded-full'/></div>
+                    <MessagePopup open={viewMessage} setOpen={setViewMessage} type='accept' message={profileInfo.AdminMessage} spin className='fa-spin'/>
+                </div>
+            );
+        }
+        if(profileInfo.Verified===2) {
+            return(
+                <div className="ml-auto mr-0 hover:cursor-pointer" onClick={()=>setViewMessage(true)}>
+                    <span className="bg-green-500 py-1 px-2 rounded text-white text-md">Denied</span>
+                    <div className='relative w-0 h-0'><FontAwesomeIcon icon={faCircleQuestion} size='md' className='absolute -top-8 -right-[75px] bg-white rounded-full'/></div>
+                    <MessagePopup open={viewMessage} setOpen={setViewMessage} type='Deny' message={profileInfo.AdminMessage} spin className='fa-spin'/>
                 </div>
             );
         }
