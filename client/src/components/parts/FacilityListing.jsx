@@ -50,7 +50,7 @@ function FacilityListing (props) {
                         <div className="invisible">placeholder</div>
                     </div>
                     <div className="flex basis-1/3 flex-initial justify-end h-28 min-w-fit">
-                        <img className="rounded-full" src={(props.account.image) ? props.image : placeholder}/>
+                        <img className="rounded-full" src={(props.account.ImageAddr) ?  `/api/profile_picture/${props.account.ImageAddr}` : placeholder}/>
                     </div>
                 </div>
             </div>

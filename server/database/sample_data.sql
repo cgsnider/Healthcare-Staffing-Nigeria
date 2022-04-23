@@ -3,7 +3,7 @@ USE cmg_staffing_nigeria;
 
 CALL admin_create_facility('NigerianHospital@hosp.org', 'Nigerian Hospital', 2, 'Lagos', 'Nigeria', 'Lagos', '123 Street', 'A Nigerian Hopsital', null);
 CALL admin_create_facility('MemorialHospital@hosp.org', 'Memorial Hospital', 2, 'Kano', 'Nigeria', 'Kano', '123 Street', 'A Memorial Hopsital', null);
-CALL admin_create_facility('GeneralHospital@hosp.org', 'Nigerian Hospital', 2, 'Ibadan', 'Nigeria', 'Oyo', '123 Street', 'A General Hopsital', null);
+CALL admin_create_facility('GeneralHospital@hosp.org', 'General Hospital', 2, 'Ibadan', 'Nigeria', 'Oyo', '123 Street', 'A General Hopsital', null);
 
 CALL create_job_posting('NigerianHospital@hosp.org', 'Cardiologist', 30000, 'Head of the cardiology department', 1, 'Cardiology', '9 Hr', 1);
 CALL create_job_posting('NigerianHospital@hosp.org', 'Gen Surgeon', 15000, 'A doctor of surgical procedures', 2, 'Surgery', '4 Hr', 1);

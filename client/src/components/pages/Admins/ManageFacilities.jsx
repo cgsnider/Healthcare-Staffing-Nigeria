@@ -12,6 +12,12 @@ function ManageFacilities (props) {
     const [viewFacilities, setViewFacilities] = useState(true);
     const [facID, setFacID] = useState(null); //Whatever variable type that is needed will be fine
 
+    const [update, setUpdate] = useState(0);
+
+    const triggerUpdate = () => {
+        setUpdate((update + 1) % 16);
+    }
+
     const handleBack = () => {
         setViewFacilities(true)
         setFacID(null)
@@ -21,6 +27,7 @@ function ManageFacilities (props) {
         deleteFacility(facID)
         setViewFacilities(true)
         setFacID(null)
+        triggerUpdate()
     }
 
     const handleVerify = () => {
@@ -37,7 +44,7 @@ function ManageFacilities (props) {
         return () => {
             isMounted = false;
         };
-    }, [])
+    }, [update])
 
     const VerifiedIcon = (props) => {
         if(facID.Verified==0) {
@@ -108,8 +115,9 @@ function ManageFacilities (props) {
                                             <div className="image overflow-hidden">
                                                 <div>
                                                     <label htmlFor='pfp-upload' >
+                                                        {console.log("facID.ImageAddr: ", facID.ImageAddr)}
                                                         <img className="h-auto w-full mx-auto"
-                                                            src={(facID.ImageAddr!==null) ?  `/api/profile_picture/${facID.ImageAddr}` : placeholder}
+                                                            src={(facID.ImageAddr) ?  `/api/profile_picture/${facID.ImageAddr}` : placeholder}
                                                             alt="Profile Picture"/>
                                                     </label>
                                                     

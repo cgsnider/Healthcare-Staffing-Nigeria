@@ -91,7 +91,7 @@ function PendingVerifications(props) {
                         {[...facilities].map((e, i) => {
                             return (
                                 <PendingProfileFac name={e.FacName}
-                                                   image={(e.image) ?  `/api/profile_picture/${e.ImageAddr}` : placeholder}
+                                                   image={(e.ImageAddr) ?  `/api/profile_picture/${e.ImageAddr}` : placeholder}
                                                    street={e.Street}
                                                    loc={`${e.City}, ${e.STATE}, ${e.Country}`}
                                                    email={e.Email}

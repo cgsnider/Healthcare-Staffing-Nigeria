@@ -16,6 +16,12 @@ function ManageProfessionals (props) {
     const [viewProfessionals, setViewProfessionals] = useState(true);
     const [profID, setProfID] = useState(null); //Whatever variable type that is needed will be fine
 
+    const [update, setUpdate] = useState(0);
+
+    const triggerUpdate = () => {
+        setUpdate((update + 1) % 16);
+    }
+
     const handleBack = () => {
         setViewProfessionals(true)
         setProfID(null)
@@ -25,6 +31,7 @@ function ManageProfessionals (props) {
         deleteProfessional(profID)
         setViewProfessionals(true)
         setProfID(null)
+        triggerUpdate()
     }
 
     const handleVerify = () => {
@@ -43,7 +50,7 @@ function ManageProfessionals (props) {
         return () => {
             isMounted = false;
         };
-    }, [])
+    }, [update])
 
     const fetchEducation = async(isMounted) => {
         console.log("EDUCATION 1")
