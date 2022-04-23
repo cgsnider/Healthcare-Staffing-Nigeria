@@ -24,7 +24,7 @@ function PendingProfileFac(props) {
 
     const handleSubmit = () => {
         if (accept){
-            postVerifyFacility(props.email);
+            postVerifyFacility({FacEmail: props.email, Message: message});
         }
         if (reject){
             rejectFacility({FacEmail: props.email, Message: message});

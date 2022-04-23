@@ -51,6 +51,27 @@ CREATE PROCEDURE delete_education (
 END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS delete_experience;
+DELIMITER //
+CREATE PROCEDURE delete_experience (
+	IN i_email VARCHAR(255),
+    IN i_company VARCHAR(255),
+	IN i_title VARCHAR(255),
+	IN i_startdate VARCHAR(15),
+	IN i_enddate VARCHAR(15)
+) BEGIN 
+
+	SELECT id FROM PROFESSIONAL WHERE Email = i_email INTO @id;
+
+	DELETE FROM EXPERIENCE 
+		WHERE PID = @id AND Company = i_company AND Title = i_title 
+        AND StartDate = i_startdate AND EndDate = i_enddate;
+
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
+		(@id, 'delete_education');
+END //
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS delete_document;
 DELIMITER //
 CREATE PROCEDURE delete_document (

@@ -191,7 +191,7 @@ SELECT id FROM ADMINISTRATOR WHERE email = i_email INTO @id;
 SELECT J.Title, J.Category, 
 	F.FacName, F.Email as FacEmail, 
 	A.TimeCreated,
-    P.Email as ProfEmail, P.FName, P.LName, P.Specialization, P.ImageAddr
+    P.Email as ProfEmail, P.FName, P.LName
 		FROM JOBPOSTING AS J JOIN FACILITY AS F ON F.ID = J.FID 
 		INNER JOIN APPLICATION AS A ON J.FID = A.FID AND J.Title = A.PostingTitle 
 		JOIN PROFESSIONAL AS P ON P.ID = A.PID
@@ -210,8 +210,9 @@ CREATE PROCEDURE get_facility_profile (
 	IN i_email varchar(255)
 ) BEGIN
 	
-	SELECT F.Email, F.Verified, F.ImageAddr, F.City, F.Country, F.State, F.Street, F.Descript, F.FacName, C.CName, C.PhoneNumber
-		FROM FACILITY AS F LEFT JOIN CONTACT AS C ON C.FID = F.ID WHERE email = i_email;
+	SELECT F.Email, F.Verified, F.ImageAddr, F.City, F.Country, F.State, F.Street, F.Descript, F.FacName, F.AdminMessage,
+		C.CName, C.PhoneNumber
+			FROM FACILITY AS F LEFT JOIN CONTACT AS C ON C.FID = F.ID WHERE email = i_email;
 
 END //
 DELIMITER ;

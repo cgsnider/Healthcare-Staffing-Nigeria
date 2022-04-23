@@ -158,20 +158,20 @@ export async function downloadResume(email) {
 
 /**
  * 
- * @param {string} profEmail the email of the professional the admin wishes to verify
+ * @param {{FacEmail: String, Mesage: String}}
  * @returns 
  */
-export async function postVerifyProfessional(profEmail) {
-    return await postData('/verify_professional', {ProfEmail: profEmail});
+export async function postVerifyProfessional(data) {
+    return await postData('/verify_professional', data);
 }
 
 /**
  * 
- * @param {string} facEmail the email of the facility the admin wishes to verify
+ * @param {{FacEmail: String, Mesage: String}}
  * @returns 
  */
-export async function postVerifyFacility(facEmail) {
-    return await postData('/verify_facility', {FacEmail: facEmail});
+export async function postVerifyFacility(data) {
+    return await postData('/verify_facility', data);
 }
 
 /**

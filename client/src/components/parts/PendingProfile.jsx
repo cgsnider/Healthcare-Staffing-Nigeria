@@ -23,7 +23,7 @@ function PendingProfile(props) {
 
     const handleSubmit = () => {
         if (accept){
-            postVerifyProfessional(props.email);
+            postVerifyProfessional({ProfEmail: props.email, Message: message});
         }
         if (reject){
             rejectProfessional({ProfEmail: props.email, Message: message});

@@ -221,7 +221,7 @@ router.get('/review_fac_verification', STD_MIDWARE, (req, res) => {
 router.post('/verify_professional', STD_MIDWARE, (req, res) => {
     if (req.user['custom:type'] == 'Admin') {
         const procedure = 'admin_verify_professional'
-        const params = [req.user.email, req.body.ProfEmail]
+        const params = [req.user.email, req.body.ProfEmail, req.body.Message]
 
         db.call(procedure, params)
             .then(results => {res.end(JSON.stringify(results))})
@@ -263,7 +263,7 @@ router.post('/reject_facility', STD_MIDWARE, (req, res) => {
 router.post('/verify_facility', STD_MIDWARE, (req, res) => {
         if (req.user['custom:type'] == 'Admin') {
             const procedure = 'admin_verify_facility'
-            const params = [req.user.email, req.body.FacEmail]
+            const params = [req.user.email, req.body.FacEmail, req.body.Message]
 
             console.log('PARAMS: ', params)
 

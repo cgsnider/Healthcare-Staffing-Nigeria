@@ -394,7 +394,8 @@ DROP PROCEDURE IF EXISTS admin_verify_professional;
 DELIMITER //
 CREATE PROCEDURE admin_verify_professional (
 	IN i_admin_email VARCHAR(255),
-    IN i_prof_email VARCHAR(255)
+    IN i_prof_email VARCHAR(255),
+    IN i_Message TEXT
 ) BEGIN 
 	
 	SET @newStatus := 2;
@@ -403,7 +404,8 @@ CREATE PROCEDURE admin_verify_professional (
 	
 	UPDATE PROFESSIONAL
 	SET
-		Verified = @newStatus
+		Verified = @newStatus,
+        AdminMessage = i_Message
 	WHERE
 		Email = i_prof_email;
 	
@@ -446,7 +448,8 @@ DROP PROCEDURE IF EXISTS admin_verify_facility;
 DELIMITER //
 CREATE PROCEDURE admin_verify_facility (
 	IN i_admin_email VARCHAR(255),
-    IN i_fac_email VARCHAR(255)
+    IN i_fac_email VARCHAR(255),
+    IN i_message TEXT
 ) BEGIN 
 	
 	SET @newStatus := 2;
@@ -455,7 +458,8 @@ CREATE PROCEDURE admin_verify_facility (
 	
 	UPDATE FACILITY
 	SET
-		Verified = @newStatus
+		Verified = @newStatus,
+        AdminMessage = i_message
 	WHERE
 		Email = i_fac_email;
 	
