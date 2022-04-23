@@ -427,7 +427,7 @@ CREATE PROCEDURE admin_reject_professional (
     IN i_message TEXT
 ) BEGIN 
 	
-	SET @newStatus := 0;
+	SET @newStatus := 3;
     
 	SELECT id FROM ADMINISTRATOR WHERE Email = i_admin_email INTO @id;
 	
@@ -481,7 +481,7 @@ CREATE PROCEDURE admin_reject_facility (
     IN i_message TEXT
 ) BEGIN 
 	
-	SET @newStatus := 0;
+	SET @newStatus := 3;
     
 	SELECT id FROM ADMINISTRATOR WHERE Email = i_admin_email INTO @id;
 	
