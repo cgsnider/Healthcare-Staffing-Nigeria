@@ -117,10 +117,10 @@ export default function Fac_Profile(props) {
                 </div>
             );
         }
-        if(profileInfo.Verified===2) {
+        if(profileInfo.Verified===3) {
             return(
                 <div className="ml-auto mr-0 hover:cursor-pointer" onClick={()=>setViewMessage(true)}>
-                    <span className="bg-green-500 py-1 px-2 rounded text-white text-md">Denied</span>
+                    <span className="bg-red-500 py-1 px-2 rounded text-white text-md">Denied</span>
                     <div className='relative w-0 h-0'><FontAwesomeIcon icon={faCircleQuestion} size='sm' className='absolute -top-8 -right-[75px] bg-white rounded-full'/></div>
                     <MessagePopup open={viewMessage} setOpen={setViewMessage} type='Deny' message={profileInfo.AdminMessage} spin className='fa-spin'/>
                 </div>
