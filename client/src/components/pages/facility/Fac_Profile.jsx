@@ -112,7 +112,7 @@ export default function Fac_Profile(props) {
             return(
                 <div className="ml-auto mr-0 hover:cursor-pointer" onClick={()=>setViewMessage(true)}>
                     <span className="bg-green-500 py-1 px-2 rounded text-white text-md">Verified</span>  
-                    <div className='relative w-0 h-0'><FontAwesomeIcon icon={faCircleQuestion} size='md' className='absolute -top-8 -right-[79px] bg-white rounded-full'/></div>
+                    <div className='relative w-0 h-0'><FontAwesomeIcon icon={faCircleQuestion} size='sm' className='absolute -top-8 -right-[79px] bg-white rounded-full'/></div>
                     <MessagePopup open={viewMessage} setOpen={setViewMessage} type='accept' message={profileInfo.AdminMessage} spin className='fa-spin'/>
                 </div>
             );
@@ -121,7 +121,7 @@ export default function Fac_Profile(props) {
             return(
                 <div className="ml-auto mr-0 hover:cursor-pointer" onClick={()=>setViewMessage(true)}>
                     <span className="bg-green-500 py-1 px-2 rounded text-white text-md">Denied</span>
-                    <div className='relative w-0 h-0'><FontAwesomeIcon icon={faCircleQuestion} size='md' className='absolute -top-8 -right-[75px] bg-white rounded-full'/></div>
+                    <div className='relative w-0 h-0'><FontAwesomeIcon icon={faCircleQuestion} size='sm' className='absolute -top-8 -right-[75px] bg-white rounded-full'/></div>
                     <MessagePopup open={viewMessage} setOpen={setViewMessage} type='Deny' message={profileInfo.AdminMessage} spin className='fa-spin'/>
                 </div>
             );
