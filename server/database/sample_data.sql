@@ -26,12 +26,3 @@ CALL add_experience('professional@demo', 'Saint Joseph Health Center and Hospita
 
 CALL admin_create_facility('facility@demo', 'Covenant Pulmonary Critical Care Inc', 0, 'East Point', 'United States', 'Georgia', '1136 Cleveland Avenue
 Suite 615', "Our patients are the center of everything we do. We're nationally ranked and locally recognized for our high-quality care, inclusive culture, exceptional doctors and caregivers, and one of the largest and most integrated healthcare systems in Georgia.", '3ab457cfed70aa59acd0370a189062e2');
-
-
--- CALL create_application('NigerianHospital@hosp.org', 'cgsnider@gatech.edu', 'Cardiology', 'COVER LETTER', NOW());
-
--- CALL admin_create_professional('Conor', 'Snows', 'cgsnider@outlook.com', 1, 'BQ32-QWE-54', 'Surgeon', '123-123-1234', '789123', 'United States', 'New York', 'First Street', 'General Surgeon for 3+ years at Memorial Hospital.');
--- CALL admin_create_professional('Charles', 'Snider', 'charles-snider@outlook.com', 1, 'AQ21-ASD-23', 'Student', '404-404-4040', '123456', 'United States', 'Atlanta', 'North Ave NW', 'This is an example Bio!');
-
-
--- CALL create_application('NigerianHospital@hosp.org', 'csnider32@gatech.edu', 'Cardiologist', 'Sample Coverletter', '2022-03-01 09:05:00');
