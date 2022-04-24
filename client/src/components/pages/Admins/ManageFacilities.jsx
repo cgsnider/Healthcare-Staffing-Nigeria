@@ -3,7 +3,7 @@ import Popup from 'reactjs-popup';
 import FacilityListing from "../../parts/FacilityListing";
 import {getBulkFacilities, postVerifyFacility, deleteFacility} from "../../../hooks/server";
 import placeholder from '../../../images/profile-placeholder.jpg';
-import '../../styling/AdminAccountManagement.css';
+import '../../styling/ConfirmationPopup.css';
 
 function ManageFacilities (props) {
 
