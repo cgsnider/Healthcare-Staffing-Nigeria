@@ -22,9 +22,10 @@ function PendingProfileFac(props) {
         setReject(!reject);
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (accept){
-            postVerifyFacility({FacEmail: props.email, Message: message});
+            await postVerifyFacility({FacEmail: props.email, Message: message});
+            props.trigger();
         }
         if (reject){
             rejectFacility({FacEmail: props.email, Message: message});

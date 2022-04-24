@@ -140,6 +140,7 @@ export default function Profile(props) {
                 </div>
             );
         }
+        return(<></>)
     }
 
     const VerifiedIcon = (props) => {
