@@ -1,3 +1,6 @@
+
+require('dotenv').config('../.env')
+
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 const CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
 const AWS = require('aws-sdk');
@@ -9,13 +12,13 @@ const jwkToPem = require('jwk-to-pem');
 const jwt = require('jsonwebtoken');
 
 const poolData = {    
-    UserPoolId: "us-east-2_q85GCcTxM",
-    ClientId: "50sar6ii4ksu1kshi2tf8o0ntb"
+    UserPoolId: process.env.USERPOOLID,
+    ClientId: process.env.CLIENTID
 }; 
 
 const DISABLE_AUTH = false; //Set this to true to disable authentication. DEV USE ONLY
 
-const pool_region = 'us-east-2';
+const pool_region = process.env.POOLREGION;
 
 const iss = `https://cognito-idp.${pool_region}.amazonaws.com/${poolData.UserPoolId}`;
 

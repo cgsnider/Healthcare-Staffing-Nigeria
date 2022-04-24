@@ -1,9 +1,10 @@
+require('dotenv').config('./.env')
 const express = require('express');
 const bodyParser = require('body-parser');
 const routesHandler = require('./routes/handler.js');
 const process = require('process');
 
-const PORT = 4000;
+const PORT = process.env.PORT;
 
 // Sets up express routing
 

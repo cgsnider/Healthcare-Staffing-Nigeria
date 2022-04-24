@@ -32,18 +32,6 @@ function arrayObject(arr) {
     return out;
 }
 
-
-
-// function formatImage(req, res, next) {
-//     const file = req.file
-//     reshape(file.path)
-//         .then(result => next())
-//         .catch(err => {
-//             console.log(err);
-//             next();
-//         })
-// }
-
 async function formatImage(path) {
 
     let meta = await sharp(path).metadata();
