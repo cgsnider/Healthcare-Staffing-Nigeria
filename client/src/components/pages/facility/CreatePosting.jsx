@@ -63,7 +63,6 @@ export default function CreatePosting(props) {
         if (editorRef.current) {
             setFormData({...formData, Descript: editorRef.current.getContent()});
             setFormData({...formData, Category: selectedCategory});
-            navigate('/facilityManage');
         }
     };
 
@@ -77,6 +76,7 @@ export default function CreatePosting(props) {
         e.preventDefault();
         console.log({...formData, Descript: editorRef.current.getContent(), Category: selectedCategory.label});
         postJobPosting({...formData, Descript: editorRef.current.getContent(), Category: selectedCategory.label})
+        .then(res => navigate('/facilityManage'))
         .catch(err=>{console.error(err);});
     }
 
