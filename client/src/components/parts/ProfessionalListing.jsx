@@ -1,5 +1,6 @@
 import React from 'react'
 import Popup from 'reactjs-popup';
+import { downloadResume } from '../../hooks/server';
 import placeholder from "../../images/profile-placeholder.jpg";
 
 function ProfessionalListing (props) {
@@ -38,7 +39,14 @@ function ProfessionalListing (props) {
                     <div className="flex flex-initial basis-1/3 flex-col justify-between">
                         <div className="truncate">{props.account.FName} {props.account.LName}</div>
                         <div className="truncate">{props.account.Specialization || "No Specialty Provided"}</div>
-                        <a href={props.account.resume} className="truncate text-blue-600" download>Resume</a>
+                        {(props.account.ResumeExists)?
+                                                <span className="text-blue-500" onClick={(e)=>{downloadResume(props.account.Email)}}>Resume</span>
+                                                :
+                                                <>
+                                                <label>No Resume</label>
+                                                
+                                                </>
+                                                }
                     </div>
                     <div className="flex flex-initial basis-1/3 flex-col justify-between text-center">
                         <div className="items-center">
