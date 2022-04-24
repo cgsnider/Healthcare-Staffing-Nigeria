@@ -40,11 +40,16 @@ function ManageFacilities (props) {
 
     useEffect(async () => {
         let isMounted = true;
+        console.log("BULK: ", await getBulkFacilities());
         setFacilities(await getBulkFacilities());
         return () => {
             isMounted = false;
         };
     }, [update])
+
+    useEffect(() => {
+        console.log(facilities)
+    }, [facilities])
 
     const VerifiedIcon = (props) => {
         if(facID.Verified==0) {

@@ -350,7 +350,7 @@ CREATE PROCEDURE admin_bulk_facilities(
 	
     SELECT id FROM ADMINISTRATOR WHERE Email = i_email INTO @id; 
     
-	SELECT F.*, C.PhoneNumber FROM FACILITY as F JOIN CONTACT AS C ON C.FID = F.ID;
+	SELECT F.*, C.PhoneNumber FROM FACILITY as F LEFT JOIN CONTACT AS C ON C.FID = F.ID;
     
     INSERT INTO SYSTEMLOG (uid, act) VALUE 
 		(@id, 'admin_bulk_facilities');
