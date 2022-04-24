@@ -22,9 +22,10 @@ function PendingProfile(props) {
         setReject(!reject);
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (accept){
-            postVerifyProfessional({ProfEmail: props.email, Message: message});
+            await postVerifyProfessional({ProfEmail: props.email, Message: message});
+            props.trigger();
         }
         if (reject){
             rejectProfessional({ProfEmail: props.email, Message: message});
