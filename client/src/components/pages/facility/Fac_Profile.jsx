@@ -14,7 +14,7 @@ import {applyForVerification, getProfileData, getProfileImage, postProfileData, 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons'
 import MessagePopup from '../../parts/MessagePopup';
-
+import CircleLoader from 'react-spinners/CircleLoader';
 export default function Fac_Profile(props) {
 
     const [profileInfo, setProfileInfo] = useState(
@@ -33,6 +33,7 @@ export default function Fac_Profile(props) {
     const [picture, setPicture] = useState(placeholder);
     const [update, setUpdate] = useState(0);
     const [viewMessage, setViewMessage] = useState(false);
+    const [infoFetchEnd, setInfoFetchEnd] = useState(false);
 
     const triggerUpdate = () => {
         setUpdate((update + 1) % 16);
@@ -58,6 +59,7 @@ export default function Fac_Profile(props) {
         if (isMounted) {
             console.log('Trigger')
             setProfileInfo(data[0][0])
+            setInfoFetchEnd(true)
             triggerUpdate()
         }
         else console.log('aborted setPostings on unmounted component')
@@ -79,18 +81,24 @@ export default function Fac_Profile(props) {
         if(profileInfo.Verified===0){
             return(
                 <div className='w-full h-8 text-center content-center bg-amber-500'> 
-                    <span>You are not verified. You will have limited access until you become verified. To submit for verification click <span className='text-blue-600 underline hover:cursor-pointer' onClick={submitVerification}>here</span></span>
+                    <span>You are not verified. You will have limited access until you become verified. To submit for verification click <span className='text-blue-600 underline hover:cursor-pointer' onClick={submitVerification}>here</span>.</span>
                 </div>
             );
         }
         else if(profileInfo.Verified===1){
             return(
                 <div className='w-full h-8 text-center content-center bg-amber-500'> 
-                    <span>Verification pending. Access will be limited until you are verified</span>
+                    <span>Verification pending. Access will be limited until you are verified.</span>
                 </div>
             );
         }
-        return (null);
+        else if(profileInfo.Verified===3){
+            return(
+                <div className='w-full h-8 text-center content-center bg-amber-500 sticky top-16'> 
+                    <span>You have been denied verification. View the response by clicking the question mark by your status and then you may resubmit for verification <span className='text-blue-600 underline hover:cursor-pointer' onClick={submitVerification}>here</span>.</span>
+                </div>
+            );
+        }
     }
 
     const VerifiedIcon = (props) => {
@@ -134,7 +142,7 @@ export default function Fac_Profile(props) {
         console.log(profileInfo.ImageAddr);
     }
 
-if(profileInfo){
+if(profileInfo && infoFetchEnd){
     return (
         <div>
            <Verificationdrop />
@@ -236,7 +244,9 @@ if(profileInfo){
     );
     } else {
         return (
-            <div>null</div>
+            <div className='flex content-center justify-center py-10'>
+                <CircleLoader loading={!infoFetchEnd} color={'#3a8c3c'}/>
+            </div>
         );
     }
 }

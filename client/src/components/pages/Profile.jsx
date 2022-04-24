@@ -122,18 +122,24 @@ export default function Profile(props) {
         if(profileInfo.Verified===0){
             return(
                 <div className='w-full h-8 text-center content-center bg-amber-500 sticky top-16'> 
-                    <span>You are not verified. You will have limited access until you become verified. To submit for verification click <span className='text-blue-600 underline hover:cursor-pointer' onClick={submitVerification}>here</span></span>
+                    <span>You are not verified. You will have limited access until you become verified. To submit for verification click <span className='text-blue-600 underline hover:cursor-pointer' onClick={submitVerification}>here</span>.</span>
                 </div>
             );
         }
         else if(profileInfo.Verified===1){
             return(
                 <div className='w-full h-8 text-center content-center bg-amber-500 sticky top-16'> 
-                    <span>Verification pending. Access will be limited until you are verified</span>
+                    <span>Verification pending. Access will be limited until you are verified.</span>
                 </div>
             );
         }
-        return (null);
+        else if(profileInfo.Verified===3){
+            return(
+                <div className='w-full h-8 text-center content-center bg-amber-500 sticky top-16'> 
+                    <span>You have been denied verification. View the response by clicking the question mark by your status and then you may resubmit for verification <span className='text-blue-600 underline hover:cursor-pointer' onClick={submitVerification}>here</span>.</span>
+                </div>
+            );
+        }
     }
 
     const VerifiedIcon = (props) => {

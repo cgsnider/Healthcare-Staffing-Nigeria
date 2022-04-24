@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { getCategories, postJobPosting, getProfileData } from '../../../hooks/server';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
+import CircleLoader from 'react-spinners/CircleLoader';
 export default function CreatePosting(props) {
 
     useEffect( () => {
@@ -27,6 +28,7 @@ export default function CreatePosting(props) {
     const [formData, setFormData] = useState({Title: '', Salary: 0, Descript: '', Slots: 1, Category: '', Shifts: 1});
     const [verification, setVerification] = useState(0);
     const navigate = useNavigate();
+    const [infoFetchEnd, setInfoFetchEnd] = useState(false);
 
     const fetchCategories = async(isMounted) => {
         let items = await getCategories()
@@ -49,6 +51,7 @@ export default function CreatePosting(props) {
         .catch(err=>{console.error(err);})
         if (isMounted) {
             setVerification(data[0][0].Verified==2?true:false, console.log(verification));
+            setInfoFetchEnd(true)
         }
 
     }
@@ -78,7 +81,7 @@ export default function CreatePosting(props) {
         return str.trim().split(/\s+/).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     }
 
-
+    if(infoFetchEnd){
     return (
         <>
         <div className='mx-5'>
@@ -89,7 +92,7 @@ export default function CreatePosting(props) {
                     <FontAwesomeIcon icon={faCircleExclamation} size='2x'/>
                     <div className='pl-4 inline text-xl text-semibold'> Your account is not verified</div>
                     <div className='pl-12'>Your account must be verified to create job listings. 
-                    You can apply for verification on your 
+                    You can apply for verification on your  
                     <span className='text-blue-600 underline hover:cursor-pointer' onClick={(e)=>navigate('/facility')}>profile page</span>.
                     If you have already submitted for verification, you can view your status on your Profile page while a member of our team 
                     reviews your profile for verification
@@ -200,4 +203,11 @@ export default function CreatePosting(props) {
         </div>
         </>
     );
+    }else {
+        return (
+            <div className='flex content-center justify-center py-10'>
+                <CircleLoader loading={!infoFetchEnd} color={'#3a8c3c'}/>
+            </div>
+        );
+    }
 }
