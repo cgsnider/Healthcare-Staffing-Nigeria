@@ -7,22 +7,14 @@ import Popup from 'reactjs-popup'
 import {getFacilityPostings, getJobPosts, getCategories} from '../../../hooks/server'
 import ReactHtmlParser from 'react-html-parser'
 import { Drop } from '../../parts/Drop';
+import '../../styling/ConfirmationPopup.css';
 
 
 function PostList (props) {
 
     let key = 0;
     const [loggedIn, setLoggedIn] = useState(false);
-    const [postings, setPostings] = useState([]);
-    const [search, setSearch] = useState('');
-    const [fetchError, setFetchError] = useState(null);
-    const [posFetchEnd, setPosFetchEnd] = useState(false);
-    const [position, setPosition] = useState(null);
-    const [openApply, setOpen] = useState(false);
-    const [applyPos, setApplyPosition] = useState({});
     const [fetchOnce, setFetchOnce] = useState(false);
-    const [catFetchEnd, setCatFetchEnd] = useState(false);
-    const [categories, setCategories] = useState(null);
 
     useEffect( ()=> {
         let isMounted = true;
@@ -31,7 +23,6 @@ function PostList (props) {
         }
         if(!fetchOnce){
             setFetchOnce(true);
-            fetchPosts(isMounted);
             fetchCategories(isMounted);
         }
 
@@ -40,9 +31,19 @@ function PostList (props) {
         };
     }, [])
 
+    const [postings, setPostings] = useState([]);
+    const [search, setSearch] = useState('');
+    const [fetchError, setFetchError] = useState(null);
+    const [posFetchEnd, setPosFetchEnd] = useState(false);
+    const [position, setPosition] = useState(null);
+    const [openApply, setOpen] = useState(false);
+    const [applyPos, setApplyPosition] = useState({});
+    const [catFetchEnd, setCatFetchEnd] = useState(false);
+    const [categories, setCategories] = useState(null);
+
     const fetchPosts = async(isMounted) => {
         setPosFetchEnd(false);
-        let items = await getFacilityPostings((position.value == 'All') ? null : position.value)
+        let items = await getJobPosts((position.value == 'All') ? null : position.value)
             .catch(err=>setFetchError(true));
         if (isMounted) {
             setPosFetchEnd(true);
@@ -79,7 +80,7 @@ function PostList (props) {
     }
 
     const handleClick = (e) =>{
-        console.log(postings)
+        console.log(postings);
         const copy = [...postings]
         if (e === 'salary') {
             copy.sort((a, b)=> a[e] < b[e]? 1:-1)
@@ -87,7 +88,7 @@ function PostList (props) {
             copy.sort((a, b)=> a[e] > b[e]? 1:-1)
         }
         
-        setPostings(copy)
+        setPostings(copy);
     }
 
     const filterSearch = (posts) =>{
@@ -100,6 +101,10 @@ function PostList (props) {
         else {
             return pos.Category === position.label;
         }
+    }
+
+    const handleDelete = () => {
+        
     }
 
     if(fetchError !== true) {
@@ -135,6 +140,7 @@ function PostList (props) {
                         :
                         <div className="flex content-center justify-center">No Jobs Posted</div>
                     }
+                    <DetailView open={openApply} setOpen={setOpen} posting={applyPos}/>
                 </div>
             )
         } else {
@@ -182,7 +188,70 @@ function PostList (props) {
         )
     }
 
+    function DetailView (props) {
+        const post = props.posting;
+        console.log('ping');
 
+        return (
+            <Popup open={props.open} onClose={()=>props.setOpen(false)} className='application'>
+            <div className='flex flex-col justify-center content-center text-center mb-10'>
+                <div className='absolute right-5 top-4 py-1 px-3 bg-gray-300 text-lg text-center align-center hover:cursor-pointer hover:bg-gray-200 hover:text-black-800' onClick={()=>props.setOpen(false)}>x</div>
+                <h1 className='text-4xl'>{post.Title}</h1>
+                <h2 className='text-xl'>{(post.FacName)? `${post.FacName}`:'?????'}</h2>
+                <h3 className='text-lg'>{(post.City)? `${post.City}, ${post.Country}`:'?????'}</h3>
+            </div>
+            <div id='posting-body' className='mx-3'>
+                <div id='description' className='mb-4'>
+                    <h3 className='font-bold text-lg'>Job Description</h3>
+                    <p>{ReactHtmlParser(post.Descript)}</p>
+                </div>
+                <div className='flex my-2'>
+                    <h6 className='font-bold'>Salary:&nbsp; </h6>
+                    <span>&#8358; {(post.Salary)? `${post.Salary}`: '?????'}</span>
+                </div>
+                <div className='flex my-2'>
+                    <h6 className='font-bold'>Shifts:&nbsp;</h6>
+                    <span>{(post.Shifts)?post.Shifts:'?????'}</span>
+                </div>
+                <div className='flex my-2'>
+                    <h6 className='font-bold'>Address:&nbsp;</h6>
+                    <span>{(post.Street)?`${post.Street}, ${post.City}, ${post.State}, ${post.Country}`:'?????'}</span>
+                </div>
+                <div className='flex my-2'>
+                    <h6 className='font-bold'>Contact:&nbsp;</h6>
+                    <span>{(post.Email)?post.Email:"?????"}</span>
+                </div>
+            </div>
+            <div>
+                <div className='flex justify-center mt-20'>
+                    <RemovePop/>
+                </div>
+            </div>
+        </Popup>
+        )
+    }
+
+    function RemovePop (props) {
+        return (
+            <div>
+                <Popup trigger={<button className="bg-red-500 hover:bg-red-700 outline outline-1 rounded px-3">Delete Post</button>} modal>
+                    {close => (
+                        <div className="confirmPop">
+                            <div className="header"> Delete Post </div>
+                            <div className="w-100% text-center mb-5 mt-2">
+                            {' '}
+                                Are you sure you want to delete this post?
+                            </div>
+                            <div className="w-100% border-b-1 border-gray-700 text-center m-auto">
+                                <button className="bg-gray-200 outline outline-1 rounded px-3 mr-2" onClick={handleDelete}>Delete</button>
+                                <button className="bg-gray-200 outline outline-1 rounded px-3 ml-2" onClick={() => {close()}}>Cancel</button>
+                            </div>
+                        </div>
+                    )}
+                </Popup>
+            </div>
+        )
+    }
 
 
 

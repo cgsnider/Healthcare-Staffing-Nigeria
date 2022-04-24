@@ -419,6 +419,58 @@ CREATE PROCEDURE admin_verify_professional (
 END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS admin_unverify_professional;
+DELIMITER //
+CREATE PROCEDURE admin_unverify_professional (
+	IN i_admin_email VARCHAR(255),
+    IN i_prof_email VARCHAR(255)
+) BEGIN 
+	
+	SET @newStatus := 0;
+    
+	SELECT id FROM ADMINISTRATOR WHERE Email = i_admin_email INTO @id;
+	
+	UPDATE PROFESSIONAL
+	SET
+		Verified = @newStatus,
+        AdminMessage = i_Message
+	WHERE
+		Email = i_prof_email;
+	
+	SELECT @newStatus;
+    
+    
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
+		(@id, 'admin_unverify_professional');
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS admin_unverify_facility;
+DELIMITER //
+CREATE PROCEDURE admin_unverify_facility(
+	IN i_admin_email VARCHAR(255),
+    IN i_fac_email VARCHAR(255)
+) BEGIN 
+	
+	SET @newStatus := 0;
+    
+	SELECT id FROM ADMINISTRATOR WHERE Email = i_admin_email INTO @id;
+	
+	UPDATE FACILITY
+	SET
+		Verified = @newStatus,
+        AdminMessage = i_Message
+	WHERE
+		Email = i_fac_email;
+	
+	SELECT @newStatus;
+    
+    
+	INSERT INTO SYSTEMLOG (uid, act) VALUE 
+		(@id, 'admin_unverify_facility');
+END //
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS admin_reject_professional;
 DELIMITER //
 CREATE PROCEDURE admin_reject_professional (

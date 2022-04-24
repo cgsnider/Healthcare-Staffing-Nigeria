@@ -99,6 +99,7 @@ export default function Fac_Profile(props) {
                 </div>
             );
         }
+        return null;
     }
 
     const VerifiedIcon = (props) => {

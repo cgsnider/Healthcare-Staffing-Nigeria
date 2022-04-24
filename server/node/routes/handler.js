@@ -232,6 +232,34 @@ router.post('/verify_professional', STD_MIDWARE, (req, res) => {
     }
 });
 
+router.post('/unverify_professional', STD_MIDWARE, (req, res) => {
+    if (req.user['custom:type'] == 'Admin') {
+        const procedure = 'admin_unverify_professional'
+        const params = [req.user.email, req.body.ProfEmail]
+
+        db.call(procedure, params)
+            .then(results => {res.end(JSON.stringify(results))})
+            .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
+    } else {
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
+        return;
+    }
+});
+
+router.post('/unverify_facility', STD_MIDWARE, (req, res) => {
+    if (req.user['custom:type'] == 'Admin') {
+        const procedure = 'admin_unverify_facility'
+        const params = [req.user.email, req.body.FacEmail]
+
+        db.call(procedure, params)
+            .then(results => {res.end(JSON.stringify(results))})
+            .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
+    } else {
+        res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
+        return;
+    }
+});
+
 router.post('/reject_professional', STD_MIDWARE, (req, res) => {
     if (req.user['custom:type'] == 'Admin') {
         const procedure = 'admin_reject_professional';
