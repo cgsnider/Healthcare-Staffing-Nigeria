@@ -11,7 +11,10 @@ import { useState, useEffect } from 'react';
 import {Drop2 , Drop} from '../../parts/Drop';
 import placeholder from '../../../images/profile-placeholder.jpg';
 import {applyForVerification, getProfileData, getProfileImage, postProfileData, postProfilePicture } from '../../../hooks/server';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons'
+import MessagePopup from '../../parts/MessagePopup';
+import CircleLoader from 'react-spinners/CircleLoader';
 export default function Fac_Profile(props) {
 
     const [profileInfo, setProfileInfo] = useState(
@@ -29,6 +32,8 @@ export default function Fac_Profile(props) {
 
     const [picture, setPicture] = useState(placeholder);
     const [update, setUpdate] = useState(0);
+    const [viewMessage, setViewMessage] = useState(false);
+    const [infoFetchEnd, setInfoFetchEnd] = useState(false);
 
     const triggerUpdate = () => {
         setUpdate((update + 1) % 16);
@@ -54,6 +59,7 @@ export default function Fac_Profile(props) {
         if (isMounted) {
             console.log('Trigger')
             setProfileInfo(data[0][0])
+            setInfoFetchEnd(true)
             triggerUpdate()
         }
         else console.log('aborted setPostings on unmounted component')
@@ -75,18 +81,24 @@ export default function Fac_Profile(props) {
         if(profileInfo.Verified===0){
             return(
                 <div className='w-full h-8 text-center content-center bg-amber-500'> 
-                    <span>You are not verified. You will have limited access until you become verified. To submit for verification click <span className='text-blue-600 underline hover:cursor-pointer' onClick={submitVerification}>here</span></span>
+                    <span>You are not verified. You will have limited access until you become verified. To submit for verification click <span className='text-blue-600 underline hover:cursor-pointer' onClick={submitVerification}>here</span>.</span>
                 </div>
             );
         }
         else if(profileInfo.Verified===1){
             return(
                 <div className='w-full h-8 text-center content-center bg-amber-500'> 
-                    <span>Verification pending. Access will be limited until you are verified</span>
+                    <span>Verification pending. Access will be limited until you are verified.</span>
                 </div>
             );
         }
-        return (null);
+        else if(profileInfo.Verified===3){
+            return(
+                <div className='w-full h-8 text-center content-center bg-amber-500 sticky top-16'> 
+                    <span>You have been denied verification. View the response by clicking the question mark by your status and then you may resubmit for verification <span className='text-blue-600 underline hover:cursor-pointer' onClick={submitVerification}>here</span>.</span>
+                </div>
+            );
+        }
     }
 
     const VerifiedIcon = (props) => {
@@ -106,8 +118,19 @@ export default function Fac_Profile(props) {
         }
         if(profileInfo.Verified==2) {
             return(
-                <div className="ml-auto mr-0">
-                    <span className="bg-green-500 py-1 px-2 rounded text-white text-sm">Verified</span>
+                <div className="ml-auto mr-0 hover:cursor-pointer" onClick={()=>setViewMessage(true)}>
+                    <span className="bg-green-500 py-1 px-2 rounded text-white text-md">Verified</span>  
+                    <div className='relative w-0 h-0'><FontAwesomeIcon icon={faCircleQuestion} size='sm' className='absolute -top-8 -right-[79px] bg-white rounded-full'/></div>
+                    <MessagePopup open={viewMessage} setOpen={setViewMessage} type='accept' message={profileInfo.AdminMessage} spin className='fa-spin'/>
+                </div>
+            );
+        }
+        if(profileInfo.Verified===3) {
+            return(
+                <div className="ml-auto mr-0 hover:cursor-pointer" onClick={()=>setViewMessage(true)}>
+                    <span className="bg-red-500 py-1 px-2 rounded text-white text-md">Denied</span>
+                    <div className='relative w-0 h-0'><FontAwesomeIcon icon={faCircleQuestion} size='sm' className='absolute -top-8 -right-[75px] bg-white rounded-full'/></div>
+                    <MessagePopup open={viewMessage} setOpen={setViewMessage} type='Deny' message={profileInfo.AdminMessage} spin className='fa-spin'/>
                 </div>
             );
         }
@@ -119,7 +142,7 @@ export default function Fac_Profile(props) {
         console.log(profileInfo.ImageAddr);
     }
 
-if(profileInfo){
+if(profileInfo && infoFetchEnd){
     return (
         <div>
            <Verificationdrop />
@@ -221,7 +244,9 @@ if(profileInfo){
     );
     } else {
         return (
-            <div>null</div>
+            <div className='flex content-center justify-center py-10'>
+                <CircleLoader loading={!infoFetchEnd} color={'#3a8c3c'}/>
+            </div>
         );
     }
 }
