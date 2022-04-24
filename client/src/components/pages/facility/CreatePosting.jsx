@@ -8,6 +8,9 @@ import { getCategories, postJobPosting, getProfileData } from '../../../hooks/se
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
 import CircleLoader from 'react-spinners/CircleLoader';
+
+
+
 export default function CreatePosting(props) {
 
     useEffect( () => {
@@ -60,6 +63,7 @@ export default function CreatePosting(props) {
         if (editorRef.current) {
             setFormData({...formData, Descript: editorRef.current.getContent()});
             setFormData({...formData, Category: selectedCategory});
+            navigate('../../pages/facility/ViewMaster');
         }
     };
 
