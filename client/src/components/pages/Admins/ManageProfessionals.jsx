@@ -3,7 +3,7 @@ import Popup from 'reactjs-popup';
 import ProfessionalListing from "../../parts/ProfessionalListing";
 import {getBulkProfessional, downloadResume, postVerifyProfessional, getEducation, getExperience, deleteProfessional} from "../../../hooks/server";
 import placeholder from '../../../images/profile-placeholder.jpg';
-import '../../styling/AdminAccountManagement.css';
+import '../../styling/ConfirmationPopup.css';
 
 function ManageProfessionals (props) {
 
