@@ -63,7 +63,7 @@ export default function CreatePosting(props) {
         if (editorRef.current) {
             setFormData({...formData, Descript: editorRef.current.getContent()});
             setFormData({...formData, Category: selectedCategory});
-            navigate('../../pages/facility/ViewMaster');
+            navigate('/facilityManage');
         }
     };
 
