@@ -175,6 +175,25 @@ export async function postVerifyFacility(data) {
 }
 
 /**
+ * 
+ * @param {{ProfEmail: String, Mesage: String}}
+ * @returns 
+ */
+ export async function postUnverifyProfessional(data) {
+    return await postData('/unverify_professional', data);
+ }
+
+/**
+ * 
+ * @param {{FacEmail: String, Mesage: String}}
+ * @returns 
+ */
+ export async function postUnverifyFacility(data) {
+    return await postData('/unverify_facility', data);
+ }
+ 
+
+/**
  * Updates a specific job posting for the current facility.
  * @param {{OldTitle: String, NewTitle: String, Category: String, Salary: int, Descript: String, Slots: int, Shifts: String, Visibility: int}} data 
  *  The data that the posting should be set to
