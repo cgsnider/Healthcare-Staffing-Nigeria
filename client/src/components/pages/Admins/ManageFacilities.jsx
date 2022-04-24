@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import Popup from 'reactjs-popup';
 import FacilityListing from "../../parts/FacilityListing";
-import {getBulkFacilities, postVerifyFacility, deleteFacility} from "../../../hooks/server";
+import {getBulkFacilities, postVerifyFacility, deleteFacility, postUnverifyFacility} from "../../../hooks/server";
 import placeholder from '../../../images/profile-placeholder.jpg';
 import '../../styling/ConfirmationPopup.css';
 
@@ -35,7 +35,7 @@ function ManageFacilities (props) {
     }
 
     const handleUnverify = () => {
-        
+        postUnverifyFacility(facID.email);
     }
 
     useEffect(async () => {

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import Popup from 'reactjs-popup';
 import ProfessionalListing from "../../parts/ProfessionalListing";
-import {getBulkProfessional, downloadResume, postVerifyProfessional, getEducation, getExperience, deleteProfessional} from "../../../hooks/server";
+import {getBulkProfessional, downloadResume, postVerifyProfessional, getEducation, getExperience, deleteProfessional, postUnverifyProfessional} from "../../../hooks/server";
 import placeholder from '../../../images/profile-placeholder.jpg';
 import '../../styling/ConfirmationPopup.css';
 
@@ -35,11 +35,11 @@ function ManageProfessionals (props) {
     }
 
     const handleVerify = () => {
-        postVerifyProfessional(profID.email)
+        postVerifyProfessional(profID.email);
     }
 
     const handleUnverify = () => {
-
+        postUnverifyProfessional(profID.email);
     }
 
     useEffect(async () => {
