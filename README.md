@@ -165,19 +165,6 @@ $ ./run.sh -ic
 
 Please refer to "Start Up Guide" for details.
 
-### Required Dependencies
-
-Node JS
-MySQL
-
-#### Developers:
-- Khalaya Dean
-- Charles Snider
-- Haoran Zhang
-- Nicholas Scholz
-- Senai Saunders
-- William Leonard
-
 # Healthcare Staffing Nigeria
 A website where healthcare workers can apply for job postings in Nigeria, and it is managed by Covenant Medical Group. Healthcare facilities can make job postings for open positions and healthcare workers can apply for the jobs.
 
