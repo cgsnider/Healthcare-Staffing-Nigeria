@@ -190,6 +190,7 @@ Please refer to "Start Up Guide" for details.
 * If a user navigates to a page they are not suppose to reach, see gui of page but with no content.
 * Administrators can be created without verification
 * Access tokens expire without notifying the user
+* Professional unable to delete application
 
 ---
 
