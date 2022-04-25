@@ -1,6 +1,9 @@
 # Healthcare Staffing and Human Resources Management Nigeria
+A website where healthcare workers can apply for job postings in Nigeria, and it is managed by Covenant Medical Group. 
 
-Creating a database and a front end website to connect healthcare workers with job opportunities in Nigeria.
+Healthcare facilities can make job postings for open positions and healthcare workers can apply for the jobs.
+
+A back end and a front end website to connect healthcare workers with job opportunities in Nigeria.
 
 #### Install Guide
 
@@ -164,9 +167,6 @@ $ ./run.sh -ic
 ##### Production Set Up
 
 Please refer to "Start Up Guide" for details.
-
-# Healthcare Staffing Nigeria
-A website where healthcare workers can apply for job postings in Nigeria, and it is managed by Covenant Medical Group. Healthcare facilities can make job postings for open positions and healthcare workers can apply for the jobs.
 
 ## Release Notes
 
