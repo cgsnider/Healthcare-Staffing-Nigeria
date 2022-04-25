@@ -5,7 +5,7 @@ Healthcare facilities can make job postings for open positions and healthcare wo
 
 A back end and a front end website to connect healthcare workers with job opportunities in Nigeria.
 
-#### Install Guide
+### Install Guide
 
 How to install this Health Care Staffing Platform to be run locally.
 
