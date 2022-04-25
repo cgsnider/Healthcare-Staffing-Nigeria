@@ -201,29 +201,29 @@ there if your installation doesn't work.
 For any of the shell scripts, if they fail, you can try to execute the commands individually. They generally are not long, and from there you can find the specific command causing the error.
 
 After running you ./enviro.sh script the .env file should be formatted as follows:
-PORT = 
+        PORT = 
 
-HOST = ''
+        HOST = ''
 
-DBUSER = ''
+        DBUSER = ''
 
-PASSWORD = ''
+        PASSWORD = ''
 
-DATABASE = ''
+        DATABASE = ''
 
-USERPOOLID = ""
+        USERPOOLID = ""
 
-CLIENTID = ""
+        CLIENTID = ""
 
-POOLREGION = ''
+        POOLREGION = ''
 
-AWS_BUCKET_NAME=""
+        AWS_BUCKET_NAME=""
 
-AWS_BUCKET_REGION=""
+        AWS_BUCKET_REGION=""
 
-AWS_ACCESS_KEY=""
+        AWS_ACCESS_KEY=""
 
-AWS_SECRET_KEY=""
+        AWS_SECRET_KEY=""
 
 If the .env file is not being generated correctly, consider manually creating the .env file and put the appropriate values to the right of the equal signs.
 
