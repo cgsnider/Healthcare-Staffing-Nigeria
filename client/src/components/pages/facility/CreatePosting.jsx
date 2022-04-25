@@ -129,7 +129,7 @@ export default function CreatePosting(props) {
 
                         <Editor
                         disabled={!verification}
-                        apiKey='n7yht7pqtyj6b2zgy4pspu604122cie6snn96p044m2vi9fu'
+                        apiKey='' //Need to add api key here for editor
                         onInit={(evt, editor) => editorRef.current = editor}
                         initialValue="<p>initial Job Description.</p>"
                         init={{
