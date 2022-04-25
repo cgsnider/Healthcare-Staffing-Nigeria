@@ -13,30 +13,42 @@ If both are already installed you can skip the dependency instructions.
 
 ###### MySQL
 MySQL can be installed here 
+
 https://dev.mysql.com/doc/mysql-getting-started/en/#mysql-getting-started-installing
+
 The link above includes a detailed install guide for MySQL. For installing on windows refer to the guide.
 
 If you have access to homebrew on macOS or Linux MySQL can be installed in 2 steps using homebrew.
+
 On the terminal run the following
+
 $ brew install mysql
+
 $ brew services start mysql
 
 Brew can be installed in macOS or Linux by running the following command
+
 $ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 ###### Node JS
 Node JS can be downloaded here
+
 https://nodejs.org/en/download/
+
 Be sure to download the LTS version and the one for your operating system. The downloads should be clearly labeled.
+
 Follow the install wizard through the process. Node JS should install like any other program for your OS.
 
+
 Alternatively, if you have access to homebrew, in the terminal run
+
 $ brew install node
 
 
 ##### AWS Services
 
 For all features of the platform to run, it needs to be connected to AWS features. 
+
 For handling login this platform uses AWS Cognito while for Mass media storage this system uses S3
 
 ###### AWS Cognito
@@ -63,9 +75,11 @@ For handling login this platform uses AWS Cognito while for Mass media storage t
 18. Record the Pool ID that will appear at the top of this page
 
 After all the steps you should have the following:
+
 - Client ID for React App (Step 11)
 - Client ID for Node JS Server (Step 13)
 - Pool ID (Step 18)
+
 If you are missing any of these, they can still be found in their appropriate locations
 
 ###### AWS S3
@@ -101,6 +115,7 @@ If you are missing any of these, they can still be found in their appropriate lo
 
 
 After all the steps you should have the following:
+
 - Bucket Name (Step 2)
 - Bucket Region (Step 3)
 - Access Key (Step 23)
@@ -109,24 +124,41 @@ After all the steps you should have the following:
 ###### Local SetSet Up
 
 Navigate to the main directory for this project.
+
 Run the following commands in the terminal
+
 $ chmod +x enviro.sh
+
 $ ./enviro.sh
+
 Running enviro.sh will cause a serios of prompts to appear on the command line.
+
 When it asks for the port number, enter 4000, entering a different port will require edition setupProxy.js (line 8)
+
 Then it will prompt for database details, Enter the requested credientials for accessing the database
+
   If new to MySQL the following inputs should work: 
+  
      Host: 'localhost'
+     
      User: 'root'
+     
      Password: ''
+     
      Database: 'cmg_staffing_nigeria' <- note unless you edit sql scripts use this database
+     
 Then it will ask you for the information you gathered from the AWS services set up to connect the application to AWS services.
 
 Now run the following commands in the terminal
+
 $ chmod +x run.sh
+
 $ ./run.sh -id 
+
 OR 
+
 $ ./run.sh -ic 
+
 -id inputs sample data to the database, -ic creates a clean (empty) database
 
 ##### Production Set Up
@@ -162,11 +194,15 @@ A website where healthcare workers can apply for job postings in Nigeria, and it
 * Job listings html parse bug fixed
 * Images on Jobs page not appearing fixed
 * Admin needing to refresh the page to see changes fixed
+* Unverfied professionals seeing blank jobs page fixed
+* Unverified facilities able to post jobs fixed
 
 #### Known Issues:
-* Occasionally when user reaches sight, platform mistakes users as logged in as professional. (Cannot retrieve data from server like a professional)
+* Occasionally when user first reaches site, platform mistakes users as logged in as professional. (Cannot retrieve data from server like a professional)
 * On the applicant page for professionals, the placeholder image is used even if the posting facility has an image
 * If a user navigates to a page they are not suppose to reach, see gui of page but with no content.
+* Administrators can be created without verification
+* Access tokens expire without notifying the user
 
 ---
 
