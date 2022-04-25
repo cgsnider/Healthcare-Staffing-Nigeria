@@ -193,8 +193,6 @@ Please refer to "Start Up Guide" for details.
 
 ---
 
-## Release Notes
-
 ### Version 0.4.0
 
 #### New Features:
