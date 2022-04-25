@@ -24,6 +24,7 @@ while getopts "cdie" OPTION; do
             ;;
 
         e)
+            
             echo "Initialize Environment"
             echo "Bucket Access:"
             _env_loc=server/node/.env
@@ -78,6 +79,22 @@ while getopts "cdie" OPTION; do
             echo 'AWS_ACCESS_KEY = "'${bucket_acc_key}'"' >> $_env_loc
             echo 'AWS_SECRET_KEY = "'${bucket_secret_key}'"' >> $_env_loc
             echo 'S3 Defined!'
+
+            echo "Part 5: Definining React Connection to Cognito"
+            read -p 'Client ID (React Application): ' client_id_r
+
+            _cognito_pool=./client/src/hooks/cognito_pool.js
+            if test -f "$_cognito_pool"; then
+                rm $_cognito_pool
+            fi
+            touch $_cognito_pool
+            echo $_cognito_pool
+
+            echo "const poolData = {" >> $_cognito_pool
+            echo "   UserPoolId: '"${user_pool}"', //Enter User Pool ID here" >> $_cognito_pool
+            echo "   ClientId: '"${client_id_r}"' // Enter Client ID Here" >> $_cognito_pool
+            echo "}" >> $_cognito_pool
+            echo "export {poolData};" >> $_cognito_pool
             ;;
 
     esac
