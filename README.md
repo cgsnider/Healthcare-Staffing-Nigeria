@@ -4,9 +4,8 @@ Creating a database and a front end website to connect healthcare workers with j
 
 #### To Run
 
-1. Go into the 'client' directory and run 'npm install'
-2. Go into the 'server/node' directory and run 'npm install'
-3. While in 'server/node' run 'npm run dev'
+1. Go to Main directory, run "./run.sh -ide" for first time set up and fill in the prompts.
+  Failure to fill in all the prompts may cause the platform to have limited functionality. 
 
 #### Developers:
 - Khalaya Dean
@@ -18,10 +17,32 @@ Creating a database and a front end website to connect healthcare workers with j
 
 ### Required Dependencies
 
-amazon-cognito-identity-js
+Node JS
+MySQL
 
 # Healthcare Staffing Nigeria
 A website where healthcare workers can apply for job postings in Nigeria, and it is managed by Covenant Medical Group. Healthcare facilities can make job postings for open positions and healthcare workers can apply for the jobs.
+
+## Release Notes
+
+### Version 1.0.0
+
+#### New Features:
+
+* Admin accounts can now be created on register_admin page
+* Admin Accounts can now remove medical professionals and medical facilities
+
+#### Bug Fixes:
+* Job listings html parse bug fixed
+* Images on Jobs page not appearing fixed
+* Admin needing to refresh the page to see changes fixed
+
+#### Known Issues:
+* Occasionally when user reaches sight, platform mistakes users as logged in as professional. (Cannot retrieve data from server like a professional)
+* On the applicant page for professionals, the placeholder image is used even if the posting facility has an image
+* If a user navigates to a page they are not suppose to reach, see gui of page but with no content.
+
+---
 
 ## Release Notes
 
