@@ -179,6 +179,57 @@ $ ./run.sh -ic
 
 Please refer to "Start Up Guide" for details.
 
+##### Trouble Shooting
+
+If errors setting up AWS Services arise resources for troubleshooting could be found here:
+
+https://docs.aws.amazon.com/cognito/index.html
+
+https://docs.aws.amazon.com/s3/index.html
+
+If one of the shell commands refuses to run, running the command
+        $ chmod +x <shells_script_name>
+
+It may be possible, especially if setting up for deployment, that you will need to run you commands with sudo. 
+If your system says you don't have privledegs to perform an operation, consider placing sudo in front of you command as so:
+
+        $sudo <instruction>
+        
+The start up guide in the main projet directory walks through the process using different wording and in some more explicit detail. Consider checking 
+there if your installation doesn't work.
+
+For any of the shell scripts, if they fail, you can try to execute the commands individually. They generally are not long, and from there you can find the specific command causing the error.
+
+After running you ./enviro.sh script the .env file should be formatted as follows:
+        PORT = 
+
+        HOST = ''
+
+        DBUSER = ''
+
+        PASSWORD = ''
+
+        DATABASE = ''
+
+        USERPOOLID = ""
+
+        CLIENTID = ""
+
+        POOLREGION = ''
+
+        AWS_BUCKET_NAME=""
+
+        AWS_BUCKET_REGION=""
+
+        AWS_ACCESS_KEY=""
+
+        AWS_SECRET_KEY=""
+
+If the .env file is not being generated correctly, consider manually creating the .env file and put the appropriate values to the right of the equal signs.
+
+In this case you also likely have to edit client/src/hooks/cognito_pool.js manually. On lines 2 and 3 insert the Pool ID and the Client ID y the appropriate comments.
+
+
 ## Release Notes
 
 ### Version 1.0.0
