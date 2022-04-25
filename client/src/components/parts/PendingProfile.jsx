@@ -9,7 +9,6 @@ function PendingProfile(props) {
     const [reject, setReject] = useState(false);
     const [message, setMessage] = useState('');
 
-    console.log("Props.bio: ", props.bio)
     const handleCheck = () => {
         setChecked(!checked);
     }
@@ -41,7 +40,6 @@ function PendingProfile(props) {
 
 
     const resumeHandler = () => {
-        console.log('resumeHandler')
         if(props.resume){
             downloadResume(props.email);
         }

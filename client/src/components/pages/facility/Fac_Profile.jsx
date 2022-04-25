@@ -49,15 +49,11 @@ export default function Fac_Profile(props) {
 
     useEffect( () => {
         setPicture((profileInfo.ImageAddr) ?  `/api/profile_picture/${profileInfo.ImageAddr}` : placeholder)
-        console.log(profileInfo)
     }, [update])
 
     const fetchProfileData = async(isMounted) => {
         let data = await getProfileData();
-        console.log("FETCH DATA: ",data);
-        console.log(isMounted);
         if (isMounted) {
-            console.log('Trigger')
             setProfileInfo(data[0][0])
             setInfoFetchEnd(true)
             triggerUpdate()
@@ -68,7 +64,6 @@ export default function Fac_Profile(props) {
 
     const ApplyVerification =(e) => {
         applyForVerification();
-        console.log()
     }
 
     const submitVerification = (e) => {
@@ -140,7 +135,6 @@ export default function Fac_Profile(props) {
     const handleImageUpload = (e) => {
         postProfilePicture(e.target.files[0]);
         fetchProfileData(true);
-        console.log(profileInfo.ImageAddr);
     }
 
 if(profileInfo && infoFetchEnd){
@@ -210,7 +204,6 @@ if(profileInfo && infoFetchEnd){
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Address</div>
                                         <div className="px-4 py-2">{(profileInfo.Street==null)? "None" : `${profileInfo.Street}\n ${profileInfo.City}, ${profileInfo.Country}`}</div>
-                                        {console.log("Prof: ", profileInfo)}
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Contact No.</div>
@@ -271,8 +264,6 @@ function AboutPopup(props) {
         setOpen({...open, open:false})
     }
     const save = (e) => {
-        console.log("SAVE")
-        console.log(tempInfo)
         postProfileData(tempInfo)
         setInfo({...tempInfo, gender: gender.label});
         setOpen({...open, open:false});

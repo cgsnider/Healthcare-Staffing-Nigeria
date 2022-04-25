@@ -55,7 +55,6 @@ function PendingVerifications(props) {
                 {(practitioners !== null && practitioners.length > 0) ?
                     <div className="flex flex-col items-center h-full">
                         {[...practitioners].map((e, i) => {
-                            console.log("e: ", e, "\te.Bio: ", e.Bio)
                             return (
                                 <PendingProfile name={`${e.FName} ${e.LName}`}
                                                 image={(e.ImageAddr) ? `/api/profile_picture/${e.ImageAddr}` : placeholder}
@@ -90,7 +89,6 @@ function PendingVerifications(props) {
                 {(facilities !== null && facilities.length > 0) ?
                     <div className="flex flex-col items-center h-full">
                         {[...facilities].map((e, i) => {
-                            console.log(e.PhoneNumber)
                             return (
                                 <PendingProfileFac name={e.FacName}
                                                    image={(e.ImageAddr) ?  `/api/profile_picture/${e.ImageAddr}` : placeholder}

@@ -53,7 +53,6 @@ function ManageProfessionals (props) {
     }, [update])
 
     const fetchEducation = async(isMounted) => {
-        console.log("EDUCATION 1")
         let data = await getEducation()
         if (isMounted) {
             setEdFetchEnd(true);
@@ -63,7 +62,6 @@ function ManageProfessionals (props) {
     }
 
     const fetchExperience = async(isMounted) => {
-        console.log("EXPERIENCE 1")
         let data = await getExperience()
         if (isMounted) {
             setInfoFetchEnd(true);
@@ -242,7 +240,6 @@ function ManageProfessionals (props) {
                                                 </div>
                                                 <ul className='list-inside space-y-2 mb-4'>
                                                     {(newExperience.length!=0)?newExperience.map((item, i)=> {
-                                                        console.log("i: ", i, "item: ", item)
                                                         return(
                                                             <li key={i} className='mb-4'>
                                                                 <div className='text-teal-600'>{`${item.Title} at ${item.Company}`}</div>

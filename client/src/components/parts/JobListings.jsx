@@ -5,7 +5,6 @@ export default function JobListing (props) {
     let handleApply = () => {
         props.setOpen(true);
         props.setPosting(props.posting)
-        console.log(props.posting)
     }
     const handleClick = (e) => {
     }

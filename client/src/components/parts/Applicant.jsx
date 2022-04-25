@@ -4,8 +4,6 @@ import {postHireApplicant} from "../../hooks/server";
 
 function Applicant(props) {
 
-    console.log('APPLICANT', props);
-
     const handleHire = async () => {
         await postHireApplicant({ApplicantEmail: props.email, PostingTitle: props.postTitle});
         props.trigger();

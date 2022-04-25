@@ -75,7 +75,6 @@ export function Drop2(props) {
         let isMounted = true;
         if((Options.length===0 && inputValue===''))
             fetchOptions(isMounted);
-        //console.log(Options)
         return () => {
             isMounted = false;
         };
@@ -88,7 +87,6 @@ export function Drop2(props) {
 
             if(isMounted){
                 setOptions(resJSON.map(item=> ({label: item.name, value: item.alpha_two_code})))
-                //console.log(resJSON)
             }
         } catch(e) {
             console.error(e)
@@ -106,14 +104,12 @@ export function Drop2(props) {
  
   // handle selection
     const handleChange = value => {
-        console.log(value);
         setSelectedValue(value)
         props.setNewEducation(value.label)
         
     }
 
     const filterOptions = (inputValue) => {
-        //console.log('options', Options);
         if(Options===null) return [];
         return Options.filter((i) => i.label.toLowerCase().includes(inputValue.toLowerCase()));
         

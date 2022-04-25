@@ -24,7 +24,6 @@ function ViewApplicants(props) {
 
     const fetchApplicants = async() => {
         let res = await getApplicants(props.postingID)
-        console.log(res)
     }
 
     if (practitioners.length === 0) {
@@ -37,7 +36,7 @@ function ViewApplicants(props) {
     return (
         <div>
             <div className="flex flex-col items-center">
-                {[...practitioners].map((e, i) => { console.log("APPLICANT 2: ", e)
+                {[...practitioners].map((e, i) => {
                     return (
                         <Applicant name={`${e.FName} ${e.LName}`}
                                         image={(e.ImageAddr) ? `/api/profile_picture/${e.ImageAddr}` : placeholder}

@@ -28,7 +28,6 @@ function TopBar(props) {
         if(!loggedIn){
             setLoggedIn(localStorage.getItem('loggedIn'));
         } else {
-            //console.log(localStorage.getItem('type'))
             setUserType(localStorage.getItem('type'))
         }
         

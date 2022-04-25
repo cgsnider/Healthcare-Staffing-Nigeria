@@ -200,7 +200,6 @@ export async function postVerifyFacility(data) {
  * @returns The results of the post
  */
 export async function updatePosting(data) {
-    console.log(data);
     return await postData('/update_posting', data)
 }
 
@@ -378,7 +377,6 @@ async function getData(url='', body={}) {
         redirect: 'follow',
         referrerPolicy: 'no-referrer', 
     })
-    console.log(data)
     if (data.status == 200) {
         const items = await data.json();
         return items;

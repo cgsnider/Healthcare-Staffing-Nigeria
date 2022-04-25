@@ -29,8 +29,6 @@ function Login(props) {
         alert('username or password incorrect');
     }
     const loginSuccess = () => {
-        console.log("LOGIN")
-        console.log(localStorage.getItem('type'))
         if (localStorage.getItem('type') == 'Professional') {
             navigate('/jobs', {replace: true})
         } else if (localStorage.getItem('type') == 'Facility') {

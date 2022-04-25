@@ -22,7 +22,6 @@ function ViewMaster(props) {
         .catch(err=>console.error(err))
         setFetching(false);
         setPostings(res);
-        console.log(res);
     }
 
     const handleClick = (e) => {

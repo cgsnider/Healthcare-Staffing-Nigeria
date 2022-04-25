@@ -36,12 +36,9 @@ async function call (procedure="", params=[]) {
             sql = sql.slice(0, sql.length - 2);
 
         sql += ");"
-
-        console.log("call: ", sql)
         
         db.query(sql)
             .then(result => {
-                console.log(sql, "\n", result[0])
                 resolve(result[0])
             }).catch(err => {
                 console.error(`Querying Database Error: ${err}`);
@@ -53,17 +50,14 @@ async function call (procedure="", params=[]) {
 
 async function handleNewUser (req, res, next) {
     const db = await promised_connection;
-    console.log("HANDLE NEW USER")
     const sql = `CALL user_exists('${req.user.email}')`
     db.query(sql)
         .then(results => {
-            console.log(results[0][0])
             if (results[0][0][0].Exist_Status === -1){
                 addNewUser(req.user)
                     .then(res => next())
-                    .catch(err => {console.log(err); res.status(Code.internal_server_error).end()});
+                    .catch(err => {res.status(Code.internal_server_error).end()});
             } else {
-                console.log('NEXT')
                 next();
             }
         })
@@ -73,7 +67,6 @@ async function handleNewUser (req, res, next) {
 async function addNewUser(user) {
     const db = await promised_connection;
     return new Promise((resolve, reject) => {
-        console.log("ADD NEW USER", user)
         let sql;
         
         if (user['custom:type'] == 'Professional') {

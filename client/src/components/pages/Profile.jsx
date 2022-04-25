@@ -61,21 +61,18 @@ export default function Profile(props) {
 
     useEffect( () => {
         setPicture((profileInfo.ImageAddr) ?  `/api/profile_picture/${profileInfo.ImageAddr}` : placeholder)
-        console.log(profileInfo)
     }, [profileInfo])
 
     const fetchProfileData = async(isMounted) => {
-        console.log('fetchProfileData')
         let data = await getProfileData()
         if (isMounted) {
             setInfoFetchEnd(true);
-            setProfileInfo(data[0][0], console.log(profileInfo));
+            setProfileInfo(data[0][0]);
         }
         else console.log('aborted setPostings on unmounted component')
     }
 
     const fetchEducation = async(isMounted) => {
-        console.log("EDUCATION 1")
         let data = await getEducation()
         if (isMounted) {
             setEdFetchEnd(true);
@@ -85,7 +82,6 @@ export default function Profile(props) {
     }
 
     const fetchExperience = async(isMounted) => {
-        console.log("EXPERIENCE 1")
         let data = await getExperience()
         if (isMounted) {
             setInfoFetchEnd(true);
@@ -311,7 +307,6 @@ export default function Profile(props) {
                                                 </div>
                                                 <ul className='list-inside space-y-2 mb-4'>
                                                     {(newExperience.length!=0)?newExperience.map((item, i)=> {
-                                                        console.log("i: ", i, "item: ", item)
                                                         return(
                                                             <li key={i} className='mb-4'>
                                                                 <div className='text-teal-600'>{`${item.Title} at ${item.Company}`}</div>
@@ -392,8 +387,6 @@ function EducationPopup (props) {
         const options = {year: 'numeric', month: 'long'}
 
         useEffect(() => {
-            console.log('NEW EDUCATION HFAKJDHSI: ', newEducation);
-            console.log('ADD EDUCATION HFAKJDHSI: ', addEducation);
             if (addEducation.length == 0) {
                 // Remove education
             } else {
@@ -409,25 +402,18 @@ function EducationPopup (props) {
                 console.log('error with inputs');
                 return;
             }
-            setAddEducation([...addEducation , {College: institute, StartDate: startDate.toLocaleDateString('en-US', options), EndDate: endDate.toLocaleDateString('en-US', options), Degree: degree.label, Count: count}], () =>  console.log('addEducation: ', addEducation));
-            console.log('addEducation 2: ', addEducation)
+            setAddEducation([...addEducation , {College: institute, StartDate: startDate.toLocaleDateString('en-US', options), EndDate: endDate.toLocaleDateString('en-US', options), Degree: degree.label, Count: count}]);
             setCount(count+1)
         }
 
         const handleRemove = (e) => {
             let index = e.target.getAttribute('data-index');
-            //console.log(index);
             setAddEducation(addEducation.filter((item)=>{
-                //console.log(item.count, index)
-                //console.log(item.count!=index);
                 return item.count != index;
             }))
-            //console.log(newEducation)
         }
         const postEducationData = () => {
-            setNewEducation([...newEducation, ...addEducation], () => console.log("New Education 2-2: ", newEducation));
-            console.log("New Education 2: ", newEducation)
-            //postData(addEducation);
+            setNewEducation([...newEducation, ...addEducation]);
         }
         const closeReset = (e) => {
             setOpen(false);
@@ -439,7 +425,6 @@ function EducationPopup (props) {
         }
         const save = (e) => {
             postEducationData()
-            console.log("Save Education: ", newEducation)
             setOpen(false)
         }
         const handleStartDate = (date) => {
@@ -540,10 +525,6 @@ function ExperiencePopup(props) {
     }
 
     useEffect(() => {
-        console.log("USEEFFECT")
-        console.log(addExperience)
-        // console.log('NEW EDUCATION HFAKJDHSI: ', newEducation);
-        // console.log('ADD EDUCATION HFAKJDHSI: ', addEducation);
         if (addExperience.length == 0) {
             // Remove education
         } else {
@@ -639,7 +620,6 @@ function AboutPopup(props) {
     const contentStyle = { width: '90%' };
     
     useEffect( () => {
-        console.log(props.info)
         if (open.fresh) {
             setOpen({...open, fresh:false})
             setTempInfo(props.info);
@@ -651,7 +631,6 @@ function AboutPopup(props) {
     }
     
     const save = (e) => {
-        console.log("TEMP INFO: ", tempInfo)
         postProfileData(tempInfo)
         setInfo({...tempInfo, gender: gender.label});
         setOpen({...open, open:false});

@@ -2,10 +2,6 @@ import { CognitoUserPool, CognitoUser, AuthenticationDetails } from "amazon-cogn
 import { poolData } from "./cognito_pool";
 import { parseJwt } from "./util";
 
-// const poolData = {
-//     UserPoolId: "us-east-2_q85GCcTxM", //Enter User Pool ID here
-//     ClientId: "2t9l195uocaslipd2ejbslcd7a" // Enter Client ID Here
-// }
 
 let userPool = new CognitoUserPool(poolData);
 
@@ -22,7 +18,6 @@ let userPool = new CognitoUserPool(poolData);
  */
 export async function RegisterUser (user, failure, success) {
     return new Promise(function (resolve, reject) {
-        console.log(user)
         const name = {
             Name: 'name',
             Value: user.name
@@ -60,7 +55,6 @@ export async function RegisterUser (user, failure, success) {
  */
 export async function LoginUser (user, failure, success) {
     return new Promise(function (resolve, reject) {
-        console.log("LoginUser", user.password)
         const cognito_user = new CognitoUser({
             Username: user.email,
             Pool: userPool,

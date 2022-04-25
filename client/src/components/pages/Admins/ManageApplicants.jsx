@@ -29,7 +29,7 @@ function ManageApplicants(props) {
                 <h3 className="text-3xl indent-12">Hired Applicants</h3>
             </div>
             <div className="flex flex-col items-center">
-                {[...practitioners].map((e, i) => { console.log("APPLICANT 2: ", e)
+                {[...practitioners].map((e, i) => {
                     return (
                         <HiredApplicant name={`${e.FName} ${e.LName}`}
                                    image={(e.ImageAddr) ? `/api/profile_picture/${e.ImageAddr}` : placeholder}

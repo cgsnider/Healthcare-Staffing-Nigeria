@@ -36,21 +36,19 @@ export default function EditPost(props) {
                 setPostExists(false);
             }
         }
-        console.log(findposting);
     }
 
     const fetchCategories = async(isMounted) => {
         let items = await getCategories()
         .catch(err=>{console.error(err);})
         if (isMounted) {
-            console.log(items);
             items[0].push({Category:'Other'})
             setCategories(items[0].map(cat => {
                 return ({
                     label: cat.Category,
                     value: cat.Category
                 })
-            }), console.log(categories))
+            }))
         }
         else console.log('aborted setCategories on unmounted component')
     }
@@ -70,7 +68,6 @@ export default function EditPost(props) {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log({...formData, Descript: editorRef.current.getContent(), Category: selectedCategory.label});
         updatePosting({OldTitle: postingTitle, NewTitle: formData.Title, Salary: formData.Salary, Descript: formData.Descript, Slots: formData.Slots, Category: formData.Category.value, Shifts: formData.Shifts})
         .then(res => {navigate('/myPostings')})
         .catch(err => {console.error(err)})

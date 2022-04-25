@@ -49,7 +49,6 @@ const STD_MIDWARE = [authenticate, db.handleNewUser]
 
 router.get('/jobs', STD_MIDWARE, (req, res) => {
     req.headers.params = JSON.parse(req.headers.params);
-    console.log("req.headers.params: ", req.headers.params)
     const procedure = 'get_postings';
     const params = [req.user.email, req.headers.params.Category];
     
@@ -73,7 +72,6 @@ router.get('/applications', STD_MIDWARE, (req, res) => {
 
     db.call(procedure, params)
         .then(results => {
-            console.log(results)
             res.end(JSON.stringify(results))
         }).catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
 });
@@ -120,7 +118,6 @@ router.get('/experience', STD_MIDWARE, (req, res) => {
 
 router.get('/resume', STD_MIDWARE, (req, res) => {
     req.headers.params = JSON.parse(req.headers.params);
-    console.log("req.headers.params: ", req.headers.params);
 
     let email = null;
 
@@ -138,7 +135,6 @@ router.get('/resume', STD_MIDWARE, (req, res) => {
 
     db.call(procedure, params, null)
         .then(result => {
-            console.log('RESULT: ', result)
             const meta = result[0][0]
             s3.download(meta.S3Key)
                 .then(file => {
@@ -148,13 +144,11 @@ router.get('/resume', STD_MIDWARE, (req, res) => {
                 })
                 .catch(err => console.log(err))
         }).catch(err => {
-            console.log("ERROR: ", err);
             res.status(err).end(JSON.stringify("Error Fetching Data from Database"))});
 });
 
 router.get('/profile_picture/:key', (req, res) => {
     const filename = req.params.key
-    console.log(req.params.key)
     const readstream = s3.download_stream(filename);
     readstream.pipe(res);
 })
@@ -169,16 +163,14 @@ router.get('/applicants', STD_MIDWARE, (req, res) => {
 });
 
 router.get('/review_prof_verification', STD_MIDWARE, async (req, res) => {
-    console.log('review_prof_verification'.toUpperCase())
     if (req.user['custom:type'] == 'Admin') {
         const procedure = 'admin_verification_pending_professional';
         const params = [req.user.email];
         db.call(procedure, params)
-            .then(results => { console.log("results: ", results)
+            .then(results => {
                 res.end(JSON.stringify(results[0]))
             }).catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
     } else {
-        console.log("SENT: ", res.headersSent)
         res.status(Code.forbidden).end(JSON.stringify("Incorrect User Type"));
         return;
     }
@@ -293,8 +285,6 @@ router.post('/verify_facility', STD_MIDWARE, (req, res) => {
             const procedure = 'admin_verify_facility'
             const params = [req.user.email, req.body.FacEmail, req.body.Message]
 
-            console.log('PARAMS: ', params)
-
             db.call(procedure, params)
                 .then(results => {res.end(JSON.stringify(results))})
                 .catch(err => {res.status(err).end(JSON.stringify("Error Fetching Data from Database"))});
@@ -305,15 +295,12 @@ router.post('/verify_facility', STD_MIDWARE, (req, res) => {
 });
 
 router.get('/bulk_professionals', STD_MIDWARE, (req, res) => {
-    console.log('BULK 1')
     if (req.user['custom:type'] == 'Admin') {
-        console.log('BULK PROFESSIONALS')
         const procedure = 'admin_bulk_professionals'
         const params = [req.user.email]
 
         db.call(procedure, params)
             .then(results => {
-                console.log("RESULTS: ", results[0]);
                 res.end(JSON.stringify(results[0]))})
             .catch(err => res.status(err).end(JSON.stringify("Error Fetching Data from Database")));
     } else {
@@ -518,8 +505,6 @@ router.post('/experience', STD_MIDWARE, async (req, res) => {
 router.post('/update_posting', STD_MIDWARE, async (req, res) => {
     if (req.user['custom:type'] == 'Facility') {
         const data = req.body
-        console.log("Salary: ", data.Category)
-        console.log("Salary: ", typeof(data.Category))
         const params = [req.user.email, data.OldTitle, data.NewTitle, data.Salary, data.Descript, data.Slots, data.Category, data.Shifts, data.Visibility];
         procedure = 'update_posting';
 

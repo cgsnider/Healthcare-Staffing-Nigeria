@@ -37,14 +37,13 @@ export default function CreatePosting(props) {
         let items = await getCategories()
         .catch(err=>{console.error(err);})
         if (isMounted) {
-            console.log(items);
             items[0].push({Category:'Other'})
             setCategories(items[0].map(cat => {
                 return ({
                     label: cat.Category,
                     value: cat.Category
                 })
-            }), console.log(categories))
+            }))
         }
         else console.log('aborted setCategories on unmounted component')
     }
@@ -53,7 +52,7 @@ export default function CreatePosting(props) {
         const data = await getProfileData()
         .catch(err=>{console.error(err);})
         if (isMounted) {
-            setVerification(data[0][0].Verified==2?true:false, console.log(verification));
+            setVerification(data[0][0].Verified==2?true:false);
             setInfoFetchEnd(true)
         }
 
@@ -74,7 +73,6 @@ export default function CreatePosting(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log({...formData, Descript: editorRef.current.getContent(), Category: selectedCategory.label});
         postJobPosting({...formData, Descript: editorRef.current.getContent(), Category: selectedCategory.label})
         .then(res => navigate('/facilityManage'))
         .catch(err=>{console.error(err);});

@@ -42,9 +42,7 @@ function Regisration (props){
     }
     const register = (e) => {
         e.preventDefault();
-        console.log(formData);
         if(formData.password === formData.confpassword){
-            console.log('password match')
             const reg_data = {
                 name: (user == users[0]) ? `${formData.fname}$${formData.lname}` : formData.org,
                 type: (register_admin) ? "Admin" : user,
@@ -63,18 +61,14 @@ function Regisration (props){
         console.log('registration Fail')
     }
     const regSuccess = () => {
-        console.log('registration successful');
         let userl = {email: formData.email, password: formData.password}
-        console.log(userl);
         LoginUser(userl, loginNo, loginYes).catch(err=>console.log(err))
         
     }
     const loginNo = () => {
-        console.log('registered but not login');
         navigate('/login', {replace: true})
     }
     const loginYes = () => {
-        console.log('registered and login');
         navigate('/jobs', {replace: true})
     }
 

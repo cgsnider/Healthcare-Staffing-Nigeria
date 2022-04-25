@@ -34,7 +34,6 @@ function ViewApplications (props) {
         if (isMounted) {
             setPostFetchEnd(true);
             setApplications(items[0]);
-            console.log(items[0]);
         }
         else console.log('aborted setPostings on unmounted component')
     }
@@ -42,7 +41,6 @@ function ViewApplications (props) {
     //handles sorting postings based on prop e
     //passed to options for use
     const handleClick = (e) =>{
-        console.log(applications)
         const copy = [...applications]
         if (e === 'salary') {
             copy.sort((a, b)=> a[e] < b[e]? 1:-1)

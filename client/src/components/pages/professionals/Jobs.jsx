@@ -50,7 +50,6 @@ function Jobs (props) {
         if (isMounted) {
             setPosFetchEnd(true);
             setPostings(items[0]);
-            console.log(items[0]);
         }
         else console.log('aborted setPostings on unmounted component')
     }
@@ -69,13 +68,12 @@ function Jobs (props) {
         if (isMounted) {
             setCatFetchEnd(true);
             items[0].unshift({Category:'All'})
-            console.log('list: ',items[0])
             setCategories(items[0].map(cat => {
                 return ({
                     label: cat.Category,
                     value: cat.Category
                 })
-            }), console.log(categories))
+            }))
             setPosFetchEnd(true);
         }
         else console.log('aborted setCategories on unmounted component')
@@ -84,7 +82,6 @@ function Jobs (props) {
     //handles sorting postings based on prop e
     //passed to options for use
     const handleClick = (e) =>{
-        console.log(postings)
         const copy = [...postings]
         if (e === 'salary') {
             copy.sort((a, b)=> a[e] < b[e]? 1:-1)
@@ -118,7 +115,7 @@ function Jobs (props) {
 
                         <ul className="prof_job_grid content-center flex flex-wrap mx-32">
                         {[...postings].filter(filterPosition).filter(filterSearch)
-                        .map(e => {console.log(e)
+                        .map(e => {
                         return ( <li className='prof_job_node mx-16 mb-8' key={key++}>
                                 <JobListing
                                 image={(e.ImageAddr) ? `/api/profile_picture/${e.ImageAddr}` : 'resources/cmg_logo.png'}
@@ -207,7 +204,6 @@ function ApplicationPage (props) {
         postApplications({'cover': cover, 'email': post.Email, 'title': post.Title})
         window.location.reload(false)
         props.setOpen(false)
-        console.log(cover)
     }
     const unverifiedClick = (e) => {
         props.setOpen(false)

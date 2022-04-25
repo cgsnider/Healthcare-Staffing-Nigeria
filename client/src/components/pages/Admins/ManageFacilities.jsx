@@ -40,16 +40,12 @@ function ManageFacilities (props) {
 
     useEffect(async () => {
         let isMounted = true;
-        console.log("BULK: ", await getBulkFacilities());
         setFacilities(await getBulkFacilities());
         return () => {
             isMounted = false;
         };
     }, [update])
 
-    useEffect(() => {
-        console.log(facilities)
-    }, [facilities])
 
     const VerifiedIcon = (props) => {
         if(facID.Verified==0) {
@@ -120,7 +116,6 @@ function ManageFacilities (props) {
                                             <div className="image overflow-hidden">
                                                 <div>
                                                     <label htmlFor='pfp-upload' >
-                                                        {console.log("facID.ImageAddr: ", facID.ImageAddr)}
                                                         <img className="h-auto w-full mx-auto"
                                                             src={(facID.ImageAddr) ?  `/api/profile_picture/${facID.ImageAddr}` : placeholder}
                                                             alt="Profile Picture"/>
@@ -164,7 +159,6 @@ function ManageFacilities (props) {
                                                     <div className="grid grid-cols-2">
                                                         <div className="px-4 py-2 font-semibold">Address</div>
                                                         <div className="px-4 py-2">{(facID.Street==null)? "None" : `${facID.Street}\n ${facID.City}, ${facID.Country}`}</div>
-                                                        {console.log("Prof: ", facID)}
                                                     </div>
                                                     <div className="grid grid-cols-2">
                                                         <div className="px-4 py-2 font-semibold">Contact No.</div>
