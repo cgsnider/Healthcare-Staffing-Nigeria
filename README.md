@@ -6,6 +6,7 @@ Creating a database and a front end website to connect healthcare workers with j
 
 1. Go to Main directory, run "./run.sh -ide" for first time set up and fill in the prompts.
   Failure to fill in all the prompts may cause the platform to have limited functionality. 
+2. For subsequent runs execute "./run.sh -id" 
 
 #### Developers:
 - Khalaya Dean
